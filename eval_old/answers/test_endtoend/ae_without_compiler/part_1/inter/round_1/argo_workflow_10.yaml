@@ -1,0 +1,111 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti_Pastel_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A serene beach at sunset with palm trees
+      - name: t2
+        dependencies: [t1]
+        template: convert_to_jpeg
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.result}}'
+      - name: t3
+        dependencies: [t2]
+        template: resize_image
+        arguments:
+          parameters:
+          - name: width
+            value: 1024
+          - name: height
+            value: 768
+          - name: file
+            value: '{{tasks.t2.outputs.result}}'
+      - name: t4
+        dependencies: [t3]
+        template: enhance_image
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t3.outputs.result}}'
+      - name: t5
+        dependencies: [t4]
+        template: email_image
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t4.outputs.result}}'
+
+  - name: tti_Pastel_Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://path-to-your-pastel-art-api/generate_pastel_image/
+      headers:
+        Content-Type: application/json
+      body: '{"prompt": "{{inputs.parameters.prompt}}"}'
+      successCondition: response.statusCode == 200
+
+  - name: convert_to_jpeg
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://path-to-your-convert-to-jpeg-api/
+      headers:
+        Content-Type: application/json
+      body: '{"file": "{{inputs.parameters.file}}"}'
+      successCondition: response.statusCode == 200
+
+  - name: resize_image
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://path-to-your-resize-api/resize_image/
+      headers:
+        Content-Type: application/json
+      body: '{"width": "{{inputs.parameters.width}}", "height": "{{inputs.parameters.height}}",
+        "file": "{{inputs.parameters.file}}"}'
+      successCondition: response.statusCode == 200
+
+  - name: enhance_image
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://path-to-your-enhance-api/image_enhance/
+      headers:
+        Content-Type: application/json
+      body: '{"file": "{{inputs.parameters.file}}"}'
+      successCondition: response.statusCode == 200
+
+  - name: email_image
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://path-to-your-email-api/send_image/
+      headers:
+        Content-Type: application/json
+      body: '{"file": "{{inputs.parameters.file}}", "email": "friend@example.com"}'
+      successCondition: response.statusCode == 200

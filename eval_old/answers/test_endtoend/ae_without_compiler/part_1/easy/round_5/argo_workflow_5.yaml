@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+      value: 1024
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+    dag:
+      tasks:
+      - name: t0
+        template: tti_Sketching_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A high-quality sketching art image of an old library.
+        dependencies: []
+  - name: tti_Sketching_Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://path_to_your_service/generate_sketching_image/
+      headers:
+        Content-Type: application/json
+      body: |
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }
+      successCondition: response.statusCode == 200

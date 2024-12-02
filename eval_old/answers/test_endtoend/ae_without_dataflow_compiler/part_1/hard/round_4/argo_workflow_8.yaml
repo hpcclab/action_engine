@@ -1,0 +1,54 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n    - name: main\n      dag:\n\
+\        tasks:\n          - name: t1\n            template: tti_Sketching_Art\n \
+\           arguments:\n              parameters:\n                - name: prompt\n\
+\                  value: \"Generate a sketching art style image of the Showa period
+(1926–1989).\"\n                - name: negative_prompts\n                  value:
+\"lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
+digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature,
+watermark, username, blurry\"\n          - name: t2\n            template: tti_Sketching_Art\n\
+\            arguments:\n              parameters:\n                - name: prompt\n\
+\                  value: \"Generate a sketching art style image of the Jomon period
+(14,000–300 BCE).\"\n                - name: negative_prompts\n                  value:
+\"lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
+digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature,
+watermark, username, blurry\"\n          - name: t3\n            template: tti_Sketching_Art\n\
+\            arguments:\n              parameters:\n                - name: prompt\n\
+\                  value: \"Generate a sketching art style image of the Nara period
+(710–794).\"\n                - name: negative_prompts\n                  value: \"\
+lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits,
+cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark,
+username, blurry\"\n          - name: t4\n            template: tti_Sketching_Art\n\
+\            arguments:\n              parameters:\n                - name: prompt\n\
+\                  value: \"Generate a sketching art style image of the Heian period
+(794–1185).\"\n                - name: negative_prompts\n                  value:
+\"lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
+digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature,
+watermark, username, blurry\"\n          - name: t5\n            template: tti_Sketching_Art\n\
+\            arguments:\n              parameters:\n                - name: prompt\n\
+\                  value: \"Generate a sketching art style image of the Kamakura period
+(1185–1333).\"\n                - name: negative_prompts\n                  value:
+\"lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
+digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature,
+watermark, username, blurry\"\n          - name: t6\n            template: tti_Sketching_Art\n\
+\            arguments:\n              parameters:\n                - name: prompt\n\
+\                  value: \"Generate a sketching art style image of the Muromachi
+period (1336–1573).\"\n                - name: negative_prompts\n                \
+\  value: \"lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit,
+fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts,
+signature, watermark, username, blurry\"\n          - name: t7\n            template:
+tti_Sketching_Art\n            arguments:\n              parameters:\n           \
+\     - name: prompt\n                  value: \"Generate a sketching art style image
+of the Azuchi-Momoyama period (1573–1603).\"\n                - name: negative_prompts\n\
+\                  value: \"lowres, bad anatomy, bad hands, text, error, missing fingers,
+extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg
+artifacts, signature, watermark, username, blurry\"\n          - name: t8\n      \
+\      template: tti_Sketching_Art\n            arguments:\n              parameters:\n\
+\                - name: prompt\n                  value: \"Generate a sketching art
+style image of the Edo period (1603–1868).\"\n                - name: negative_prompts\n\
+\                  value: \"lowres, bad anatomy, bad hands, text, error, missing fingers,
+extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg
+artifacts, signature, watermark, username, blurry\"\n          - name: t9\n      \
+\      template: tti_Sketching_Art\n            arguments:\n              parameters:\n\
+\                - name: prompt\n                  value: \"Generate a sketching art
+style image of the Meiji period (1868–1912).\"\n                - name"

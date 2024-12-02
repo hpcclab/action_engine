@@ -1,0 +1,141 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: art-generation-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti_charcoal_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Depict the Renaissance period in charcoal art style.
+
+      - name: t2
+        template: tti_pastel_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Depict the Baroque period in pastel art style.
+
+      - name: t3
+        template: tti_painting_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Depict the Victorian era in painting art style.
+
+      - name: t4
+        template: tti_ukiyoe_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Depict the Edo period in ukiyo-e art style.
+
+      - name: t5
+        template: tti_charcoal_art_enhanced
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{tasks.t1.outputs.result}}'
+        dependencies: [t1]
+
+      - name: t6
+        template: tti_pastel_art_enhanced
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{tasks.t1.outputs.result}}'
+        dependencies: [t1]
+
+      - name: t7
+        template: tti_painting_art_enhanced
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{tasks.t1.outputs.result}}'
+        dependencies: [t1]
+
+      - name: t8
+        template: tti_ukiyoe_art_enhanced
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{tasks.t1.outputs.result}}'
+        dependencies: [t1]
+
+  - name: tti_charcoal_art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://charcoal-api/generate_charcoal_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti_pastel_art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://pastel-api/generate_pastel_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti_painting_art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://painting-api/generate_painting_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti_ukiyoe_art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://ukiyoe-api/generate_ukiyoe_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti_charcoal_art_enhanced
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://charcoal-api/generate_charcoal_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti_pastel_art_enhanced
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://pastel-api/generate_pastel_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti_painting_art_enhanced
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://painting-api/generate_painting_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti_ukiyoe_art_enhanced
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://ukiyoe-api/generate_ukiyoe_image/
+      successCondition: response.statusCode == 200

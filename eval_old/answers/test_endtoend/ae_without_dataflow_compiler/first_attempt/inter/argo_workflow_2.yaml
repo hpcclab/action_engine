@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+    dag:
+      tasks:
+      - name: t1
+        template: tti-animation-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{{{ tasks.t1.result }}}}'
+        dependencies: []
+      - name: t2
+        template: tti-animation-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{{{ tasks.t2.result }}}}'
+        dependencies: []
+  - name: tti-animation-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: t1
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: /generate_charcoal_image/
+      successCondition: response.statusCode == 200
+  - name: t2
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: /resize_image/
+      successCondition: response.statusCode == 200
+  - name: t3
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: /convert_to_pdf/
+      successCondition: response.statusCode == 200

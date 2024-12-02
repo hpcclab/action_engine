@@ -1,0 +1,122 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-futuristic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A futuristic cityscape at night
+      - name: t2
+        template: image-to-pdf-conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.artifact.art-file}}'
+        dependencies: [t1]
+
+  - name: tti-futuristic-art
+    inputs:
+      parameters:
+      - name: prompt
+    outputs:
+      artifacts:
+      - name: art-file
+        path: /mnt/art_file
+    script:
+      image: python:3.8
+      command: [sh, -c]
+      source: |
+        python3 -c '
+        from fastapi import FastAPI, HTTPException
+        from fastapi.responses import FileResponse
+        from PIL import Image
+        from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
+        import torch
+        from pydantic import BaseModel
+        from pathlib import Path
+
+        app = FastAPI()
+
+        def load_model():
+          model_id = "nitrosocke/Future-Diffusion"
+          pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)
+          pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
+          pipe = pipe.to("cuda")
+          return pipe
+
+        def process_data(prompt, pipe):
+          response = pipe(prompt).images[0]
+          return response
+
+        @app.post("/generate_futuristic_image/")
+        async def generate_image(prompt: str):
+          try:
+            pipe = load_model()
+            prompt = "Futuristic-style picture: " + prompt
+            response = process_data(prompt, pipe)
+            response.save("/mnt/art_file/generated_img.png")
+            image_path = Path("/mnt/art_file/generated_img.png")
+            if not image_path.is_file():
+              return {"error": "Image not found on the server"}
+            return FileResponse(image_path)
+          except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+        ' > /mnt/art_file/generated_img.png
+
+  - name: image-to-pdf-conversion
+    inputs:
+      parameters:
+      - name: file
+    outputs:
+      artifacts:
+      - name: pdf-file
+        path: /mnt/pdf_file/output.pdf
+    script:
+      image: python:3.8
+      command: [sh, -c]
+      source: |-
+        python3 -c '
+        from fastapi import FastAPI, File, UploadFile, HTTPException
+        from fastapi.responses import FileResponse
+        from pathlib import Path
+        from PIL import Image
+        import img2pdf
+
+        app = FastAPI()
+
+        supported_extensions = [".JPEG", ".PNG", ".GIF", ".BMP", ".TIFF", ".PBM", ".PGM", ".PPM"]
+
+        def check_file_extension(file_path):
+          file_extension = file_path.suffix.upper()
+          if file_extension not in supported_extensions:
+            return False
+          return True
+
+        @app.post("/convert_to_pdf/")
+        async def image_to_pdf(file: UploadFile):
+          try:
+            file_path = Path(file.filename)
+            file_name = file_path.stem
+
+            if not check_file_extension(file_path):
+              return {"error": "Unsupported format"}
+
+            contents = await file.read()
+            pdf_bytes = img2pdf.convert(contents)
+            pdf_file_path = f"{file_name}.pdf"
+
+            with open(pdf_file_path, "wb") as pdf_file:
+              pdf_file.write(pdf_bytes)
+
+            return FileResponse(pdf_file_path, media_type="application/pdf", filename="output.pdf")
+          except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+        ' > /mnt/pdf_file/output.pdf

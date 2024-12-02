@@ -1,0 +1,128 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+    - name: height
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+    dag:
+      tasks:
+      - name: t1
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A castle surrounded by a dense forest
+        dependencies: []
+
+      - name: t2
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: '{{workflow.parameters.width}}'
+          - name: height
+            value: '{{workflow.parameters.height}}'
+          - name: file
+            value: '{{{{ tasks.t1.outputs.artifact.image }}}}'
+        dependencies:
+        - t1
+
+      - name: t3
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{{{ tasks.t2.outputs.artifact.image }}}}'
+        dependencies:
+        - t2
+
+      - name: t4
+        template: image-to-pdf-conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{{{ tasks.t3.outputs.artifact.image }}}}'
+        dependencies:
+        - t3
+
+      - name: t5
+        template: send-to-email
+        arguments:
+          parameters:
+          - name: file
+            value: '{{{{ tasks.t4.outputs.artifact.pdf }}}}'
+        dependencies:
+        - t4
+
+  - name: tti-sketching-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://tti-sketching-art-endpoint
+      successCondition: response.statusCode == 200
+    outputs:
+      artifacts:
+      - name: image
+        path: /tmp/image.png
+
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://image-resizing-endpoint
+      successCondition: response.statusCode == 200
+    outputs:
+      artifacts:
+      - name: image
+        path: /tmp/resized_image.png
+
+  - name: image-enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://image-enhancement-endpoint
+      successCondition: response.statusCode == 200
+    outputs:
+      artifacts:
+      - name: image
+        path: /tmp/enhanced_image.jpg
+
+  - name: image-to-pdf-conversion
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://image-to-pdf-conversion-endpoint
+      successCondition: response.statusCode == 200
+    outputs:
+      artifacts:
+      - name: pdf
+        path: /tmp/converted_pdf.pdf
+
+  - name: send-to-email
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://send-to-email-endpoint
+      successCondition: response.statusCode == 200

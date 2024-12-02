@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+    dag:
+      tasks:
+      - name: t6
+        template: tti-Mosaic-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{{{ tasks.t6.result }}}}'
+        dependencies: []
+
+  - name: tti-Mosaic-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: /generate_mosaic_image/
+      successCondition: response.statusCode == 200

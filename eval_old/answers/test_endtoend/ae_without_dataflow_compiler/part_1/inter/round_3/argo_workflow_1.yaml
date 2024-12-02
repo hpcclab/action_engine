@@ -1,0 +1,75 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  arguments:
+    parameters:
+    - name: width
+    - name: height
+    - name: prompt1
+    - name: prompt2
+    - name: file
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: prompt1
+      - name: prompt2
+      - name: file
+    dag:
+      tasks:
+      - name: t1
+        template: tti-Futuristic-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt1}}'
+        dependencies: []
+      - name: t2
+        template: tti-Pastel-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt2}}'
+        dependencies: [t1]
+      - name: t3
+        template: Image-Resizing
+        arguments:
+          parameters:
+          - name: width
+            value: '{{inputs.parameters.width}}'
+          - name: height
+            value: '{{inputs.parameters.height}}'
+          - name: file
+            value: '{{tasks.t2.outputs.images}}'
+        dependencies: [t2]
+  - name: tti-Futuristic-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_futuristic_image/
+      successCondition: response.statusCode == 200
+  - name: tti-Pastel-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_pastel_image/
+      successCondition: response.statusCode == 200
+  - name: Image-Resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/resize_image/
+      successCondition: response.statusCode == 200

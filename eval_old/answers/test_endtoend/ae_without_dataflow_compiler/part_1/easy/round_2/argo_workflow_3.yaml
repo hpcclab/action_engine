@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: prompt
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: prompt
+    dag:
+      tasks:
+      - name: t1
+        template: tti-Graffiti-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies: []
+  - name: tti-Graffiti-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: <API_URL_HERE>    # Replace with the actual URL of the 'tti_Graffiti_Art' API
+      successCondition: response.statusCode == 200

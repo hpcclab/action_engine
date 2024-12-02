@@ -1,0 +1,136 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: prompt
+    - name: width
+    - name: height
+    - name: file
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: prompt
+      - name: width
+      - name: height
+      - name: file
+    dag:
+      tasks:
+      - name: t1
+        template: tti-graffiti-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+      - name: t2
+        template: tti-mosaic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+      - name: t3
+        template: tti-ukiyoe-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+      - name: t4
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: '{{inputs.parameters.width}}'
+          - name: height
+            value: '{{inputs.parameters.height}}'
+          - name: file
+            value: '{{tasks.t1.outputs.result}}'
+        dependencies: [t1]
+      - name: t5
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t2.outputs.result}}'
+        dependencies: [t2]
+      - name: t6
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t3.outputs.result}}'
+        dependencies: [t3]
+
+  - name: tti-graffiti-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: /generate_grafiti_image/
+      body:
+        parameter: prompt
+      successCondition: response.statusCode == 200
+
+  - name: tti-mosaic-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: /generate_mosaic_image/
+      body:
+        parameter: prompt
+      successCondition: response.statusCode == 200
+
+  - name: tti-ukiyoe-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: /generate_ukiyoe_image/
+      body:
+        parameter: prompt
+      successCondition: response.statusCode == 200
+
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: /resize_image/
+      body:
+        parameters:
+          width: '{{inputs.parameters.width}}'
+          height: '{{inputs.parameters.height}}'
+          file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+
+  - name: image-enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: /image_enhance/
+      body:
+        parameter: file
+      successCondition: response.statusCode == 200
+
+  - name: image-enhancement-ukiyoe
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: /generate_ukiyoe_image/
+      body:
+        parameter: file
+      successCondition: response.statusCode == 200

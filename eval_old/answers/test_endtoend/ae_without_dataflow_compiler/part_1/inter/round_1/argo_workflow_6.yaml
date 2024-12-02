@@ -1,0 +1,109 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-charcoal-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Create a charcoal art image of a New York landscape in 1990.
+        dependencies:
+        - t1
+      - name: t2
+        template: tti-charcoal-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Convert the charcoal art image of the New York landscape in 1990
+              to PNG format.
+        dependencies:
+        - t1
+      - name: t3
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 800
+          - name: height
+            value: 600
+          - name: file
+            value: '{{ tasks.t2.outputs.result }}'
+        dependencies:
+        - t2
+      - name: t4
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ tasks.t3.outputs.result }}'
+        dependencies:
+        - t3
+      - name: t5
+        template: send-email
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ tasks.t4.outputs.result }}'
+        dependencies:
+        - t4
+
+  - name: tti-charcoal-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://myapi.com/generate_charcoal_image/
+      body:
+        prompt: '{{ inputs.parameters.prompt }}'
+      successCondition: response.statusCode == 200
+      output:
+        result: '{{ response.body }}'
+
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://myapi.com/resize_image/
+      body:
+        width: '{{ inputs.parameters.width }}'
+        height: '{{ inputs.parameters.height }}'
+        file: '{{ inputs.parameters.file }}'
+      successCondition: response.statusCode == 200
+      output:
+        result: '{{ response.body }}'
+
+  - name: image-enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://myapi.com/image_enhance/
+      body:
+        file: '{{ inputs.parameters.file }}'
+      successCondition: response.statusCode == 200
+      output:
+        result: '{{ response.body }}'
+
+  - name: send-email
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://myapi.com/send_email/
+      body:
+        file: '{{ inputs.parameters.file }}'
+      successCondition: response.statusCode == 200

@@ -1,0 +1,54 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-mosaic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Ancient Roman architecture
+      - name: t2
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 1024
+          - name: height
+            value: 768
+          - name: file
+            value: '{{tasks.t1.outputs.art_image}}'
+        dependencies: [t1]
+
+  - name: tti-mosaic-art
+    inputs:
+      parameters:
+      - name: prompt
+    outputs:
+      parameters:
+      - name: art_image
+        valueFrom:
+          path: /tmp/generated_img.png
+    container:
+      image: your-docker-image-for-tti-mosaic-art
+      command: [bash, -c]
+      args: ["python3 generate_mosaic_image.py --prompt '{{inputs.parameters.prompt}}'
+          --output /tmp/generated_img.png"]
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    container:
+      image: your-docker-image-for-image-resizing
+      command: [bash, -c]
+      args: ["python3 resize_image.py --width '{{inputs.parameters.width}}' --height
+          '{{inputs.parameters.height}}' --file '{{inputs.parameters.file}}' --output
+          /tmp/resized_image.png"]

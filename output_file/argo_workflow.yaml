@@ -1,0 +1,73 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: username
+    - name: playlist_name
+    - name: song_name
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: username
+      - name: playlist_name
+      - name: song_name
+    dag:
+      tasks:
+      - name: t1
+        template: username2id
+        arguments:
+          parameters:
+          - name: username
+            value: '{{ inputs.parameters.username }}'
+        dependencies: []
+      - name: t2
+        template: playlistname2id
+        arguments:
+          parameters:
+          - name: playlist_name
+            value: '{{ inputs.parameters.playlist_name }}'
+        dependencies:
+        - t1
+      - name: t3
+        template: addsongtoplaylist
+        arguments:
+          parameters:
+          - name: song_name
+            value: '{{ inputs.parameters.song_name }}'
+          - name: user_ID
+            value: '{{ tasks.t1.result }}'
+          - name: playlist_ID
+            value: '{{ tasks.t2.result }}'
+        dependencies:
+        - t2
+  - name: username2id
+    inputs:
+      parameters:
+      - name: username
+    http:
+      method:
+      url:
+      successCondition: response.statusCode == 200
+  - name: playlistname2id
+    inputs:
+      parameters:
+      - name: playlist_name
+    http:
+      method:
+      url:
+      successCondition: response.statusCode == 200
+  - name: addsongtoplaylist
+    inputs:
+      parameters:
+      - name: user_ID
+      - name: playlist_ID
+      - name: song_name
+    http:
+      method:
+      url:
+      successCondition: response.statusCode == 200

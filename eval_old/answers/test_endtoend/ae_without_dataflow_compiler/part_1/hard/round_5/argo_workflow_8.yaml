@@ -1,0 +1,89 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: prompt
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: prompt
+    dag:
+      tasks:
+      - name: t1
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+      - name: t2
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: [t1]
+      - name: t3
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: [t2]
+      - name: t4
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: [t3]
+      - name: t5
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: [t4]
+      - name: t6
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: [t5]
+      - name: t7
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: [t6]
+      - name: t8
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: [t7]
+      - name: t9
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: [t8]
+  - name: tti-sketching-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_sketching_image/
+      headers:
+        Content-Type: application/json
+      body: '{"prompt": "{{inputs.parameters.prompt}}"}'
+      successCondition: response.statusCode == 200

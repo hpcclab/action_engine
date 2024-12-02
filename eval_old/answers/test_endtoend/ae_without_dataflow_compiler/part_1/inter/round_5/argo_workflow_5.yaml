@@ -1,0 +1,133 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti_Futuristic_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Create a digital art piece of a futuristic cityscape at night.
+      - name: t2
+        dependencies: [t1]
+        template: image_to_pdf_conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{{{tasks.t1.outputs.result}}}}'
+      - name: t3
+        dependencies: [t2]
+        template: Image_Resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 1920
+          - name: height
+            value: 1080
+          - name: file
+            value: '{{{{tasks.t2.outputs.result}}}}'
+      - name: t4
+        dependencies: [t3]
+        template: Image_Enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{{{tasks.t3.outputs.result}}}}'
+      - name: t5
+        dependencies: [t4]
+        template: send_email
+        arguments:
+          parameters:
+          - name: sender
+            value: your_sender_email@example.com
+          - name: receiver
+            value: your_receiver_email@example.com
+          - name: msg_text
+            value: Attached is the enhanced PDF of the futuristic cityscape at night.
+          - name: msg_subject
+            value: Futuristic Cityscape Artwork PDF
+          - name: file
+            value: '{{{{tasks.t4.outputs.result}}}}'
+  - name: tti_Futuristic_Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://your-tti-futuristic-art-api-endpoint
+      successCondition: response.statusCode == 200
+      body: |
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }
+      timeoutSeconds: 60
+  - name: image_to_pdf_conversion
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://your-image-to-pdf-api-endpoint
+      successCondition: response.statusCode == 200
+      body: |
+        {
+          "file": "{{inputs.parameters.file}}"
+        }
+      timeoutSeconds: 60
+  - name: Image_Resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://your-image-resizing-api-endpoint
+      successCondition: response.statusCode == 200
+      body: |
+        {
+          "width": "{{inputs.parameters.width}}",
+          "height": "{{inputs.parameters.height}}",
+          "file": "{{inputs.parameters.file}}"
+        }
+      timeoutSeconds: 60
+  - name: Image_Enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://your-image-enhancement-api-endpoint
+      successCondition: response.statusCode == 200
+      body: |
+        {
+          "file": "{{inputs.parameters.file}}"
+        }
+      timeoutSeconds: 60
+  - name: send_email
+    inputs:
+      parameters:
+      - name: sender
+      - name: receiver
+      - name: msg_text
+      - name: msg_subject
+      - name: file
+    http:
+      method: POST
+      url: http://your-send-email-api-endpoint
+      successCondition: response.statusCode == 200
+      body: |
+        {
+          "sender": "{{inputs.parameters.sender}}",
+          "receiver": "{{inputs.parameters.receiver}}",
+          "msg_text": "{{inputs.parameters.msg_text}}",
+          "msg_subject": "{{inputs.parameters.msg_subject}}",
+          "file": "{{inputs.parameters.file}}"
+        }
+      timeoutSeconds: 60

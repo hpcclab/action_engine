@@ -1,0 +1,63 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-Futuristic-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Create a digital art piece of a futuristic cityscape.
+      - name: t2
+        template: tti-Pastel-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ tasks.t1.outputs.parameters.result }}'
+        dependencies: [t1]
+      - name: t3
+        template: Image-Resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 1024
+          - name: height
+            value: 768
+          - name: file
+            value: '{{ tasks.t2.outputs.parameters.result }}'
+        dependencies: [t2]
+
+  - name: tti-Futuristic-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://your-api-endpoint-for-futuristic-art/generate_futuristic_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti-Pastel-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://your-api-endpoint-for-pastel-art/generate_pastel_image/
+      successCondition: response.statusCode == 200
+
+  - name: Image-Resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://your-api-endpoint-for-image-resizing/resize_image/
+      successCondition: response.statusCode == 200

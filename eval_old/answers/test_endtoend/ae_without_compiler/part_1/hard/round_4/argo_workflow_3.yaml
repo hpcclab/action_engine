@@ -1,0 +1,152 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  arguments:
+    parameters:
+    - name: prompt
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: prompt
+    dag:
+      tasks:
+      - name: t1
+        template: tti-Mosaic-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+      - name: t2
+        template: tti-Pastel-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+      - name: t3
+        template: tti-Graffiti-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+      - name: t4
+        template: Image-Enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.result}}'  # Assuming .outputs.result provides the output file
+        dependencies: [t1]
+      - name: t5
+        template: tti-Mosaic-Art-resize
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{tasks.t4.outputs.result}}'  # Assuming .outputs.result provides the output file
+        dependencies: [t4]
+      - name: t6
+        template: tti-Mosaic-Art-convert
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{tasks.t5.outputs.result}}'  # Assuming .outputs.result provides the output file
+        dependencies: [t5]
+      - name: t7
+        template: tti-Mosaic-Art-email
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{tasks.t6.outputs.result}}'  # Assuming .outputs.result provides the output file
+        dependencies: [t6]
+  - name: tti-Mosaic-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/tti_Mosaic_Art  # Replace with actual URL
+      successCondition: response.status == 200
+      body: |
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }
+
+  - name: tti-Pastel-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/tti_Pastel_Art  # Replace with actual URL
+      successCondition: response.status == 200
+      body: |
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }
+
+  - name: tti-Graffiti-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/tti_Graffiti_Art  # Replace with actual URL
+      successCondition: response.status == 200
+      body: |
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }
+
+  - name: Image-Enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/Image_Enhancement  # Replace with actual URL
+      successCondition: response.status == 200
+      body: |
+        {
+          "file": "{{inputs.parameters.file}}"
+        }
+
+  - name: tti-Mosaic-Art-resize
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/tti_Mosaic_Art_resize  # Replace with actual URL
+      successCondition: response.status == 200
+      body: |
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }
+
+  - name: tti-Mosaic-Art-convert
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/tti_Mosaic_Art_convert  # Replace with actual URL
+      successCondition: response.status == 200
+      body: |
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }
+
+  - name: tti-Mosaic-Art-email
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/tti_Mosaic_Art_email  # Replace with actual URL
+      successCondition: response.status == 200
+      body: |-
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }

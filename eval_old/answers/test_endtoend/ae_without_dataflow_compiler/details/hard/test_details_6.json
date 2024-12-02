@@ -1,0 +1,170 @@
+[
+    {
+        "Id": 2,
+        "name": "tti_Charcoal_Art",
+        "input_parameters_with_datatype": [
+            {
+                "name": "prompt",
+                "datatype": "string",
+                "description": "The 'prompt' parameter is a user prompt in string data type. It is required for the API to generate a visually engaging charcoal art style image based on the content or theme specified by the user. The prompt serves as the input text that will be transformed into a unique charcoal art representation by the API."
+            }
+        ],
+        "input_description": "The input parameter for this API is a user prompt in string data type.",
+        "output_data_type": "binary_image_file",
+        "output description": "An image in a specific charcoal art style format",
+        "description": "This API processes an input user prompt to generate an image in charcoal art style. It takes a text prompt from the user converts it into a charcoal art style image and returns the resulting image. The input parameter is a string containing the user prompt and the output is an image in the charcoal art style.",
+        "method": "POST",
+        "url": null,
+        "summary": "The 'tti_Charcoal_Art' API utilizes a POST method to transform textual prompts into visually engaging charcoal art style images. Users supply a prompt in string format, specifying the content or theme for the artwork they desire. This input prompt is then processed by the API to generate a unique image in the distinctive charcoal art style. The output of the API is delivered as a binary_image_file, presenting the user with a creative representation of their original prompt transformed into a charcoal art format. This API seamlessly merges textual input with artistic expression, providing users with a simple yet powerful tool to create captivating charcoal art imagery.",
+        "source_code": "from fastapi import FastAPI, HTTPException\nfrom fastapi.responses import FileResponse\n\nfrom PIL import Image\nfrom diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler\nimport torch\nfrom pydantic import BaseModel\nfrom pathlib import Path\n\napp = FastAPI()\n\ndef load_model():\n    model_id = 'Falah/charcoal-style'\n    pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)\n    pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n    pipe = pipe.to('cuda')\n    return pipe\n\ndef process_data(prompt, pipe):\n    response = pipe(prompt).images[0]\n    return response\n\n@app.post(\"/generate_charcoal_image/\")\nasync def generate_image(prompt:str):\n    try:\n\n        # Load the model (replace load_model() with your actual model loading logic)\n        pipe = load_model()\n\n        # Prompt Creation\n        prompt = \"Charcoal-style picture: \" + prompt\n\n        # Process the data (replace process_data() with your actual data processing logic)\n        response = process_data(prompt, pipe)\n\n        ## Save the image\n        response.save('generated_img.png')\n\n        image_path = Path('generated_img.png')\n        if not image_path.is_file():\n            return {\"error\": \"Image not found on the server\"}\n\n        return FileResponse(image_path)\n    except Exception as e:\n        # Handle exceptions or errors here\n        raise HTTPException(status_code=500, detail=str(e))",
+        "task_num": 1,
+        "task_description": "Generate a charcoal art style image depicting the Renaissance period."
+    },
+    {
+        "Id": 8,
+        "name": "tti_Pastel_Art",
+        "input_parameters_with_datatype": [
+            {
+                "name": "prompt",
+                "datatype": "string",
+                "description": "The prompt parameter is a string data type that serves as a user input to guide the generation of a unique pastel art piece using a pre-trained model specialized for the pastel art style. It is essential for users to provide a creative prompt that influences the artistic output of the API, allowing them to translate their ideas into visually appealing pastel art images."
+            }
+        ],
+        "input_description": "The input parameter for this API is a user prompt in string data type.",
+        "output_data_type": "binary_image_file",
+        "output description": "Generated image in png file format",
+        "description": "This API takes a user prompt and generates an image in pastel art style. It loads a pre-trained model for pastel art generation and processes the user prompt to create the image. The generated image is returned in the form of a PNG file.",
+        "method": "POST",
+        "url": null,
+        "summary": "The 'tti_Pastel_Art' API allows users to create pastel art images through a POST method. By providing a prompt in string format, users can guide the generation of a unique pastel art piece using a pre-trained model specialized for this art style. The output of this API is delivered as a binary_image_file, presenting the final artwork in PNG file format. This API facilitates the seamless translation of text prompts into visually appealing pastel art, offering a creative tool for digital artists and enthusiasts to explore and express their artistic visions in a distinctive, soft-palette aesthetic.",
+        "source_code": "from fastapi import FastAPI, HTTPException\nfrom fastapi.responses import FileResponse\n\nfrom PIL import Image\nfrom diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler\nimport torch\nfrom pydantic import BaseModel\nfrom pathlib import Path\n\napp = FastAPI()\n\ndef load_model():\n    model_id = 'JamesFlare/pastel-mix'\n    pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)\n    pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n    pipe = pipe.to('cuda')\n    return pipe\n\ndef process_data(prompt, pipe):\n    response = pipe(prompt).images[0]\n    return response\n\n@app.post(\"/generate_pastel_image/\")\nasync def generate_image(prompt:str):\n    try:\n\n        # Load the model (replace load_model() with your actual model loading logic)\n        pipe = load_model()\n\n        # Prompt Creation\n        prompt = \"Pastel-style picture: \" + prompt\n\n        # Process the data (replace process_data() with your actual data processing logic)\n        response = process_data(prompt, pipe)\n\n        ## Save the image\n        response.save('generated_img.png')\n\n        image_path = Path('generated_img.png')\n        if not image_path.is_file():\n            return {\"error\": \"Image not found on the server\"}\n\n        return FileResponse(image_path)\n    except Exception as e:\n        # Handle exceptions or errors here\n        raise HTTPException(status_code=500, detail=str(e))",
+        "task_num": 2,
+        "task_description": "Generate a pastel art style image depicting the Baroque period."
+    },
+    {
+        "Id": 7,
+        "name": "tti_Painting_Art",
+        "input_parameters_with_datatype": [
+            {
+                "name": "prompt",
+                "datatype": "string",
+                "description": "The 'prompt' parameter is a user prompt in string data type. It is required for the 'tti_Painting_Art' API to receive input from users in the form of a textual description of their desired artistic content or theme. This prompt is essential for the API to generate a unique painting art style image based on the user's input, allowing users to visually express their creative ideas through the conversion of text to artwork."
+            }
+        ],
+        "input_description": "The input parameter for this API is a user prompt in string data type.",
+        "output_data_type": "binary_image_file",
+        "output description": "Generated image in painting art style (file)",
+        "description": "This API takes a user prompt and generates an image in a painting art style. It uses a pre-trained model to process the prompt and produce the painting image as output. The input parameter is the prompt provided by the user as a string and the output is the generated image in painting art style saved as a file.",
+        "method": "POST",
+        "url": null,
+        "summary": "The 'tti_Painting_Art' API facilitates the conversion of user prompts into artwork resembling a painting via a POST method. By receiving a prompt in string format as an input, users can describe their desired artistic content or theme. This API employs a sophisticated pre-trained model to transform the input prompt into a unique painting art style image, which is subsequently returned as a binary_image_file. Users can leverage this API to seamlessly translate textual descriptions into visually captivating painting-style images, enhancing their creative projects or digital media endeavors.",
+        "source_code": "from fastapi import FastAPI, HTTPException\nfrom fastapi.responses import FileResponse\n\nfrom PIL import Image\nfrom diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler\nimport torch\nfrom pydantic import BaseModel\nfrom pathlib import Path\n\napp = FastAPI()\n\ndef load_model():\n    model_id = \"dallinmackay/Van-Gogh-diffusion\"\n    pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)\n    pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n    pipe = pipe.to('cuda')\n    return pipe\n\ndef process_data(prompt, pipe):\n    response = pipe(prompt).images[0]\n    return response\n\n@app.post(\"/generate_painting_image/\")\nasync def generate_image(prompt:str):\n    try:\n\n        # Load the model (replace load_model() with your actual model loading logic)\n        pipe = load_model()\n\n        # Prompt Creation\n        prompt = \"Lvngvncnt-style picture: \" + prompt\n\n        # Process the data (replace process_data() with your actual data processing logic)\n        response = process_data(prompt, pipe)\n\n        ## Save the image\n        response.save('generated_img.png')\n\n        image_path = Path('generated_img.png')\n        if not image_path.is_file():\n            return {\"error\": \"Image not found on the server\"}\n\n        return FileResponse(image_path)\n    except Exception as e:\n        # Handle exceptions or errors here\n        raise HTTPException(status_code=500, detail=str(e))",
+        "task_num": 3,
+        "task_description": "Generate a painting art style image depicting the Victorian era."
+    },
+    {
+        "Id": 10,
+        "name": "tti_Ukiyo-e_Art",
+        "input_parameters_with_datatype": [
+            {
+                "name": "prompt",
+                "datatype": "string",
+                "description": "The 'prompt' parameter is a user prompt in string data type. It is required for the API to generate visually captivating images resembling the traditional Japanese ukiyo-e art style. The prompt should be enriched by appending 'Japanese Ukiyo e-style picture:' to guide the image creation process, as specified in the function description."
+            }
+        ],
+        "input_description": "The input parameter for this API is a user prompt in string data type.",
+        "output_data_type": "binary_image_file",
+        "output description": "The output of this API is an image generated in ukiyo-e art style.",
+        "description": "This API takes a user prompt as input and generates an image in the traditional Japanese ukiyo-e art style. The input prompt is concatenated with 'Japanese Ukiyo e-style picture:' before processing. The generated image is then saved as a PNG file and returned as a response.",
+        "method": "POST",
+        "url": null,
+        "summary": "The 'tti_Ukiyo-e_Art' API is a resourceful tool that converts user prompts into visually captivating images resembling the traditional Japanese ukiyo-e art style using a POST method. Users submit a prompt in string format, which is enriched by appending 'Japanese Ukiyo e-style picture:' to guide the image creation process. Through intricate processing, the API yields an image brimming with ukiyo-e aesthetics and nuances, ultimately delivering the output as a PNG binary_image_file. This API seamlessly merges modern inputs with historical artistic styles, offering users a gateway to explore and integrate traditional Japanese artistry into contemporary digital creations.",
+        "source_code": "from fastapi import FastAPI, HTTPException\nfrom fastapi.responses import FileResponse\n\nfrom PIL import Image\nfrom diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler\nimport torch\nfrom pydantic import BaseModel\nfrom pathlib import Path\n\napp = FastAPI()\n\ndef load_model():\n    model_id = 'salmonhumorous/ukeiyo-style-diffusion'\n    pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)\n    pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n    pipe = pipe.to('cuda')\n    return pipe\n\ndef process_data(prompt, pipe):\n    response = pipe(prompt).images[0]\n    return response\n\n@app.post(\"/generate_ukiyoe_image/\")\nasync def generate_image(prompt:str):\n    try:\n\n        # Load the model (replace load_model() with your actual model loading logic)\n        pipe = load_model()\n\n        # Prompt Creation\n        prompt = \"Japanese Ukiyo e-style picture: \" + prompt\n\n        # Process the data (replace process_data() with your actual data processing logic)\n        response = process_data(prompt, pipe)\n\n        ## Save the image\n        response.save('generated_img.png')\n\n        image_path = Path('generated_img.png')\n        if not image_path.is_file():\n            return {\"error\": \"Image not found on the server\"}\n\n        return FileResponse(image_path)\n    except Exception as e:\n        # Handle exceptions or errors here\n        raise HTTPException(status_code=500, detail=str(e))",
+        "task_num": 1,
+        "task_description": "Generate a ukiyo-e art style image depicting the Edo period."
+    },
+    {
+        "Id": 2,
+        "name": "tti_Charcoal_Art",
+        "input_parameters_with_datatype": [
+            {
+                "name": "prompt",
+                "datatype": "string",
+                "description": "The 'prompt' parameter is a user prompt in string data type. It is required for the API to generate a visually engaging charcoal art style image based on the content or theme specified by the user. The prompt serves as the input text that will be transformed into a unique charcoal art representation by the API."
+            }
+        ],
+        "input_description": "The input parameter for this API is a user prompt in string data type.",
+        "output_data_type": "binary_image_file",
+        "output description": "An image in a specific charcoal art style format",
+        "description": "This API processes an input user prompt to generate an image in charcoal art style. It takes a text prompt from the user converts it into a charcoal art style image and returns the resulting image. The input parameter is a string containing the user prompt and the output is an image in the charcoal art style.",
+        "method": "POST",
+        "url": null,
+        "summary": "The 'tti_Charcoal_Art' API utilizes a POST method to transform textual prompts into visually engaging charcoal art style images. Users supply a prompt in string format, specifying the content or theme for the artwork they desire. This input prompt is then processed by the API to generate a unique image in the distinctive charcoal art style. The output of the API is delivered as a binary_image_file, presenting the user with a creative representation of their original prompt transformed into a charcoal art format. This API seamlessly merges textual input with artistic expression, providing users with a simple yet powerful tool to create captivating charcoal art imagery.",
+        "source_code": "from fastapi import FastAPI, HTTPException\nfrom fastapi.responses import FileResponse\n\nfrom PIL import Image\nfrom diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler\nimport torch\nfrom pydantic import BaseModel\nfrom pathlib import Path\n\napp = FastAPI()\n\ndef load_model():\n    model_id = 'Falah/charcoal-style'\n    pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)\n    pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n    pipe = pipe.to('cuda')\n    return pipe\n\ndef process_data(prompt, pipe):\n    response = pipe(prompt).images[0]\n    return response\n\n@app.post(\"/generate_charcoal_image/\")\nasync def generate_image(prompt:str):\n    try:\n\n        # Load the model (replace load_model() with your actual model loading logic)\n        pipe = load_model()\n\n        # Prompt Creation\n        prompt = \"Charcoal-style picture: \" + prompt\n\n        # Process the data (replace process_data() with your actual data processing logic)\n        response = process_data(prompt, pipe)\n\n        ## Save the image\n        response.save('generated_img.png')\n\n        image_path = Path('generated_img.png')\n        if not image_path.is_file():\n            return {\"error\": \"Image not found on the server\"}\n\n        return FileResponse(image_path)\n    except Exception as e:\n        # Handle exceptions or errors here\n        raise HTTPException(status_code=500, detail=str(e))",
+        "task_num": 5,
+        "task_description": "Enhance the quality of the charcoal art style image depicting the Renaissance period."
+    },
+    {
+        "Id": 8,
+        "name": "tti_Pastel_Art",
+        "input_parameters_with_datatype": [
+            {
+                "name": "prompt",
+                "datatype": "string",
+                "description": "The prompt parameter is a string data type that serves as a user input to guide the generation of a unique pastel art piece using a pre-trained model specialized for the pastel art style. It is essential for users to provide a creative prompt that influences the artistic output of the API, allowing them to translate their ideas into visually appealing pastel art images."
+            }
+        ],
+        "input_description": "The input parameter for this API is a user prompt in string data type.",
+        "output_data_type": "binary_image_file",
+        "output description": "Generated image in png file format",
+        "description": "This API takes a user prompt and generates an image in pastel art style. It loads a pre-trained model for pastel art generation and processes the user prompt to create the image. The generated image is returned in the form of a PNG file.",
+        "method": "POST",
+        "url": null,
+        "summary": "The 'tti_Pastel_Art' API allows users to create pastel art images through a POST method. By providing a prompt in string format, users can guide the generation of a unique pastel art piece using a pre-trained model specialized for this art style. The output of this API is delivered as a binary_image_file, presenting the final artwork in PNG file format. This API facilitates the seamless translation of text prompts into visually appealing pastel art, offering a creative tool for digital artists and enthusiasts to explore and express their artistic visions in a distinctive, soft-palette aesthetic.",
+        "source_code": "from fastapi import FastAPI, HTTPException\nfrom fastapi.responses import FileResponse\n\nfrom PIL import Image\nfrom diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler\nimport torch\nfrom pydantic import BaseModel\nfrom pathlib import Path\n\napp = FastAPI()\n\ndef load_model():\n    model_id = 'JamesFlare/pastel-mix'\n    pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)\n    pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n    pipe = pipe.to('cuda')\n    return pipe\n\ndef process_data(prompt, pipe):\n    response = pipe(prompt).images[0]\n    return response\n\n@app.post(\"/generate_pastel_image/\")\nasync def generate_image(prompt:str):\n    try:\n\n        # Load the model (replace load_model() with your actual model loading logic)\n        pipe = load_model()\n\n        # Prompt Creation\n        prompt = \"Pastel-style picture: \" + prompt\n\n        # Process the data (replace process_data() with your actual data processing logic)\n        response = process_data(prompt, pipe)\n\n        ## Save the image\n        response.save('generated_img.png')\n\n        image_path = Path('generated_img.png')\n        if not image_path.is_file():\n            return {\"error\": \"Image not found on the server\"}\n\n        return FileResponse(image_path)\n    except Exception as e:\n        # Handle exceptions or errors here\n        raise HTTPException(status_code=500, detail=str(e))",
+        "task_num": 6,
+        "task_description": "Enhance the quality of the pastel art style image depicting the Baroque period."
+    },
+    {
+        "Id": 7,
+        "name": "tti_Painting_Art",
+        "input_parameters_with_datatype": [
+            {
+                "name": "prompt",
+                "datatype": "string",
+                "description": "The 'prompt' parameter is a user prompt in string data type. It is required for the 'tti_Painting_Art' API to receive input from users in the form of a textual description of their desired artistic content or theme. This prompt is essential for the API to generate a unique painting art style image based on the user's input, allowing users to visually express their creative ideas through the conversion of text to artwork."
+            }
+        ],
+        "input_description": "The input parameter for this API is a user prompt in string data type.",
+        "output_data_type": "binary_image_file",
+        "output description": "Generated image in painting art style (file)",
+        "description": "This API takes a user prompt and generates an image in a painting art style. It uses a pre-trained model to process the prompt and produce the painting image as output. The input parameter is the prompt provided by the user as a string and the output is the generated image in painting art style saved as a file.",
+        "method": "POST",
+        "url": null,
+        "summary": "The 'tti_Painting_Art' API facilitates the conversion of user prompts into artwork resembling a painting via a POST method. By receiving a prompt in string format as an input, users can describe their desired artistic content or theme. This API employs a sophisticated pre-trained model to transform the input prompt into a unique painting art style image, which is subsequently returned as a binary_image_file. Users can leverage this API to seamlessly translate textual descriptions into visually captivating painting-style images, enhancing their creative projects or digital media endeavors.",
+        "source_code": "from fastapi import FastAPI, HTTPException\nfrom fastapi.responses import FileResponse\n\nfrom PIL import Image\nfrom diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler\nimport torch\nfrom pydantic import BaseModel\nfrom pathlib import Path\n\napp = FastAPI()\n\ndef load_model():\n    model_id = \"dallinmackay/Van-Gogh-diffusion\"\n    pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)\n    pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n    pipe = pipe.to('cuda')\n    return pipe\n\ndef process_data(prompt, pipe):\n    response = pipe(prompt).images[0]\n    return response\n\n@app.post(\"/generate_painting_image/\")\nasync def generate_image(prompt:str):\n    try:\n\n        # Load the model (replace load_model() with your actual model loading logic)\n        pipe = load_model()\n\n        # Prompt Creation\n        prompt = \"Lvngvncnt-style picture: \" + prompt\n\n        # Process the data (replace process_data() with your actual data processing logic)\n        response = process_data(prompt, pipe)\n\n        ## Save the image\n        response.save('generated_img.png')\n\n        image_path = Path('generated_img.png')\n        if not image_path.is_file():\n            return {\"error\": \"Image not found on the server\"}\n\n        return FileResponse(image_path)\n    except Exception as e:\n        # Handle exceptions or errors here\n        raise HTTPException(status_code=500, detail=str(e))",
+        "task_num": 7,
+        "task_description": "Enhance the quality of the painting art style image depicting the Victorian era."
+    },
+    {
+        "Id": 10,
+        "name": "tti_Ukiyo-e_Art",
+        "input_parameters_with_datatype": [
+            {
+                "name": "prompt",
+                "datatype": "string",
+                "description": "The 'prompt' parameter is a user prompt in string data type. It is required for the API to generate visually captivating images resembling the traditional Japanese ukiyo-e art style. The prompt should be enriched by appending 'Japanese Ukiyo e-style picture:' to guide the image creation process, as specified in the function description."
+            }
+        ],
+        "input_description": "The input parameter for this API is a user prompt in string data type.",
+        "output_data_type": "binary_image_file",
+        "output description": "The output of this API is an image generated in ukiyo-e art style.",
+        "description": "This API takes a user prompt as input and generates an image in the traditional Japanese ukiyo-e art style. The input prompt is concatenated with 'Japanese Ukiyo e-style picture:' before processing. The generated image is then saved as a PNG file and returned as a response.",
+        "method": "POST",
+        "url": null,
+        "summary": "The 'tti_Ukiyo-e_Art' API is a resourceful tool that converts user prompts into visually captivating images resembling the traditional Japanese ukiyo-e art style using a POST method. Users submit a prompt in string format, which is enriched by appending 'Japanese Ukiyo e-style picture:' to guide the image creation process. Through intricate processing, the API yields an image brimming with ukiyo-e aesthetics and nuances, ultimately delivering the output as a PNG binary_image_file. This API seamlessly merges modern inputs with historical artistic styles, offering users a gateway to explore and integrate traditional Japanese artistry into contemporary digital creations.",
+        "source_code": "from fastapi import FastAPI, HTTPException\nfrom fastapi.responses import FileResponse\n\nfrom PIL import Image\nfrom diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler\nimport torch\nfrom pydantic import BaseModel\nfrom pathlib import Path\n\napp = FastAPI()\n\ndef load_model():\n    model_id = 'salmonhumorous/ukeiyo-style-diffusion'\n    pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)\n    pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n    pipe = pipe.to('cuda')\n    return pipe\n\ndef process_data(prompt, pipe):\n    response = pipe(prompt).images[0]\n    return response\n\n@app.post(\"/generate_ukiyoe_image/\")\nasync def generate_image(prompt:str):\n    try:\n\n        # Load the model (replace load_model() with your actual model loading logic)\n        pipe = load_model()\n\n        # Prompt Creation\n        prompt = \"Japanese Ukiyo e-style picture: \" + prompt\n\n        # Process the data (replace process_data() with your actual data processing logic)\n        response = process_data(prompt, pipe)\n\n        ## Save the image\n        response.save('generated_img.png')\n\n        image_path = Path('generated_img.png')\n        if not image_path.is_file():\n            return {\"error\": \"Image not found on the server\"}\n\n        return FileResponse(image_path)\n    except Exception as e:\n        # Handle exceptions or errors here\n        raise HTTPException(status_code=500, detail=str(e))",
+        "task_num": 8,
+        "task_description": "Enhance the quality of the ukiyo-e art style image depicting the Edo period."
+    }
+]

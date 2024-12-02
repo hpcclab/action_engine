@@ -1,0 +1,54 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n  - name: main\n    dag:\n    \
+\  tasks:\n      - name: t1\n        template: tti_Futuristic_Art\n        arguments:\n\
+\          parameters:\n          - name: prompt\n            value: \"Create a digital
+art piece of a futuristic cityscape at night, with neon lights and flying cars.\"\n\
+\        dependencies: []\n\n      - name: t2\n        template: Image_Resizing\n\
+\        arguments:\n          parameters:\n          - name: width\n            value:
+1920\n          - name: height\n            value: 1080\n          - name: file\n\
+\            value: \"{{tasks.t1.outputs.parameters.result}}\"\n        dependencies:\n\
+\        - t1\n\n      - name: t3\n        template: Image_Enhancement\n        arguments:\n\
+\          parameters:\n          - name: file\n            value: \"{{tasks.t2.outputs.parameters.result}}\"\
+\n        dependencies:\n        - t2\n\n      - name: t4\n        template: image_to_pdf_conversion\n\
+\        arguments:\n          parameters:\n          - name: file\n            value:
+\"{{tasks.t3.outputs.parameters.result}}\"\n        dependencies:\n        - t3\n\n\
+\  - name: tti_Futuristic_Art\n    inputs:\n      parameters:\n      - name: prompt\n\
+\    outputs:\n      parameters:\n      - name: result\n        valueFrom:\n     \
+\     path: /outputs/result\n    script:\n      image: python:3.8\n      command:
+[\"python\"]\n      source: |\n        import json, os\n        from fastapi import
+FastAPI\n        from fastapi.responses import FileResponse\n        from PIL import
+Image\n        from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler\n\
+\        import torch\n\n        app = FastAPI()\n        \n        def load_model():\n\
+\            model_id = 'nitrosocke/Future-Diffusion'\n            pipe = StableDiffusionPipeline.from_pretrained(model_id,
+torch_dtype=torch.float16)\n            pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n\
+\            pipe = pipe.to('cuda')\n            return pipe\n        \n        def
+process_data(prompt, pipe):\n            response = pipe(prompt).images[0]\n     \
+\       return response\n        \n        @app.post(\"/generate_futuristic_image/\"\
+)\n        async def generate_image(prompt: str):\n            try:\n            \
+\    pipe = load_model()\n                response = process_data(\"Futuristic-style
+picture: \" + prompt, pipe)\n                response.save(\"/outputs/result.png\"\
+)\n                return {\"result\": \"/outputs/result.png\"}\n            except
+Exception as e:\n                raise HTTPException(status_code=500, detail=str(e))\n\
+\n  - name: Image_Resizing\n    inputs:\n      parameters:\n      - name: width\n\
+\      - name: height\n      - name: file\n    outputs:\n      parameters:\n     \
+\ - name: result\n        valueFrom:\n          path: /outputs/result\n    script:\n\
+\      image: python:3.8\n      command: [\"python\"]\n      source: |\n        import
+os\n        from fastapi import FastAPI, File, UploadFile, HTTPException\n       \
+\ from fastapi.responses import FileResponse\n        from PIL import Image\n\n  \
+\      app = FastAPI()\n        \n        @app.post('/resize_image/')\n        async
+def resize_image(width: int, height: int, file: UploadFile):\n            try:\n \
+\               contents = await file.read()\n                image = Image.open(io.BytesIO(contents))\n\
+\                resized = image.resize((width, height))\n                resized.save(\"\
+/outputs/resized_image.png\")\n                return {\"result\": \"/outputs/resized_image.png\"\
+}\n            except Exception as e:\n                raise HTTPException(status_code=500,
+detail=str(e))\n\n  - name: Image_Enhancement\n    inputs:\n      parameters:\n  \
+\    - name: file\n    outputs:\n      parameters:\n      - name: result\n       \
+\ valueFrom:\n          path: /outputs/result\n    script:\n      image: python:3.8\n\
+\      command: [\"python\"]\n      source: |\n        import cv2\n        import
+numpy as np\n        from pathlib import Path\n        from fastapi import FastAPI,
+UploadFile, HTTPException\n        from fastapi.responses import FileResponse\n\n\
+\        SUPPORTED_FORMATS = [\n            \".bmp\", \".dib\",\n            \".jpeg\"\
+, \".jpg\", \".jpe\",\n            \".jp2\", \".png\", \n            \".webp\", \"\
+.avif\", \n            \".pbm\", \".pgm\", \".ppm\", \".pxm\", \".pnm\", \n      \
+\      \".pfm\", \".sr\", \".ras\",\n            \".tiff\", \".tif\", \n         \
+\   \".exr\", \".hdr\", \".pic\"\n        ]"

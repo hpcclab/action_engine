@@ -1,0 +1,82 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: prompt
+    - name: width
+    - name: height
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: prompt
+      - name: width
+      - name: height
+    dag:
+      tasks:
+      - name: t1
+        template: tti-mosaic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: []
+      - name: t2
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: '{{inputs.parameters.width}}'
+          - name: height
+            value: '{{inputs.parameters.height}}'
+          - name: file
+            value: '{{tasks.t1.outputs.parameters.image}}'
+        dependencies: [t1]
+
+  - name: tti-mosaic-art
+    inputs:
+      parameters:
+      - name: prompt
+    outputs:
+      parameters:
+      - name: image
+        valueFrom:
+          path: /path/to/generated_img.png
+    http:
+      method: POST
+      url: http://server-address/generate_mosaic_image/    # Update with the actual server address
+      headers:
+        Content-Type: application/json
+      body: |
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }
+      successCondition: response.statusCode == 200
+
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    outputs:
+      parameters:
+      - name: resized_image
+        valueFrom:
+          path: /path/to/output.png
+    http:
+      method: POST
+      url: http://server-address/resize_image/    # Update with the actual server address
+      headers:
+        Content-Type: multipart/form-data
+      body: |
+        {
+          "width": "{{inputs.parameters.width}}",
+          "height": "{{inputs.parameters.height}}",
+          "file": "{{inputs.parameters.file}}"
+        }
+      successCondition: response.statusCode == 200

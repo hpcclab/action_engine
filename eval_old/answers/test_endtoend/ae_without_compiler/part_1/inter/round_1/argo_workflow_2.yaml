@@ -1,0 +1,82 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-charcoal-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a serene forest charcoal art
+      - name: t2
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 1920
+          - name: height
+            value: 1080
+          - name: file
+            value: '{{tasks.t1.outputs.artifact.image}}'
+        dependencies: [t1]
+      - name: t3
+        template: image-to-pdf-conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t2.outputs.artifact.image}}'
+        dependencies: [t2]
+  - name: tti-charcoal-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: <URL_FOR_CHARCOAL_ART_SERVICE>
+      json:
+        prompt: '{{inputs.parameters.prompt}}'
+      successCondition: response.statusCode == 200
+    outputs:
+      artifacts:
+      - name: image
+        path: /tmp/generated_img.png
+
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: <URL_FOR_IMAGE_RESIZING_SERVICE>
+      form:
+        width: '{{inputs.parameters.width}}'
+        height: '{{inputs.parameters.height}}'
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+    outputs:
+      artifacts:
+      - name: image
+        path: /tmp/resized_image.png
+
+  - name: image-to-pdf-conversion
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: <URL_FOR_IMAGE_TO_PDF_CONVERSION_SERVICE>
+      form:
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+    outputs:
+      artifacts:
+      - name: pdf
+        path: /tmp/output.pdf

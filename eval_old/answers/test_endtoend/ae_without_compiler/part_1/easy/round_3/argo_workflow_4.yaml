@@ -1,0 +1,9 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  arguments:\n    parameters:\n    - name: width\n  entrypoint: main\n\
+\  templates:\n  - name: main\n    inputs:\n      parameters:\n      - name: width\n\
+\    dag:\n      tasks:\n      - name: t1\n        template: tti-pastel-art\n    \
+\    arguments:\n          parameters:\n          - name: prompt\n            value:
+'{{{{ tasks.t1.result }}}}'\n        dependencies: []\n  - name: tti-pastel-art\n\
+\    inputs:\n      parameters:\n      - name: prompt\n    http:\n      method: POST\n\
+\      url: http://example.com/generate_pastel_image/\n      successCondition: response.statusCode
+== 200\n      url: \"http://example.com/generate_pastel_image/\"\n```"

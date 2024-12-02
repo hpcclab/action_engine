@@ -1,0 +1,33 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n  - name: main\n    dag:\n    \
+\  tasks:\n      - name: t1\n        template: tti-pastel-art\n        arguments:\n\
+\          parameters:\n            - name: prompt\n              value: \"Create
+a pastel art image of a sunset over the ocean.\"\n        dependencies: []\n     \
+\ - name: t2\n        template: tti-pastel-art\n        arguments:\n          parameters:\n\
+\            - name: prompt\n              value: \"Convert the pastel art image of
+the sunset over the ocean to a JPEG format.\"\n        dependencies:\n          -
+t1\n      - name: t3\n        template: image-resizing\n        arguments:\n     \
+\     parameters:\n            - name: width\n              value: \"1024\"\n    \
+\        - name: height\n              value: \"768\"\n            - name: file\n\
+\              value: \"{{tasks.t2.outputs.parameters.image}}\"\n        dependencies:\n\
+\          - t2\n      - name: t4\n        template: image-enhancement\n        arguments:\n\
+\          parameters:\n            - name: file\n              value: \"{{tasks.t3.outputs.parameters.image}}\"\
+\n        dependencies:\n          - t3\n      - name: t5\n        template: image-enhancement\n\
+\        arguments:\n          parameters:\n            - name: file\n           \
+\   value: \"{{tasks.t4.outputs.parameters.image}}\"\n        dependencies:\n    \
+\      - t4\n  \n  templates:\n  - name: tti-pastel-art\n    inputs:\n      parameters:\n\
+\      - name: prompt\n    http:\n      method: POST\n      url: \"http://example.com/generate_pastel_image/\"\
+\n      body:\n        prompt: \"{{inputs.parameters.prompt }}\"\n      successCondition:
+response.statusCode == 200\n      outputs:\n        parameters:\n        - name: image\n\
+\          valueFrom:\n            jsonPath: \"$.image\"\n  \n  - name: image-resizing\n\
+\    inputs:\n      parameters:\n      - name: width\n      - name: height\n     \
+\ - name: file\n    http:\n      method: POST\n      url: \"http://example.com/resize_image/\"\
+\n      body:\n        width: \"{{inputs.parameters.width}}\"\n        height: \"\
+{{inputs.parameters.height}}\"\n        file: \"{{inputs.parameters.file}}\"\n   \
+\   successCondition: response.statusCode == 200\n      outputs:\n        parameters:\n\
+\        - name: image\n          valueFrom:\n            jsonPath: \"$.image\"\n\
+\  \n  - name: image-enhancement\n    inputs:\n      parameters:\n      - name: file\n\
+\    http:\n      method: POST\n      url: \"http://example.com/image_enhance/\"\n\
+\      body:\n        file: \"{{inputs.parameters.file}}\"\n      successCondition:
+response.statusCode == 200\n      outputs:\n        parameters:\n        - name: image\n\
+\          valueFrom:\n            jsonPath: \"$.image\"\n```"

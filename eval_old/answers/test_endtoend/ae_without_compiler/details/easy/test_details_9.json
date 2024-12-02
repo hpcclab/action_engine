@@ -1,0 +1,61 @@
+[
+    {
+        "Id": 9,
+        "name": "tti_Sketching_Art",
+        "input_parameters_with_datatype": [
+            {
+                "name": "prompt",
+                "datatype": "string",
+                "description": "The 'prompt' parameter is a user-provided textual prompt in string format that serves as the input for generating artistic sketching images. It is essential for guiding the AI model to create visually striking sketching art style images based on the user's creative input."
+            }
+        ],
+        "input_description": "The input parameter for this API is a user prompt in string data type.",
+        "output_data_type": "binary_image_file",
+        "output description": "Generated sketching art style image of 'A bustling marketplace' in PNG format",
+        "description": "This API takes a user prompt as input and generates an image in sketching art style using the LoRA model and VAE component. The input prompt is combined with predefined negative prompts to guide the image generation process. The output is a high-quality sketching art style image saved in PNG format.",
+        "method": "POST",
+        "url": null,
+        "summary": "The 'tti_Sketching_Art' API operates through a POST method to transform user prompts into artistic sketching images with the aid of the LoRA model and VAE component. Users provide a textual prompt in string format, which is then harmonized with pre-defined negative prompts to steer the generation of the artwork. The API proficiently processes this input, resulting in the creation of a visually striking sketching art style image. The final output is delivered in the form of a binary_image_file, encapsulating the generated art piece in PNG format. This API seamlessly merges user creativity with advanced AI techniques, empowering users to effortlessly convert simple prompts into sophisticated sketching art, enabling diverse applications in digital artistry and creative projects.",
+        "source_code": "from fastapi import FastAPI, HTTPException\nfrom fastapi.responses import FileResponse\n\nfrom pydantic import BaseModel\nfrom pathlib import Path\n\n\nimport torch\nfrom diffusers import (\n    StableDiffusionXLPipeline, \n    EulerAncestralDiscreteScheduler,\n    AutoencoderKL\n)\napp = FastAPI()\n\n@app.post(\"/generate_sketching_image/\")\nasync def generate_image(prompt:str):\n    try:\n\n        # Initialize LoRA model and weights\n        lora_model_id = \"Linaqruf/sketch-style-xl-lora\"\n        lora_filename = \"sketch-style-xl.safetensors\"\n\n        # Load VAE component\n        vae = AutoencoderKL.from_pretrained(\n            \"madebyollin/sdxl-vae-fp16-fix\", \n            torch_dtype=torch.float16\n        )\n\n        # Configure the pipeline\n        pipe = StableDiffusionXLPipeline.from_pretrained(\n            \"Linaqruf/animagine-xl-2.0\", \n            vae=vae,\n            torch_dtype=torch.float16, \n            use_safetensors=True, \n            variant=\"fp16\"\n        )\n        pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(pipe.scheduler.config)\n        pipe.to('cuda')\n\n        # Load and fuse LoRA weights\n        pipe.load_lora_weights(lora_model_id, weight_name=lora_filename)\n        pipe.fuse_lora(lora_scale=0.6)\n\n        # Define prompts and generate image\n        prompt = \"Monochrome, Greyscale Sketch-style picture: \" + prompt\n        \n\n        negative_prompt = \"lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry\"\n\n        image = pipe(\n            prompt, \n            negative_prompt=negative_prompt, \n            width=1024,\n            height=1024,\n            guidance_scale=12,\n            num_inference_steps=50\n        ).images[0]\n\n        # Unfuse LoRA before saving the image\n        pipe.unfuse_lora()\n        image.save(\"generated_img.png\")\n\n        image_path = Path('generated_img.png')\n        if not image_path.is_file():\n            return {\"error\": \"Image not found on the server\"}\n        return FileResponse(image_path)\n    except Exception as e:\n        # Handle exceptions or errors here\n        raise HTTPException(status_code=500, detail=str(e))",
+        "task_num": 1,
+        "task_description": "Create a sketching art image of 'A bustling marketplace'.",
+        "dependencies": [],
+        "dependency_output": {},
+        "depended_params": []
+    },
+    {
+        "Id": 11,
+        "name": "image_to_pdf_conversion",
+        "input_parameters_with_datatype": [
+            {
+                "name": "file",
+                "datatype": "binary_image_file",
+                "description": "The 'file' parameter should be a binary image file in one of the supported formats: JPEG, PNG, GIF, BMP, TIFF, PBM, PGM, or PPM. This parameter is required for the 'image_to_pdf_conversion' API to receive the input image file that will be converted to a PDF document. The API processes the provided image file and generates a PDF output, enabling users to efficiently transform visual content into a universally accessible format for sharing, printing, or archiving purposes."
+            }
+        ],
+        "input_description": "An image file in supported format (.JPEG .PNG .GIF .BMP .TIFF .PBM .PGM .PPM)",
+        "output_data_type": "binary_image_file",
+        "output description": "A PDF file containing the sketching art image of 'A bustling marketplace' formatted for inclusion in an e-book.",
+        "description": "This API allows users to convert an image file to a PDF document. Users need to upload an image file with one of the supported formats and the API will process the image and generate a corresponding PDF file as output.",
+        "method": "POST",
+        "url": null,
+        "summary": "The 'image_to_pdf_conversion' API offers a convenient solution for converting image files to PDF documents through a POST method. Users can upload an image file in formats such as JPEG, PNG, GIF, BMP, TIFF, PBM, PGM, or PPM as the input parameter. Once the image is provided, the API seamlessly processes it and produces a PDF file as the output, allowing for efficient transformation of visual content into a portable and universally accessible format. This functionality streamlines the conversion process, enabling users to effortlessly convert diverse image types into PDF documents to facilitate sharing, printing, or archiving purposes.",
+        "source_code": "from fastapi import FastAPI, File, UploadFile, HTTPException\nfrom fastapi.responses import FileResponse\nfrom pathlib import Path\nfrom PIL import Image\nimport img2pdf\n\napp = FastAPI()\n\n# Define the supported image extensions\nsupported_extensions = [\".JPEG\", \".PNG\", \".GIF\", \".BMP\", \".TIFF\", \".PBM\", \".PGM\", \".PPM\"]\n\n\ndef check_file_extension(file_path):\n    file_extension = file_path.suffix.upper()\n    if file_extension not in supported_extensions:\n        return False\n    return True\n\n\n@app.post(\"/convert_to_pdf/\")\nasync def image_to_pdf(file: UploadFile):\n    try:\n        file_path = Path(file.filename)\n        file_name = file_path.stem\n        \n        \n        # # File format support check\n        if not check_file_extension(file_path):\n            return {\"error\": \"Unsupported format\"}\n\n        # Read the contents of the uploaded file\n        contents = await file.read()\n        \n        pdf_bytes = img2pdf.convert(contents)\n        \n        pdf_file_path = f'{file_name}.pdf'\n\n        with open(pdf_file_path, 'wb') as pdf_file:\n            pdf_file.write(pdf_bytes)\n\n        # Return the PDF file\n        return FileResponse(pdf_file_path, media_type=\"application/pdf\", filename=\"output.pdf\")\n    except Exception as e:\n        # Handle exceptions or errors here\n        raise HTTPException(status_code=500, detail=str(e))",
+        "task_num": 2,
+        "task_description": "Convert the sketching art image of 'A bustling marketplace' to PDF format for an e-book.",
+        "dependencies": [
+            "t1"
+        ],
+        "dependency_output": {
+            "t1": {
+                "output_data_type": "binary_image_file",
+                "output_description": "Generated sketching art style image of 'A bustling marketplace' in PNG format"
+            }
+        },
+        "depended_params": [
+            {
+                "file": "t1"
+            }
+        ]
+    }
+]

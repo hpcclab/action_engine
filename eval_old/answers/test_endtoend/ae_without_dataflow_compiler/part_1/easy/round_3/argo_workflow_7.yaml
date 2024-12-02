@@ -1,0 +1,63 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-Graffiti-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Urban jungle
+      - name: t2
+        template: Image-Resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 800
+          - name: height
+            value: 600
+          - name: file
+            value: '{{tasks.t1.outputs.result}}'
+        dependencies: [t1]
+
+  - name: tti-Graffiti-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_grafiti_image/  # Replace with actual endpoint
+      headers:
+        Content-Type: application/json
+      body: |
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }
+      successCondition: response.status == 200
+      output:
+        result: '{{workflow.outputs.parameters.graffiti_image}}'
+
+  - name: Image-Resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/resize_image/  # Replace with actual endpoint
+      headers:
+        Content-Type: multipart/form-data
+      formData:
+        width: '{{inputs.parameters.width}}'
+        height: '{{inputs.parameters.height}}'
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.status == 200
+      output:
+        result: '{{workflow.outputs.parameters.resized_image}}'

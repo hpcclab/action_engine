@@ -1,0 +1,7 @@
+eval_numbers includes different vetor databases with splits in different number of APIs
+File name = "eval_api_vec_num_{num}"
+[20, 40, 60, 80, 100, 120, 140, 160, 180, 194]
+
+eval_domains includes different vector databases with splits in different number of domains
+File name = "eval_api_vec_domain_{num}"
+[5, 10,15, 20, 25, 30, 35, 40, 48]

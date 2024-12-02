@@ -1,0 +1,105 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: prompt
+    - name: prompt
+    - name: prompt
+    - name: prompt
+    - name: prompt
+    - name: prompt
+    - name: prompt
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: prompt
+      - name: prompt
+      - name: prompt
+      - name: prompt
+      - name: prompt
+      - name: prompt
+      - name: prompt
+    dag:
+      tasks:
+      - name: t1
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies: []
+      - name: t2
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies: []
+      - name: t3
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies: []
+      - name: t4
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies:
+        - t1
+        - t2
+        - t3
+      - name: t5
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies:
+        - t1
+        - t2
+        - t3
+      - name: t6
+        template: tti-futuristic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies:
+        - t1
+        - t2
+        - t3
+      - name: t7
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies:
+        - t4
+        - t5
+        - t6
+  - name: tti-sketching-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: tti-futuristic-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200

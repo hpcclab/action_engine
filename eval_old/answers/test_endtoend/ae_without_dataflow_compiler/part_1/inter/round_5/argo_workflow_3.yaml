@@ -1,0 +1,82 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-pastel-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Create a pastel art image of a sunset over the ocean.
+      - name: t2
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.result}}'
+        dependencies: [t1]
+      - name: t3
+        template: send-email
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t2.outputs.result}}'
+        dependencies: [t2]
+
+  - name: tti-pastel-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_pastel_image/
+      headers:
+        Content-Type: application/json
+      body: |
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }
+      successCondition: response.statusCode == 200
+      outputMapping:
+        result: '{{response.body}}'
+
+  - name: image-enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/image_enhance/
+      headers:
+        Content-Type: multipart/form-data
+      body: |
+        {
+          "file": "{{inputs.parameters.file}}"
+        }
+      successCondition: response.statusCode == 200
+      outputMapping:
+        result: '{{response.body}}'
+
+  - name: send-email
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/send_email/
+      headers:
+        Content-Type: application/json
+      body: |
+        {
+          "file": "{{inputs.parameters.file}}",
+          "recipient": "colleague@example.com",
+          "subject": "Enhanced Pastel Art Image",
+          "message": "Here is the enhanced pastel art image of the sunset over the ocean."
+        }
+      successCondition: response.statusCode == 200

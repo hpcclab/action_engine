@@ -1,0 +1,560 @@
+[
+    {
+        "id": 1,
+        "node_number": 3,
+        "user_query": "I want to create a digital art piece of a futuristic cityscape, enhance its quality, and then convert it to a PDF for a presentation.",
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a digital art piece of a futuristic cityscape."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Enhance the quality of the digital art piece of the futuristic cityscape."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Convert the enhanced digital art piece of the futuristic cityscape into PDF format for a presentation."
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Futuristic_art",
+                "parameters": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "parameters": [
+                    "image_file"
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "parameters": [
+                    "image_file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "node_number": 3,
+        "user_query": "Please generate a charcoal art image of a serene forest, resize it to 1920x1080 pixels, and convert it to a PDF for printing.",
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Generate a charcoal art image of a serene forest."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Resize the charcoal art image of the serene forest to 1920x1080 pixels."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Convert the resized charcoal art image of the serene forest to a PDF for printing."
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Charcoal_Art",
+                "parameters": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "parameters": [
+                    "image_file",
+                    "width",
+                    "height"
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "parameters": [
+                    "image_file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "node_number": 3,
+        "user_query": "I need a pastel art image of a sunset over the ocean, enhance its quality, and then send it via email to my colleague.",
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a pastel art image of a sunset over the ocean."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Enhance the quality of the pastel art image of the sunset over the ocean."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Send the enhanced pastel art image via email to the colleague."
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Pastel_Art",
+                "parameters": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "parameters": [
+                    "image_file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "parameters": [
+                    "sender_email",
+                    "receiver_email",
+                    "subject",
+                    "message",
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "node_number": 3,
+        "user_query": "Create a sketching art image of a bustling marketplace, convert it to a PNG format, and then resize it to 800x600 pixels for a website.",
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a sketching art image of a bustling marketplace."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Convert the sketching art image of the bustling marketplace to a PNG format."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Resize the sketching art image of the bustling marketplace to 800x600 pixels for a website."
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Sketching_Art",
+                "parameters": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "image_format_converter",
+                "parameters": [
+                    "image_file",
+                    "output_format"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "parameters": [
+                    "image_file",
+                    "width",
+                    "height"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "node_number": 5,
+        "user_query": "I want to create a digital art piece of a futuristic cityscape at night, then convert it to a PDF, resize it to 1920x1080 pixels, and finally enhance the image quality before sending it via email.",
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a digital art piece of a futuristic cityscape at night."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Convert the digital art piece of a futuristic cityscape at night to a PDF format."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Resize the PDF of the futuristic cityscape at night to 1920x1080 pixels."
+            },
+            {
+                "task_number": 4,
+                "task_description": "Enhance the image quality of the resized PDF of the futuristic cityscape at night."
+            },
+            {
+                "task_number": 5,
+                "task_description": "Send the enhanced PDF of the futuristic cityscape at night via email."
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Futuristic_Art",
+                "parameters": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "parameters": [
+                    "image_file"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "parameters": [
+                    "image_file",
+                    "width",
+                    "height"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "parameters": [
+                    "image_file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "parameters": [
+                    "sender_email",
+                    "receiver_email",
+                    "message_content",
+                    "subject",
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "node_number": 5,
+        "user_query": "I need a charcoal art image of a New York landscape in 1990, convert it to a PNG, resize it to 800x600 pixels, enhance its quality, and then send it to my colleague via email.",
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a charcoal art image of a New York landscape in 1990."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Convert the charcoal art image of the New York landscape in 1990 to PNG format."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Resize the PNG image of the New York landscape in 1990 to 800x600 pixels."
+            },
+            {
+                "task_number": 4,
+                "task_description": "Enhance the quality of the resized PNG image of the New York landscape in 1990."
+            },
+            {
+                "task_number": 5,
+                "task_description": "Send the enhanced PNG image of the New York landscape in 1990 to my colleague via email."
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Charcoal_Art",
+                "parameters": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "image_format_converter",
+                "parameters": [
+                    "image_file",
+                    "output_format"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "parameters": [
+                    "image_file",
+                    "width",
+                    "height"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "parameters": [
+                    "image_file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "parameters": [
+                    "sender_email",
+                    "receiver_email",
+                    "message_content",
+                    "subject",
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "node_number": 5,
+        "user_query": "Create a pastel art image of a sunset over the ocean, convert it to a JPEG, resize it to 1024x768 pixels, enhance its quality, and send it to my friend via email.",
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a pastel art image of a sunset over the ocean."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Convert the pastel art image of the sunset over the ocean to a JPEG format."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Resize the JPEG image of the sunset over the ocean to 1024x768 pixels."
+            },
+            {
+                "task_number": 4,
+                "task_description": "Enhance the quality of the resized JPEG image of the sunset over the ocean."
+            },
+            {
+                "task_number": 5,
+                "task_description": "Send the enhanced JPEG image of the sunset over the ocean to my friend via email."
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Pastel_Art",
+                "parameters": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "image_format_converter",
+                "parameters": [
+                    "image_file",
+                    "output_format"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "parameters": [
+                    "image_file",
+                    "width",
+                    "height"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "parameters": [
+                    "image_file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "parameters": [
+                    "sender_email",
+                    "receiver_email",
+                    "message_content",
+                    "subject",
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "node_number": 5,
+        "user_query": "I want to create a futuristic cityscape at night, with neon lights and flying cars. Then, resize it to 1920x1080 pixels, enhance its quality, convert this image into a PDF, and finally send it to my email.",
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a digital art piece of a futuristic cityscape at night, with neon lights and flying cars."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Resize the digital art piece to 1920x1080 pixels."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Enhance the quality of the resized digital art piece."
+            },
+            {
+                "task_number": 4,
+                "task_description": "Convert the enhanced digital art piece into a PDF format."
+            },
+            {
+                "task_number": 5,
+                "task_description": "Send the PDF of the digital art piece to the user's email."
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Futuristic_Art",
+                "parameters": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "parameters": [
+                    "image_file"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "parameters": [
+                    "image_file",
+                    "width",
+                    "height"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "parameters": [
+                    "image_file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "parameters": [
+                    "sender_email",
+                    "receiver_email",
+                    "message_content",
+                    "subject_line",
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "node_number": 5,
+        "user_query": "I need a sketch of a castle surrounded by a dense forest. After generating the sketch, resize it to 1280x720 pixels, enhance the image quality, convert it to a PDF, and send it to my colleague's email.",
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a sketch of a castle surrounded by a dense forest."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Resize the sketch of the castle surrounded by a dense forest to 1280x720 pixels."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Enhance the image quality of the resized sketch of the castle surrounded by a dense forest."
+            },
+            {
+                "task_number": 4,
+                "task_description": "Convert the enhanced sketch of the castle surrounded by a dense forest to a PDF format."
+            },
+            {
+                "task_number": 5,
+                "task_description": "Send the PDF of the enhanced sketch to the colleague's email."
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Sketching_Art",
+                "parameters": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "parameters": [
+                    "image_file",
+                    "width",
+                    "height"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "parameters": [
+                    "image_file"
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "parameters": [
+                    "image_file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "parameters": [
+                    "sender_email",
+                    "receiver_email",
+                    "message_content",
+                    "subject_line",
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "node_number": 5,
+        "user_query": "Create a pastel art image of a serene beach at sunset with palm trees. Convert this image to a JPEG, resize it to 1024x768 pixels, enhance its quality, and send it to my friend's email.",
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a pastel art image of a serene beach at sunset with palm trees."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Convert the pastel art image of a serene beach at sunset with palm trees to a JPEG format."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Resize the JPEG image of a serene beach at sunset with palm trees to 1024x768 pixels."
+            },
+            {
+                "task_number": 4,
+                "task_description": "Enhance the quality of the resized JPEG image of a serene beach at sunset with palm trees."
+            },
+            {
+                "task_number": 5,
+                "task_description": "Email the enhanced JPEG image of a serene beach at sunset with palm trees to my friend."
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Pastel_Art",
+                "parameters": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "image_format_converter",
+                "parameters": [
+                    "image_file",
+                    "output_format"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "parameters": [
+                    "image_file",
+                    "width",
+                    "height"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "parameters": [
+                    "image_file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "parameters": [
+                    "sender_email",
+                    "receiver_email",
+                    "message_content",
+                    "subject_line",
+                    "file"
+                ]
+            }
+        ]
+    }
+]

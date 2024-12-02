@@ -1,0 +1,897 @@
+[
+    {
+        "api_name": "Random Gradient Resume Template Generator",
+        "category": "Jobs",
+        "summary": "The API generates unique resume templates with randomly generated personal, skill, and experience data using the Flask web framework and the Faker library. Users can access the main endpoint for random template generation via a GET method, which renders an HTML page displaying the created resume template. The generated resumes include a name, job title, website, skills, summary, and work experiences based on realistic information. Additionally, users can download the generated template as a ZIP file through the download endpoint. Both endpoints have no required or optional parameters. The output of the main endpoint is an HTML page displaying the random resume template, while the download endpoint generates a ZIP file containing the template and its assets."
+    },
+    {
+        "api_name": "Genius Lyrics API",
+        "category": "Music",
+        "summary": "The API provides functionality to fetch lyrics from genius.com. Users can retrieve lyrics of a song by providing the path to the song on genius.com as a parameter. The API supports the GET method for accessing the lyrics. The required parameter 'lyricurl' expects a string datatype representing the path to the song lyrics. The output parameter 'lyric' is of type string and contains the retrieved lyrics in HTML format, including artist information, song parts, and annotations. The API response includes headers for access control and content information, and the schema defines the structure of the response object."
+    },
+    {
+        "api_name": "Artist Info",
+        "category": "Music",
+        "summary": "Artist Info API allows users to retrieve information about artists. The API is free to use and is hosted on RapidAPI. For more details, visit [Artist Info](https://rapidapi.com/satradiorock/api/artist-info/)."
+    },      
+    {
+        "api_name": "World Cities",
+        "category": "Travel",
+        "summary": "The API 'World Cities' provides functionalities to retrieve information about countries, states, and cities worldwide. The available endpoints include getting cities by state and country using GET method with required parameters 'stateId' of type NUMBER and 'code' of type string (default: 'us'), retrieving cities of a specific country with the 'Country Cities' endpoint using the country code or name, obtaining states of a country through 'Country States' endpoint with the 'code' parameter, fetching a list of all countries globally with the 'All Countries' endpoint, accessing details of a particular country using 'Country details' endpoint based on the country code or name, and retrieving countries filtered by geographical region with the 'Countries by region' endpoint using the 'region' parameter (default: 'Africa'). The output of these endpoints is in JSON format containing relevant information."
+    },
+    {
+        "api_name": "Certificate Generator",
+        "category": "Other",
+        "summary": "The API provides functionality for generating and verifying certificates. Users can utilize the 'Get Certificate' endpoint to retrieve an HTML certificate using a unique identifier. The 'Verify Certificate' endpoint allows users to verify the authenticity of a generated certificate. The 'Generate Certificate' endpoint enables users to create new certificates, returning a message along with the certificate ID and creation timestamp in the response. The API supports GET and POST methods for certificate generation and verification. Input parameters for these endpoints include a string identifier for certificate operations. The output parameters include boolean 'isVerified' and string 'createdAt' properties for certificate verification."
+    },
+    {
+        "api_name": "Cinema API",
+        "category": "Entertainment",
+        "summary": "The Cinema API offers a range of functionalities related to movies, reviews, images, and cast information. Users can access movie reviews by providing a movie ID, retrieve images associated with a particular ID, obtain movie IDs by searching titles or categories (movies/actors), and fetch full cast lists with their images and roles by ID. The API supports the GET method for these endpoints and requires string input parameters for IDs, titles, and categories. The output is in JSON format and provides comprehensive details specific to the endpoint called, enhancing the user experience in exploring movie-related data."
+    },
+    {
+        "api_name": "Fortnite unofficial",
+        "category": "Gaming",
+        "summary": "The API provides access to various Fortnite-related resources such as weapons, items, vehicles, traps, maps, foods, and consumables. Users can retrieve information from different categories through endpoints like Vault for items, Weapons for a list of weapons, Vehicles for vehicle details, Traps for trap information, Maps for various map versions, Foods for food items, and Consumables for consumable items. The API functions through the GET method without any required or optional parameters for these endpoints, providing JSON responses containing the respective data for each category."
+    },
+    {
+        "api_name": "Book Finder",
+        "category": "Database",
+        "summary": "The Book Finder API enables users to search for books based on various criteria including title, author, series, book type, categories, and Lexile measure range. The API supports GET method for searching books and offers optional parameters like book type (fiction or nonfiction), categories, maximum and minimum Lexile measure, series name, page number, author name, title terms, and results per page. The output parameter is in JSON format containing information about the found books. The API is free to use and provides detailed search functionality for finding books based on specific preferences."
+    },
+    {
+        "api_name": "PDF Split Tool",
+        "category": "Business_Software",
+        "summary": "The API named PDF Split Tool offers functionalities to split and combine PDF documents. Users can utilize endpoints like Combine to merge multiple PDF files into one, Image to split a PDF into multiple image files, and Split to divide a PDF into multiple PDF documents. These methods use POST requests with required parameters specified as BINARY data types, such as 'files' for Combine, 'file' for Image and Split. Optional parameters like 'combinedFileName' for Combine and 'type' and 'dpi' for Image allow additional customization. The API returns the output in JSON format upon successful completion of the specified operation."
+    },
+    {
+        "api_name": "AI Resume Generator",
+        "category": "Jobs",
+        "summary": "The API offers a document generation service utilizing OpenAI to create example resumes based on provided data such as University Name, Degree, and a list of Skills. Users can access the service through GET requests for generating Cover Letters and Resumes. Optional parameters for these requests include jobDescription, degree, university, skills, and jobTitle with default values provided. The response from the API is in large text format. The API operates on a freemium pricing model and has a high average service level, success rate, and popularity score. Detailed information and usage instructions can be found on the API's home URL."
+    },
+    {
+        "api_name": "Dead By Daylight Perk Data",
+        "category": "Gaming",
+        "summary": "The API provides access to Dead By Daylight perk data, offering endpoints to retrieve perks by name, search for perks based on a search term, and get perks by owner. Users can utilize the GET method with required parameters such as perk name, search term, or perk owner (all of type string) to receive perk information. Optional parameters allow for further customization. The output parameter is in JSON format containing key-value pairs of perk data. The service is available through the URL: https://dead-by-daylight-perk-data.p.rapidapi.com/"
+    },
+    {
+        "api_name": "AI Similarity Engine",
+        "category": "Artificial_Intelligence_Machine_Learning",
+        "summary": "The AI Similarity Engine API facilitates obtaining similarity scores from two comparable data structures such as images or text. Users can utilize the API to compare images and retrieve the similarity score. The method used is POST, and the required input parameter is a binary file representing the image to be compared. Additionally, an optional input parameter 'model' with a default value of 'resnet50' can be specified to customize the comparison process. The output parameter data type is defined in the schema as an object containing fields like 'get', 'parameters', 'errors', 'results', and 'response'. The API is hosted at ai-similarity-engine.p.rapidapi.com and supports both free and premium pricing options."
+    },
+    {
+        "api_name": "Age Detection AI",
+        "category": "Artificial_Intelligence_Machine_Learning",
+        "summary": "The Age Detection AI API allows users to detect the age of people in an image. This API is available under a freemium pricing model and is hosted on RapidAPI. For more details, visit [Age Detection AI](https://rapidapi.com/ai-gateway-ai-gateway-default/api/age-detection-ai/)."
+    },
+    {
+        "api_name": "AI Background Remover",
+        "category": "Artificial_Intelligence_Machine_Learning",
+        "summary": "The AI Background Remover API uses advanced algorithms and machine learning models to accurately remove backgrounds from images. It is useful for photo editing, e-commerce platforms, or design tools to enhance the visual appeal of images. Available under a freemium pricing model, this API offers easy integration and fast processing. For more details, visit [AI Background Remover](https://rapidapi.com/firdavscoder1/api/ai-background-remover/)."
+    },
+    {
+        "name": "AI Picture Upscaler",
+        "category": "Artificial_Intelligence_Machine_Learning",
+        "summary": "The AI Picture Upscaler API uses advanced machine learning algorithms to enhance image resolution and quality in real-time. It helps photographers, designers, and content creators improve visuals by making images sharper, clearer, and more detailed. The API supports parameters like noise cancellation, image style, and size factor to customize the upscaling process."
+    },    
+    {
+        "api_name": "Skin analyze",
+        "category": "Monitoring",
+        "summary": "The API named Skin analyze offers skin condition analysis tools for features like skin color, texture, double eyelids, eye bags, dark circles, wrinkles, acne, and spots. The API operates through a POST method and requires a binary image input with specific requirements including format (JPG, JPEG), size (not exceeding 2 MB), resolution (between 200x200px and 4096x4096px), and face quality considerations. The output schema includes request ID, log ID, error code, error code description, and error message. Users can access the skin analysis functionality by uploading the image and receive analysis results for various skin attributes."
+    },
+    {
+        "name": "Corona Updates",
+        "category": "Monitoring",
+        "summary": "The Corona Updates API provides short analyses of the spread of the coronavirus across the world. It offers real-time data on COVID-19, including key metrics and trends. This tool is useful for tracking the global pandemic's impact with high service reliability and popularity."
+    },    
+    {
+        "api_name": "Easy Authenticator",
+        "category": "SMS",
+        "summary": "The Easy Authenticator API offers time-based one-time password (TOTP) functionality, supporting multiple apps like Google Authenticator or Microsoft Authenticator. Users can validate TOTP through the 'verify' endpoint using POST method with required parameters 'token' of type STRING and 'secretCode' of type STRING. The response of the verification process is in JSON format. Additionally, users can generate a secret key and QR code using the 'newAuthKey' endpoint by sending POST requests with optional parameters 'account' and 'issuer' of type STRING. The API's output schema is structured to provide a successful status code of 200 upon key generation and supports further customization for enhanced authentication security."
+    },
+    {
+        "api_name": "Name compare",
+        "category": "Commerce",
+        "summary": "The API provides a name comparison functionality to ensure that documents belong to expected individuals. It offers a GET method to fetch API results using a request ID and a POST method to compare two strings and generate a match score on a scale of 1 to 5. The input parameter for the GET method is the request ID of type STRING while the POST method does not require any input parameters. The output parameter for the POST method is a match score on a scale of 1 to 5. The tool is available for use with the ability to automate workflows and streamline decision-making processes."
+    },
+    {
+        "api_name": "Exercises",
+        "category": "Health_and_Fitness",
+        "summary": "The API 'Exercises' allows users to access a diverse range of exercises with detailed exercise data and animated demonstrations. The method supported by the API is GET. Input parameters include 'count' (NUMBER, Min 1, Max 100), 'equipmentUsed' (ENUM), 'muscleTarget' (ENUM), and 'bodyPart' (ENUM). The output parameter datatype is JSON and includes exercise data such as ID, name, body part, muscle target, equipment used, and image URL for animated demonstrations. Users can retrieve exercise information based on specified criteria like equipment used, muscle target, and body part. The API provides a comprehensive resource for individuals seeking exercise details and demonstrations."
+    },
+    {
+        "api_name": "ALL Crypto News Feed",
+        "category": "News_Media",
+        "summary": "The API 'ALL Crypto News Feed' offers functionalities to retrieve various types of crypto-related news feeds, including blogs, tweets, and a combination of all feed sources like Tweets, Blogs, Binance, and UsGov announcements. The API supports GET requests for accessing the different feed types with no required parameters. Users can fetch Blogs Feed, Twitter Feed, and All Feed through dedicated endpoints. The output parameter datatype is JSON, providing the corresponding news feed data in a structured format. The service operates under the FREEMIUM pricing model and is hosted at all-crypto-news-feed.p.rapidapi.com."
+    },
+    {
+        "api_name": "Car Data_v2",
+        "category": "Data",
+        "summary": "The Car Data_v2 API provides access to relevant automobile data including car make, model, type, and year. Users can utilize the GET method to retrieve and filter lists of cars based on parameters like page number, limit, type, model, make, and year. The API requires input parameters of type STRING for page, limit, type, model, make, and year, with default values provided for ease of use. The output is in JSON format containing information about the cars based on the specified filters. This API is part of the freemium pricing model and is hosted at car-data1.p.rapidapi.com."
+    },
+    {
+        "api_name": "Historical Events by API-Ninjas",
+        "category": "Events",
+        "summary": "The API by API-Ninjas allows users to search through historical events by providing a list of up to 10 events that match the search parameters. The endpoint '/v1/historicalevents' supports the GET method and requires at least one of the following parameters: text (STRING - query text for event search), year (NUMBER - 4-digit year or negative integer for BC/BCE years), month (NUMBER - integer month), and day (NUMBER - calendar day of the month). Additionally, an optional parameter 'offset' (NUMBER - number of results to offset for pagination) can be used. The API returns historical events matching the search criteria in JSON format."
+    },
+    {
+        "name": "Holidays by API-Ninjas",
+        "category": "Events",
+        "summary": "The Holidays by API-Ninjas API provides past, present, and future holiday data for any country. It allows users to retrieve holiday information based on the calendar year and country, including various types of holidays. This tool is useful for integrating holiday data into applications, with high service reliability and popularity."
+    },
+    {
+        "name": "latest-news-api",
+        "category": "Events",
+        "summary": "The latest-news-api provides fast and convenient access to the latest news from reputable sources. It offers a simple GET endpoint to retrieve news results, making it easy to integrate current news into applications. The API is freemium and is designed for efficient news retrieval."
+    },        
+    {
+        "api_name": "Color Correction",
+        "category": "Media",
+        "summary": "The API offers automated color correction and white balancing functionality for photos. Users can utilize the Color Correction and White Balancing endpoint, which is a POST method, to perform asynchronous correction on JPEG images by providing a secret password for image retrieval and the image's URL for correction. Optional parameter for notification URL is available for image readiness notification. The output parameter is the corrected image in the JPEG format. This tool allows users to enhance photo colors and white balance effectively through a simple API interaction."
+    },
+    {
+        "api_name": "Celebrity by API-Ninjas",
+        "category": "Entertainment",
+        "summary": "The API 'Celebrity by API-Ninjas' allows users to retrieve information on their favorite celebrities. By accessing the '/v1/celebrity' endpoint using the GET method, users can search for celebrities based on parameters such as name (case-insensitive), minimum height, minimum net worth, nationality, maximum net worth, and maximum height. The input parameters' datatypes include STRING for name and nationality, and NUMBER for min_net_worth and max_net_worth. The API returns JSON data containing details about the requested celebrity, including their name, height, net worth, nationality, and more. Users can utilize this API to gather comprehensive information about various celebrities."
+    },
+    {
+        "api_name": "Healthy",
+        "category": "Medical",
+        "summary": "The Healthy API provides information on publications, symptoms, treatment, funding, grants, and clinical studies related to medical and health issues. The API supports a specific endpoint for retrieving a large list of publications and trials for medical conditions identified by a unique research ID. Users can access clinical data, trials, publications, grant and funding information, as well as requirements and application processes through a separate endpoint. The API methods are primarily GET requests and do not require any mandatory input parameters, allowing users to easily retrieve the latest information on medical research news and grant requirements."
+    },
+    {
+        "api_name": "Gender Checker",
+        "category": "Email",
+        "summary": "The API named Gender Checker provides a service to infer a person's gender based on their first name and country. The API offers a method called 'Gender' accessible via the GET request, which returns the inferred gender (either male or female). The required input parameter 'query' expects a string representing the name, with a default example 'Andrea', while the optional input parameter 'country' expects a string representing the country, with a default example 'Italy'. The output parameter 'result' is of type string and provides the inferred gender of the input name."
+    },
+    {
+        "api_name": "News Media Screening",
+        "category": "Financial",
+        "summary": "The API 'News Media Screening' allows users to search for a person of interest in millions of global news sources and retrieve news articles where the person was mentioned along with details on sentiment and key connections. The method used is GET, requiring a name parameter of type STRING for the person's name. Optional parameters include webhook, searchtype, realtime, format, and keyword, all of type STRING. The output includes news articles related to the person of interest, sentiment analysis, and key connections found. The service is accessible through the endpoint https://news-media-screening.p.rapidapi.com/ai/news."
+    },
+    {
+        "api_name": "Digital Business Card",
+        "category": "Business_Software",
+        "summary": "The API enables users to generate interactive business cards in PDF Base64 format, which can then be converted to PDF using any programming language. Interactive Business Cards can be tailored with email, background number, color code, image URL/Base64, name/company, profession, WhatsApp/phone numbers, address, Instagram/Facebook/YouTube URLs, and website URL. The API operates through a POST method where users can provide these details for creating the interactive card. The API does not have any specific required or optional parameters defined in the provided information, and the output data format is JSON."
+    },
+    {
+        "api_name": "Email",
+        "category": "Data",
+        "summary": "The Email API allows users to analyze, validate, and parse the content of a given email address. The API offers a GET method where the required input parameter is the email address in string format. The response includes details on the analysis of the email address, such as domain validation, recoded email address, and validity status. Despite being under maintenance, the API aims to check for common errors, misspellings, and fake DNS entries in email addresses. The service is free to use and can help users verify the authenticity and correctness of email addresses."
+    },
+    {
+        "api_name": "Bitcoin qr generator",
+        "category": "Payments",
+        "summary": "The API allows users to generate QR codes for Bitcoin transactions. By accessing the 'Generate qr photo' endpoint via a GET method, users can create a QR code image for their Bitcoin transactions by providing two required parameters: address and amount. The generated QR code photo will be available at 'crypto.hirak.site/btc/ADDRESSAMOUNT.png'. The input parameters' datatypes are both strings, with default values provided for amount and address. The output parameter's datatype is JSON, and the response includes the generated QR code photo. The API service is offered under a freemium pricing model, and detailed information and image generation can be achieved through the provided endpoint."
+    },
+    {
+        "api_name": "Calories Burned by API-Ninjas",
+        "category": "Health_and_Fitness",
+        "summary": "The API allows users to calculate the calories burned for various sports and activities. By accessing the /v1/caloriesburned endpoint via a GET request, users can provide the name of the activity (which can be partial for matching similar activities), weight of the user in pounds (default 160), and duration of the activity in minutes (default 60). The API calculates and returns the calories burned during the specified activity. The input parameters include activity (STRING), weight (NUMBER), and duration (STRING), while the output parameter is the calculated calories burned data."
+    },
+    {
+        "api_name": "Ayfie Document Converter",
+        "category": "Business_Software",
+        "summary": "The Ayfie Document Converter API offers a free online document conversion service supporting over 550 file formats like PDF, XLSX, DOCX, TIF, and TXT. Users can utilize the API to integrate the document converter into their applications or utilize the portal for drag-and-drop file conversion. The API endpoint /api/converter/1/FileConverter/Convert accepts files for conversion through a POST method with a required binary file parameter. Upon successful conversion, the API provides the converted file as output. The API boasts high service levels, low latency, and good success rates, making it a reliable choice for document conversion needs."
+    },
+    {
+        "api_name": "Climate Change News",
+        "category": "Media",
+        "summary": "The API 'Climate Change News' provides access to the latest climate change news globally. Users can retrieve individual news articles from specific providers by providing the newspaper ID or fetch all news about climate change. The endpoints support the GET method, with the 'Get Individual News' endpoint requiring a string parameter for newspaper ID (defaulted to 'thetimes'). The output of the endpoints contains news data in JSON format. This free API service is accessible via the host 'climate-change-news44.p.rapidapi.com' with detailed information available on the RapidAPI platform."
+    },
+    {
+        "api_name": "Spam Scanner",
+        "category": "Communication",
+        "summary": "The Spam Scanner API is designed to scan individual messages or text for spam content, primarily catering to email spam but applicable to various types of spam such as message or comment spam. The API checks the input data against an extensive spam database to detect spammy URLs, domains, email addresses, and content. The current version of the API is in its early stages with limited functionality, but promises future enhancements based on user interest. The ScanMessage endpoint allows users to submit a message for spam scanning using the POST method, with no required or optional parameters specified. The API returns the classification result in JSON format."
+    },
+    {
+        "api_name": "All about Crypto",
+        "category": "Financial",
+        "summary": "The API 'All about Crypto' allows users to retrieve news related to cryptocurrency from around the world. Users can utilize two endpoints provided by the API, 'Get news from specific resource' and 'Get all the news about Cryptocoins', both accessible via the GET method. The 'Get news from specific resource' endpoint requires a parameter 'itemid' of type string, which specifies the news resource to fetch news from, with 'coindesk' as the default value. The output of both endpoints is in JSON format, containing information about the cryptocurrency news retrieved."
+    },
+    {
+        "api_name": "ESA Semantic Relatedness",
+        "category": "Other",
+        "summary": "The API named ESA Semantic Relatedness offers a tool for calculating the semantic relatedness or similarity between text excerpts by assessing the likeness of their meanings or semantic content. The API endpoint 'Relatedness' supports the POST method and requires a 'lang' parameter indicating the language of the submitted texts, with supported languages being English (en) and Portuguese (pt). The output of the API provides information on the semantic relatedness between the text excerpts and is accessible through the specified API endpoint. The tool is available for use under a FREEMIUM pricing model and can be accessed via the provided home URL."
+    },
+    {
+        "api_name": "IsItWater.com",
+        "category": "Location",
+        "summary": "The IsItWater.com API provides a tool to determine if a given coordinate on Earth is water or land. By utilizing the 'Is a coordinate water?' endpoint through a GET method, users can input longitude and latitude parameters of numeric type to receive a response indicating whether the coordinate corresponds to water. The API's functionality focuses on location-based analysis, where the input longitude and latitude are essential for the API to make the determination. The output parameter's datatype is a boolean, with 'true' indicating water and 'false' indicating land."
+    },
+    {
+        "api_name": "City by API-Ninjas",
+        "category": "Location",
+        "summary": "The API 'City by API-Ninjas' allows users to retrieve useful statistics for tens of thousands of cities worldwide. The endpoint '/v1/city' supports the GET method and provides optional parameters including 'max_lat' (maximum latitude coordinate), 'min_population' (minimum city population), 'min_lon' (minimum longitude coordinate), 'country' (ISO-3166 alpha-2 country code), 'max_population' (maximum city population), 'min_lat' (minimum latitude coordinate), 'name' (name of the city), 'max_lon' (maximum longitude coordinate), and 'limit' (number of results to return). Users can specify filter criteria based on geographic coordinates, population, country, and city name. The API response is in JSON format containing information about the requested city/cities."
+    },
+    {
+        "api_name": "Counter",
+        "category": "Monitoring",
+        "summary": "The API named Counter allows users to count views on a website or specific actions in an application. The API includes endpoints for retrieving the current count without increasing it and getting the count while incrementing it by one. Both endpoints use the GET method and have optional parameters such as CLABEL, COLOR, IDV, and ID. The output parameter is in JSON format and includes the current count value. The API is available under a freemium pricing model and offers high service level, low latency, and excellent success rate based on user scores."
+    },
+    {
+        "api_name": "Address From To Latitude Longitude",
+        "category": "Data",
+        "summary": "The API offers a free geocoding service to convert latitude and longitude coordinates to and from address locations. The method used is GET where users provide the longitude (Lng) and latitude (Lat) as string datatypes to retrieve the corresponding address information. The output parameter is a JSON response containing the address details based on the provided coordinates. Users can access this functionality through the endpoint 'https://address-from-to-latitude-longitude1.p.rapidapi.com/GetLatLng'."
+    },
+    {
+        "api_name": "ASE-Data",
+        "category": "Finance",
+        "summary": "The API ASE-Data provides access to financial information, specifically annual report financial data on US companies in JSON format. The primary endpoint allows users to retrieve approximately 8 years of financial data (average) for a given stock ticker, with an average of 200 data points provided for each year. The API supports the GET method and requires input parameters in the form of a ticker (STRING) to specify the stock and a key (STRING) for API authentication. Additionally, an optional parameter 'docs' (STRING) can be used to specify the type of document to retrieve (default is '10-k'). The output of the endpoint is financial data represented in JSON format."
+    },
+    {
+        "api_name": "Website Emails & Social Media Pages Link Extractor",
+        "category": "Email",
+        "summary": "The API offers the functionality to extract contact emails and social media page links (Facebook, YouTube, Twitter, Linkedin, Pinterest, and Instagram) from a specified website domain. It operates using the GET method with a required parameter of 'domain' which is of type STRING. The default domain is set to 'alreadycoded.com'. The output parameter is of type JSON containing the extracted contact emails and social media page links. The API is accessible through the endpoint url: https://website-emails-social-media-pages-link-extractor.p.rapidapi.com/data, and it falls under the FREEMIUM pricing tier."
+    },
+    {
+        "api_name": "Social media caption",
+        "category": "Advertising",
+        "summary": "The API 'Social media caption' allows users to generate catchy captions for social media content. The method used is GET, and the required input parameters are 'name' and 'description', both of type STRING. The 'name' parameter represents the content name, while the 'description' parameter is used for providing a description of the content. The output parameter is in JSON format, providing the generated catchy caption based on the input provided."
+    },
+    {
+        "api_name": "Format Phone Number",
+        "category": "SMS",
+        "summary": "The API named 'Format Phone Number' enables users to format phone numbers for SMS services by providing a telephone number and a two-character country code or just the telephone number, with the system using the country code from signup if necessary. The API supports a POST method for formatting the phone numbers. The endpoint does not have any required or optional parameters specified in the source code. Users can access the API through the endpoint at 'https://format-phone-number1.p.rapidapi.com/format/'."
+    },
+    {
+        "api_name": "EmojiAPI",
+        "category": "Other",
+        "summary": "The EmojiAPI offers random emoji generation and access to the list of available emojis. Users can retrieve a random emoji using the 'Random Emoji' endpoint through a GET request. The API does not require any input parameters for this endpoint. Additionally, users can fetch all available emojis by utilizing the 'emojis' endpoint, which also operates through a GET method. Both endpoints return data in JSON format. The service is provided under the FREEMIUM pricing model and can be accessed via the host 'emojiapi1.p.rapidapi.com'."
+    },
+    {
+        "api_name": "Body Index Calculator",
+        "category": "Health_and_Fitness",
+        "summary": "The API offers a Body Mass Index (BMI) Calculator tool to calculate BMI value and corresponding weight status, taking age into account. The API endpoint is accessible via GET method and does not require any input parameters. Upon calling the endpoint, users receive BMI calculation results and weight status information. The service is available under a freemium pricing model, with more advanced features potentially available for premium users. Users can access the API documentation and utilize the BMI calculation functionality through the provided API endpoint."
+    },
+    {
+        "api_name": "Amazing Facts",
+        "category": "Entertainment",
+        "summary": "The API 'Amazing Facts' allows users to generate random interesting facts from a vast collection across various categories. The API endpoint 'Get random facts from over 100 categories' utilizes the GET method and returns 5 random facts chosen from the available categories. This endpoint does not require any input parameters. The output of this endpoint is a JSON response containing the random facts retrieved. The API is accessible for free with some premium features available for advanced usage."
+    },
+    {
+        "api_name": "Famous Quotes",
+        "category": "Data",
+        "summary": "The API 'Famous Quotes' provides a dictionary of thousands of famous quotes organized by category and quotee. Users can access quotes by specific individuals by providing the name of the person, enabling retrieval of quotes attributed to them. Additionally, users can retrieve quotes based on categories such as humor by specifying the desired category. The API operates through GET method and requires string type parameters, for name in quotes by quotee and category in quotes by category. The output format includes the quote text, category, and details of the quotee including name, image, profession, and lifespan, presented in JSON format within an array structure."
+    },
+    {
+        "api_name": "Sus Guru Malicious Website AI Detector API",
+        "category": "Cybersecurity",
+        "summary": "The API offers functionality to check the safety of websites by detecting if they are malicious. The API includes endpoints such as /api/report/{report_id}, which returns details for a given report ID, providing information like model prediction, model probability, URL, timestamps, upvotes, downvotes, and error status. The required input parameter for this endpoint is the report ID of type NUMBER. Another endpoint /api/scan allows users to submit a URL for scanning to determine if it has been scanned before or if a new scan has started. The output includes details like new report ID, scanning status, and queue position. The method for this endpoint is POST. Additionally, the API has an endpoint /api/queue to check if a site is currently being scanned and provides the queue size. The response includes scanning status and queue size. The API supports GET and POST methods for different functionalities."
+    },
+    {
+        "name": "IP Threat Lookup",
+        "category": "Cybersecurity",
+        "summary": "The IP Threat Lookup API allows you to check specific IP addresses to determine if they pose a threat to your network. It provides detailed information such as the Confidence of Abuse score, the number of reports, and various attributes of the IP address like country code, ISP, and usage type. The API helps in identifying potentially malicious IP addresses and integrating threat intelligence into your security systems."
+    },
+    {
+        "name": "Secure password generator",
+        "category": "Cybersecurity",
+        "summary": "The Secure Password Generator API allows you to generate strong, secure passwords based on your specified length and preferences. It offers a customizable way to create passwords for various applications, enhancing security by providing a flexible solution for password management. This API helps in generating random, secure passwords to protect your accounts and sensitive information."
+    },        
+    {
+        "api_name": "Brightest Stars",
+        "category": "Science",
+        "summary": "The API 'Brightest Stars' provides a list of the brightest stars and their details. Users can access the list of all currently discovered brightest stars using the 'Get all brightest stars list' endpoint through a GET method with a required parameter 'param' of type string. The endpoint returns data in JSON format, with a status code of 200. The output parameter is a JSON object containing key-value pairs of star details. This API offers this functionality for free and can be accessed through the host URL 'https://brightest-stars.p.rapidapi.com/'."
+    },
+    {
+        "api_name": "Emoji",
+        "category": "Social",
+        "summary": "The API provides a single endpoint for retrieving emojis based on a provided name or string through a 'GET' request. Users can obtain any emoji associated with the specified name from the endpoint. The input parameter 'name' has a datatype of STRING and represents the name or string for which the emoji is requested. The output parameter datatype is determined by the response from the API endpoint, providing the requested emoji associated with the input name. The service is accessible through the GET method, allowing users to easily fetch emojis using the API."
+    },
+    {
+        "name": "Avatar Maker",
+        "category": "Social",
+        "summary": "This API generates avatars from text input. It allows customization of avatar size, font size, color, font type, background color, and rounding. It’s a free and easy-to-use tool for creating text-based avatars."
+    },
+    {
+        "name": "Facebook Image Text Ratio Checker",
+        "category": "Social",
+        "summary": "This API allows you to check the text-to-image ratio of an image to ensure it complies with Facebook's advertising policies (20% or less text). You can submit an image file to the API and receive feedback on whether the image meets the text ratio requirements. It supports optional parameters for callback URLs and advanced text detection settings."
+    },    
+    {
+        "api_name": "Address Distance Calculator",
+        "category": "Location",
+        "summary": "The API named Address Distance Calculator offers functionality to calculate the distance between two addresses through an API. The method provided by the API for this purpose is POST request to the endpoint 'https://address-distance-calculator.p.rapidapi.com/api/get_distance'. The API does not require any input parameters. The output parameter datatype is a JSON object containing the distance between the specified addresses. Users can utilize this API to easily obtain the distance measurement between different locations using a simple POST request."
+    },
+    {
+        "api_name": "Latest Movies",
+        "category": "Movies",
+        "summary": "The API 'Latest Movies' provides access to a collection of movies available for download, with a freemium pricing model. Users can utilize the 'Get All Movies' endpoint using the GET method to retrieve all the latest movies without any required or optional parameters. The output is in JSON format containing information about the available movies. The API's functionality focuses on providing a simple and straightforward way to access and download the latest movies for free."
+    },
+    {
+        "api_name": "Gold To Currency",
+        "category": "Financial",
+        "summary": "The API named Gold To Currency allows users to convert the price of gold to a chosen currency specified by an IBAN for 1 gram and 1 ounce on a selected date. The API offers a single endpoint named 'Get Gold Price' accessible via the GET method. It requires two parameters: 'iban' of type string, representing the chosen currency with provided reference link for available exchange rates, and 'date' of type DATE (YYYY-MM-DD) indicating the desired date for gold price conversion with a note that gold pricing is not available on weekends. The output of the endpoint provides the converted gold price information based on the specified parameters."
+    },
+    {
+        "api_name": "Alcohol Consumption By Country",
+        "category": "Data",
+        "summary": "The API provides data on alcohol consumption by country, allowing users to obtain insights into global alcohol consumption patterns. Users can access this information through a GET method endpoint to retrieve alcohol consumption data for all countries. The API does not require any input parameters for this particular endpoint. The output parameter datatype is JSON containing information on alcohol consumption levels for different countries. The service is free to use and offers high service level and success rate, with an average latency of 1403 ms, making it valuable for fields such as healthcare, public policy, and marketing."
+    },
+    {
+        "api_name": "detect sentence",
+        "category": "Tools",
+        "summary": "The API named 'detect sentence' offers functionality to detect grammatical errors in a given sentence. The API endpoint is accessed using the HTTP GET method without any required or optional parameters. Users can call this endpoint to analyze the grammar of a sentence and receive a response with information about any detected errors. The output parameter is of type JSON and provides details regarding detected grammatical errors in the sentence."
+    },
+    {
+        "name": "Affiliate URL Cleaner",
+        "category": "Tools",
+        "summary": "The Affiliate URL Cleaner API removes affiliate parameters and tracking information from URLs. It takes a URL as input and returns a 'clean' version without any affiliate or tracking data, helping to ensure that URLs are free of unwanted tracking elements."
+    },
+    {
+        "name": "Blog Post Generator API - SEO Optimised with Keywords",
+        "category": "Tools",
+        "summary": "The Blog Post Generator API creates SEO-optimized blog posts, including titles, content, and relevant keywords. It helps automate content creation and improve SEO by generating posts that you can use to enhance domain authority and online visibility. The API can be integrated into applications for periodic content updates."
+    },
+    {
+        "name": "Calendar Converter",
+        "category": "Tools",
+        "summary": "The Calendar Converter API enables the conversion of dates between different civil, religious, and historical calendars. Users can specify the date and the target calendar system to obtain the converted date. Supported calendars include Gregorian, Julian, French Republican, Maya, Islamic, and Hebrew."
+    },            
+    {
+        "api_name": "OneFinder",
+        "category": "eCommerce",
+        "summary": "OneFinder API enables users to find real names for their app, business, or domain by performing a simple search. The API offers a POST method through the endpoint at https://onefinder.p.rapidapi.com/finder. There are no specific required or optional parameters for this endpoint. Upon execution, the API returns the real names found. Users can interact with the service through the provided code snippet or by making direct requests to the API endpoint. OneFinder is accessible for free with premium features available, and additional functionalities may be explored through the API documentation."
+    },
+    {
+        "api_name": "Book Suggest",
+        "category": "Tools",
+        "summary": "The API named Book Suggest provides book recommendations for users. It is a FREEMIUM service accessible through a single default GET endpoint. There are no required or optional parameters for this endpoint. Users can utilize this API to receive book suggestions based on their preferences. The output of the endpoint is in JSON format containing information about recommended books. The API is hosted at book-suggest.p.rapidapi.com and is designed to assist users in discovering new books to read."
+    },
+    {
+        "api_name": "Books Search",
+        "category": "Database",
+        "summary": "The Books Search API provides a tool for users to search for books based on names or genres, offering information on thousands of books globally. Users can access book suggestions and recommendations through the API, with support for searching by specific queries. The API supports a GET method for searching books, requiring a 'query' parameter of type STRING, which defaults to 'do epic shit'. Users can retrieve book information by specifying the desired query. The output parameter is in JSON format containing details about the searched books."
+    },
+    {
+        "api_name": "anonmyous mail sender",
+        "category": "Email",
+        "summary": "The API named 'anonmyous mail sender' allows users to send anonymous emails to any recipient without revealing the sender's identity. The functionality of this API involves sending an email to the provided email address through the POST method. There are no required or optional parameters specified for this endpoint. Upon successful email submission, the API returns a response. Users can access this service for free with additional premium features available. For more information, visit the API's home URL at 'https://rapidapi.com/sujalmakkar/api/anonmyous-mail-sender/'."
+    },
+    {
+        "api_name": "Circulating Supply",
+        "category": "Finance",
+        "summary": "The API provides a functionality to retrieve the value of a given coin. Users can access the 'Coin' endpoint via a GET method to obtain the value of the specified coin where the input parameter 'coin' should be of type STRING representing the coin name. The default value for 'coin' is 'btc'. The API returns the value of the requested coin as the output parameter of type JSON. The service is free to use and can be accessed at 'https://circulating-supply3.p.rapidapi.com/production/resource'."
+    },
+    {
+        "api_name": "Apex Legends Weapon Stats",
+        "category": "Gaming",
+        "summary": "The Apex Legends Weapon Stats API provides access to weapon statistics for the game Apex Legends. Users can retrieve information about all available weapons through the 'GET Weapon Stats' endpoint using the GET method. The API does not require any input parameters for this endpoint. The output of the API call will return data in JSON format containing details on various weapons in the game. This tool is designed to offer users insights into weapon performance and attributes within Apex Legends for strategic gameplay and analysis."
+    },
+    {
+        "api_name": "Website Emails & Social Media Pages Link Extractor",
+        "category": "Email",
+        "summary": "The API allows users to extract contact emails and links to social media pages (Facebook, YouTube, Twitter, Linkedin, Pinterest, Instagram) of a specified website domain. The functionality is provided through a GET method endpoint where the input parameter 'domain' is a string representing the website domain name. The output parameter is of datatype JSON and provides a list of contact emails and social media page links associated with the specified website domain."
+    },
+    {
+        "api_name": "People Lookup",
+        "category": "Advertising",
+        "summary": "The API, People Lookup, offers functionality to search for and retrieve phone, email, LinkedIn, and other information for individuals in the USA. The API operates based on a GET method and requires input parameters including 'name' (STRING) to search for people by name and an optional parameter 'State' (STRING) to specify the US state for the search, with default values provided. The output of the API call returns information regarding the specified individual, with data including the person's contact details and additional relevant information. Users can access the API through the provided endpoint to retrieve information efficiently."
+    },
+    {
+        "api_name": "Article Data Extraction",
+        "category": "Media",
+        "summary": "The API provides a tool for extracting normalized data from any blog or article in a structured JSON format. Users can access the functionality through a GET method by providing the URL of the article as a string parameter. The output parameter is in JSON format containing the extracted data from the specified article. The API is available as a freemium service with high service level, low latency, and a high success rate, making it a popular choice for retrieving structured data from online articles."
+    },
+    {
+        "api_name": "AI Meta Description Generator",
+        "category": "Business",
+        "summary": "The AI Meta Description Generator API utilizes powerful AI to automatically generate SEO/SERP optimized meta descriptions for web pages. By supplying the web page link, users can trigger the AI to create effective meta descriptions. The API offers a method of POST request to the endpoint 'url-to-meta/' for generating meta descriptions. There are no required or optional parameters specified in the API documentation, suggesting that the AI-driven generation process operates based on the provided web page link. The output of this API call would likely return a JSON response containing the automatically generated meta description."
+    },
+    {
+        "api_name": "Vehicle specs",
+        "category": "Transportation",
+        "summary": "The API named 'Vehicle specs' allows users to obtain the characteristics of a vehicle by providing the type approval number, version code, and variant code. This API is available for free with a freemium pricing model. Users can access the functionality through a POST method at the endpoint 'https://vehicle-specs.p.rapidapi.com/'. The API does not require any input parameters for the request. Upon successful execution, the API returns the characteristics of the specified vehicle. The response is in JSON format with details about the vehicle's specifications."
+    },
+    {
+        "api_name": "Format Phone Number",
+        "category": "SMS",
+        "summary": "The API 'Format Phone Number' focuses on formatting phone numbers for SMS services by accepting either a telephone number and a two-character country code or just a telephone number. The API will utilize the country code associated with the user account by default if not provided. The API endpoint supports POST method, and it does not have any required or optional parameters specified. Upon successful execution, the API returns a properly formatted phone number suitable for sending through SMS services."
+    },
+    {
+        "api_name": "Atmosphere methane concentration",
+        "category": "Science",
+        "summary": "The API provides monthly data on the amount of methane in the atmosphere from 1983 to the present, expressed as a mole fraction in dry air and parts per million (ppm). Users can access this information via the Methane endpoint using the GET method. The endpoint does not require any specific input parameters but offers an optional 'methane' object parameter. The response will be an object with no CORS resources enabled, returning the methane concentration data for the specified timeframe. The API is free to use and offers reliable service with high success rates and low latency."
+    },
+    {
+        "api_name": "climate-api",
+        "category": "Weather",
+        "summary": "The climate-api allows users to retrieve climate change news from various sources. The API offers two main endpoints: 'get individual news source' and 'get all news'. The 'get individual news source' endpoint supports the GET method and requires the input parameters 'Accept-Charset' (STRING) to specify the news source and 'newspaperId' (string) to designate the newspaper identity. Users can access news from different resources using this endpoint and receive a JSON response with key-value pairs. On the other hand, the 'get all news' endpoint also uses the GET method and fetches all climate change news without any required parameters. Both endpoints are hosted on climate-api1.p.rapidapi.com with a freemium pricing model."
+    },
+    {
+        "api_name": "IMDb top 100 movies",
+        "category": "Movies",
+        "summary": "The API 'IMDb top 100 movies' provides access to information about the top 100 movies according to IMDb. Users can retrieve the list of top 100 movies along with details such as cover image, rank, title, thumbnail, rating, ID, year, images, description, genre, director, writer, and IMDb ID. The API supports GET requests for getting the top 100 movies list and for retrieving specific movie details by providing the movie ID as input parameter. The input parameter for the 'Get a specific Movie by id' endpoint is a STRING type representing the movie ID, with a default value of 'top13'. The output parameter is in JSON format containing the details of the requested movie."
+    },
+    {
+        "api_name": "Driving Distance Calculator Between two Points",
+        "category": "Location",
+        "summary": "The API allows users to calculate the estimated driving distance in miles, kilometers, nautical miles, and travel time between two locations such as cities, addresses, zip codes, or places. The endpoint 'origin and destination location' accepts input parameters 'destination' and 'origin' of type STRING representing the destination and origin locations respectively. The API supports the GET method for fetching the distance calculation data. The output parameter is JSON format containing the estimated distance and travel time information."
+    },
+    {
+        "api_name": "Spam Scanner",
+        "category": "Communication",
+        "summary": "The Spam Scanner API is a tool designed to scan messages or text for spam content, such as spammy URLs/domains, email addresses, IP addresses, and textual content. The API utilizes an extensive spam database to classify messages as spam if they contain any spammy elements. Users can access the API via a POST method to scan messages for spam, with no specific required or optional parameters. The output datatype of the API response is JSON format, providing information on the spam content detected in the scanned message. This early version of the API is free to use and is primarily focused on detecting spam in emails, messages, and comments."
+    },
+    {
+        "api_name": "AccuOCR",
+        "category": "Visual_Recognition",
+        "summary": "AccuOCR is an optical character recognition (OCR) API that accurately extracts text from images encoded in base64 format. The API supports up to 112 languages and can be accessed through a POST method at the /image-ocr endpoint. The endpoint does not have any required or optional parameters. The response schema includes fields such as status, reference, processing mode, text, and processing time, with text being a string and processing time being a number. Users can utilize this API to efficiently extract text content from images for various applications."
+    },
+    {
+        "api_name": "Bokeh effect filter",
+        "category": "Video_Images",
+        "summary": "The API offers a Bokeh effect filter tool for applying visually appealing blur effects to images with customizable aperture shapes. Users can access the functionality through the POST method at the base64_bytes endpoint to process uploaded images as binary data. The required input parameter 'file' must be of type BINARY representing the image data, with an optional parameter 'lens' available for specifying aperture shapes. The API outputs the processed image with the Bokeh effect applied, allowing users to create visually enhanced images with creative blur effects tailored to their preferences."
+    },
+    {
+        "api_name": "Economic Events Calendar",
+        "category": "Financial",
+        "summary": "The API offers access to economic events allowing users to retrieve a complete list of events and filter them by countries and dates. By making a GET request to the 'Events' endpoint, users can fetch economic events by specifying countries using symbols like US, JP, GB separated by commas, and date ranges in the format YYYY-MM-DD. The input parameters include 'to' (string) for the end date, 'from' (string) for the start date, and 'countries' (string) for filtering events by specific countries with default values for 'countries' being US and GB. The API response is in JSON format containing information about the economic events."
+    },
+    {
+        "api_name": "FraudSentinel",
+        "category": "Payments",
+        "summary": "FraudSentinel API offers real-time fraud detection by examining IP reputation, Proxy/VPN/TOR usage, BOT detection, and more. The API supports a GET method endpoint allowing users to retrieve detailed JSON data from numerous IP classification databases. The required input parameter 'ip' is of type STRING and represents the IP address to analyze, defaulting to '127.0.0.1'. Optional parameters include 'nocache' of type BOOLEAN and 'paranoid' of type BOOLEAN with a default value of false. The output parameter is in JSON format, providing insights on the IP's reputation and potential fraudulent activity, aiding in fraud prevention efforts."
+    },
+    {
+        "api_name": "Bitcoin News",
+        "category": "Finance",
+        "summary": "The API 'Bitcoin News' allows users to access the latest news related to Bitcoin from major websites globally. It offers two endpoints: 'Get All Bitcoin News' and 'Get Individual Bitcoin News Sources'. The 'Get All Bitcoin News' endpoint retrieves news from various Bitcoin news sites, while the 'Get Individual Bitcoin News Sources' endpoint provides information for a specific news resource based on the provided newspaperId. The API supports GET method for both endpoints. The 'Get Individual Bitcoin News Sources' endpoint requires the input parameter 'newspaperId' of data type string to specify the news source. The output parameters of these endpoints vary based on the specific endpoint's response, providing news data in a structured format."
+    },
+    {
+        "api_name": "Guinness-World-Records-Api",
+        "category": "Entertainment",
+        "summary": "The API offers functionality to fetch Guinness World Records based on a specified term or retrieve details for a specific record. Users can utilize the 'Get Record Details' endpoint to obtain information like who/what/where/when and paragraphs related to a specific Guinness World Record by providing the corresponding href. Additionally, the 'Get Records' endpoint allows users to fetch Guinness World Records based on a term, with optional parameters for pagination. Both endpoints support the GET method, and the input parameters include 'href' of type STRING for record details and 'term' of type string for record search, along with optional parameters for pagination. The output will contain detailed information related to the requested record or records."
+    },
+    {
+        "api_name": "Mathionary",
+        "category": "Education",
+        "summary": "The API offers a restful interface for querying definitions and examples related to math concepts. Users can access different levels of math concepts such as basic, intermediate, complex, and advanced through respective endpoints. The API functions using the GET method and does not require any input parameters for these endpoints. The output of the API calls returns JSON data containing information on the queried math concepts and relevant examples."
+    },
+    {
+        "api_name": "Climate change_v31",
+        "category": "News_Media",
+        "summary": "The API allows users to access climate change information and news feeds globally. The API offers endpoints such as 'Get news source feeds' and 'World climate change' accessible through the GET method. For the 'Get news source feeds' endpoint, users need to provide the parameter 'newspaperId' as a string to specify the source of news feed (default is 'guadian'). The endpoint returns news feeds from various sources around the world. The output parameter is in JSON format containing the news information. The 'World climate change' endpoint provides information on climate changes worldwide without any required parameters. Users can retrieve global climate change data in JSON format through this endpoint."
+    },
+    {
+        "api_name": "Temp Email Killer",
+        "category": "eCommerce",
+        "summary": "The API offers a service to check the validity of domain or full email addresses, providing a response parameter 'result' which indicates whether the email can be used for registration. If 'result' is true, the email is valid; if false, registration with temporary emails is prohibited. Additionally, there is an 'error' parameter to handle user input errors. The API supports a GET method and requires 'data' parameter of type STRING (default: 'fovah86335@990ys.com') representing the email or domain to be checked, with an optional 'ip' parameter for detailed statistics. The response schema includes 'error' as an integer, 'result' as a boolean, and 'message' as a string."
+    },
+    {
+        "name": "Poeteer",
+        "category": "eCommerce",
+        "summary": "Poeteer is an AI-based API that generates blogs, articles, and topics from scratch. It offers functionalities to create high-level sections for articles, generate detailed content based on section names and titles, and come up with new article or blog topics based on user-provided ideas. It's ideal for automating content creation and ideation."
+    },    
+    {
+        "api_name": "AI-translate",
+        "category": "Translation",
+        "summary": "The API AI-translate offers an unlimited automatic translation service with support for over 99 languages. Users can utilize the Translate endpoint by making a POST call with the 'lang' parameter specifying the target language for translation, or source and target language if needed. The Translate endpoint returns the translated text in JSON format. Additionally, the API provides the Get list of languages endpoint to retrieve a list of supported languages through a POST call. The output of this endpoint includes the available languages supported for translation. AI-translate operates on the ai-translate1.p.rapidapi.com host and is categorized as a FREEMIUM service."
+    },
+    {
+        "api_name": "Document Data Extraction Solutions",
+        "category": "Commerce",
+        "summary": "The API offers document data extraction solutions for extracting and digitizing text fields from images of standard documents in real-time. It supports functionalities like Indian Driving License Data Extraction and Indian Pan Card Data Extraction, where users can extract details from images of Indian driving licenses or PAN cards. The API uses a POST method for these endpoints and does not require any specific input parameters. The output datatype is JSON, containing the extracted details from the provided document image."
+    },
+    {
+        "api_name": "Car Data_v2",
+        "category": "Data",
+        "summary": "The API allows users to retrieve and filter lists of cars by various parameters like type, model, make, and year. Users can access the car data through the GET method with required input parameters including page number and limit. Optional parameters such as type, model, make, and year can be used for further filtering. The output parameter is in JSON format containing relevant automobile data such as car make, model, type, and year. The API is available for free with additional features under a freemium pricing model, and it is hosted at car-data1.p.rapidapi.com."
+    },
+    {
+        "api_name": "Bad Words Profanity Filter",
+        "category": "Text_Analysis",
+        "summary": "The Bad Words Profanity Filter API offers functionality to automatically detect and filter offensive, inappropriate, or profane content within text data. Users can integrate profanity filtering capabilities into their applications, platforms, or services to maintain a safe and respectful environment for users. The API provides endpoints for filtering bad words and detecting bad words using the POST method. Both endpoints do not require any input parameters. The output parameter for both endpoints is the filtered or detected text data. This API operates on a freemium pricing model and has a high average service level, latency, and success rate."
+    },
+    {
+        "name": "Abstractive News Summarization",
+        "category": "Text_Analysis",
+        "summary": "The Abstractive News Summarization API uses advanced NLP techniques to generate concise summaries of news articles. It is designed to produce summaries that capture the essence of the source text, applicable across various domains including literature, science, finance, and legal documents."
+    },
+    {
+        "name": "Advanced Emotions Detection - AdvEmotions",
+        "category": "Text_Analysis",
+        "summary": "The AdvEmotions API provides advanced emotion recognition capabilities, identifying up to 27 different emotions from a given text. It can detect emotions such as joy, sadness, anger, fear, and more, helping to analyze and understand emotional content in textual data."
+    },        
+    {
+        "api_name": "Fibonacci",
+        "category": "Science",
+        "summary": "The Fibonacci API allows users to retrieve specific items or a range of items from the Fibonacci list. Users can make API calls to get an interval with items from the Fibonacci list based on left and right indexes or to retrieve a specific number from the Fibonacci list. The input parameters for these endpoints are numbers between -10000 and 10000. The output for the 'Get a range of items from Fibonacci list' endpoint is an array containing elements with properties 'index' and 'value', while the output for the 'Get a number from Fibonacci list' endpoint is a single number from the Fibonacci sequence. The API supports the GET method for accessing the functionalities."
+    },
+    {
+        "api_name": "Dictionary Data API",
+        "category": "Education",
+        "summary": "The API allows users to retrieve the definition, pronunciation, and example usages of words through a single GET endpoint. By accessing the 'GetDefinition' endpoint with a specific word parameter, users can receive information such as the pronunciation audio link and multiple meanings categorized by parts of speech. The input parameter 'word' expects a string data type representing the word for which information is requested. The output parameter includes 'word' as a string, 'pronunciation' as a string containing the audio link, and 'meaning' as an array of objects containing 'tag' for part of speech and 'values' for associated definitions and examples."
+    },
+    {
+        "name": "Book Finder",
+        "category": "Education",
+        "summary": "Book Finder is an API for searching books by various criteria such as title, author, series, book type, categories, and Lexile measures. It allows users to find books based on reading complexity and genre, with options to specify maximum and minimum Lexile measures. The API supports both fiction and nonfiction categories and provides detailed search parameters for comprehensive book discovery."
+    },
+    {
+        "name": "Climate Change",
+        "category": "Education",
+        "summary": "The Climate Change API provides curated information and news about climate change. It offers endpoints to fetch the latest climate change news and to search for news from specific sources. Users can access comprehensive updates on the climate crisis and its effects through this API."
+    },        
+    {
+        "api_name": "Historical Moon Phase API",
+        "category": "Weather",
+        "summary": "The API allows users to fetch current or historical moon phase data, providing information such as lunar phase name, emoji, lunar age, and lunar distance. It offers endpoints like 'Lunar Age' for obtaining lunar age details like percentage and distance, 'Moon Phase Emoji' for getting emoji representation of a moon phase, and 'Moon Phase' for retrieving current or historical moon phase data. The API supports POST method for these endpoints with no required parameters. Users can utilize the service to access moon phase related information efficiently."
+    },
+    {
+        "api_name": "Address Normalization and Geocoding",
+        "category": "Mapping",
+        "summary": "The API offers a geocoding service that takes free text address input, normalizes it, and provides rooftop latitude/longitude geocode coordinates. The method used is GET, and the required input parameter is the address in string format, with a default example provided as '1600 pennsylvania ave washington dc'. The output parameters include a standardized address with details such as number, country, municipality, postal code, region, street, and subregion, along with latitude and longitude coordinates. The API's response schema defines the datatype of the output parameters as strings for address-related details and numbers for coordinates."
+    },
+    {
+        "api_name": "Highest Grossing Movies",
+        "category": "Movies",
+        "summary": "The API offers access to information about the highest grossing movies of all time, providing endpoints to retrieve data based on MPAA rating, genre, movie ranking range, and overall top 2000 movies. Users can make GET requests to obtain lists of up to 100 highest grossing movies by MPAA rating or genre, movies within a specific ranking range, or the top 2000 highest grossing movies globally. The input parameters include 'rating' (string) to specify MPAA rating, 'genre' (string) to specify movie genre, and 'range' (string) to indicate the movie ranking range. The output is in JSON format and consists of movie data such as titles, box office earnings, and ratings."
+    },
+    {
+        "api_name": "Etymology Meaning",
+        "category": "Communication",
+        "summary": "The API 'Etymology Meaning' offers the functionality to retrieve etymological information of a specified word. The API provides endpoints for different word types such as noun, adjective, and verb searches, returning the etymological meanings associated with the input word. The methods used are GET requests where the required input parameter is the word itself, specified as a string. The output parameter is in JSON format, containing key-value pairs of the etymological information. Users can access various syntactic details and meanings related to the input word through different endpoints available in the API, enhancing their understanding of the word's origin and history."
+    },
+    {
+        "api_name": "24HourCharts",
+        "category": "Business_Software",
+        "summary": "The 24HourCharts API allows users to easily and quickly generate charts in various formats such as HTML, SVG, Chart.JS response, and PNG. Users can create charts by sending a POST request to the respective endpoints. The API does not require any specific input parameters for generating charts. The output of the API varies depending on the endpoint used, with HTML, SVG, Chart.JS response, and PNG formats available as output. Users can integrate these generated charts into their applications or websites for data visualization purposes."
+    },
+    {
+        "api_name": "GoogleTimezoneAPI",
+        "category": "Mapping",
+        "summary": "GoogleTimezoneAPI allows users to include the time zone information on any map powered by Google Maps. The API consists of two main endpoints: getLocalTime and getTimeZone, which are both accessible through the POST method. The getLocalTime endpoint requires input parameters in the form of a timestamp (seconds since 1970 UTC) and a location (latitude and longitude), with an optional apiKey parameter for authentication. The getTimeZone endpoint also requires a location and timestamp input, along with optional parameters for language and apiKey. The API returns the local time calculation and time zone data for a specific point on the Earth, providing valuable information for time-related applications and services."
+    },
+    {
+        "api_name": "Dynamic Designers QR Code",
+        "category": "Advertising",
+        "summary": "The API 'Dynamic Designers QR Code' offers functionalities for designing and customizing QR codes in PNG, JPG, SVG, and PDF formats. Users can upload a logo to display on their QR codes and customize parameters such as body shape, eye shape, background color, body color, eye color, eye ball color, logo, size, and output format through the 'Custom QR Codes' endpoint accessed via the GET method. Input parameters include 'config' of type STRING defining design details and 'data' of type STRING for encoding information in the QR code. Additionally, an optional parameter 'size' of type NUMBER allows specifying the image size in pixels. The API provides a 'Logo Upload' endpoint using the POST method for uploading logos with a file size limit of 500 KB, receiving a file name in return for configuration. The responses are in JSON format."
+    },
+    {
+        "api_name": "ia-img-code",
+        "category": "Commerce",
+        "summary": "The ia-img-code API allows developers to generate, scan, and parse barcodes. The /generate endpoint enables users to create barcodes in various formats such as Code 128, EAN-13, and QR Code, with options for customizing scale, height, and file format. Input parameters for the /generate endpoint include text (optional), scale, height, includetext, and textxalign. The endpoint supports a wide range of barcode formats. The method used is POST, and there are no required parameters. The API outputs the generated barcode in the requested format."
+    },
+    {
+        "api_name": "Covid-19 Data NYT",
+        "category": "Health_and_Fitness",
+        "summary": "The Covid-19 Data NYT API allows users to retrieve COVID-19 data for the US directly from The New York Times. Users can access specific state data by date, total state data by date, specific US data by date, and total US data by date. The API supports GET requests for obtaining the amount of new COVID-19 cases and deaths, as well as total cases and deaths in specified states and in the US. Input parameters include the YYYY-MM-DD date format and state abbreviations specified as strings. The output parameter is in JSON format providing COVID-19 case and death counts."
+    },
+    {
+        "api_name": "secure-text-api",
+        "category": "Cryptography",
+        "summary": "The secure-text-api offers endpoints for encrypting and decrypting text via HTTP requests. The API provides functionalities such as encryption using a public key and decryption using a private key. Users can generate public and private keys through the getKey endpoint, obtaining a six-character verification code for key ownership. Input parameters for encryption and decryption are plaintext and ciphertext, respectively. Output parameters consist of the corresponding ciphertext or plaintext as strings. The API supports POST and GET methods for interaction and is hosted on secure-text-api.p.rapidapi.com."
+    },
+    {
+        "name": "Digital Currency",
+        "category": "Cryptography",
+        "summary": "The Digital Currency API provides a comprehensive list of all digital currencies. It allows users to retrieve information about various digital currencies through a simple GET request."
+    },
+    {
+        "name": "EEA - Email Encryption API",
+        "category": "Cryptography",
+        "summary": "The EEA - Email Encryption API provides functionalities for encrypting, decrypting, signing, and verifying emails to ensure secure communication. It supports operations such as verifying a message's signature, signing messages, encrypting and decrypting messages, all crucial for maintaining email security."
+    },    
+    {
+        "api_name": "AI Visual Recognition",
+        "category": "Visual_Recognition",
+        "summary": "The AI Visual Recognition API allows users to analyze image content at high speeds. The API offers endpoints such as OCR for detecting text in images, Tag for generating a list of words/tags based on an image, Describe for generating an image description, and Detect for identifying objects in an image. These endpoints primarily use the POST method for requests and provide optional parameters like language for specifying output language and detectOrientation for text orientation detection. The output of the API calls is in JSON format, providing insights into the analyzed image content."
+    },
+    {
+        "api_name": "AeroDataBox",
+        "category": "Transportation",
+        "summary": "The AeroDataBox API offers functionalities for retrieving flight data relevant to travel, hospitality, aviation applications, researchers, small teams, and individual developers. The API includes a beta endpoint for aircraft image recognition that identifies aircraft depicted in uploaded images, utilizing computer vision technology to detect aircraft registrations and match them with database records. Input parameters for the endpoint include a binary image file (JPEG, PNG, or BMP) for analysis. Output parameters consist of data about the recognized aircrafts, including details such as registration, model, airline information, engine type, freighter status, and more. The API also provides a web-hook subscription creation endpoint where users can set up subscriptions for specific subjects like flights or airports, returning information about the created subscription for future management."
+    },
+    {
+        "api_name": "Google Search_v3",
+        "category": "Search",
+        "summary": "The Google Search API allows users to retrieve real-time data from Google search results, supporting both web search and image search functionalities. The API offers endpoints for image and web searches, where users can input parameters such as the search query, result index, number of results to return, country code, and language restriction. The image search endpoint returns a JSON object with properties like title, thumbnail image URL, original image URL, dimensions, and context link. Similarly, the web search endpoint provides properties like title, HTML title, link, display link, snippet, and HTML snippet. Both endpoints support the GET method and offer a standardized schema for the output data."
+    },
+    {
+        "api_name": "Crypto News_v3",
+        "category": "News_Media",
+        "summary": "The Crypto News API (Crypto News_v3) offers functionality to fetch the latest crypto news articles and tweets with sentiment analysis and keyword extraction. The API includes endpoints for retrieving articles and tweets related to cryptocurrencies, with optional parameters such as the number of keywords to extract, maximum number of articles or tweets, and time frame for retrieval. For articles, the 'subject' parameter is required, and optional parameters include 'top_n_keywords', 'max_articles', and 'last_n_hours'. For tweets, there are optional parameters like 'top_n_keywords', 'max_tweets', and 'last_n_hours'. The output schema includes details such as datetime, hashtags, sentiment analysis, source, and text for tweets."
+    },
+    {
+        "api_name": "Body Calculator",
+        "category": "Medical",
+        "summary": "The API offers tools for calculating body metrics such as body fat percentage and BMI using skinfold measurement methods. Users can utilize endpoints like 'getFourSkinfold', 'getThreeSkinfold', 'getBMI', and 'getSevenSkinfold' to perform calculations. The API supports POST method for input data processing. The required parameters for each endpoint are not specified, and the output is represented in a JSON object format with properties like 'percentage' for skinfold measurements and 'value' for BMI calculation. The service provides a schema detailing the expected output data types and ranges for numeric values."
+    },
+    {
+        "api_name": "Add blind image watermark",
+        "category": "Video_Images",
+        "summary": "The API provides an image blind watermarking algorithm service with capabilities to add or resolve watermarks on images. The service body includes two main functionalities: `encode_pic` for adding watermarks and `decode_pic` for decoding watermarks. Users can access the API through a POST method to the endpoint 'https://add-blind-image-watermark.p.rapidapi.com/image/editing/add_blind_image_watermark' to specify the function type to either encode or decode the watermark. Required parameters include 'function_type' of type ENUM to indicate the operation type, while optional parameters include 'output_file_type', 'logo', 'watermark_image', 'origin_image', and 'quality_factor' with various data types like ENUM, BINARY, and NUMBER for configuring watermark and image properties. The API returns a response containing relevant data such as URL addresses for the watermarked image and decoded watermark image."
+    },
+    {
+        "api_name": "Phone Number Analyzer",
+        "category": "SMS",
+        "summary": "The Phone Number Analyzer API offers functionalities to find phone numbers in text, retrieve information about a phone number, and hide phone numbers in text. The API supports POST method for all endpoints. The 'Find Phone Number In Text' endpoint requires input parameters region (STRING) and text (STRING), with an optional locale parameter (STRING). The output is a JSON response containing the found phone numbers. The 'Hide Phone Number In Text' endpoint requires region (STRING) and text (STRING) as required parameters, and limit (STRING) and sign (STRING) as optional parameters. This endpoint returns the text with hidden phone numbers based on the specified limit and sign characters. The 'Analyze Phone Number' endpoint requires number (STRING) and region (STRING) as required parameters, and locale (STRING) as an optional parameter. The output provides information about the analyzed phone number in JSON format."
+    },
+    {
+        "api_name": "AI Textraction",
+        "category": "Text_Analysis",
+        "summary": "The AI Textraction API is a powerful AI-powered text parser that extracts custom user-defined entities from unstructured text. The API's functionality involves processing unstructured text to extract exact values like prices, dates, names, semantic answers, and more, with no apparent limit. It supports multi-language input and can handle texts up to 50,000 characters long. Users can send a POST request to the Textraction endpoint to extract entities by providing input text and an array of custom query entities including descriptions, types, and variable names. The output includes JSON results mapping input entities to the extracted values and statistical information such as text character count and number of entities extracted."
+    },
+    {
+        "api_name": "Car License Plate Detection",
+        "category": "Visual_Recognition",
+        "summary": "The API named Car License Plate Detection offers functionality for license plate or car recognition using a freemium pricing model. Users can access the car recognition endpoint through a POST method to send a URL containing cars and receive coordinates of boxes with cars and license plates, along with confidence level, license plate number, and country information. The API does not have any required or optional parameters for this endpoint. The output schema includes details like license plate number, confidence level, license plate coordinates, country, car coordinates, and orientation, returned as objects and arrays. Users are advised to refer to the README and documentation for more information."
+    },
+    {
+        "api_name": "AlumPrice",
+        "category": "Logistics",
+        "summary": "The AlumPrice API is a Restful API that allows users to query aluminium prices dating back to 2014. The API offers several endpoints for basic operations like getting, deleting, modifying, showing, adding/editing, pagination, filtering data by ID and date. The API utilizes the GET, POST, PUT, PATCH, and DELETE methods to interact with the data. Input parameters are of STRING type and include IDs for optional parameters, pagination, and filtering by ID or date. The API does not require any mandatory parameters for its endpoints. The output parameters return JSON objects with the relevant aluminium price data."
+    },
+    {
+        "name": "TrackingMore_v2",
+        "category": "Logistics",
+        "summary": "TrackingMore is an all-in-one global package tracking tool that supports tracking and tracing international packages across 472 couriers. It provides endpoints to list supported carriers, track packages, detect carriers by tracking numbers, and more."
+    },    
+    {
+        "api_name": "All In One Image Converter",
+        "category": "Video_Images",
+        "summary": "The API 'All In One Image Converter' offers functionality to convert image files to various commonly used formats such as PNG, JPG, WEBP, and GIF. Users can utilize POST method endpoints like 'JPG to PNG' and 'PNG to JPG' to convert between specific formats by providing image files as BINARY input parameters. The API responds with a success message and a download URL for the converted file. The service supports conversion between different image formats with the option to download the resulting files. Optional parameters are not required for the conversion process, and the API provides clear instructions for usage through the provided code snippets. The API allows users to easily manipulate image formats for their desired output."
+    },
+    {
+        "api_name": "Art openings Italy",
+        "category": "Events",
+        "summary": "The API 'Art openings Italy' offers users the ability to access information about ongoing art events in various cities in Italy. Users can utilize the 'Live events' endpoint through a GET request, with optional parameters such as city, genre, and location to filter the event results. The API returns JSON data containing details about the events, including title, city, opening and closing dates, location, genres, and artists. Additionally, users can retrieve detailed information about a specific event using the 'Events Detail' endpoint by providing the unique event ID. The API also provides a 'Health check' endpoint to monitor the application's uptime. Furthermore, users can retrieve lists of all genres, locations, and cities where art events take place using dedicated endpoints. The API utilizes the GET method for data retrieval, with optional and required parameters specified in the endpoints' descriptions."
+    },
+    {
+        "api_name": "CalcX - Investment API",
+        "category": "Financial",
+        "summary": "The API provides functionality for calculating various investment metrics such as simple interest, compound interest, investment returns, return on investment, capital gains tax, and annual percentage yield. The API offers multiple endpoints for performing calculations, including GET requests to calculate investment metrics based on parameters like principal amount, interest rate, and time period, with optional parameters for compounding frequency, currency conversion, and result formatting. Users can receive detailed investment results in JSON format. The API also supports batch processing of multiple investment calculations in a single request, providing a consolidated response for all submitted data."
+    },
+    {
+        "api_name": "Cryptocurrency News",
+        "category": "Cryptography",
+        "summary": "The API 'Cryptocurrency News' provides access to the latest cryptocurrency news from various sources such as CoinDesk, Bitcoinist, Cointelegraph, The Guardian, BSC News, and Decrypt. Users can retrieve news articles by making GET requests to specific endpoints for each news source. The API does not require any input parameters for fetching news articles. The response data is structured in an object format with properties including URL, title, description, thumbnail, and creation date. The API returns an array of objects containing news details for each source, allowing users to stay informed about the latest updates in the world of cryptocurrencies."
+    },
+    {
+        "api_name": "Recipe Prediction",
+        "category": "Food",
+        "summary": "The API allows users to input a base64 image to receive recipe predictions. By using the 'Send Image' endpoint with a GET method, users can provide a base64 image as the required input parameter in URL format. The output parameter is of type JSON and includes the recipe predictions based on the image provided. This API serves the functionality of predicting recipes from images and is accessible through the home URL: https://rapidapi.com/forlucas27/api/recipe-prediction/"
+    },
+    {
+        "api_name": "AI Resume Parser & Extractor",
+        "category": "Business",
+        "summary": "The API offers automated CV/resume parsing by processing PDF files to extract key information for machine readability, supporting synchronous and asynchronous operations with callback URLs. The endpoints include pdf-base64 for processing base64-encoded PDF files, pdf-uri for extracting data from online PDFs, and pdf-upload for uploading PDFs via multipart/form-data. Input parameters for pdf-base64 are base64 field for the PDF content and customSchema field for custom extraction schemas if required. Output parameters include structured data based on the schema. For pdf-uri, input includes the URI and optional customSchema field, while pdf-upload requires the PDF file and optional customSchema and callbackURL fields for defining extraction schemas and receiving results, respectively. The API can handle errors and varied document complexities during processing."
+    },
+    {
+        "api_name": "Food Calories",
+        "category": "Food",
+        "summary": "The API 'Food Calories' allows users to retrieve information about food items including their calorie and kilojoule values. The API provides various endpoints such as sorting foods by calories, sorting by kilojoules, retrieving food objects by name, accessing a list of all foods, getting foods by category name, and obtaining category objects. Input parameters include food name for retrieving specific food details and category name for filtering foods by category. Optional parameters may include size for certain endpoints. The API primarily operates through GET requests and returns data in JSON format, with responses containing details such as food categories, names, calorie values, and kilojoule values."
+    },
+    {
+        "api_name": "Airports",
+        "category": "Transportation",
+        "summary": "The API allows users to retrieve data about airports worldwide based on airport code, location, or search query. Users can search for airports using a string (e.g., \"heathrow\") through the GET method, with the 'q' parameter of type STRING. The output includes airport details such as name, location, type, and website. Another endpoint allows users to collect airport information by code (e.g., LAX) through the GET method, with the 'code' parameter of type string. The response includes detailed airport information including latitude, longitude, elevation, and website. Additionally, the API provides a 'Closest' endpoint that returns the 12 closest airports based on a given latitude and longitude, with parameters 'lat' and 'lon' of type NUMBER. The output contains details of the closest airports including name, type, region, and distance in meters."
+    },
+    {
+        "api_name": "AI 1001FX Functions",
+        "category": "Artificial_Intelligence_Machine_Learning",
+        "summary": "The AI 1001FX Functions API offers a variety of AI-powered functions to analyze and process text, images, and more. Users can leverage features such as mood detection, object recognition in images, OCR text extraction, language translation, content summarization, contact information extraction, content policy checking, language detection, and entity recognition. The API provides endpoints for recognizing objects in pictures, checking content policy compliance, detecting mood from text, language detection, extracting text from images, summarizing long texts, detecting entities in text, translating text, and extracting contact information. These endpoints accept input in the form of text and images and return responses with information such as recognized labels, detected entities, mood analysis, translated text, and extracted contact information in various data formats."
+    },
+    {
+        "api_name": "Remote Jobs API",
+        "category": "Jobs",
+        "summary": "The Remote Jobs API provides access to a list of remote job opportunities from various sources including weworkremotely, remoteok, GitHub, StackOverflow, Twitch, Mailchimp, Figma, and more. Users can utilize the GET method to retrieve the latest 20 remote jobs with optional parameters for filtering by company or category. The endpoint for getting a specific remote job requires the job ID as a string input parameter. Pagination functionality is also available through the GET method by specifying the page ID as a number input parameter. The output of the API includes details such as job title, company logo, location, company name, and date of posting in a structured JSON format."
+    },
+    {
+        "api_name": "bracketPy",
+        "category": "Business",
+        "summary": "The bracketPy API offers a range of functionalities for natural language processing and machine learning applications. Users can leverage the API to extract information from web pages, build predictive models, generate topic models, create recommendation engines, and more. The API supports various endpoints such as fetching URLs, extracting concepts, analyzing YouTube videos, identifying language, determining sentiment scores, calculating document and sentence similarities, categorizing content, suggesting hashtags, measuring word similarity, recognizing images, analyzing text tone and mood, classifying text based on semantic information, extracting named entities, creating content summaries, and finding similar phrases. Each endpoint operates through the POST method with no specific input parameters required, and responses are returned in JSON format."
+    },
+    {
+        "api_name": "Giphy",
+        "category": "Media",
+        "summary": "The Giphy API provides a range of endpoints for interacting with animated GIFs. Users can utilize the 'Search' endpoint to search for GIFs based on a query term or phrase, with options for limiting the number of results and specifying ratings. The API supports GET method and requires a 'q' parameter of type STRING for search queries. The output parameter is JSON format and returns GIF search results based on the provided parameters. Additionally, users can access endpoints such as 'Get GIF by ID', 'Get GIFs by ID', 'Translate', 'Random', 'Trending GIFs', 'Sticker Search', 'STICKER Roulette', 'STICKER Trending', and 'STICKER Translate' for various functionalities related to GIFs and stickers with detailed input and output specifications."
+    },
+    {
+        "api_name": "Datapi",
+        "category": "Storage",
+        "summary": "The Datapi API provides endpoints for database accessibility, allowing users to send, query, get, and set data via HTTP POST and GET methods. The API supports string input parameters for ID and returns JSON data. The 'Send Data' endpoint enables users to send or save data to the backend API, while the 'Query Data' endpoint allows data querying within the API. Additionally, users can create unique addresses, private and public key pairs, UUIDs, and query values by ID through respective endpoints. The 'Make ID' endpoint generates a unique address with associated keys using Bitcoin's wallet structure, and the 'Make UUID' endpoint creates a unique UUID using Bitcoin's public and private key combination. The API also offers functionalities to set and retrieve values for a particular ID. The service is available under a FREEMIUM pricing model."
+    },
+    {
+        "api_name": "Job Descriptions API",
+        "category": "Jobs",
+        "summary": "The API offers functions to estimate salary ranges, classify job descriptions, extract information from job descriptions, and moderate job descriptions. The API includes endpoints like classifyJD for classifying job functions and seniority levels based on O*NET SOC codes, extractYearsExperience for extracting years of experience from job descriptions, extractSalaryRange for extracting salary ranges, startAsyncJobDescriptionReview for asynchronously reviewing job descriptions, startAsyncJobDescriptionModeration for asynchronously moderating job descriptions, startAsyncJobDescriptionReformatting for asynchronously reformatting job descriptions, checkJobDescriptionFormat for checking HTML job description formatting, and createJobDescription for creating a job description. The API supports POST method for all endpoints with no required parameters, and response schemas include different data types like strings, integers, booleans, and objects."
+    },
+    {
+        "api_name": "Checky - Verify Phone Number",
+        "category": "Communication",
+        "summary": "The API Checky - Verify Phone Number offers functionalities to determine the validity and type of a given phone number in real-time, supporting all countries. The API provides endpoints for verifying phone numbers individually or in batch using POST requests to receive information on the phone number's type and national format. Additionally, users can retrieve information about the carrier or service provider for a given phone number through dedicated endpoints. The 'Verify' endpoint requires a GET request with parameters 'country' (two-letter country code) and 'phone' (phone number without special characters) in the query string. The service is accessed through both GET and POST methods, with detailed usage explained in the API documentation."
+    },
+    {
+        "api_name": "Certified Translation",
+        "category": "Translation",
+        "summary": "The Certified Translation API offers a range of endpoints for handling translation-related tasks. Users can interact with the API through methods such as GET and POST to manage account information, retrieve specific orders, list orders, pay quotes, create quotes, upload files, and retrieve information on available languages. Input parameters include order numbers, quote tokens, files for upload (in formats like PDF, DOC, JPG), and metadata for assisting in pricing and turnaround time determinations. The API provides responses with key-value pairs and support for webhook updates on order processing. Overall, the service facilitates professional translations of complex documents with support for human translators and certification."
+    },
+    {
+        "name": "CodeMorph",
+        "category": "Translation",
+        "summary": "CodeMorph is an AI-powered code translation tool that converts code from one programming language to another. Users can submit code snippets or entire codebases, and the API returns the translated code in the desired target language. The AI technology ensures accurate and reliable translations by understanding and mapping equivalent functionalities between languages."
+    },
+    {
+        "name": "Dictionary",
+        "category": "Translation",
+        "summary": "The Dictionary API provides definitions of words using data from Oxford. Users can retrieve any definition they need by accessing this endpoint, which returns comprehensive information about words."
+    },        
+    {
+        "api_name": "CarbonFootprint",
+        "category": "Science",
+        "summary": "The API offers functionalities to calculate carbon footprints in various scenarios such as air quality, paper production, traditional and clean hydro energy usage, fuel consumption, car travel, air travel, motorbike travel, and public transportation. Using GET method, the 'AirQualityHealthIndex' endpoint returns the official air quality health index based on ground-level ozone, nitrogen dioxide, and fine particulate matter levels. 'TreeEquivalent' calculates the number of trees equivalent to paper production, while 'TraditionalHydroToCarbonFootprint' calculates CO2 emissions from traditional hydro energy. 'CleanHydroToCarbonFootprint' calculates CO2 emissions from clean hydro energy usage. Other endpoints like 'CarbonFootprintFromCarTravel', 'CarbonFootprintFromFlight', 'CarbonFootprintFromMotorBike', and 'CarbonFootprintFromPublicTransit' determine CO2 emissions from car, flight, motorbike, and public transit journeys respectively."
+    },
+    {
+        "api_name": "Movie Quote",
+        "category": "Database",
+        "summary": "The Movie Quote API allows users to find quotes from millions of movies and series that are time-based, contextualized, and linked with the IMDb movie database. The API offers a method 'GET' to retrieve quotes based on a keyword input parameter of type 'string', which has a default value of 'so far so good'. The output parameters include details such as movie title, year, cover image URL, quote phrase, and time stamp. Users can access movie quotes through the provided endpoint and customize the search by specifying different keywords to explore a wide range of quotes from various films."
+    },
+    {
+        "api_name": "Beverages and Desserts",
+        "category": "Food",
+        "summary": "The API 'Beverages and Desserts' provides access to various beverages and desserts. Users can retrieve details of desserts and beverages by their IDs using the GET method. The 'Get Desserts by their ID' endpoint requires a string input ID parameter to fetch specific desserts, while the 'Get Beverage by their ID' endpoint fetches specific beverages based on the provided ID. Additionally, users can retrieve a list of all desserts and beverages through separate endpoints using the GET method. The output of these endpoints includes information such as name, description, images, price, and ingredients of the selected dessert or beverage."
+    },
+    {
+        "api_name": "Pokemon Go API",
+        "category": "Gaming",
+        "summary": "The API provides various endpoints for retrieving data related to Pokemon Go, including type effectiveness, Pokemon rarity, power-up requirements, genders, current moves, evolutions, raid exclusive Pokemon, buddy distances, candy requirements for evolution, Pokemon stats, nesting Pokemon, maximum CP, shiny Pokemon, Alolan Pokemon, fast moves, Pokemon names, charged moves, released Pokemon, weather boosts, possible Ditto Pokemon, Pokemon types, encounter data, and more. Users can access the API through GET requests to retrieve JSON data with details such as Pokemon types, stats, evolutions, moves, rarity, shiny availability, and encounter information. The API does not require any input parameters for these endpoints, and the output consists of JSON objects or arrays containing relevant Pokemon information."
+    },
+    {
+        "api_name": "AI News - Global",
+        "category": "News_Media",
+        "summary": "The API provides access to global news generated by AI, allowing users to retrieve news articles from various regions. The API offers endpoints such as 'Available Regions' to list all regions available and 'Get News' to fetch news by region. The 'Get News' method requires parameters including 'region' (string) for the region's key code and 'version' (string) for the API version. The output of 'Get News' includes articles with details such as source, author, title, description, URL, and published date. Additionally, users can access related news, full content extraction, news images, and news videos through dedicated endpoints. The API supports GET and POST methods, requiring proper authentication headers for usage."
+    },
+    {
+        "api_name": "Keyword Suggestion API",
+        "category": "Advertising",
+        "summary": "The Keyword Suggestion API offers developers the ability to retrieve a list of suggested keywords related to a specific topic or phrase. It helps in optimizing website content, improving search engine rankings, and generating content ideas. The API provides suggestions based on criteria such as search volume, competition, and relevance, and also offers insights into keyword search trends over time. Available endpoints include 'All' for all related keywords, 'Alphabetical' for alphabetical suggestions, 'Comparisons' for comparison keywords, 'Preposition' for prepositional keywords, 'Questions' for question-related keywords, and 'Related' for related search terms. The API supports GET method with required parameters like 'keyword' (string) and optional parameters like 'country_code' and 'language_code'. The output schema includes different categories of keywords along with their respective arrays of related terms."
+    },
+    {
+        "api_name": "4eat",
+        "category": "Health_and_Fitness",
+        "summary": "The 4eat API offers functionalities for managing user recipes, user registration, adding recipes, and generating weekly nutritional plans. Users can utilize the 'post-userRecipe' endpoint to create personalized healthy recipes, 'post-signupUser' endpoint to register new users with detailed information for personalized nutrition services, 'post-addRecipe' endpoint to include recipes in their catalog, and 'post-newWeek' endpoint to generate weekly nutritional plans. The API includes methods for accessing setup data and recipe details. The endpoints support POST method for data submission, and the output schema for the 'post-newWeek' endpoint includes a structured week plan object with details such as week ID, days, meals per day, meal types, recipe IDs, names, subcategories, cooking level, time, and ingredient quantities for optimal nutrition planning."
+    },
+    {
+        "api_name": "US Gas Prices",
+        "category": "Transportation",
+        "summary": "US Gas Prices API offers access to current and historical gas price data for various states in the US. The API provides endpoints such as /us/hi for Hawaii, /us/id for Idaho, /us/in for Indiana, and more, each returning the current gas price data. Users can query historical data by including the optional 'date' parameter in the request. The API supports GET method for fetching data, and users can specify the date parameter in 'YYYY-MM-DD' format to retrieve specific historical data. The output format is JSON by default, but users can request XML format by adding the 'Accept: application/xml' header in the request."
+    },
+    {
+        "api_name": "Advanced Movie Search",
+        "category": "Movies",
+        "summary": "The Advanced Movie Search API allows users to search for movies using advanced queries like genre, name, etc., and retrieve detailed information about them. The API includes the following endpoints: \n\n1. 'Genre List': A GET method that retrieves a list of all available genres. It does not require any input parameters.\n\n2. 'Search by Name': A GET method that searches for a movie by a query string. It requires the parameter 'query' (string) for the search term and has an optional parameter 'page' (number) for pagination. The output includes a list of movies with details such as ID, title, overview, popularity, release date, and vote average.\n\n3. 'Get Detailed Response': A GET method that provides detailed information for a specific movie ID. It requires the parameter 'movie_id' (number) and returns details including the movie's budget, genres, homepage, ID, IMDb ID, original language, original title, overview, popularity, poster path, and production companies. The API supports GET methods and requires appropriate authentication headers for usage."
+    },
+    {
+        "api_name": "certer.org",
+        "category": "Other",
+        "summary": "The `certer.org` API offers a range of utilities for hashing, encoding, converting, and validating data. It includes endpoints for hashing strings using algorithms like Whirlpool and GOST, converting text to Leet or bytes to human-readable formats, and validating binary numbers, email addresses, IPv4 and IPv6 addresses, and Roman numerals. Each endpoint utilizes the POST method and accepts parameters like strings, numbers, and binary data. For example, the `/hash/whirlpool` endpoint requires a string (`value`) to hash and returns a hashed string. The `/converter/bytes/human` endpoint requires a number (`bytes`) and returns a human-readable string representation. All endpoints return data in JSON format."
+    },
+    {
+        "api_name": "Foxit eSign",
+        "category": "Business",
+        "summary": "The Foxit eSign API allows users to manage document signing workflows and folders through various endpoints. You can download individual documents as PDFs (`documentDownload`), update folder details such as recipient information (`updateFolder`), view activity history of a specific folder (`activityHistory`), create new folders and send documents for signatures (`createfolder`), delete folders permanently (`delete`), regenerate embedded signing sessions (`regenerateEmbeddedSigningSession`), move folders to a recycle bin (`movetorecyclebin`), retrieve data from specific folders (`myfolder`), and get the history of deleted folders (`deletedLog`). Each endpoint supports either GET or POST methods, with the majority requiring folder IDs and optional parameters for detailed configurations."
+    },
+    {
+        "api_name": "Route optimization",
+        "category": "Logistics",
+        "summary": "The Route Optimization API provides functionality to calculate the fastest route between multiple waypoints for different modes of transportation, including driving, cycling, walking, and public transit. With the `Route and directions` endpoint, users can obtain detailed turn-by-turn directions for their selected routing mode. This API supports specifying waypoints as latitude and longitude coordinates and allows users to choose their preferred mode of travel. It also provides routing information including travel time and distance, making it a versatile tool for optimizing travel routes."
+    },
+    {
+        "api_name": "Route and directions",
+        "category": "Mapping",
+        "summary": "The Route and Directions API provides detailed route calculation with turn-by-turn navigation between multiple waypoints. By specifying latitude and longitude coordinates separated by pipes (`|`) and selecting a mode of transportation (e.g., drive, bicycle, walk, or transit), users receive a GeoJSON-formatted response that includes navigation instructions, travel time, and distance for the route. This API is ideal for generating precise travel directions and optimizing routes based on chosen transportation methods."
+    },
+    {
+        "api_name": "Check Disposable Email",
+        "category": "Commerce",
+        "summary": "The Check Disposable Email API allows you to verify whether an email address is from a disposable or temporary domain, which is often used for spamming or trolling. It provides endpoints to check if an email is valid, look up disposable emails, and validate email addresses. Additionally, it includes features to retrieve information about newly registered domains and perform WHOIS lookups. This API is useful for ensuring the integrity of user data and preventing abuse through disposable email addresses."
+    },
+    {
+        "api_name": "AccuWeather",
+        "category": "Weather",
+        "summary": "The AccuWeather API provides detailed weather forecasts including current conditions, historical data, and forecasts for top cities worldwide. It offers endpoints to retrieve current conditions, historical weather data for the past 6 and 24 hours, and weather conditions for top-ranked cities. The API allows customization of responses with language and detail options and requires an API key for access. This API is suitable for applications needing accurate and detailed weather information."
+    },
+    {
+        "api_name": "Coinbase",
+        "category": "Payments",
+        "summary": "The Coinbase API allows users to perform various cryptocurrency transactions and retrieve real-time data on bitcoin and ethereum. It includes endpoints for getting current exchange rates, canceling and completing money requests, and committing buys, deposits, sells, and withdrawals. The API requires an access token for authentication and supports base currency customization. This API is ideal for applications that need to handle cryptocurrency transactions and real-time market data."
+    },
+    {
+        "api_name": "GoogleCloudStorage",
+        "category": "Storage",
+        "summary": "The Google Cloud Storage API enables users to store and manage data in Google Cloud. It includes endpoints for retrieving bucket information, managing IAM policies, and composing objects from existing ones. Key functionalities include listing buckets for a project, fetching IAM policies, and concatenating multiple objects into a single one. The API requires Google Cloud Access Token for authentication and offers customizable query parameters for listing and managing resources. This API is well-suited for applications needing robust cloud storage solutions."
+    },
+    {
+        "api_name": "Dropbox",
+        "category": "Storage",
+        "summary": "The Dropbox API allows users to access, store, and sync files online and across multiple devices. It provides endpoints for managing files, including adding members to files, retrieving file metadata, and syncing changes. The API requires an access token for authentication and supports various file operations, making it suitable for applications that need seamless file management and collaboration features. Access to the API is free."
+    },
+    {
+        "api_name": "API-FORMULA-1",
+        "category": "Sports",
+        "summary": "The API-FORMULA-1 provides comprehensive data on Formula 1, including information about circuits, teams, drivers, and rankings. It features endpoints for retrieving race results, starting grid rankings, and other F1-related data. With a high service level and popularity score, it offers reliable access to Formula 1 statistics and updates. The API is available under a freemium pricing model, with detailed documentation accessible at https://api-sports.io/documentation/formula-1/v1."
+    },
+    {
+        "api_name": "Image Search",
+        "category": "Search",
+        "summary": "The Image Search API provides developers with a tool to integrate image search functionality into their applications or websites. It allows for querying images based on search terms and delivers relevant image results. With a freemium pricing model, it offers high service levels and reliability, as indicated by its high popularity score. More details and documentation can be found at https://rapidapi.com/Glavier/api/image-search19/."
+    },
+    {
+        "api_name": "Cities Cost of Living",
+        "category": "Travel",
+        "summary": "The Cities Cost of Living API provides detailed information about living expenses in over 650 cities worldwide. It allows users to retrieve data on the cost of living in various cities and currencies. With a freemium pricing model, the API has high service levels and reliability, as evidenced by its popularity score. More information and documentation can be found at https://rapidapi.com/ditno-ditno-default/api/cities-cost-of-living1/."
+    },
+    {
+        "api_name": "BigOven",
+        "category": "Food",
+        "summary": "The BigOven API allows users to access 350,000+ recipes, reviews, and nutrition facts. The API supports functionalities such as adding recipe images and adding recipes to the grocery list. The 'addRecipeImage' endpoint enables users to upload an image for a recipe, specifying image position latitude, longitude, and caption. Input parameters include API Key, user password, recipe ID, and image file in various datatypes. The output parameter returns the JSON response containing the success status of the image upload. The 'addRecipeToGroceryList' endpoint allows users to add a recipe to the grocery list with options to mark the recipe lines as pending and scale the recipe size. The API supports POST method for both endpoints, with detailed parameter descriptions and expected JSON response."
+    },
+    {
+        "api_name": "City and State Search API",
+        "category": "Search",
+        "summary": "The API allows users to search for cities by name and retrieve a list of cities that match the specified query. The endpoint supports GET method and requires a 'q' parameter of type STRING for the search query. Optional parameters include 'page', 'country_code', 'sortOrder', 'sortBy', 'country_name', 'country_id', 'limit', 'state_code', 'state_id', and 'state_name'. The API returns city information in JSON format with details such as city name, state name, country code, and country name. Users can access the service for free through the provided endpoint URL."
+    },
+    {
+        "api_name": "Concerts - Artists Events Tracker",
+        "category": "Music",
+        "summary": "The Concerts - Artists Events Tracker API provides access to live, upcoming, and past music events based on location, venue, and artist name. It supports querying past events by venue name and time period. With its freemium pricing model, the API boasts a high service level and reliability, as reflected in its popularity score. More information and documentation are available at https://rapidapi.com/s.mahmoud97/api/concerts-artists-events-tracker/."
+    },
+    {
+        "api_name": "EcoWeather",
+        "category": "Energy",
+        "summary": "The EcoWeather API provides economically relevant meteorological data such as heat degree days and average temperature. It offers endpoints to retrieve data on snow days within a specified period, useful for winter service planning and tourism. The API follows a freemium pricing model and has a solid service level and reliability. For more details, visit https://rapidapi.com/stromdao-stromdao-default/api/ecoweather/."
+    },
+    {
+        "name": "Motivation-api",
+        "category": "Energy",
+        "summary": "Motivation-api provides daily inspiration and motivation for your work. It offers a simple GET endpoint to fetch motivational data from its home page."
+    },
+    {
+        "name": "Electricity Carbon Footprint Germany",
+        "category": "Energy",
+        "summary": "This API provides the CO2 footprint of electricity in Germany, expressed in grams per Kilo-Watt-Hour. It offers both current and historical emission data, with options to query by specific dates or get trends for the last 30 and 365 days."
+    },        
+    {
+        "api_name": "MedAPI",
+        "category": "Medical",
+        "summary": "MedAPI offers a collection of medical calculators, scores, and algorithms. It provides endpoints for calculating the AKIN classification for Acute Kidney Injury and the Estimated Glomerular Filtration Rate (eGFR) for pediatric individuals using the revised Schwartz Equation. The API is free to use and provides detailed medical calculations based on input parameters. For more information, visit [MedAPI](https://rapidapi.com/metrapi-metrapi-default/api/medapi2/)."
+    },
+    {
+        "api_name": "Google News",
+        "category": "News_Media",
+        "summary": "Google News API provides real-time news and articles sourced from Google News. It offers endpoints to retrieve supported languages and regions, allowing integration of news functionalities into applications. The API is available with a freemium pricing model. For more information, visit [Google News API](https://rapidapi.com/bfd-id/api/google-news13/)."
+    },
+    {
+        "api_name": "AllScores",
+        "category": "Sports",
+        "summary": "The AllScores API offers extensive real-time scores and updates for over 2,000 competitions across 10 sports, including Football, Rugby, Tennis, Basketball, Cricket, Ice Hockey, Baseball, Volleyball, American Football, and Handball. It provides real-time stats, breaking news, in-play insights, lineups, live tables, fixtures, social buzz, and odds. The API is available with a freemium pricing model. For more details, visit [AllScores API](https://rapidapi.com/fluis.lacasse/api/allscores/)."
+    },
+    {
+        "api_name": "Face Detection with Age and Gender Estimation",
+        "category": "Video_Images",
+        "summary": "The Face Detection with Age and Gender Estimation API allows users to detect all faces in a photo and estimate their age and gender. The API requires a base64-encoded image in a POST request and returns the coordinates of detected faces along with age and gender estimations in a JSON response. It offers a freemium pricing model. For more details, visit [Face Detection with Age and Gender Estimation API](https://rapidapi.com/yotaverse1-yotaverse-default/api/face-detection-with-age-and-gender-estimation/)."
+    },
+    {
+        "api_name": "Hotels",
+        "category": "Travel",
+        "summary": "The Hotels API provides comprehensive information about hotel properties worldwide, including details on rooms, prices, facilities, and policies. It's designed for creating travel-related applications or websites. The API offers a freemium pricing model and boasts high reliability with a 100% average service level and success rate. For more details, visit [Hotels API](https://rapidapi.com/apidojo/api/hotels4/)."
+    }, 
+    {
+        "api_name": "Call of Duty",
+        "category": "Gaming",
+        "summary": "The Call of Duty API provides access to stats for Modern Warfare and Warzone players and matches. It allows for easy creation of responsive dashboards and scripts. The API is free to use and offers high service reliability with an average service level of 100% and low latency. For more information, visit [Call of Duty API](https://rapidapi.com/sohamp2812/api/call-of-duty8/)."
+    },
+    {
+        "api_name": "Funny Joke Dataset",
+        "category": "Database",
+        "summary": "The Funny Joke Dataset API provides a collection of English jokes for testing and development purposes. It includes jokes from various categories such as Animal, Bar, One Liners, and more. The API offers a freemium pricing model and has high service reliability with an average service level of 100%. For more details, visit [Funny Joke Dataset API](https://rapidapi.com/abiodunoluwasegunsharafa-Pu9kywlF-YE/api/funny-joke-dataset/)."
+    },
+    {
+        "api_name": "BasketAPI",
+        "category": "Sports",
+        "summary": "BasketAPI provides comprehensive basketball data, including live scores, results, schedules, and statistics for over 70 basketball leagues worldwide. It covers leagues like the NBA, Euroleague, NCAA, and more. The API is freemium with a high service level, averaging 100% success rate. For more details, visit [BasketAPI](https://rapidapi.com/fluis.lacasse/api/basketapi1/)."
+    }
+]

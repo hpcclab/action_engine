@@ -1,0 +1,591 @@
+{
+    "test_data": [
+        {
+            "id": 1,
+            "user_request": "I am creating a digital art gallery that showcases different art styles of a single subject. First, I need a digital art image of a serene mountain landscape during sunrise. Next, I want a pastel art image of the same mountain landscape but during sunset. Then, I need a sketching art image of the mountain landscape at night with a starry sky. After generating these images, I need only the digital mountain image to be resized to 1920x1080 pixels, and enhanced for better quality. Finally, please email the digital image to my client for review.",
+            "selected_apis": [
+                {
+                    "name": "tti_Digital_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Pastel_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "Image_Resizing",
+                    "parameters": [
+                        "image_file",
+                        "width",
+                        "height"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image_file"
+                    ]
+                },
+                {
+                    "name": "send_email",
+                    "parameters": [
+                        "sender_email",
+                        "receiver_email",
+                        "subject",
+                        "message",
+                        "attachment"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "user_request": "I am working on a project that explores the evolution of urban art. First, I need a graffiti art image of a bustling city street with vibrant colors and street performers. Next, I want a mosaic art image of the same city street but in a more abstract form. Then, I need a ukiyo-e art image of the city street with traditional Japanese elements. After generating these images, I need the graffiti art image to be resized to 1080x720 pixels. Also, I want to enhance the quality of the generated mosaic image and the ukiyo-e image. ",           
+            "selected_apis": [
+                {
+                    "name": "tti_Graffiti_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Mosaic_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Ukiyo-e_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "Image_Resizing",
+                    "parameters": [
+                        "image_file",
+                        "width",
+                        "height"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image_file"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image_file"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "user_request": "I am creating art gallery that showcases different style of cats. First, I need to generate five images of black cat in different art styles: mosaic art, pastel art, and graffiti art. After that, I want to enhance the quality of the mosaic art image, resize it to 1920x1080 pixels, and convert it to a PNG format. I need you to email the only mosaic art of black cat image. ",
+            "selected_apis": [
+                {
+                    "name": "tti_Mosaic_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Pastel_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Graffiti_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image_file"
+                    ]
+                },
+                {
+                    "name": "Image_Resizing",
+                    "parameters": [
+                        "image_file",
+                        "width",
+                        "height"
+                    ]
+                },
+                {
+                    "name": "image_format_converter",
+                    "parameters": [
+                        "image_file",
+                        "output_format"
+                    ]
+                },
+                {
+                    "name": "send_email",
+                    "parameters": [
+                        "sender_email",
+                        "receiver_email",
+                        "subject",
+                        "message",
+                        "file"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "user_request": "I am working on a project that involves creating a visual timeline of technological advancements of computers. I need to generate three images in a sketching art style: one depicting the early 1900s, another showing the 1950s, and the last one representing the 2020s in a futuristic art style. After generating these images, I want to change each the converted pictures of 1950s and 2020s to be PNG format. Finally, email the 2020s one to my project supervisor.",
+            "selected_apis": [
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "image_format_converter",
+                    "parameters": [
+                        "image_file",
+                        "output_format"
+                    ]
+                },
+                {
+                    "name": "image_format_converter",
+                    "parameters": [
+                        "image_file",
+                        "output_format"
+                    ]
+                },
+                {
+                    "name": "image_format_converter",
+                    "parameters": [
+                        "image_file",
+                        "output_format"
+                    ]
+                },
+                {
+                    "name": "send_email",
+                    "parameters": [
+                        "sender_email",
+                        "receiver_email",
+                        "subject",
+                        "message",
+                        "file"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "user_request":  "First, I need to generate futuristic image of iphone. Second, convert the format to JPEG, resize it to 500x500, and enhance the image quality. Then, I need the enhansed image to be converted into a single PDF file. Please send the image to John, Kody, and Mike",
+            "selected_apis": [
+                {
+                    "name": "tti_Animation_Art",
+                    "parameters": [
+                        "user prompt"
+                    ]
+                },
+                {
+                    "name": "image_format_converter",
+                    "parameters": [
+                        "image_file",
+                        "output_format"
+                    ]
+                },
+                {
+                    "name": "Image_Resizing",
+                    "parameters": [
+                        "image file",
+                        "width",
+                        "height"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image file"
+                    ]
+                },
+                {
+                    "name": "image_to_pdf_conversion",
+                    "parameters": [
+                        "image files"
+                    ]
+                },
+                {
+                    "name": "send_email",
+                    "parameters": [
+                        "sender's email address",
+                        "receiver's email address",
+                        "message content",
+                        "subject line",
+                        "file"
+                    ]
+                }
+                ,
+                {
+                    "name": "send_email",
+                    "parameters": [
+                        "sender's email address",
+                        "receiver's email address",
+                        "message content",
+                        "subject line",
+                        "file"
+                    ]
+                }
+                ,
+                {
+                    "name": "send_email",
+                    "parameters": [
+                        "sender's email address",
+                        "receiver's email address",
+                        "message content",
+                        "subject line",
+                        "file"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "user_request": "I am creating a digital art book that showcases different historical periods through various art styles. First, I need to generate four images: one in charcoal art style depicting the Renaissance period, one in pastel art style depicting the Baroque period, one in painting art style depicting the Victorian era, and one in ukiyo-e art style depicting the Edo period. After generating these images, enhance the quality of each image." ,
+            "selected_apis": [
+                {
+                    "name": "tti_Charcoal_Art",
+                    "parameters": [
+                        "user prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Pastel_Art",
+                    "parameters": [
+                        "user prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Painting_Art",
+                    "parameters": [
+                        "user prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Ukiyo-e_Art",
+                    "parameters": [
+                        "user prompt"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image file"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image file"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image file"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image file"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "user_request": "Generate an animated image of high school boy and girl in Japan separately. After generating these images, I want both images to be enhanced and resized to 500x800. I need the resized boy image ot be PNG format and girl image to be JEPG.",
+            "selected_apis": [
+                {
+                    "name": "tti_Animation_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Animation_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image_file"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image_file"
+                    ]
+                },
+                {
+                    "name": "Image_Resizing",
+                    "parameters": [
+                        "image_file",
+                        "width",
+                        "height"
+                    ]
+                },
+                {
+                    "name": "Image_Resizing",
+                    "parameters": [
+                        "image_file",
+                        "width",
+                        "height"
+                    ]
+                },
+                {
+                    "name": "image_format_converter",
+                    "parameters": [
+                        "image_file",
+                        "output_format"
+                    ]
+                },
+                {
+                    "name": "image_format_converter",
+                    "parameters": [
+                        "image_file",
+                        "output_format"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "user_request": "I am working on a project that involves creating a visual timeline of a historical event in Japan. Generate 9 different the most historical events in Japan in sketching art style.",
+            "selected_apis": [
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "user_request": "I am creating a digital art gallery showcasing different art styles of a single subject, a modern cityscape. First, I need five different images: one in animation style, one in charcoal style, one in digital art style, one in futuristic art style, and one in graffiti art style. After generating these images, I want the only animation art image to be enhanced and resized to 500x500, and convert it to 2 different images in JPEG format and PNG format. Finally, Finally, email the only aniimated image to my art professor for feedback.",
+            "selected_apis": [
+                {
+                    "name": "tti_Animation_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Charcoal_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Digital_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Futuristic_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Graffiti_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image_file"
+                    ]
+                },
+                {
+                    "name": "Image_Resizing",
+                    "parameters": [
+                        "image_file",
+                        "width",
+                        "height"
+                    ]
+                },
+                {
+                    "name": "image_format_converter",
+                    "parameters": [
+                        "image_file",
+                        "output_format"
+                    ]
+                },
+                {
+                    "name": "image_format_converter",
+                    "parameters": [
+                        "image_file",
+                        "output_format"
+                    ]
+                },
+                {
+                    "name": "send_email",
+                    "parameters": [
+                        "sender_email",
+                        "receiver_email",
+                        "subject",
+                        "message",
+                        "file"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "user_request": "I am working on a project that involves creating a sketch dog book. Please generate 10 diffrent images in sketching art style:Labrador Retriever, German Shepherd, Golden Retriever, Bulldog, Poodle, Beagle, Rottweiler, Dachshund, Siberian Husky, Shih Tzu",
+            "selected_apis": [
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                }
+            ]
+        }
+    ]
+}

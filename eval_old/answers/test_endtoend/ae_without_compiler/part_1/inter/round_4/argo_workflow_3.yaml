@@ -1,0 +1,80 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-pastel-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Create a pastel art image of a sunset over the ocean.
+        dependencies: []
+
+      - name: t2
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.parameters.image}}'
+        dependencies:
+        - t1
+
+      - name: t3
+        template: tti-pastel-art-2
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t2.outputs.parameters.enhanced_image}}'
+        dependencies:
+        - t2
+
+  - name: tti-pastel-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://<YOUR_TTI_PASTEL_ART_API_ENDPOINT>
+      body:
+        prompt: '{{inputs.parameters.prompt}}'
+      successCondition: response.statusCode == 200
+      outputParameters:
+      - name: image
+        valueFrom:
+          jsonPath: $.path_to_image
+
+  - name: image-enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://<YOUR_IMAGE_ENHANCEMENT_API_ENDPOINT>
+      body:
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+      outputParameters:
+      - name: enhanced_image
+        valueFrom:
+          jsonPath: $.path_to_enhanced_image
+
+  - name: tti-pastel-art-2
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://<YOUR_TTI_PASTEL_ART_API_ENDPOINT>
+      body:
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+      outputParameters:
+      - name: final_image
+        valueFrom:
+          jsonPath: $.path_to_final_image

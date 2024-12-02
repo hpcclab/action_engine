@@ -1,0 +1,83 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-Charcoal-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a charcoal art image of a serene forest.
+      - name: t2
+        dependencies: [t1]
+        template: Image-Resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 1920
+          - name: height
+            value: 1080
+          - name: file
+            value: '{{tasks.t1.outputs.parameters.file}}'
+      - name: t3
+        dependencies: [t2]
+        template: Image-to-PDF-Conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t2.outputs.parameters.file}}'
+
+  - name: tti-Charcoal-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://your-api-url/generate_charcoal_image/
+      body:
+        prompt: '{{inputs.parameters.prompt}}'
+      successCondition: response.statusCode == 200
+      outputParameters:
+      - name: file
+        valueFrom:
+          jsonPath: $.file
+
+  - name: Image-Resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://your-api-url/resize_image/
+      body:
+        width: '{{inputs.parameters.width}}'
+        height: '{{inputs.parameters.height}}'
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+      outputParameters:
+      - name: file
+        valueFrom:
+          jsonPath: $.file
+
+  - name: Image-to-PDF-Conversion
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://your-api-url/convert_to_pdf/
+      body:
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+      outputParameters:
+      - name: file
+        valueFrom:
+          jsonPath: $.file

@@ -1,0 +1,39 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n  - name: main\n    dag:\n    \
+\  tasks:\n      - name: t1\n        template: tti-mosaic-art\n        arguments:\n\
+\          parameters:\n          - name: prompt\n            value: '{{workflow.parameters.prompt}}'\n\
+\      - name: t2\n        template: tti-pastel-art\n        dependencies: [t1]\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: '{{workflow.parameters.prompt}}'\n      - name: t3\n        template: tti-sketching-art\n\
+\        dependencies: [t2]\n        arguments:\n          parameters:\n         \
+\ - name: prompt\n            value: '{{workflow.parameters.prompt}}'\n      - name:
+t4\n        template: image-resizing\n        dependencies: [t3]\n        arguments:\n\
+\          parameters:\n          - name: width\n            value: '1920'\n     \
+\     - name: height\n            value: '1080'\n          - name: file\n        \
+\    value: '{{tasks.t3.outputs.result}}'\n      - name: t5\n        template: image-enhancement\n\
+\        dependencies: [t4]\n        arguments:\n          parameters:\n         \
+\ - name: file\n            value: '{{tasks.t4.outputs.result}}'\n      - name: t6\n\
+\        template: tti-mosaic-art\n        dependencies: [t5]\n        arguments:\n\
+\          parameters:\n          - name: prompt\n            value: '{{workflow.parameters.prompt}}'\n\
+\n  templates:\n  - name: tti-mosaic-art\n    inputs:\n      parameters:\n      -
+name: prompt\n    http:\n      method: POST\n      url: \"http://example.com/generate_mosaic_image/\"\
+\n      body: '{\"prompt\": \"{{inputs.parameters.prompt}}\"}'\n      successCondition:
+\"response.statusCode == 200\"\n      output: \n        result: \"{{response.body}}\"\
+\n    \n  - name: tti-pastel-art\n    inputs:\n      parameters:\n      - name: prompt\n\
+\    http:\n      method: POST\n      url: \"http://example.com/generate_pastel_image/\"\
+\n      body: '{\"prompt\": \"{{inputs.parameters.prompt}}\"}'\n      successCondition:
+\"response.statusCode == 200\"\n      output: \n        result: \"{{response.body}}\"\
+\n\n  - name: tti-sketching-art\n    inputs:\n      parameters:\n      - name: prompt\n\
+\    http:\n      method: POST\n      url: \"http://example.com/generate_sketching_image/\"\
+\n      body: '{\"prompt\": \"{{inputs.parameters.prompt}}\"}'\n      successCondition:
+\"response.statusCode == 200\"\n      output: \n        result: \"{{response.body}}\"\
+\n\n  - name: image-resizing\n    inputs:\n      parameters:\n      - name: width\n\
+\      - name: height\n      - name: file\n    http:\n      method: POST\n      url:
+\"http://example.com/resize_image/\"\n      body: '{\"width\": \"{{inputs.parameters.width}}\"\
+, \"height\": \"{{inputs.parameters.height}}\", \"file\": \"{{inputs.parameters.file}}\"\
+}'\n      successCondition: \"response.statusCode == 200\"\n      output: \n     \
+\   result: \"{{response.body}}\"\n\n  - name: image-enhancement\n    inputs:\n  \
+\    parameters:\n      - name: file\n    http:\n      method: POST\n      url: \"\
+http://example.com/image_enhance/\"\n      body: '{\"file\": \"{{inputs.parameters.file}}\"\
+}'\n      successCondition: \"response.statusCode == 200\"\n      output: \n     \
+\   result: \"{{response.body}}\"\n```"

@@ -1,0 +1,127 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-Mosaic-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate an image of a black cat in mosaic art style.
+      - name: t2
+        dependencies: [t1]
+        template: tti-Pastel-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate an image of a black cat in pastel art style.
+      - name: t3
+        dependencies: [t2]
+        template: tti-Graffiti-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate an image of a black cat in graffiti art style.
+      - name: t4
+        dependencies: [t3]
+        template: Image-Enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t3.outputs.result}}'
+      - name: t5
+        dependencies: [t4]
+        template: Resize-Image
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t4.outputs.result}}'
+          - name: width
+            value: '1920'
+          - name: height
+            value: '1080'
+      - name: t6
+        dependencies: [t5]
+        template: Convert-to-PNG
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t5.outputs.result}}'
+      - name: t7
+        dependencies: [t6]
+        template: Email-Image
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t6.outputs.result}}'
+
+  - name: tti-Mosaic-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_mosaic_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti-Pastel-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_pastel_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti-Graffiti-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_grafiti_image/
+      successCondition: response.statusCode == 200
+
+  - name: Image-Enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/image_enhance/
+      successCondition: response.statusCode == 200
+
+  - name: Resize-Image
+    inputs:
+      parameters:
+      - name: file
+      - name: width
+      - name: height
+    http:
+      method: POST
+      url: http://example.com/resize_image/
+      successCondition: response.statusCode == 200
+
+  - name: Convert-to-PNG
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/convert_to_png/
+      successCondition: response.statusCode == 200
+
+  - name: Email-Image
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/email_image/
+      successCondition: response.statusCode == 200

@@ -1,0 +1,51 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n  - name: main\n    dag:\n    \
+\  tasks:\n      - name: t1\n        template: tti_Mosaic_Art_task\n        arguments:\n\
+\          parameters:\n          - name: prompt\n            value: \"Generate an
+image of a black cat in mosaic art style.\"\n      \n      - name: t2\n        template:
+tti_Pastel_Art_task\n        arguments:\n          parameters:\n          - name:
+prompt\n            value: \"Generate an image of a black cat in pastel art style.\"\
+\n\n      - name: t3\n        template: tti_Graffiti_Art_task\n        arguments:\n\
+\          parameters:\n          - name: prompt\n            value: \"Generate an
+image of a black cat in graffiti art style.\"\n\n      - name: t4\n        template:
+Image_Enhancement_task\n        arguments:\n          parameters:\n          - name:
+file\n            value: \"{{tasks.t1.outputs.result}}\"\n        dependencies: [t1]\n\
+\n      - name: t5\n        template: Resize_Image_task\n        arguments:\n    \
+\      parameters:\n          - name: file\n            value: \"{{tasks.t4.outputs.result}}\"\
+\n        dependencies: [t4]\n\n      - name: t6\n        template: Convert_To_PNG_task\n\
+\        arguments:\n          parameters:\n          - name: file\n            value:
+\"{{tasks.t5.outputs.result}}\"\n        dependencies: [t5]\n\n      - name: t7\n\
+\        template: Email_PNG_task\n        arguments:\n          parameters:\n   \
+\       - name: file\n            value: \"{{tasks.t6.outputs.result}}\"\n       \
+\ dependencies: [t6]\n\n  - name: tti_Mosaic_Art_task\n    inputs:\n      parameters:\n\
+\      - name: prompt\n    http:\n      method: POST\n      url: \"/generate_mosaic_image/\"\
+\n      headers:\n      - name: Content-Type\n        value: application/json\n  \
+\    body: |\n        {\n          \"prompt\": \"{{inputs.parameters.prompt}}\"\n\
+\        }\n      successCondition: response.statusCode == 200\n\n  - name: tti_Pastel_Art_task\n\
+\    inputs:\n      parameters:\n      - name: prompt\n    http:\n      method: POST\n\
+\      url: \"/generate_pastel_image/\"\n      headers:\n      - name: Content-Type\n\
+\        value: application/json\n      body: |\n        {\n          \"prompt\":
+\"{{inputs.parameters.prompt}}\"\n        }\n      successCondition: response.statusCode
+== 200\n\n  - name: tti_Graffiti_Art_task\n    inputs:\n      parameters:\n      -
+name: prompt\n    http:\n      method: POST\n      url: \"/generate_grafiti_image/\"\
+\n      headers:\n      - name: Content-Type\n        value: application/json\n  \
+\    body: |\n        {\n          \"prompt\": \"{{inputs.parameters.prompt}}\"\n\
+\        }\n      successCondition: response.statusCode == 200\n\n  - name: Image_Enhancement_task\n\
+\    inputs:\n      parameters:\n      - name: file\n    http:\n      method: POST\n\
+\      url: \"/image_enhance/\"\n      headers:\n      - name: Content-Type\n    \
+\    value: application/octet-stream\n      body: \"{{inputs.parameters.file}}\"\n\
+\      successCondition: response.statusCode == 200\n\n  - name: Resize_Image_task\n\
+\    inputs:\n      parameters:\n      - name: file\n    script:\n      image: my-image-editing-tool:latest\n\
+\      command: [ \"python\" ]\n      source: |\n        from PIL import Image\n \
+\       import sys\n        input_image_path = sys.argv[1]\n        output_image_path
+= \"resized_image.png\"\n        image = Image.open(input_image_path)\n        image
+= image.resize((1920, 1080))\n        image.save(output_image_path)\n      args: [\"\
+{{inputs.parameters.file}}\"]\n\n  - name: Convert_To_PNG_task\n    inputs:\n    \
+\  parameters:\n      - name: file\n    script:\n      image: my-image-editing-tool:latest\n\
+\      command: [ \"python\" ]\n      source: |\n        from PIL import Image\n \
+\       import sys\n        input_image_path = sys.argv[1]\n        output_image_path
+= \"output_image.png\"\n        image = Image.open(input_image_path)\n        image.save(output_image_path,
+\"PNG\")\n      args: [\"{{inputs.parameters.file}}\"]\n\n  - name: Email_PNG_task\n\
+\    inputs:\n      parameters:\n      - name: file\n    script:\n      image: my-email-api:latest\n\
+\      command: [ \"python\" ]\n      source: |\n        import sys\n        import
+smtplib\n        from email.message import EmailMessage\n        input"

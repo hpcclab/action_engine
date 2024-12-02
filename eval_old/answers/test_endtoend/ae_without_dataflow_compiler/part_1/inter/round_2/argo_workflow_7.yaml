@@ -1,0 +1,101 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-pastel-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Create a pastel art image of a sunset over the ocean.
+      - name: t2
+        template: tti-pastel-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Convert the pastel art image of the sunset over the ocean to a
+              JPEG format.
+        dependencies: [t1]
+      - name: t3
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 1024
+          - name: height
+            value: 768
+          - name: file
+            value: '{{tasks.t2.outputs.result}}'
+        dependencies: [t2]
+      - name: t4
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t3.outputs.result}}'
+        dependencies: [t3]
+      - name: t5
+        template: email-sending
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t4.outputs.result}}'
+        dependencies: [t4]
+
+  - name: tti-pastel-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://your-pastel-art-service/generate_pastel_image/
+      body: '{"prompt": "{{inputs.parameters.prompt}}"}'
+      headers:
+        Content-Type: application/json
+      successCondition: response.statusCode == 200
+
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://your-image-resizing-service/resize_image/
+      body: '{"width": "{{inputs.parameters.width}}", "height": "{{inputs.parameters.height}}",
+        "file": "{{inputs.parameters.file}}"}'
+      headers:
+        Content-Type: application/json
+      successCondition: response.statusCode == 200
+
+  - name: image-enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://your-image-enhancement-service/image_enhance/
+      body: '{"file": "{{inputs.parameters.file}}"}'
+      headers:
+        Content-Type: application/json
+      successCondition: response.statusCode == 200
+
+  - name: email-sending
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://your-email-service/send_email/
+      body: '{"file": "{{inputs.parameters.file}}", "to": "friend@example.com", "subject":
+        "Sunset over the ocean"}'
+      headers:
+        Content-Type: application/json
+      successCondition: response.statusCode == 200

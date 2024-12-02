@@ -1,0 +1,158 @@
+{
+    "test_data": [
+        {
+            "id": 1,
+            "user_request": "I want to create a digital art piece of a futuristic cityscape.",
+            "selected_apis": [
+                {
+                    "name": "tti_Digital_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "user_request": "Can you generate a charcoal art image of a serene forest?",
+            "selected_apis": [
+                {
+                    "name": "tti_Charcoal_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "user_request": "Please create a graffiti-style image with the theme 'urban jungle'.",
+            "selected_apis": [
+                {
+                    "name": "tti_Graffiti_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "user_request": "I need a pastel art image of a sunset over the ocean.",
+            "selected_apis": [
+                {
+                    "name": "tti_Pastel_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "user_request": "Generate a sketching art image of an old library.",
+            "selected_apis": [
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "user_request": "I need to create a digital art piece based on the theme 'A futuristic cityscape at night' and then convert the generated image to a PDF for a presentation.",
+            "selected_apis": [
+                {
+                    "name": "tti_Digital_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "image_to_pdf_conversion",
+                    "parameters": [
+                        "image_file"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "user_request": "I want to generate a graffiti art image with the theme 'Urban jungle' and then resize it to 800x600 pixels for a website banner.",
+            "selected_apis": [
+                {
+                    "name": "tti_Graffiti_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "Image_Resizing",
+                    "parameters": [
+                        "image_file",
+                        "width",
+                        "height"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "user_request": "I need a pastel art image of 'A peaceful beach at sunrise' and then enhance the image quality for printing.",
+            "selected_apis": [
+                {
+                    "name": "tti_Pastel_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "Image_Enhancement",
+                    "parameters": [
+                        "image_file"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "user_request": "Create a sketching art image of 'A bustling marketplace' and convert it to a PDF for an e-book.",
+            "selected_apis": [
+                {
+                    "name": "tti_Sketching_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "image_to_pdf_conversion",
+                    "parameters": [
+                        "image_file"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "user_request": "Generate a mosaic art image with the theme 'Ancient Roman architecture' and resize it to 1024x768 pixels for a digital frame.",
+            "selected_apis": [
+                {
+                    "name": "tti_Mosaic_Art",
+                    "parameters": [
+                        "prompt"
+                    ]
+                },
+                {
+                    "name": "Image_Resizing",
+                    "parameters": [
+                        "image_file",
+                        "width",
+                        "height"
+                    ]
+                }
+            ]
+        }
+    ]
+}

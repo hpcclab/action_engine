@@ -1,0 +1,50 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  arguments:\n    parameters:\n    - name: width\n    - name: height\n\
+\    - name: email\n  entrypoint: main\n  templates:\n  - name: main\n    inputs:\n\
+\      parameters:\n      - name: width\n      - name: height\n      - name: email\n\
+\    dag:\n      tasks:\n      - name: t1\n        template: tti-pastel-art\n    \
+\    arguments:\n          parameters:\n          - name: prompt\n            value:
+\"Create a pastel art image of a sunset over the ocean.\"\n        dependencies: []\n\
+\      - name: t2\n        template: image-conversion\n        arguments:\n      \
+\    parameters:\n          - name: file\n            value: \"{{tasks.t1.outputs.art_image}}\"\
+\n        dependencies:\n        - t1\n      - name: t3\n        template: image-resizing\n\
+\        arguments:\n          parameters:\n          - name: file\n            value:
+\"{{tasks.t2.outputs.converted_image}}\"\n          - name: width\n            value:
+\"{{inputs.parameters.width}}\"\n          - name: height\n            value: \"{{inputs.parameters.height}}\"\
+\n        dependencies:\n        - t2\n      - name: t4\n        template: image-enhancement\n\
+\        arguments:\n          parameters:\n          - name: file\n            value:
+\"{{tasks.t3.outputs.resized_image}}\"\n        dependencies:\n        - t3\n    \
+\  - name: t5\n        template: email-send\n        arguments:\n          parameters:\n\
+\          - name: file\n            value: \"{{tasks.t4.outputs.enhanced_image}}\"\
+\n          - name: email\n            value: \"{{inputs.parameters.email}}\"\n  \
+\      dependencies:\n        - t4\n\n  - name: tti-pastel-art\n    inputs:\n    \
+\  parameters:\n      - name: prompt\n    outputs:\n      parameters:\n      - name:
+art_image\n        valueFrom:\n          path: \"/mnt/results/art_image.png\"\n  \
+\  script:\n      image: python:3.8\n      command: [python]\n      source: |\n  \
+\      import requests\n\n        prompt = \"{{inputs.parameters.prompt}}\"\n    \
+\    response = requests.post('http://pastel-art-api/generate_pastel_image/', json={\"\
+prompt\": prompt})\n        \n        if response.status_code == 200:\n          \
+\  with open('/mnt/results/art_image.png', 'wb') as f:\n                f.write(response.content)\n\
+\        else:\n            raise Exception(f\"Failed to generate pastel art image,
+status_code: {response.status_code}\")\n\n  - name: image-conversion\n    inputs:\n\
+\      parameters:\n      - name: file\n    outputs:\n      parameters:\n      - name:
+converted_image\n        valueFrom:\n          path: \"/mnt/results/converted_image.jpeg\"\
+\n    script:\n      image: python:3.8\n      command: [python]\n      source: |\n\
+\        from PIL import Image\n\n        image = Image.open(\"{{inputs.parameters.file}}\"\
+)\n        image = image.convert(\"RGB\")\n        image.save(\"/mnt/results/converted_image.jpeg\"\
+)\n        \n  - name: image-resizing\n    inputs:\n      parameters:\n      - name:
+file\n      - name: width\n      - name: height\n    outputs:\n      parameters:\n\
+\      - name: resized_image\n        valueFrom:\n          path: \"/mnt/results/resized_image.pdf\"\
+\n    script:\n      image: python:3.8\n      command: [python]\n      source: |\n\
+\        from PIL import Image\n\n        image = Image.open(\"{{inputs.parameters.file}}\"\
+)\n        resized_image = image.resize(({{inputs.parameters.width}}, {{inputs.parameters.height}}))\n\
+\        resized_image.save(\"/mnt/results/resized_image.pdf\", format='PDF')\n\n\
+\  - name: image-enhancement\n    inputs:\n      parameters:\n      - name: file\n\
+\    outputs:\n      parameters:\n      - name: enhanced_image\n        valueFrom:\n\
+\          path: \"/mnt/results/enhanced_image.jpeg\"\n    script:\n      image: python:3.8\n\
+\      command: [python]\n      source: |\n        import cv2\n        import numpy
+as np\n        from PIL import Image\n\n        image = cv2.imread(\"{{inputs.parameters.file}}\"\
+)\n\n        denoised_image = cv2.fastNlMeansDenoisingColored(image, None, 10, 10,
+7, 21)\n        contrast_stretched_image = cv2.normalize(denoised_image, None, 255,
+0, cv2.NORM_MINMAX, cv2.CV_8UC1)\n        kernel = np.array([[0, -1, 0], [-1, 5, -1],
+[0, -1, 0]], np.float32)\n        sharpened_image ="

@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+    dag:
+      tasks:
+      - name: t1
+        template: tti-pastel-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{{{ inputs.parameters.width }}}}' # Replace this with actual input parameter for prompt
+        dependencies: []
+  - name: tti-pastel-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://your-api-endpoint/generate_pastel_image/ # Replace this with actual URL
+      successCondition: response.statusCode == 200
+      headers:
+        Content-Type: application/json
+      body: '{ "prompt": "{{inputs.parameters.prompt}}" }'

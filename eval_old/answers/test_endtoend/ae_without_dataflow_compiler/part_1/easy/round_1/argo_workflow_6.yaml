@@ -1,0 +1,57 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: t1-template
+        arguments:
+          parameters:
+          - name: prompt
+            value: A futuristic cityscape at night
+      - name: t2
+        template: t2-template
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.result}}'
+        dependencies: [t1]
+
+  - name: t1-template
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://your-tti-futuristic-art-api-endpoint.com/generate_futuristic_image/
+      headers:
+        Content-Type: application/json
+      body: |
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }
+      successCondition: response.statusCode == 200
+      output:
+        result: '{{response.body}}'
+
+  - name: t2-template
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://your-image-to-pdf-conversion-api-endpoint.com/convert_to_pdf/
+      headers:
+        Content-Type: multipart/form-data
+      body: |
+        {
+          "file": "{{inputs.parameters.file}}"
+        }
+      successCondition: response.statusCode == 200
+      output:
+        result: '{{response.body}}'

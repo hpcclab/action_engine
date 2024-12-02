@@ -1,0 +1,2129 @@
+[
+    {
+        "id": 1,
+        "number_of_node": 3,
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a digital art piece of a futuristic cityscape."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Enhance the quality of the digital art piece of the futuristic cityscape."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Convert the enhanced digital art piece of the futuristic cityscape into PDF format for a presentation."
+            }
+        ],
+        "topological_order": [
+            {
+                "state": "sequential",
+                "task_nums": [
+                    1
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    2
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    3
+                ]
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Digital_Art",
+                "input_params": [
+                    {
+                        "name": "prompt",
+                        "datatype": "string",
+                        "description": "The 'prompt' parameter is a user prompt in string data type, which serves as the input for this API. It describes the desired content or concept for the digital artwork generation process. The prompt is essential for guiding the model in creating visually striking digital art images based on the user's input, enabling users to convert their ideas into unique digital artworks."
+                    }
+                ],
+                "dependencies": [],
+                "depended_params": [
+                    {
+                        "prompt": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "A single image file in supported formats (.bmp .jpeg .png etc.) required for enhancing the quality of the image by applying denoising, contrast stretching, sharpening, brightness adjustment, and gamma correction techniques to improve its visual quality."
+                    }
+                ],
+                "dependencies": [
+                    "t1"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter should be a binary image file in one of the supported formats: JPEG, PNG, GIF, BMP, TIFF, PBM, PGM, or PPM. This parameter is required for the 'image_to_pdf_conversion' API to receive the input image file that will be converted to a PDF document. The API processes the provided image file and generates a PDF output, enabling users to efficiently transform visual content into a universally accessible format for sharing, printing, or archiving purposes."
+                    }
+                ],
+                "dependencies": [
+                    "t2"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t2"
+                    }
+                ]
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_Digital_Art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "number_of_node": 3,
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Generate a charcoal art image of a serene forest."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Resize the charcoal art image of the serene forest to 1920x1080 pixels."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Convert the resized charcoal art image of the serene forest to a PDF for printing."
+            }
+        ],
+        "topological_order": [
+            {
+                "state": "sequential",
+                "task_nums": [
+                    1
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    2
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    3
+                ]
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Charcoal_Art",
+                "input_params": [
+                    {
+                        "name": "prompt",
+                        "datatype": "string",
+                        "description": "The 'prompt' parameter is a user prompt in string data type. It is required for the API to generate a visually engaging charcoal art style image based on the content or theme specified by the user. The prompt serves as the input text that will be transformed into a unique charcoal art representation by the API."
+                    }
+                ],
+                "dependencies": [],
+                "depended_params": []
+            },
+            {
+                "name": "Image_Resizing",
+                "input_params": [
+                    {
+                        "name": "width",
+                        "datatype": "int",
+                        "description": "The 'width' parameter specifies the desired width dimension for resizing the user-uploaded image file. This parameter is essential for determining the new width of the image during the resizing process. It plays a crucial role in adjusting the dimensions of the image according to user requirements, ensuring the output meets the specified width criteria for the resized image."
+                    },
+                    {
+                        "name": "height",
+                        "datatype": "int",
+                        "description": "The height parameter specifies the desired height dimension for resizing the user-uploaded image file. This parameter is essential for determining the final dimensions of the resized image, ensuring that the output meets the user's requirements for image size adjustments."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter of datatype 'binary_image_file' is required for this API as it serves as the input containing the image file uploaded by the user. This parameter is essential for the 'Image_Resizing' API to receive the binary form of the image file, enabling the resizing process to be carried out on the user-provided visual content."
+                    }
+                ],
+                "dependencies": [
+                    "t1"
+                ],
+                "depended_params": [
+                    {
+                        "width": "t1"
+                    },
+                    {
+                        "height": "t1"
+                    },
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter should be a binary image file in one of the supported formats: JPEG, PNG, GIF, BMP, TIFF, PBM, PGM, or PPM. This parameter is required for the 'image_to_pdf_conversion' API to receive the input image file that will be converted to a PDF document. The API processes the provided image file and generates a PDF output, enabling users to efficiently transform visual content into a universally accessible format for sharing, printing, or archiving purposes."
+                    }
+                ],
+                "dependencies": [
+                    "t2"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t2"
+                    }
+                ]
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_Charcoal_Art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": []
+            },
+            {
+                "name": "Image_Resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "width",
+                    "height",
+                    "file"
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "number_of_node": 3,
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a pastel art image of a sunset over the ocean."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Enhance the quality of the pastel art image of the sunset over the ocean."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Send the enhanced pastel art image via email to the colleague."
+            }
+        ],
+        "topological_order": [
+            {
+                "state": "sequential",
+                "task_nums": [
+                    1
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    2
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    3
+                ]
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Pastel_Art",
+                "input_params": [
+                    {
+                        "name": "prompt",
+                        "datatype": "string",
+                        "description": "The prompt parameter is a string data type that serves as a user input to guide the generation of a unique pastel art piece using a pre-trained model specialized for the pastel art style. It is essential for users to provide a creative prompt that influences the artistic output of the API, allowing them to translate their ideas into visually appealing pastel art images."
+                    }
+                ],
+                "dependencies": [],
+                "depended_params": [
+                    {
+                        "prompt": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "A single image file in supported formats (.bmp .jpeg .png etc.) required for enhancing the quality of the image by applying denoising, contrast stretching, sharpening, brightness adjustment, and gamma correction techniques to improve its visual quality."
+                    }
+                ],
+                "dependencies": [
+                    "t1"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "send_email",
+                "input_params": [
+                    {
+                        "name": "sender_address",
+                        "datatype": "string",
+                        "description": "The sender's email address is required to specify the email sender when using the 'send_email' API. This parameter ensures that the email is sent from the correct sender's address, allowing for proper identification and communication between the sender and the receiver."
+                    },
+                    {
+                        "name": "receiver_address",
+                        "datatype": "string",
+                        "description": "The receiver_address parameter is a string datatype that represents the email address of the recipient to whom the email will be sent. This parameter is required for the 'send_email' API to specify the destination of the email communication."
+                    },
+                    {
+                        "name": "message_text",
+                        "datatype": "string",
+                        "description": "The 'message_text' parameter is a string datatype that represents the content of the email message. It is a required input for the 'send_email' API as it contains the main body of the email that will be sent to the recipient. The message_text parameter allows users to input the text content of the email message, enabling effective communication and information sharing through the email service."
+                    },
+                    {
+                        "name": "message_subject",
+                        "datatype": "string",
+                        "description": "The 'message_subject' parameter is a string datatype that represents the subject line of the email message. It is a required input for the 'send_email' API function as it provides essential context and information about the content of the email being sent. Including a subject line helps recipients quickly understand the purpose or topic of the email, enhancing communication efficiency and clarity during email correspondence."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter is required to attach an image, audio, or any generic file in binary format to the email message being sent. This parameter allows users to include additional files along with the email content, enhancing the communication experience and enabling file sharing through the 'send_email' API."
+                    }
+                ],
+                "dependencies": [
+                    "t2"
+                ],
+                "depended_params": [
+                    {
+                        "sender_address": "t1"
+                    },
+                    {
+                        "receiver_address": "t3"
+                    },
+                    {
+                        "file": "t2"
+                    }
+                ]
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_Pastel_Art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "all_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_text",
+                    "message_subject",
+                    "file"
+                ],
+                "user_input": [
+                    "message_text",
+                    "message_subject"
+                ],
+                "dependent_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "number_of_node": 3,
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a sketching art image of a bustling marketplace."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Convert the sketching art image of the bustling marketplace to a PNG format."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Resize the sketching art image of the bustling marketplace to 800x600 pixels for a website."
+            }
+        ],
+        "topological_order": [
+            {
+                "state": "sequential",
+                "task_nums": [
+                    1
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    2
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    3
+                ]
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Sketching_Art",
+                "input_params": [
+                    {
+                        "name": "prompt",
+                        "datatype": "string",
+                        "description": "The 'prompt' parameter is a user-provided textual prompt in string format that serves as the input for generating artistic sketching images. It is essential for guiding the AI model to create visually striking sketching art style images based on the user's creative input."
+                    }
+                ],
+                "dependencies": [],
+                "depended_params": [
+                    {
+                        "prompt": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_format_converter",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter is a binary_image_file that represents the image file to be uploaded and converted to a specified format. This parameter is required for the 'convert_image' function to receive the input image file for processing and conversion. The function reads the contents of the uploaded file, opens it using the PIL library, saves it in the desired format, and returns the converted image file as a response. The 'file' parameter plays a crucial role in the image conversion process within the 'image_format_converter' function."
+                    },
+                    {
+                        "name": "output_format",
+                        "datatype": "string",
+                        "description": "The 'output_format' parameter specifies the desired image format to which the uploaded image should be converted. It is a string datatype representing the file format such as JPEG, PNG, GIF, BMP, TIFF, PBM, PGM, PPM, or JPG. This parameter is essential for the 'image_format_converter' function to determine the output format for the converted image file."
+                    }
+                ],
+                "dependencies": [
+                    "t1"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t1"
+                    },
+                    {
+                        "output_format": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "input_params": [
+                    {
+                        "name": "width",
+                        "datatype": "int",
+                        "description": "The 'width' parameter specifies the desired width dimension for resizing the user-uploaded image file. This parameter is essential for determining the new width of the image during the resizing process. It plays a crucial role in adjusting the dimensions of the image according to user requirements, ensuring the output meets the specified width criteria for the resized image."
+                    },
+                    {
+                        "name": "height",
+                        "datatype": "int",
+                        "description": "The height parameter specifies the desired height dimension for resizing the user-uploaded image file. This parameter is essential for determining the final dimensions of the resized image, ensuring that the output meets the user's requirements for image size adjustments."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter of datatype 'binary_image_file' is required for this API as it serves as the input containing the image file uploaded by the user. This parameter is essential for the 'Image_Resizing' API to receive the binary form of the image file, enabling the resizing process to be carried out on the user-provided visual content."
+                    }
+                ],
+                "dependencies": [
+                    "t2"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t2"
+                    }
+                ]
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_Sketching_Art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "image_format_converter",
+                "all_params": [
+                    "file",
+                    "output_format"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file",
+                    "output_format"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [
+                    "width",
+                    "height"
+                ],
+                "dependent_params": [
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "number_of_node": 5,
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a digital art piece of a futuristic cityscape at night."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Convert the digital art piece of a futuristic cityscape at night to a PDF format."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Resize the PDF of the futuristic cityscape at night to 1920x1080 pixels."
+            },
+            {
+                "task_number": 4,
+                "task_description": "Enhance the image quality of the resized PDF of the futuristic cityscape at night."
+            },
+            {
+                "task_number": 5,
+                "task_description": "Send the enhanced PDF of the futuristic cityscape at night via email."
+            }
+        ],
+        "topological_order": [
+            {
+                "state": "sequential",
+                "task_nums": [
+                    1
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    2
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    3
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    4
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    5
+                ]
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Digital_Art",
+                "input_params": [
+                    {
+                        "name": "prompt",
+                        "datatype": "string",
+                        "description": "The 'prompt' parameter is a user prompt in string data type, which serves as the input for this API. It describes the desired content or concept for the digital artwork generation process. The prompt is essential for guiding the model in creating visually striking digital art images based on the user's input, enabling users to convert their ideas into unique digital artworks."
+                    }
+                ],
+                "dependencies": [],
+                "depended_params": [
+                    {
+                        "prompt": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter should be a binary image file in one of the supported formats: JPEG, PNG, GIF, BMP, TIFF, PBM, PGM, or PPM. This parameter is required for the 'image_to_pdf_conversion' API to receive the input image file that will be converted to a PDF document. The API processes the provided image file and generates a PDF output, enabling users to efficiently transform visual content into a universally accessible format for sharing, printing, or archiving purposes."
+                    }
+                ],
+                "dependencies": [
+                    "t1"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "input_params": [
+                    {
+                        "name": "width",
+                        "datatype": "int",
+                        "description": "The 'width' parameter specifies the desired width dimension for resizing the user-uploaded image file. This parameter is essential for determining the new width of the image during the resizing process. It plays a crucial role in adjusting the dimensions of the image according to user requirements, ensuring the output meets the specified width criteria for the resized image."
+                    },
+                    {
+                        "name": "height",
+                        "datatype": "int",
+                        "description": "The height parameter specifies the desired height dimension for resizing the user-uploaded image file. This parameter is essential for determining the final dimensions of the resized image, ensuring that the output meets the user's requirements for image size adjustments."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter of datatype 'binary_image_file' is required for this API as it serves as the input containing the image file uploaded by the user. This parameter is essential for the 'Image_Resizing' API to receive the binary form of the image file, enabling the resizing process to be carried out on the user-provided visual content."
+                    }
+                ],
+                "dependencies": [
+                    "t2"
+                ],
+                "depended_params": [
+                    {
+                        "height": "t2"
+                    },
+                    {
+                        "file": "t2"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "A single image file in supported formats (.bmp .jpeg .png etc.) required for enhancing the quality of the image by applying denoising, contrast stretching, sharpening, brightness adjustment, and gamma correction techniques to improve its visual quality."
+                    }
+                ],
+                "dependencies": [
+                    "t3"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t3"
+                    }
+                ]
+            },
+            {
+                "name": "send_email",
+                "input_params": [
+                    {
+                        "name": "sender_address",
+                        "datatype": "string",
+                        "description": "The sender's email address is required to specify the email sender when using the 'send_email' API. This parameter ensures that the email is sent from the correct sender's address, allowing for proper identification and communication between the sender and the receiver."
+                    },
+                    {
+                        "name": "receiver_address",
+                        "datatype": "string",
+                        "description": "The receiver_address parameter is a string datatype that represents the email address of the recipient to whom the email will be sent. This parameter is required for the 'send_email' API to specify the destination of the email communication."
+                    },
+                    {
+                        "name": "message_text",
+                        "datatype": "string",
+                        "description": "The 'message_text' parameter is a string datatype that represents the content of the email message. It is a required input for the 'send_email' API as it contains the main body of the email that will be sent to the recipient. The message_text parameter allows users to input the text content of the email message, enabling effective communication and information sharing through the email service."
+                    },
+                    {
+                        "name": "message_subject",
+                        "datatype": "string",
+                        "description": "The 'message_subject' parameter is a string datatype that represents the subject line of the email message. It is a required input for the 'send_email' API function as it provides essential context and information about the content of the email being sent. Including a subject line helps recipients quickly understand the purpose or topic of the email, enhancing communication efficiency and clarity during email correspondence."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter is required to attach an image, audio, or any generic file in binary format to the email message being sent. This parameter allows users to include additional files along with the email content, enhancing the communication experience and enabling file sharing through the 'send_email' API."
+                    }
+                ],
+                "dependencies": [
+                    "t4"
+                ],
+                "depended_params": [
+                    {
+                        "sender_address": "t5"
+                    },
+                    {
+                        "receiver_address": "t5"
+                    },
+                    {
+                        "message_subject": "t4"
+                    },
+                    {
+                        "file": "t4"
+                    }
+                ]
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_Digital_Art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [
+                    "width"
+                ],
+                "dependent_params": [
+                    "height",
+                    "file"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "all_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_text",
+                    "message_subject",
+                    "file"
+                ],
+                "user_input": [
+                    "message_text"
+                ],
+                "dependent_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_subject",
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "number_of_node": 5,
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a charcoal art image of a New York landscape in 1990."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Convert the charcoal art image of the New York landscape in 1990 to PNG format."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Resize the PNG image of the New York landscape in 1990 to 800x600 pixels."
+            },
+            {
+                "task_number": 4,
+                "task_description": "Enhance the quality of the resized PNG image of the New York landscape in 1990."
+            },
+            {
+                "task_number": 5,
+                "task_description": "Send the enhanced PNG image of the New York landscape in 1990 to my colleague via email."
+            }
+        ],
+        "topological_order": [
+            {
+                "state": "sequential",
+                "task_nums": [
+                    1
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    2
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    3
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    4
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    5
+                ]
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Charcoal_Art",
+                "input_params": [
+                    {
+                        "name": "prompt",
+                        "datatype": "string",
+                        "description": "The 'prompt' parameter is a user prompt in string data type. It is required for the API to generate a visually engaging charcoal art style image based on the content or theme specified by the user. The prompt serves as the input text that will be transformed into a unique charcoal art representation by the API."
+                    }
+                ],
+                "dependencies": [],
+                "depended_params": [
+                    {
+                        "prompt": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_format_converter",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter is a binary_image_file that represents the image file to be uploaded and converted to a specified format. This parameter is required for the 'convert_image' function to receive the input image file for processing and conversion. The function reads the contents of the uploaded file, opens it using the PIL library, saves it in the desired format, and returns the converted image file as a response. The 'file' parameter plays a crucial role in the image conversion process within the 'image_format_converter' function."
+                    },
+                    {
+                        "name": "output_format",
+                        "datatype": "string",
+                        "description": "The 'output_format' parameter specifies the desired image format to which the uploaded image should be converted. It is a string datatype representing the file format such as JPEG, PNG, GIF, BMP, TIFF, PBM, PGM, PPM, or JPG. This parameter is essential for the 'image_format_converter' function to determine the output format for the converted image file."
+                    }
+                ],
+                "dependencies": [
+                    "t1"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t1"
+                    },
+                    {
+                        "output_format": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "input_params": [
+                    {
+                        "name": "width",
+                        "datatype": "int",
+                        "description": "The 'width' parameter specifies the desired width dimension for resizing the user-uploaded image file. This parameter is essential for determining the new width of the image during the resizing process. It plays a crucial role in adjusting the dimensions of the image according to user requirements, ensuring the output meets the specified width criteria for the resized image."
+                    },
+                    {
+                        "name": "height",
+                        "datatype": "int",
+                        "description": "The height parameter specifies the desired height dimension for resizing the user-uploaded image file. This parameter is essential for determining the final dimensions of the resized image, ensuring that the output meets the user's requirements for image size adjustments."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter of datatype 'binary_image_file' is required for this API as it serves as the input containing the image file uploaded by the user. This parameter is essential for the 'Image_Resizing' API to receive the binary form of the image file, enabling the resizing process to be carried out on the user-provided visual content."
+                    }
+                ],
+                "dependencies": [
+                    "t2"
+                ],
+                "depended_params": [
+                    {
+                        "width": "t2"
+                    },
+                    {
+                        "height": "t2"
+                    },
+                    {
+                        "file": "t2"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "A single image file in supported formats (.bmp .jpeg .png etc.) required for enhancing the quality of the image by applying denoising, contrast stretching, sharpening, brightness adjustment, and gamma correction techniques to improve its visual quality."
+                    }
+                ],
+                "dependencies": [
+                    "t3"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t3"
+                    }
+                ]
+            },
+            {
+                "name": "send_email",
+                "input_params": [
+                    {
+                        "name": "sender_address",
+                        "datatype": "string",
+                        "description": "The sender's email address is required to specify the email sender when using the 'send_email' API. This parameter ensures that the email is sent from the correct sender's address, allowing for proper identification and communication between the sender and the receiver."
+                    },
+                    {
+                        "name": "receiver_address",
+                        "datatype": "string",
+                        "description": "The receiver_address parameter is a string datatype that represents the email address of the recipient to whom the email will be sent. This parameter is required for the 'send_email' API to specify the destination of the email communication."
+                    },
+                    {
+                        "name": "message_text",
+                        "datatype": "string",
+                        "description": "The 'message_text' parameter is a string datatype that represents the content of the email message. It is a required input for the 'send_email' API as it contains the main body of the email that will be sent to the recipient. The message_text parameter allows users to input the text content of the email message, enabling effective communication and information sharing through the email service."
+                    },
+                    {
+                        "name": "message_subject",
+                        "datatype": "string",
+                        "description": "The 'message_subject' parameter is a string datatype that represents the subject line of the email message. It is a required input for the 'send_email' API function as it provides essential context and information about the content of the email being sent. Including a subject line helps recipients quickly understand the purpose or topic of the email, enhancing communication efficiency and clarity during email correspondence."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter is required to attach an image, audio, or any generic file in binary format to the email message being sent. This parameter allows users to include additional files along with the email content, enhancing the communication experience and enabling file sharing through the 'send_email' API."
+                    }
+                ],
+                "dependencies": [
+                    "t4"
+                ],
+                "depended_params": [
+                    {
+                        "sender_address": "t2"
+                    },
+                    {
+                        "receiver_address": "t5"
+                    },
+                    {
+                        "message_subject": "t5"
+                    },
+                    {
+                        "file": "t4"
+                    }
+                ]
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_Charcoal_Art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "image_format_converter",
+                "all_params": [
+                    "file",
+                    "output_format"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file",
+                    "output_format"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "width",
+                    "height",
+                    "file"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "all_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_text",
+                    "message_subject",
+                    "file"
+                ],
+                "user_input": [
+                    "message_text"
+                ],
+                "dependent_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_subject",
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "number_of_node": 5,
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a pastel art image of a sunset over the ocean."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Convert the pastel art image of the sunset over the ocean to a JPEG format."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Resize the JPEG image of the sunset over the ocean to 1024x768 pixels."
+            },
+            {
+                "task_number": 4,
+                "task_description": "Enhance the quality of the resized JPEG image of the sunset over the ocean."
+            },
+            {
+                "task_number": 5,
+                "task_description": "Send the enhanced JPEG image of the sunset over the ocean to my friend via email."
+            }
+        ],
+        "topological_order": [
+            {
+                "state": "sequential",
+                "task_nums": [
+                    1
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    2
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    3
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    4
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    5
+                ]
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Pastel_Art",
+                "input_params": [
+                    {
+                        "name": "prompt",
+                        "datatype": "string",
+                        "description": "The prompt parameter is a string data type that serves as a user input to guide the generation of a unique pastel art piece using a pre-trained model specialized for the pastel art style. It is essential for users to provide a creative prompt that influences the artistic output of the API, allowing them to translate their ideas into visually appealing pastel art images."
+                    }
+                ],
+                "dependencies": [],
+                "depended_params": [
+                    {
+                        "prompt": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_format_converter",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter is a binary_image_file that represents the image file to be uploaded and converted to a specified format. This parameter is required for the 'convert_image' function to receive the input image file for processing and conversion. The function reads the contents of the uploaded file, opens it using the PIL library, saves it in the desired format, and returns the converted image file as a response. The 'file' parameter plays a crucial role in the image conversion process within the 'image_format_converter' function."
+                    },
+                    {
+                        "name": "output_format",
+                        "datatype": "string",
+                        "description": "The 'output_format' parameter specifies the desired image format to which the uploaded image should be converted. It is a string datatype representing the file format such as JPEG, PNG, GIF, BMP, TIFF, PBM, PGM, PPM, or JPG. This parameter is essential for the 'image_format_converter' function to determine the output format for the converted image file."
+                    }
+                ],
+                "dependencies": [
+                    "t1"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t1"
+                    },
+                    {
+                        "output_format": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "input_params": [
+                    {
+                        "name": "width",
+                        "datatype": "int",
+                        "description": "The 'width' parameter specifies the desired width dimension for resizing the user-uploaded image file. This parameter is essential for determining the new width of the image during the resizing process. It plays a crucial role in adjusting the dimensions of the image according to user requirements, ensuring the output meets the specified width criteria for the resized image."
+                    },
+                    {
+                        "name": "height",
+                        "datatype": "int",
+                        "description": "The height parameter specifies the desired height dimension for resizing the user-uploaded image file. This parameter is essential for determining the final dimensions of the resized image, ensuring that the output meets the user's requirements for image size adjustments."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter of datatype 'binary_image_file' is required for this API as it serves as the input containing the image file uploaded by the user. This parameter is essential for the 'Image_Resizing' API to receive the binary form of the image file, enabling the resizing process to be carried out on the user-provided visual content."
+                    }
+                ],
+                "dependencies": [
+                    "t2"
+                ],
+                "depended_params": [
+                    {
+                        "width": "t2"
+                    },
+                    {
+                        "height": "t2"
+                    },
+                    {
+                        "file": "t2"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "A single image file in supported formats (.bmp .jpeg .png etc.) required for enhancing the quality of the image by applying denoising, contrast stretching, sharpening, brightness adjustment, and gamma correction techniques to improve its visual quality."
+                    }
+                ],
+                "dependencies": [
+                    "t3"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t3"
+                    }
+                ]
+            },
+            {
+                "name": "send_email",
+                "input_params": [
+                    {
+                        "name": "sender_address",
+                        "datatype": "string",
+                        "description": "The sender's email address is required to specify the email sender when using the 'send_email' API. This parameter ensures that the email is sent from the correct sender's address, allowing for proper identification and communication between the sender and the receiver."
+                    },
+                    {
+                        "name": "receiver_address",
+                        "datatype": "string",
+                        "description": "The receiver_address parameter is a string datatype that represents the email address of the recipient to whom the email will be sent. This parameter is required for the 'send_email' API to specify the destination of the email communication."
+                    },
+                    {
+                        "name": "message_text",
+                        "datatype": "string",
+                        "description": "The 'message_text' parameter is a string datatype that represents the content of the email message. It is a required input for the 'send_email' API as it contains the main body of the email that will be sent to the recipient. The message_text parameter allows users to input the text content of the email message, enabling effective communication and information sharing through the email service."
+                    },
+                    {
+                        "name": "message_subject",
+                        "datatype": "string",
+                        "description": "The 'message_subject' parameter is a string datatype that represents the subject line of the email message. It is a required input for the 'send_email' API function as it provides essential context and information about the content of the email being sent. Including a subject line helps recipients quickly understand the purpose or topic of the email, enhancing communication efficiency and clarity during email correspondence."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter is required to attach an image, audio, or any generic file in binary format to the email message being sent. This parameter allows users to include additional files along with the email content, enhancing the communication experience and enabling file sharing through the 'send_email' API."
+                    }
+                ],
+                "dependencies": [
+                    "t4"
+                ],
+                "depended_params": [
+                    {
+                        "sender_address": "t4"
+                    },
+                    {
+                        "receiver_address": "t5"
+                    },
+                    {
+                        "file": "t4"
+                    }
+                ]
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_Pastel_Art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "image_format_converter",
+                "all_params": [
+                    "file",
+                    "output_format"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file",
+                    "output_format"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "width",
+                    "height",
+                    "file"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "all_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_text",
+                    "message_subject",
+                    "file"
+                ],
+                "user_input": [
+                    "message_text",
+                    "message_subject"
+                ],
+                "dependent_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "number_of_node": 5,
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a digital art piece of a futuristic cityscape at night, with neon lights and flying cars."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Resize the digital art piece to 1920x1080 pixels."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Enhance the quality of the resized digital art piece."
+            },
+            {
+                "task_number": 4,
+                "task_description": "Convert the enhanced digital art piece into a PDF format."
+            },
+            {
+                "task_number": 5,
+                "task_description": "Send the PDF of the digital art piece to the user's email."
+            }
+        ],
+        "topological_order": [
+            {
+                "state": "sequential",
+                "task_nums": [
+                    1
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    2
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    3
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    4
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    5
+                ]
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Futuristic_Art",
+                "input_params": [
+                    {
+                        "name": "prompt",
+                        "datatype": "string",
+                        "description": "The 'prompt' parameter is a user prompt in string data type. It is required for the API to generate visually captivating images inspired by Futuristic art. The prompt serves as the input text that will be processed by a pre-trained model to create artwork embodying Futuristic art aesthetics. This parameter is essential for users to provide the specific textual content that will be transformed into a Futuristic art-themed visual representation."
+                    }
+                ],
+                "dependencies": [],
+                "depended_params": [
+                    {
+                        "prompt": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter should be a binary image file in one of the supported formats: JPEG, PNG, GIF, BMP, TIFF, PBM, PGM, or PPM. This parameter is required for the 'image_to_pdf_conversion' API to receive the input image file that will be converted to a PDF document. The API processes the provided image file and generates a PDF output, enabling users to efficiently transform visual content into a universally accessible format for sharing, printing, or archiving purposes."
+                    }
+                ],
+                "dependencies": [
+                    "t1"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "input_params": [
+                    {
+                        "name": "width",
+                        "datatype": "int",
+                        "description": "The 'width' parameter specifies the desired width dimension for resizing the user-uploaded image file. This parameter is essential for determining the new width of the image during the resizing process. It plays a crucial role in adjusting the dimensions of the image according to user requirements, ensuring the output meets the specified width criteria for the resized image."
+                    },
+                    {
+                        "name": "height",
+                        "datatype": "int",
+                        "description": "The height parameter specifies the desired height dimension for resizing the user-uploaded image file. This parameter is essential for determining the final dimensions of the resized image, ensuring that the output meets the user's requirements for image size adjustments."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter of datatype 'binary_image_file' is required for this API as it serves as the input containing the image file uploaded by the user. This parameter is essential for the 'Image_Resizing' API to receive the binary form of the image file, enabling the resizing process to be carried out on the user-provided visual content."
+                    }
+                ],
+                "dependencies": [
+                    "t2"
+                ],
+                "depended_params": [
+                    {
+                        "width": "t2"
+                    },
+                    {
+                        "height": "t2"
+                    },
+                    {
+                        "file": "t2"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "A single image file in supported formats (.bmp .jpeg .png etc.) required for enhancing the quality of the image by applying denoising, contrast stretching, sharpening, brightness adjustment, and gamma correction techniques to improve its visual quality."
+                    }
+                ],
+                "dependencies": [
+                    "t3"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t3"
+                    }
+                ]
+            },
+            {
+                "name": "send_email",
+                "input_params": [
+                    {
+                        "name": "sender_address",
+                        "datatype": "string",
+                        "description": "The sender's email address is required to specify the email sender when using the 'send_email' API. This parameter ensures that the email is sent from the correct sender's address, allowing for proper identification and communication between the sender and the receiver."
+                    },
+                    {
+                        "name": "receiver_address",
+                        "datatype": "string",
+                        "description": "The receiver_address parameter is a string datatype that represents the email address of the recipient to whom the email will be sent. This parameter is required for the 'send_email' API to specify the destination of the email communication."
+                    },
+                    {
+                        "name": "message_text",
+                        "datatype": "string",
+                        "description": "The 'message_text' parameter is a string datatype that represents the content of the email message. It is a required input for the 'send_email' API as it contains the main body of the email that will be sent to the recipient. The message_text parameter allows users to input the text content of the email message, enabling effective communication and information sharing through the email service."
+                    },
+                    {
+                        "name": "message_subject",
+                        "datatype": "string",
+                        "description": "The 'message_subject' parameter is a string datatype that represents the subject line of the email message. It is a required input for the 'send_email' API function as it provides essential context and information about the content of the email being sent. Including a subject line helps recipients quickly understand the purpose or topic of the email, enhancing communication efficiency and clarity during email correspondence."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter is required to attach an image, audio, or any generic file in binary format to the email message being sent. This parameter allows users to include additional files along with the email content, enhancing the communication experience and enabling file sharing through the 'send_email' API."
+                    }
+                ],
+                "dependencies": [
+                    "t4"
+                ],
+                "depended_params": [
+                    {
+                        "sender_address": "t4"
+                    },
+                    {
+                        "receiver_address": "t4"
+                    },
+                    {
+                        "message_subject": "t5"
+                    },
+                    {
+                        "file": "t2"
+                    }
+                ]
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_Futuristic_Art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "width",
+                    "height",
+                    "file"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "all_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_text",
+                    "message_subject",
+                    "file"
+                ],
+                "user_input": [
+                    "message_text"
+                ],
+                "dependent_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_subject",
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "number_of_node": 5,
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a sketch of a castle surrounded by a dense forest."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Resize the sketch of the castle surrounded by a dense forest to 1280x720 pixels."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Enhance the image quality of the resized sketch of the castle surrounded by a dense forest."
+            },
+            {
+                "task_number": 4,
+                "task_description": "Convert the enhanced sketch of the castle surrounded by a dense forest to a PDF format."
+            },
+            {
+                "task_number": 5,
+                "task_description": "Send the PDF of the enhanced sketch of the castle surrounded by a dense forest to the colleague's email."
+            }
+        ],
+        "topological_order": [
+            {
+                "state": "sequential",
+                "task_nums": [
+                    1
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    2
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    3
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    4
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    5
+                ]
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Sketching_Art",
+                "input_params": [
+                    {
+                        "name": "prompt",
+                        "datatype": "string",
+                        "description": "The 'prompt' parameter is a user-provided textual prompt in string format that serves as the input for generating artistic sketching images. It is essential for guiding the AI model to create visually striking sketching art style images based on the user's creative input."
+                    }
+                ],
+                "dependencies": [],
+                "depended_params": [
+                    {
+                        "prompt": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "input_params": [
+                    {
+                        "name": "width",
+                        "datatype": "int",
+                        "description": "The 'width' parameter specifies the desired width dimension for resizing the user-uploaded image file. This parameter is essential for determining the new width of the image during the resizing process. It plays a crucial role in adjusting the dimensions of the image according to user requirements, ensuring the output meets the specified width criteria for the resized image."
+                    },
+                    {
+                        "name": "height",
+                        "datatype": "int",
+                        "description": "The height parameter specifies the desired height dimension for resizing the user-uploaded image file. This parameter is essential for determining the final dimensions of the resized image, ensuring that the output meets the user's requirements for image size adjustments."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter of datatype 'binary_image_file' is required for this API as it serves as the input containing the image file uploaded by the user. This parameter is essential for the 'Image_Resizing' API to receive the binary form of the image file, enabling the resizing process to be carried out on the user-provided visual content."
+                    }
+                ],
+                "dependencies": [
+                    "t1"
+                ],
+                "depended_params": [
+                    {
+                        "width": "t1"
+                    },
+                    {
+                        "height": "t1"
+                    },
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "A single image file in supported formats (.bmp .jpeg .png etc.) required for enhancing the quality of the image by applying denoising, contrast stretching, sharpening, brightness adjustment, and gamma correction techniques to improve its visual quality."
+                    }
+                ],
+                "dependencies": [
+                    "t2"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t2"
+                    }
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter should be a binary image file in one of the supported formats: JPEG, PNG, GIF, BMP, TIFF, PBM, PGM, or PPM. This parameter is required for the 'image_to_pdf_conversion' API to receive the input image file that will be converted to a PDF document. The API processes the provided image file and generates a PDF output, enabling users to efficiently transform visual content into a universally accessible format for sharing, printing, or archiving purposes."
+                    }
+                ],
+                "dependencies": [
+                    "t3"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t3"
+                    }
+                ]
+            },
+            {
+                "name": "send_email",
+                "input_params": [
+                    {
+                        "name": "sender_address",
+                        "datatype": "string",
+                        "description": "The sender's email address is required to specify the email sender when using the 'send_email' API. This parameter ensures that the email is sent from the correct sender's address, allowing for proper identification and communication between the sender and the receiver."
+                    },
+                    {
+                        "name": "receiver_address",
+                        "datatype": "string",
+                        "description": "The receiver_address parameter is a string datatype that represents the email address of the recipient to whom the email will be sent. This parameter is required for the 'send_email' API to specify the destination of the email communication."
+                    },
+                    {
+                        "name": "message_text",
+                        "datatype": "string",
+                        "description": "The 'message_text' parameter is a string datatype that represents the content of the email message. It is a required input for the 'send_email' API as it contains the main body of the email that will be sent to the recipient. The message_text parameter allows users to input the text content of the email message, enabling effective communication and information sharing through the email service."
+                    },
+                    {
+                        "name": "message_subject",
+                        "datatype": "string",
+                        "description": "The 'message_subject' parameter is a string datatype that represents the subject line of the email message. It is a required input for the 'send_email' API function as it provides essential context and information about the content of the email being sent. Including a subject line helps recipients quickly understand the purpose or topic of the email, enhancing communication efficiency and clarity during email correspondence."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter is required to attach an image, audio, or any generic file in binary format to the email message being sent. This parameter allows users to include additional files along with the email content, enhancing the communication experience and enabling file sharing through the 'send_email' API."
+                    }
+                ],
+                "dependencies": [
+                    "t4"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t4"
+                    }
+                ]
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_Sketching_Art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "width",
+                    "height",
+                    "file"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "all_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_text",
+                    "message_subject",
+                    "file"
+                ],
+                "user_input": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_text",
+                    "message_subject"
+                ],
+                "dependent_params": [
+                    "file"
+                ]
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "number_of_node": 5,
+        "task_list": [
+            {
+                "task_number": 1,
+                "task_description": "Create a pastel art image of a serene beach at sunset with palm trees."
+            },
+            {
+                "task_number": 2,
+                "task_description": "Convert the pastel art image of a serene beach at sunset with palm trees to a JPEG format."
+            },
+            {
+                "task_number": 3,
+                "task_description": "Resize the JPEG image of a serene beach at sunset with palm trees to 1024x768 pixels."
+            },
+            {
+                "task_number": 4,
+                "task_description": "Enhance the quality of the resized JPEG image of a serene beach at sunset with palm trees."
+            },
+            {
+                "task_number": 5,
+                "task_description": "Send the enhanced JPEG image of a serene beach at sunset with palm trees to my friend's email."
+            }
+        ],
+        "topological_order": [
+            {
+                "state": "sequential",
+                "task_nums": [
+                    1
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    2
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    3
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    4
+                ]
+            },
+            {
+                "state": "sequential",
+                "task_nums": [
+                    5
+                ]
+            }
+        ],
+        "selected_apis": [
+            {
+                "name": "tti_Pastel_Art",
+                "input_params": [
+                    {
+                        "name": "prompt",
+                        "datatype": "string",
+                        "description": "The prompt parameter is a string data type that serves as a user input to guide the generation of a unique pastel art piece using a pre-trained model specialized for the pastel art style. It is essential for users to provide a creative prompt that influences the artistic output of the API, allowing them to translate their ideas into visually appealing pastel art images."
+                    }
+                ],
+                "dependencies": [],
+                "depended_params": [
+                    {
+                        "prompt": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_format_converter",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter is a binary_image_file that represents the image file to be uploaded and converted to a specified format. This parameter is required for the 'convert_image' function to receive the input image file for processing and conversion. The function reads the contents of the uploaded file, opens it using the PIL library, saves it in the desired format, and returns the converted image file as a response. The 'file' parameter plays a crucial role in the image conversion process within the 'image_format_converter' function."
+                    },
+                    {
+                        "name": "output_format",
+                        "datatype": "string",
+                        "description": "The 'output_format' parameter specifies the desired image format to which the uploaded image should be converted. It is a string datatype representing the file format such as JPEG, PNG, GIF, BMP, TIFF, PBM, PGM, PPM, or JPG. This parameter is essential for the 'image_format_converter' function to determine the output format for the converted image file."
+                    }
+                ],
+                "dependencies": [
+                    "t1"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t1"
+                    },
+                    {
+                        "output_format": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "input_params": [
+                    {
+                        "name": "width",
+                        "datatype": "int",
+                        "description": "The 'width' parameter specifies the desired width dimension for resizing the user-uploaded image file. This parameter is essential for determining the new width of the image during the resizing process. It plays a crucial role in adjusting the dimensions of the image according to user requirements, ensuring the output meets the specified width criteria for the resized image."
+                    },
+                    {
+                        "name": "height",
+                        "datatype": "int",
+                        "description": "The height parameter specifies the desired height dimension for resizing the user-uploaded image file. This parameter is essential for determining the final dimensions of the resized image, ensuring that the output meets the user's requirements for image size adjustments."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter of datatype 'binary_image_file' is required for this API as it serves as the input containing the image file uploaded by the user. This parameter is essential for the 'Image_Resizing' API to receive the binary form of the image file, enabling the resizing process to be carried out on the user-provided visual content."
+                    }
+                ],
+                "dependencies": [
+                    "t2"
+                ],
+                "depended_params": [
+                    {
+                        "width": "t2"
+                    },
+                    {
+                        "height": "t2"
+                    },
+                    {
+                        "file": "t2"
+                    }
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "input_params": [
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "A single image file in supported formats (.bmp .jpeg .png etc.) required for enhancing the quality of the image by applying denoising, contrast stretching, sharpening, brightness adjustment, and gamma correction techniques to improve its visual quality."
+                    }
+                ],
+                "dependencies": [
+                    "t3"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t3"
+                    }
+                ]
+            },
+            {
+                "name": "send_email",
+                "input_params": [
+                    {
+                        "name": "sender_address",
+                        "datatype": "string",
+                        "description": "The sender's email address is required to specify the email sender when using the 'send_email' API. This parameter ensures that the email is sent from the correct sender's address, allowing for proper identification and communication between the sender and the receiver."
+                    },
+                    {
+                        "name": "receiver_address",
+                        "datatype": "string",
+                        "description": "The receiver_address parameter is a string datatype that represents the email address of the recipient to whom the email will be sent. This parameter is required for the 'send_email' API to specify the destination of the email communication."
+                    },
+                    {
+                        "name": "message_text",
+                        "datatype": "string",
+                        "description": "The 'message_text' parameter is a string datatype that represents the content of the email message. It is a required input for the 'send_email' API as it contains the main body of the email that will be sent to the recipient. The message_text parameter allows users to input the text content of the email message, enabling effective communication and information sharing through the email service."
+                    },
+                    {
+                        "name": "message_subject",
+                        "datatype": "string",
+                        "description": "The 'message_subject' parameter is a string datatype that represents the subject line of the email message. It is a required input for the 'send_email' API function as it provides essential context and information about the content of the email being sent. Including a subject line helps recipients quickly understand the purpose or topic of the email, enhancing communication efficiency and clarity during email correspondence."
+                    },
+                    {
+                        "name": "file",
+                        "datatype": "binary_image_file",
+                        "description": "The 'file' parameter is required to attach an image, audio, or any generic file in binary format to the email message being sent. This parameter allows users to include additional files along with the email content, enhancing the communication experience and enabling file sharing through the 'send_email' API."
+                    }
+                ],
+                "dependencies": [
+                    "t4"
+                ],
+                "depended_params": [
+                    {
+                        "file": "t4"
+                    }
+                ]
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_Pastel_Art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "prompt"
+                ]
+            },
+            {
+                "name": "image_format_converter",
+                "all_params": [
+                    "file",
+                    "output_format"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file",
+                    "output_format"
+                ]
+            },
+            {
+                "name": "Image_Resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "width",
+                    "height",
+                    "file"
+                ]
+            },
+            {
+                "name": "Image_Enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ]
+            },
+            {
+                "name": "send_email",
+                "all_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_text",
+                    "message_subject",
+                    "file"
+                ],
+                "user_input": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_text",
+                    "message_subject"
+                ],
+                "dependent_params": [
+                    "file"
+                ]
+            }
+        ]
+    }
+]

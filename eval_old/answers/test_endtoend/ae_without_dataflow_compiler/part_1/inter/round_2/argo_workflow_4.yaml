@@ -1,0 +1,72 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Create a sketching art image of a bustling marketplace.
+      - name: t2
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Convert the sketching art image of the bustling marketplace to
+              a PNG format.
+        dependencies: [t1]
+      - name: t3
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 800
+          - name: height
+            value: 600
+          - name: file
+            value: '{{tasks.t2.outputs.artifact}}'
+        dependencies: [t2]
+
+  # Template for tti-sketching-art
+  - name: tti-sketching-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_sketching_image/
+      body: '{"prompt": "{{inputs.parameters.prompt}}"}'
+      successCondition: response.statusCode == 200
+      headers:
+        Content-Type: application/json
+      output:
+        artifact:
+          name: result
+          path: /tmp/sketching_art_result.png
+
+  # Template for image-resizing
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/resize_image/
+      body: '{"width": {{inputs.parameters.width}}, "height": {{inputs.parameters.height}},
+        "file": "{{inputs.parameters.file}}"}'
+      successCondition: response.statusCode == 200
+      headers:
+        Content-Type: application/json
+      output:
+        artifact:
+          name: resized_image
+          path: /tmp/resized_image.png

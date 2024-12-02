@@ -1,0 +1,97 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: prompt
+    - name: prompt
+    - name: width
+    - name: height
+    - name: file
+    - name: file
+    - name: file
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: prompt
+      - name: prompt
+      - name: width
+      - name: height
+      - name: file
+      - name: file
+      - name: file
+    dag:
+      tasks:
+      - name: t1
+        template: tti-pastel-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies: []
+      - name: t2
+        template: tti-pastel-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies:
+        - t1
+      - name: t3
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: '{{ inputs.parameters.width }}'
+          - name: height
+            value: '{{ inputs.parameters.height }}'
+          - name: file
+            value: '{{ inputs.parameters.file }}'
+        dependencies:
+        - t2
+      - name: t4
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ inputs.parameters.file }}'
+        dependencies:
+        - t3
+      - name: t5
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ inputs.parameters.file }}'
+        dependencies:
+        - t4
+  - name: tti-pastel-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: image-enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200

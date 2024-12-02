@@ -1,0 +1,110 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti_Futuristic_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A futuristic image of an iPhone with sleek, modern design elements.
+      - name: t2
+        dependencies: [t1]
+        template: Image_Enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.parameters.file}}'
+      - name: t3
+        dependencies: [t1]
+        template: Image_Resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 500
+          - name: height
+            value: 500
+          - name: file
+            value: '{{tasks.t1.outputs.parameters.file}}'
+      - name: t4
+        dependencies: [t1]
+        template: Image_Enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.parameters.file}}'
+      - name: t5
+        dependencies: [t2, t3, t4]
+        template: image_to_pdf_conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t2.outputs.parameters.file}}' # Enhanced JPEG image from t2
+      - name: t6
+        dependencies: [t5]
+        template: image_to_pdf_conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t5.outputs.parameters.file}}'
+        # Action to send the PDF to John
+      - name: t7
+        dependencies: [t5]
+        template: image_to_pdf_conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t5.outputs.parameters.file}}'
+        # Action to send the PDF to Kody
+      - name: t8
+        dependencies: [t5]
+        template: image_to_pdf_conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t5.outputs.parameters.file}}'
+        # Action to send the PDF to Mike
+
+  - name: tti_Futuristic_Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: <Specify-URL-for-tti_Futuristic_Art>
+      successCondition: response.statusCode == 200
+
+  - name: Image_Enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: <Specify-URL-for-Image_Enhancement>
+      successCondition: response.statusCode == 200
+
+  - name: Image_Resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: <Specify-URL-for-Image_Resizing>
+      successCondition: response.statusCode == 200
+
+  - name: image_to_pdf_conversion
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: <Specify-URL-for-image_to_pdf_conversion>
+      successCondition: response.statusCode == 200

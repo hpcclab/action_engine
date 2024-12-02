@@ -1,0 +1,49 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  arguments:\n    parameters:\n    - name: width\n  entrypoint: main\n\
+\  templates:\n  - name: main\n    inputs:\n      parameters:\n      - name: width\n\
+\    dag:\n      tasks:\n      - name: t1\n        template: tti-animation-art\n \
+\       arguments:\n          parameters:\n          - name: prompt\n            value:
+\"The modern cityscape\"\n      - name: t2\n        template: tti-charcoal-art\n \
+\       arguments:\n          parameters:\n          - name: prompt\n            value:
+\"The modern cityscape\"\n      - name: t3\n        template: tti-digital-art\n  \
+\      arguments:\n          parameters:\n          - name: prompt\n            value:
+\"The modern cityscape\"\n      - name: t4\n        template: tti-futuristic-art\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: \"The modern cityscape\"\n      - name: t5\n        template: tti-graffiti-art\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: \"The modern cityscape\"\n      - name: t6\n        template: tti-sketching-art\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: \"The modern cityscape\"\n        dependencies: [t1, t2, t3, t4, t5]\n  \
+\    - name: t7\n        template: image-resizing\n        arguments:\n          parameters:\n\
+\          - name: width\n            value: 500\n          - name: height\n     \
+\       value: 500\n          - name: file\n            value: '{{tasks.t6.outputs.parameters.file}}'\n\
+\        dependencies: [t6]\n      - name: t8\n        template: image-to-pdf-conversion\n\
+\        arguments:\n          parameters:\n          - name: file\n            value:
+'{{tasks.t7.outputs.parameters.file}}'\n        dependencies: [t7]\n      - name:
+t9\n        template: image-enhancement\n        arguments:\n          parameters:\n\
+\          - name: file\n            value: '{{tasks.t7.outputs.parameters.file}}'\n\
+\        dependencies: [t7]\n      - name: t10\n        template: tti-animation-art\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: \"Emailing enhanced and resized image to the art professor\"\n        dependencies:
+[t8, t9]\n\n  - name: tti-animation-art\n    inputs:\n      parameters:\n      - name:
+prompt\n    http:\n      method: POST\n      url: \"http://example.com/generate_anime_image/\"\
+\n      body:\n        prompt: \"{{inputs.parameters.prompt}}\"\n      successCondition:
+response.statusCode == 200\n\n  - name: tti-charcoal-art\n    inputs:\n      parameters:\n\
+\      - name: prompt\n    http:\n      method: POST\n      url: \"http://example.com/generate_charcoal_image/\"\
+\n      body:\n        prompt: \"{{inputs.parameters.prompt}}\"\n      successCondition:
+response.statusCode == 200\n\n  - name: tti-digital-art\n    inputs:\n      parameters:\n\
+\      - name: prompt\n    http:\n      method: POST\n      url: \"http://example.com/generate_digital_image/\"\
+\n      body:\n        prompt: \"{{inputs.parameters.prompt}}\"\n      successCondition:
+response.statusCode == 200\n\n  - name: tti-futuristic-art\n    inputs:\n      parameters:\n\
+\      - name: prompt\n    http:\n      method: POST\n      url: \"http://example.com/generate_futuristic_image/\"\
+\n      body:\n        prompt: \"{{inputs.parameters.prompt}}\"\n      successCondition:
+response.statusCode == 200\n\n  - name: tti-graffiti-art\n    inputs:\n      parameters:\n\
+\      - name: prompt\n    http:\n      method: POST\n      url: \"http://example.com/generate_grafiti_image/\"\
+\n      body:\n        prompt: \"{{inputs.parameters.prompt}}\"\n      successCondition:
+response.statusCode == 200\n\n  - name: tti-sketching-art\n    inputs:\n      parameters:\n\
+\      - name: prompt\n    http:\n      method: POST\n      url: \"http://example.com/generate_sketching_image/\"\
+\n      body:\n        prompt: \"{{inputs.parameters.prompt}}\"\n      successCondition:
+response.statusCode == 200\n\n  - name: image-resizing\n    inputs:\n      parameters:\n\
+\      - name: width\n      - name: height\n      - name: file\n    http:\n      method:
+POST\n      url: \"http://example.com/resize_image/\"\n      body:\n        width:
+\"{{inputs"

@@ -1,0 +1,54 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+    dag:
+      tasks:
+      - name: t1
+        template: tti_sketching_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A bustling marketplace
+        dependencies: []
+      - name: t2
+        template: image_to_pdf_conversion
+        arguments:
+          parameters:
+          - name: file
+            value: "{{{{tasks.t1.outputs.parameters['generated_img.png']}}}}"
+        dependencies: [t1]
+
+  - name: tti_sketching_art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://localhost:8000/generate_sketching_image/
+      headers:
+        Content-Type: application/json
+      body: '{"prompt": "{{inputs.parameters.prompt}}"}'
+      successCondition: response.statusCode == 200
+
+  - name: image_to_pdf_conversion
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://localhost:8000/convert_to_pdf/
+      headers:
+        Content-Type: multipart/form-data
+      body: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200

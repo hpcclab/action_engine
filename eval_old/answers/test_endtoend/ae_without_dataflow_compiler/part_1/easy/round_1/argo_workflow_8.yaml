@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+    dag:
+      tasks:
+      - name: t1
+        template: tti-mosaic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A peaceful beach at sunrise
+        dependencies: []
+  - name: tti-mosaic-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://<external-api-url>/generate_mosaic_image/
+      headers:
+        Content-Type: application/json
+      body: |
+        {
+          "prompt": "{{ inputs.parameters.prompt }}"
+        }
+      successCondition: response.statusCode == 200
