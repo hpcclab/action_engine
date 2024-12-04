@@ -1,0 +1,37 @@
+# index: 1300
+# query: What's the weather like in Tokyo right now and how does it compare to the forecast for the following week?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1300-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getweatherforecast
+        template: getweatherforecast
+        arguments:
+          parameters:
+          - name: location
+            value: '{{ inputs.parameters.location }}'
+      - name: getcurrentweather
+        template: getcurrentweather
+        dependencies:
+        - getweatherforecast
+        arguments:
+          parameters:
+          - name: location
+            value: '{{ inputs.parameters.location }}'
+      - name: compareweather
+        template: compareweather
+        dependencies:
+        - getcurrentweather
+        arguments:
+          parameters:
+          - name: current_weather
+            value: '{{ tasks.getcurrentweather.result }}'
+          - name: weather_forecast
+            value: '{{ tasks.getweatherforecast.result }}'

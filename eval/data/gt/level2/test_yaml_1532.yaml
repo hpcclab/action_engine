@@ -1,0 +1,41 @@
+# index: 1532
+# query: When is the next bus from Times Square to Wall Street considering current traffic conditions?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1532-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: fetchnextbus
+        template: fetchnextbus
+        dependencies:
+        - calculatetraveltime
+        arguments:
+          parameters:
+          - name: travel_time
+            value: '{{ tasks.calculatetraveltime.result }}'
+          - name: bus_route
+            value: '{{ inputs.parameters.bus_route }}'
+      - name: calculatetraveltime
+        template: calculatetraveltime
+        dependencies:
+        - retrievelocaltrafficinfo
+        arguments:
+          parameters:
+          - name: traffic_info
+            value: '{{ tasks.retrievelocaltrafficinfo.result }}'
+          - name: start_point
+            value: '{{ inputs.parameters.start_point }}'
+          - name: end_point
+            value: '{{ inputs.parameters.end_point }}'
+      - name: retrievelocaltrafficinfo
+        template: retrievelocaltrafficinfo
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'

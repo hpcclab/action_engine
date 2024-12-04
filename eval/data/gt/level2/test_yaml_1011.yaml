@@ -1,0 +1,37 @@
+# index: 1011
+# query: Can you generate a review for the book 'Pride and Prejudice' by Jane Austen?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1011-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: bookinfo
+        template: bookinfo
+        dependencies:
+        - authorbio
+        arguments:
+          parameters:
+          - name: title
+            value: '{{ inputs.parameters.title }}'
+      - name: reviewgenerator
+        template: reviewgenerator
+        dependencies:
+        - bookinfo
+        arguments:
+          parameters:
+          - name: bookdetails
+            value: '{{ tasks.bookinfo.result }}'
+          - name: authorData
+            value: '{{ tasks.authorbio.result }}'
+      - name: authorbio
+        template: authorbio
+        arguments:
+          parameters:
+          - name: author
+            value: '{{ inputs.parameters.author }}'

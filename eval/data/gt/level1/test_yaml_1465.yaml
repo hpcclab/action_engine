@@ -1,0 +1,39 @@
+# index: 1465
+# query: Is there a pediatrician available at a hospital near the bistro 'Le Bouchon' in Chicago?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1465-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: nearbyhospitalquery
+        template: nearbyhospitalquery
+        dependencies:
+        - restaurantdetail
+        arguments:
+          parameters:
+          - name: coordinate_position
+            value: '{{ tasks.restaurantdetail.result }}'
+      - name: doctoravailabilityquery
+        template: doctoravailabilityquery
+        dependencies:
+        - nearbyhospitalquery
+        arguments:
+          parameters:
+          - name: hospital
+            value: '{{ tasks.nearbyhospitalquery.result }}'
+          - name: specialty
+            value: '{{ inputs.parameters.specialty }}'
+      - name: restaurantdetail
+        template: restaurantdetail
+        arguments:
+          parameters:
+          - name: restaurant_name
+            value: '{{ inputs.parameters.restaurant_name }}'
+          - name: city
+            value: '{{ inputs.parameters.city }}'

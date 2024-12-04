@@ -1,0 +1,43 @@
+# index: 1075
+# query: I need to book a room for five people in a 4-star hotel in Seattle from 15th September to 22nd September.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1075-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: bookhotel
+        template: bookhotel
+        dependencies:
+        - findroomtype
+        arguments:
+          parameters:
+          - name: roomType
+            value: '{{ tasks.findroomtype.result }}'
+          - name: checkInDate
+            value: '{{ inputs.parameters.checkInDate }}'
+          - name: checkOutDate
+            value: '{{ inputs.parameters.checkOutDate }}'
+      - name: searchhotel
+        template: searchhotel
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: starRating
+            value: '{{ inputs.parameters.starRating }}'
+      - name: findroomtype
+        template: findroomtype
+        dependencies:
+        - searchhotel
+        arguments:
+          parameters:
+          - name: hotelname
+            value: '{{ tasks.searchhotel.result }}'
+          - name: guestNumber
+            value: '{{ inputs.parameters.guestNumber }}'

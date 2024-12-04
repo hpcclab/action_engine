@@ -1,0 +1,35 @@
+# index: 1410
+# query: Can you name other books written by the author of 'The Hobbit'?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1410-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: authorofbook
+        template: authorofbook
+        dependencies:
+        - bookfinder
+        arguments:
+          parameters:
+          - name: book_id
+            value: '{{ tasks.bookfinder.result }}'
+      - name: bookfinder
+        template: bookfinder
+        arguments:
+          parameters:
+          - name: book_name
+            value: '{{ inputs.parameters.book_name }}'
+      - name: booksbyauthor
+        template: booksbyauthor
+        dependencies:
+        - authorofbook
+        arguments:
+          parameters:
+          - name: author_id
+            value: '{{ tasks.authorofbook.result }}'

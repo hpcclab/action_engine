@@ -1,0 +1,49 @@
+# index: 129
+# query: Hi there, it is so windy. I need to purchase a suitable outfit for the weather in Rome.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-129-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getweather
+        template: getweather
+        dependencies:
+        - recommendclothing
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: buyclothing
+        template: buyclothing
+        dependencies:
+        - getstore
+        arguments:
+          parameters:
+          - name: storename
+            value: '{{ tasks.getstore.result }}'
+          - name: clothingItem
+            value: '{{ tasks.recommendclothing.result }}'
+      - name: getstore
+        template: getstore
+        dependencies:
+        - recommendclothing
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: clothingItem
+            value: '{{ tasks.recommendclothing.result }}'
+      - name: recommendclothing
+        template: recommendclothing
+        dependencies:
+        - getweather
+        arguments:
+          parameters:
+          - name: weather
+            value: '{{ tasks.getweather.result }}'

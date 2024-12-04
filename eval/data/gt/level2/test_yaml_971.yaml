@@ -1,0 +1,39 @@
+# index: 971
+# query: How much would item ID: 999 cost in Japanese Yen if its price is in Euros?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-971-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: itemprice
+        template: itemprice
+        dependencies:
+        - currencyconversion
+        arguments:
+          parameters:
+          - name: item_id
+            value: '{{ inputs.parameters.item_id }}'
+      - name: calculateprice
+        template: calculateprice
+        dependencies:
+        - itemprice
+        arguments:
+          parameters:
+          - name: price
+            value: '{{ tasks.itemprice.result }}'
+          - name: conversion_rate
+            value: '{{ tasks.currencyconversion.result }}'
+      - name: currencyconversion
+        template: currencyconversion
+        arguments:
+          parameters:
+          - name: from_currency
+            value: '{{ inputs.parameters.from_currency }}'
+          - name: to_currency
+            value: '{{ inputs.parameters.to_currency }}'

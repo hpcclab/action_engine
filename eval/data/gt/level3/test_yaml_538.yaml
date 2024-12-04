@@ -1,0 +1,51 @@
+# index: 538
+# query: Can you suggest a plan for my trip to Rome next weekend?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-538-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: weatherforecast
+        template: weatherforecast
+        dependencies:
+        - restaurantrecommendations
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: eventfinder
+        template: eventfinder
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: tripadvisor
+        template: tripadvisor
+        dependencies:
+        - weatherforecast
+        arguments:
+          parameters:
+          - name: weather
+            value: '{{ tasks.weatherforecast.result }}'
+          - name: restaurants
+            value: '{{ tasks.restaurantrecommendations.result }}'
+          - name: events
+            value: '{{ tasks.eventfinder.result }}'
+      - name: restaurantrecommendations
+        template: restaurantrecommendations
+        dependencies:
+        - eventfinder
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'

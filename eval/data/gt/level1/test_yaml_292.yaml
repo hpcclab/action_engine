@@ -1,0 +1,31 @@
+# index: 292
+# query: What are the details for the flight from Toronto to Vancouver on 10th September?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-292-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getflightdetails
+        template: getflightdetails
+        dependencies:
+        - searchflight
+        arguments:
+          parameters:
+          - name: flight_id
+            value: '{{ tasks.searchflight.result }}'
+      - name: searchflight
+        template: searchflight
+        arguments:
+          parameters:
+          - name: city_from
+            value: '{{ inputs.parameters.city_from }}'
+          - name: city_to
+            value: '{{ inputs.parameters.city_to }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'

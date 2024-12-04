@@ -1,0 +1,39 @@
+# index: 1037
+# query: We are eager to watch the new Harry Potter movie tomorrow night. Can you recommend a restaurant for dinner and make a reservation for 8 at 6 PM?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1037-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: booktable
+        template: booktable
+        dependencies:
+        - restaurantrecommendation
+        arguments:
+          parameters:
+          - name: restaurant
+            value: '{{ tasks.restaurantrecommendation.result }}'
+          - name: no_of_persons
+            value: '{{ inputs.parameters.no_of_persons }}'
+          - name: time
+            value: '{{ inputs.parameters.time }}'
+      - name: getmovie
+        template: getmovie
+        arguments:
+          parameters:
+          - name: show
+            value: '{{ inputs.parameters.show }}'
+      - name: restaurantrecommendation
+        template: restaurantrecommendation
+        dependencies:
+        - getmovie
+        arguments:
+          parameters:
+          - name: venue
+            value: '{{ tasks.getmovie.result }}'

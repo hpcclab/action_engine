@@ -1,0 +1,57 @@
+# index: 1542
+# query: Can you book a flight from my city to New York on May 15th?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1542-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findflight
+        template: findflight
+        dependencies:
+        - fetchcity
+        arguments:
+          parameters:
+          - name: cityDeparture
+            value: '{{ tasks.fetchcity.result }}'
+          - name: cityArrival
+            value: '{{ inputs.parameters.cityArrival }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: bookflight
+        template: bookflight
+        dependencies:
+        - fetchflightid
+        arguments:
+          parameters:
+          - name: flight_ID
+            value: '{{ tasks.fetchflightid.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: getuserid
+        template: getuserid
+        arguments:
+          parameters:
+          - name: username
+            value: '{{ inputs.parameters.username }}'
+      - name: fetchflightid
+        template: fetchflightid
+        dependencies:
+        - findflight
+        arguments:
+          parameters:
+          - name: flight_name
+            value: '{{ tasks.findflight.result }}'
+      - name: fetchcity
+        template: fetchcity
+        dependencies:
+        - getuserid
+        arguments:
+          parameters:
+          - name: user_ID
+            value: '{{ tasks.getuserid.result }}'

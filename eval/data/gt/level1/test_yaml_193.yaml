@@ -1,0 +1,27 @@
+# index: 193
+# query: Can you check if the game Cyberpunk 2077 is available in the store?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-193-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: productavailability
+        template: productavailability
+        dependencies:
+        - productname2id
+        arguments:
+          parameters:
+          - name: product_id
+            value: '{{ tasks.productname2id.result }}'
+      - name: productname2id
+        template: productname2id
+        arguments:
+          parameters:
+          - name: product_name
+            value: '{{ inputs.parameters.product_name }}'

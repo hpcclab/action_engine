@@ -1,0 +1,39 @@
+# index: 753
+# query: I, user789, would like to have a book discussion with the author of the book with ISBN 978-3-16-148410-0 on 25th of October at 6pm.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-753-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: schedulediscussion
+        template: schedulediscussion
+        dependencies:
+        - book2author
+        arguments:
+          parameters:
+          - name: user_ID
+            value: '{{ inputs.parameters.user_ID }}'
+          - name: author_name
+            value: '{{ tasks.book2author.result }}'
+          - name: date_time
+            value: '{{ inputs.parameters.date_time }}'
+      - name: isbn2book
+        template: isbn2book
+        arguments:
+          parameters:
+          - name: isbn
+            value: '{{ inputs.parameters.isbn }}'
+      - name: book2author
+        template: book2author
+        dependencies:
+        - isbn2book
+        arguments:
+          parameters:
+          - name: book_title
+            value: '{{ tasks.isbn2book.result }}'

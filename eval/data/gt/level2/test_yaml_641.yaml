@@ -1,0 +1,35 @@
+# index: 641
+# query: I'm known as 'Jack_Sparrow' in the system. Can you give me guidance according to the current climatic conditions of my locality?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-641-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: weather2advice
+        template: weather2advice
+        dependencies:
+        - city2weather
+        arguments:
+          parameters:
+          - name: weather
+            value: '{{ tasks.city2weather.result }}'
+      - name: username2city
+        template: username2city
+        arguments:
+          parameters:
+          - name: username
+            value: '{{ inputs.parameters.username }}'
+      - name: city2weather
+        template: city2weather
+        dependencies:
+        - username2city
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ tasks.username2city.result }}'

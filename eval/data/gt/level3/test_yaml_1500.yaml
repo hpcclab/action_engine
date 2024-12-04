@@ -1,0 +1,45 @@
+# index: 1500
+# query: Could you send a notification to the user with the username 'booklover' about the price of the book with ISBN 978-3-16-148410-0?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1500-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: isbn2booktitle
+        template: isbn2booktitle
+        arguments:
+          parameters:
+          - name: ISBN
+            value: '{{ inputs.parameters.ISBN }}'
+      - name: bookprice
+        template: bookprice
+        dependencies:
+        - isbn2booktitle
+        arguments:
+          parameters:
+          - name: book_title
+            value: '{{ tasks.isbn2booktitle.result }}'
+      - name: notifyuser
+        template: notifyuser
+        dependencies:
+        - username2id
+        arguments:
+          parameters:
+          - name: person_ID
+            value: '{{ tasks.username2id.result }}'
+          - name: message
+            value: '{{ tasks.bookprice.result }}'
+      - name: username2id
+        template: username2id
+        dependencies:
+        - bookprice
+        arguments:
+          parameters:
+          - name: username
+            value: '{{ inputs.parameters.username }}'

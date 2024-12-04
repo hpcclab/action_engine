@@ -1,0 +1,57 @@
+# index: 1316
+# query: I'm thinking of purchasing a townhouse in Miami with an initial payment of 150000, an interest rate of 3 percent, and a term of 25 years. Can you provide me with a total cost estimation?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1316-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: mortgagecalculator
+        template: mortgagecalculator
+        dependencies:
+        - realestateprice
+        arguments:
+          parameters:
+          - name: propertyPrice
+            value: '{{ tasks.realestateprice.result }}'
+          - name: downPayment
+            value: '{{ inputs.parameters.downPayment }}'
+          - name: interestRate
+            value: '{{ inputs.parameters.interestRate }}'
+          - name: term
+            value: '{{ inputs.parameters.term }}'
+      - name: realestateprice
+        template: realestateprice
+        dependencies:
+        - taxestimator
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: propertyType
+            value: '{{ inputs.parameters.propertyType }}'
+      - name: taxestimator
+        template: taxestimator
+        dependencies:
+        - realestateprice
+        arguments:
+          parameters:
+          - name: propertyPrice
+            value: '{{ tasks.realestateprice.result }}'
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: propertyownershipcost
+        template: propertyownershipcost
+        dependencies:
+        - mortgagecalculator
+        arguments:
+          parameters:
+          - name: mortgagePayment
+            value: '{{ tasks.mortgagecalculator.result }}'
+          - name: tax
+            value: '{{ tasks.taxestimator.result }}'

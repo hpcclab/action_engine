@@ -1,0 +1,47 @@
+# index: 1088
+# query: I want to watch a drama movie in Seattle on December 25th for 6 people. Could you find a suitable movie and book the tickets?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1088-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findshowtime
+        template: findshowtime
+        dependencies:
+        - findmovie
+        arguments:
+          parameters:
+          - name: movie_name
+            value: '{{ tasks.findmovie.result }}'
+          - name: location
+            value: '{{ inputs.parameters.location }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: bookmovieticket
+        template: bookmovieticket
+        dependencies:
+        - findmovie
+        arguments:
+          parameters:
+          - name: movie_name
+            value: '{{ tasks.findmovie.result }}'
+          - name: showtime
+            value: '{{ tasks.findshowtime.result }}'
+          - name: number_of_tickets
+            value: '{{ inputs.parameters.number_of_tickets }}'
+      - name: findmovie
+        template: findmovie
+        dependencies:
+        - findshowtime
+        arguments:
+          parameters:
+          - name: genre
+            value: '{{ inputs.parameters.genre }}'
+          - name: location
+            value: '{{ inputs.parameters.location }}'

@@ -1,0 +1,49 @@
+# index: 474
+# query: I am a 45-year-old woman looking to improve my health. Can you help me create a wellness plan?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-474-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: createwellnessplan
+        template: createwellnessplan
+        dependencies:
+        - getdietplan
+        arguments:
+          parameters:
+          - name: DietPlan
+            value: '{{ tasks.getdietplan.result }}'
+          - name: ExerciseRoutine
+            value: '{{ tasks.getexerciseroutine.result }}'
+      - name: getdietplan
+        template: getdietplan
+        dependencies:
+        - gethealthinformation
+        arguments:
+          parameters:
+          - name: HealthInformation
+            value: '{{ tasks.gethealthinformation.result }}'
+      - name: gethealthinformation
+        template: gethealthinformation
+        dependencies:
+        - getexerciseroutine
+        arguments:
+          parameters:
+          - name: age
+            value: '{{ inputs.parameters.age }}'
+          - name: gender
+            value: '{{ inputs.parameters.gender }}'
+      - name: getexerciseroutine
+        template: getexerciseroutine
+        dependencies:
+        - gethealthinformation
+        arguments:
+          parameters:
+          - name: HealthInformation
+            value: '{{ tasks.gethealthinformation.result }}'

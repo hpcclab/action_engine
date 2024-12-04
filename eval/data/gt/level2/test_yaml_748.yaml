@@ -1,0 +1,41 @@
+# index: 748
+# query: Can you book a table for me at 'Red Lobster' in 'Las Vegas Strip, Nevada' on May 5th at 6 pm?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-748-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: booktable
+        template: booktable
+        dependencies:
+        - address2coordinates
+        arguments:
+          parameters:
+          - name: coordinates
+            value: '{{ tasks.address2coordinates.result }}'
+          - name: restaurant_id
+            value: '{{ tasks.restaurantname2id.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: time
+            value: '{{ inputs.parameters.time }}'
+      - name: restaurantname2id
+        template: restaurantname2id
+        arguments:
+          parameters:
+          - name: restaurant_name
+            value: '{{ inputs.parameters.restaurant_name }}'
+      - name: address2coordinates
+        template: address2coordinates
+        dependencies:
+        - restaurantname2id
+        arguments:
+          parameters:
+          - name: address
+            value: '{{ inputs.parameters.address }}'

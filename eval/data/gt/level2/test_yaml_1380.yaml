@@ -1,0 +1,37 @@
+# index: 1380
+# query: What could be the repercussion of the current weather on the population in Tokyo?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1380-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: citypopulation
+        template: citypopulation
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: getweather
+        template: getweather
+        dependencies:
+        - citypopulation
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: weatherimpactonpopulation
+        template: weatherimpactonpopulation
+        dependencies:
+        - getweather
+        arguments:
+          parameters:
+          - name: weather
+            value: '{{ tasks.getweather.result }}'
+          - name: population
+            value: '{{ tasks.citypopulation.result }}'

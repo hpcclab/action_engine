@@ -1,0 +1,29 @@
+# index: 42
+# query: Could you help me select what to wear for a date in Chicago tonight?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-42-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: selectoutfit
+        template: selectoutfit
+        dependencies:
+        - checkweather
+        arguments:
+          parameters:
+          - name: weather
+            value: '{{ tasks.checkweather.result }}'
+          - name: occasion
+            value: '{{ inputs.parameters.occasion }}'
+      - name: checkweather
+        template: checkweather
+        arguments:
+          parameters:
+          - name: location
+            value: '{{ inputs.parameters.location }}'

@@ -7,10 +7,6 @@ from .utilities import escape_json
 
 import json
 import re
-# local
-# filename = '/home/UNT/ae0589/Desktop/HPCC/AutomaticWorkflowGeneration/ActionEngine/utils/try_prompt/data_2.json'
-#cloud
-filename = './utils/try_prompt/data_2.json'
 
 def semantic_wf_to_list(semantic_wf):
   """
@@ -75,8 +71,6 @@ def form_output_description(selected_functions):
             "sys_prompt": SYSTEM_PROMPT,
             "selected_functions": selected_functions
             }
-    with open(filename, 'w') as file:
-        json.dump(data, file, indent=4) 
     return selected_functions
 
 def add_dependecy(semantic_wf, selected_functions):

@@ -1,0 +1,45 @@
+# index: 637
+# query: I'm Michelle. Can you book a table for me for my favourite cuisine next Wednesday?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-637-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getuserfavoritecuisine
+        template: getuserfavoritecuisine
+        dependencies:
+        - getuserid
+        arguments:
+          parameters:
+          - name: user_ID
+            value: '{{ tasks.getuserid.result }}'
+      - name: getuserid
+        template: getuserid
+        arguments:
+          parameters:
+          - name: username
+            value: '{{ inputs.parameters.username }}'
+      - name: bookrestauranttable
+        template: bookrestauranttable
+        dependencies:
+        - findrestaurantbycuisine
+        arguments:
+          parameters:
+          - name: restaurant_ID
+            value: '{{ tasks.findrestaurantbycuisine.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: findrestaurantbycuisine
+        template: findrestaurantbycuisine
+        dependencies:
+        - getuserfavoritecuisine
+        arguments:
+          parameters:
+          - name: cuisine
+            value: '{{ tasks.getuserfavoritecuisine.result }}'

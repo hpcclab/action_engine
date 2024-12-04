@@ -1,0 +1,31 @@
+# index: 134
+# query: I want to know the cost of French wine at the nearest liquor store in Los Angeles
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-134-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findneareststore
+        template: findneareststore
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: store_type
+            value: '{{ inputs.parameters.store_type }}'
+      - name: getproductprice
+        template: getproductprice
+        dependencies:
+        - findneareststore
+        arguments:
+          parameters:
+          - name: store_name
+            value: '{{ tasks.findneareststore.result }}'
+          - name: product_name
+            value: '{{ inputs.parameters.product_name }}'

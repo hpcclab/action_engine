@@ -1,0 +1,33 @@
+# index: 845
+# query: I am currently in Boston and I have a huge craving for Mexican food. Based on the current weather, can I make a reservation for 6 people at a Mexican restaurant tonight at 7 pm?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-845-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: bookreservation
+        template: bookreservation
+        dependencies:
+        - findrestaurant
+        arguments:
+          parameters:
+          - name: restaurantname
+            value: '{{ tasks.findrestaurant.result }}'
+          - name: partySize
+            value: '{{ inputs.parameters.partySize }}'
+          - name: time
+            value: '{{ inputs.parameters.time }}'
+      - name: findrestaurant
+        template: findrestaurant
+        arguments:
+          parameters:
+          - name: location
+            value: '{{ inputs.parameters.location }}'
+          - name: cuisine
+            value: '{{ inputs.parameters.cuisine }}'

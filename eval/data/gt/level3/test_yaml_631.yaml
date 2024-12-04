@@ -1,0 +1,45 @@
+# index: 631
+# query: Hi, This is Edward. I just finished 'Moby Dick' and looking for a similar book. Can you suggest me one?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-631-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getbookidbytitle
+        template: getbookidbytitle
+        arguments:
+          parameters:
+          - name: book_title
+            value: '{{ inputs.parameters.book_title }}'
+      - name: getbookgenre
+        template: getbookgenre
+        dependencies:
+        - getbookidbytitle
+        arguments:
+          parameters:
+          - name: book_ID
+            value: '{{ tasks.getbookidbytitle.result }}'
+      - name: getuseridbyuser
+        template: getuseridbyuser
+        dependencies:
+        - getbookgenre
+        arguments:
+          parameters:
+          - name: user_name
+            value: '{{ inputs.parameters.user_name }}'
+      - name: recommendbookbygenre
+        template: recommendbookbygenre
+        dependencies:
+        - getuseridbyuser
+        arguments:
+          parameters:
+          - name: user_ID
+            value: '{{ tasks.getuseridbyuser.result }}'
+          - name: genre
+            value: '{{ tasks.getbookgenre.result }}'

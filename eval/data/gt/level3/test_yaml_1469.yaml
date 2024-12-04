@@ -1,0 +1,47 @@
+# index: 1469
+# query: I have a conference in Tokyo next week. What should I wear considering the weather and the latest fashion trends?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1469-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findtrendingfashion
+        template: findtrendingfashion
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: season
+            value: '{{ inputs.parameters.season }}'
+      - name: generateoutfit
+        template: generateoutfit
+        dependencies:
+        - recommendclothing
+        arguments:
+          parameters:
+          - name: clothing
+            value: '{{ tasks.recommendclothing.result }}'
+          - name: fashion
+            value: '{{ tasks.findtrendingfashion.result }}'
+      - name: getlocalweather
+        template: getlocalweather
+        dependencies:
+        - findtrendingfashion
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: recommendclothing
+        template: recommendclothing
+        dependencies:
+        - getlocalweather
+        arguments:
+          parameters:
+          - name: weather
+            value: '{{ tasks.getlocalweather.result }}'

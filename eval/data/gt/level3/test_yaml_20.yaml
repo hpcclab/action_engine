@@ -1,0 +1,41 @@
+# index: 20
+# query: Please reserve the book 'The Great Gatsby' from July 2nd to July 16th. The user is 'emily_davis'.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-20-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: username2email
+        template: username2email
+        dependencies:
+        - title2isbn
+        arguments:
+          parameters:
+          - name: username
+            value: '{{ inputs.parameters.username }}'
+      - name: title2isbn
+        template: title2isbn
+        arguments:
+          parameters:
+          - name: title
+            value: '{{ inputs.parameters.title }}'
+      - name: reservebook
+        template: reservebook
+        dependencies:
+        - username2email
+        arguments:
+          parameters:
+          - name: user_email
+            value: '{{ tasks.username2email.result }}'
+          - name: ISBN
+            value: '{{ tasks.title2isbn.result }}'
+          - name: start_date
+            value: '{{ inputs.parameters.start_date }}'
+          - name: end_date
+            value: '{{ inputs.parameters.end_date }}'

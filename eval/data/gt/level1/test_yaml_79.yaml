@@ -1,0 +1,33 @@
+# index: 79
+# query: Could you help me reserve a ticket for the movie 'The Lion King' in Miami today at 3 pm?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-79-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getmovietheaters
+        template: getmovietheaters
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: buymovieticket
+        template: buymovieticket
+        dependencies:
+        - getmovietheaters
+        arguments:
+          parameters:
+          - name: movie_name
+            value: '{{ inputs.parameters.movie_name }}'
+          - name: theater_name
+            value: '{{ tasks.getmovietheaters.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: time
+            value: '{{ inputs.parameters.time }}'

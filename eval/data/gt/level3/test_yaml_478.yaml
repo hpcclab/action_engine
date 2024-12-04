@@ -1,0 +1,39 @@
+# index: 478
+# query: I am flying from New York to Los Angeles and I have 50kg of luggage. How much will it cost me?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-478-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: checkluggageallowance
+        template: checkluggageallowance
+        dependencies:
+        - findflight
+        arguments:
+          parameters:
+          - name: flight
+            value: '{{ tasks.findflight.result }}'
+      - name: findflight
+        template: findflight
+        arguments:
+          parameters:
+          - name: startPoint
+            value: '{{ inputs.parameters.startPoint }}'
+          - name: endPoint
+            value: '{{ inputs.parameters.endPoint }}'
+      - name: getluggagefee
+        template: getluggagefee
+        dependencies:
+        - checkluggageallowance
+        arguments:
+          parameters:
+          - name: luggage
+            value: '{{ tasks.checkluggageallowance.result }}'
+          - name: weight
+            value: '{{ inputs.parameters.weight }}'

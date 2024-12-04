@@ -1,0 +1,49 @@
+# index: 105
+# query: I want to know when should I leave from King Station for a concert located at Central Park, I will drive a car.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-105-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: calculatedistance
+        template: calculatedistance
+        arguments:
+          parameters:
+          - name: start_point
+            value: '{{ inputs.parameters.start_point }}'
+          - name: end_point
+            value: '{{ inputs.parameters.end_point }}'
+      - name: estimatetraveltime
+        template: estimatetraveltime
+        dependencies:
+        - calculatedistance
+        arguments:
+          parameters:
+          - name: distance
+            value: '{{ tasks.calculatedistance.result }}'
+          - name: mode_of_transport
+            value: '{{ inputs.parameters.mode_of_transport }}'
+      - name: queryeventtime
+        template: queryeventtime
+        dependencies:
+        - estimatetraveltime
+        arguments:
+          parameters:
+          - name: event_name
+            value: '{{ inputs.parameters.event_name }}'
+      - name: alertbeforedeparture
+        template: alertbeforedeparture
+        dependencies:
+        - queryeventtime
+        arguments:
+          parameters:
+          - name: event_time
+            value: '{{ tasks.queryeventtime.result }}'
+          - name: travel_time
+            value: '{{ tasks.estimatetraveltime.result }}'

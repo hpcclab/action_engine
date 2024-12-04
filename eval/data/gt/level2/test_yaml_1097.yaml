@@ -1,0 +1,35 @@
+# index: 1097
+# query: Can you check the status of John's flight?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1097-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getflightnumber
+        template: getflightnumber
+        dependencies:
+        - personname2id
+        arguments:
+          parameters:
+          - name: person_ID
+            value: '{{ tasks.personname2id.result }}'
+      - name: personname2id
+        template: personname2id
+        arguments:
+          parameters:
+          - name: person_name
+            value: '{{ inputs.parameters.person_name }}'
+      - name: flightstatus
+        template: flightstatus
+        dependencies:
+        - getflightnumber
+        arguments:
+          parameters:
+          - name: flight_number
+            value: '{{ tasks.getflightnumber.result }}'

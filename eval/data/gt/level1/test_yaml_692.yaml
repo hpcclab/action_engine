@@ -1,0 +1,31 @@
+# index: 692
+# query: Can you add 2 of product 654 to Emily Thompson's shopping cart?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-692-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: addtocart
+        template: addtocart
+        dependencies:
+        - customernametoid
+        arguments:
+          parameters:
+          - name: customer_ID
+            value: '{{ tasks.customernametoid.result }}'
+          - name: product_ID
+            value: '{{ inputs.parameters.product_ID }}'
+          - name: quantity
+            value: '{{ inputs.parameters.quantity }}'
+      - name: customernametoid
+        template: customernametoid
+        arguments:
+          parameters:
+          - name: customer_name
+            value: '{{ inputs.parameters.customer_name }}'

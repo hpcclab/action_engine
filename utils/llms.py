@@ -31,7 +31,7 @@ def get_model(model_name):
     # Load the model based on the model_name
     if model_name == "gpt-4o":
         _loaded_model = ChatOpenAI(model="gpt-4o", temperature=0, api_key=openai_api_key)
-    elif model_name == "gpt-3.5":
+    elif model_name == "gpt-3.5-turbo":
         _loaded_model = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, api_key=openai_api_key)
     else:
         # Load tokenizer and model for HuggingFace models

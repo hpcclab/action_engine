@@ -1,0 +1,43 @@
+# index: 898
+# query: I own shares in Netflix. Considering its current market value, should I augment my holdings, relinquish, or hold steady?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-898-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: predictfuturestockprice
+        template: predictfuturestockprice
+        dependencies:
+        - getstockprice
+        arguments:
+          parameters:
+          - name: stockId
+            value: '{{ inputs.parameters.stockId }}'
+          - name: currentPrice
+            value: '{{ tasks.getstockprice.result }}'
+      - name: suggeststockaction
+        template: suggeststockaction
+        dependencies:
+        - getstockprice
+        arguments:
+          parameters:
+          - name: stockId
+            value: '{{ inputs.parameters.stockId }}'
+          - name: currentPrice
+            value: '{{ tasks.getstockprice.result }}'
+          - name: futurePrice
+            value: '{{ tasks.predictfuturestockprice.result }}'
+      - name: getstockprice
+        template: getstockprice
+        dependencies:
+        - predictfuturestockprice
+        arguments:
+          parameters:
+          - name: stockId
+            value: '{{ inputs.parameters.stockId }}'

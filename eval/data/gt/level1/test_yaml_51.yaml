@@ -1,0 +1,31 @@
+# index: 51
+# query: Please give me the menu at the finest burger joint in Seattle?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-51-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findrestaurant
+        template: findrestaurant
+        arguments:
+          parameters:
+          - name: location
+            value: '{{ inputs.parameters.location }}'
+          - name: type
+            value: '{{ inputs.parameters.type }}'
+          - name: rating
+            value: '{{ inputs.parameters.rating }}'
+      - name: getmenu
+        template: getmenu
+        dependencies:
+        - findrestaurant
+        arguments:
+          parameters:
+          - name: restaurant_id
+            value: '{{ tasks.findrestaurant.result }}'

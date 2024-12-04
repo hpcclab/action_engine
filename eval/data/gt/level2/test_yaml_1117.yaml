@@ -1,0 +1,35 @@
+# index: 1117
+# query: How long will it take me to read the book with ISBN 123456789?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1117-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: pagecount
+        template: pagecount
+        dependencies:
+        - booktitle
+        arguments:
+          parameters:
+          - name: Title
+            value: '{{ tasks.booktitle.result }}'
+      - name: booktitle
+        template: booktitle
+        arguments:
+          parameters:
+          - name: ISBN
+            value: '{{ inputs.parameters.ISBN }}'
+      - name: readingtime
+        template: readingtime
+        dependencies:
+        - pagecount
+        arguments:
+          parameters:
+          - name: Pages
+            value: '{{ tasks.pagecount.result }}'

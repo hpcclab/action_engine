@@ -1,0 +1,39 @@
+# index: 468
+# query: Can you confirm an appointment with a cardiologist in New York for August 10th?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-468-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getappointment
+        template: getappointment
+        dependencies:
+        - finddoctor
+        arguments:
+          parameters:
+          - name: doctor_id
+            value: '{{ tasks.finddoctor.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: confirmappointment
+        template: confirmappointment
+        dependencies:
+        - getappointment
+        arguments:
+          parameters:
+          - name: appointment_id
+            value: '{{ tasks.getappointment.result }}'
+      - name: finddoctor
+        template: finddoctor
+        arguments:
+          parameters:
+          - name: specialty
+            value: '{{ inputs.parameters.specialty }}'
+          - name: location
+            value: '{{ inputs.parameters.location }}'

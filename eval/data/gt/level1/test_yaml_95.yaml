@@ -1,0 +1,33 @@
+# index: 95
+# query: I want to travel to London from 5th July to 10th July. Find me a flight and a hotel with gym facilities and book for me. Also, suggest me the best time for sightseeing as per the weather condition.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-95-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: bookhotel
+        template: bookhotel
+        dependencies:
+        - searchhotel
+        arguments:
+          parameters:
+          - name: hotel_name
+            value: '{{ tasks.searchhotel.result }}'
+          - name: check_in_date
+            value: '{{ inputs.parameters.check_in_date }}'
+          - name: check_out_date
+            value: '{{ inputs.parameters.check_out_date }}'
+      - name: searchhotel
+        template: searchhotel
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: hotel_preferences
+            value: '{{ inputs.parameters.hotel_preferences }}'

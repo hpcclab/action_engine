@@ -1,0 +1,47 @@
+# index: 1322
+# query: I'm currently in San Francisco and I plan to drive to Los Angeles. Could you provide me with the route and the time it would take if I maintain an average speed of 55 miles per hour?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1322-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: calculatedistance
+        template: calculatedistance
+        dependencies:
+        - calculatetime
+        arguments:
+          parameters:
+          - name: origin
+            value: '{{ inputs.parameters.origin }}'
+          - name: destination
+            value: '{{ inputs.parameters.destination }}'
+      - name: calculatetime
+        template: calculatetime
+        dependencies:
+        - calculatedistance
+        arguments:
+          parameters:
+          - name: distance
+            value: '{{ tasks.calculatedistance.result }}'
+          - name: speed
+            value: '{{ inputs.parameters.speed }}'
+      - name: routeplanner
+        template: routeplanner
+        dependencies:
+        - calculatedistance
+        arguments:
+          parameters:
+          - name: origin
+            value: '{{ inputs.parameters.origin }}'
+          - name: destination
+            value: '{{ inputs.parameters.destination }}'
+          - name: distance
+            value: '{{ tasks.calculatedistance.result }}'
+          - name: time
+            value: '{{ tasks.calculatetime.result }}'

@@ -1,0 +1,41 @@
+# index: 774
+# query: Can you plan a trip for me to Tokyo on September 15?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-774-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: weathercode2forecast
+        template: weathercode2forecast
+        dependencies:
+        - cityname2weathercode
+        arguments:
+          parameters:
+          - name: weather_code
+            value: '{{ tasks.cityname2weathercode.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: plantrip
+        template: plantrip
+        dependencies:
+        - weathercode2forecast
+        arguments:
+          parameters:
+          - name: city_name
+            value: '{{ inputs.parameters.city_name }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: weather_forecast
+            value: '{{ tasks.weathercode2forecast.result }}'
+      - name: cityname2weathercode
+        template: cityname2weathercode
+        arguments:
+          parameters:
+          - name: city_name
+            value: '{{ inputs.parameters.city_name }}'

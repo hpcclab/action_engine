@@ -1,0 +1,37 @@
+# index: 961
+# query: Can you find the premium seat class for a flight from Singapore to San Francisco?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-961-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: seatclassavailability
+        template: seatclassavailability
+        dependencies:
+        - flightsearch
+        arguments:
+          parameters:
+          - name: flight_id
+            value: '{{ tasks.flightsearch.result }}'
+      - name: bestseatclass
+        template: bestseatclass
+        dependencies:
+        - seatclassavailability
+        arguments:
+          parameters:
+          - name: seat_classes
+            value: '{{ tasks.seatclassavailability.result }}'
+      - name: flightsearch
+        template: flightsearch
+        arguments:
+          parameters:
+          - name: departure_city
+            value: '{{ inputs.parameters.departure_city }}'
+          - name: arrival_city
+            value: '{{ inputs.parameters.arrival_city }}'

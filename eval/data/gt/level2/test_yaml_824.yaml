@@ -1,0 +1,35 @@
+# index: 824
+# query: Can you find the reviews for the album currently being played at the nearest music store in Toronto?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-824-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getcurrentalbums
+        template: getcurrentalbums
+        dependencies:
+        - getlocalmusicstore
+        arguments:
+          parameters:
+          - name: store_name
+            value: '{{ tasks.getlocalmusicstore.result }}'
+      - name: getlocalmusicstore
+        template: getlocalmusicstore
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: getalbumreviews
+        template: getalbumreviews
+        dependencies:
+        - getcurrentalbums
+        arguments:
+          parameters:
+          - name: album_name
+            value: '{{ tasks.getcurrentalbums.result }}'

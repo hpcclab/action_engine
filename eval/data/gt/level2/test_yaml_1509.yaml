@@ -1,0 +1,43 @@
+# index: 1509
+# query: I would like to have Italian food for dinner for 3 in New York city at 8 pm, and could you please show me the way from Manhattan?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1509-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: booktable
+        template: booktable
+        dependencies:
+        - getrestaurant
+        arguments:
+          parameters:
+          - name: restaurant_name
+            value: '{{ tasks.getrestaurant.result }}'
+          - name: number_of_people
+            value: '{{ inputs.parameters.number_of_people }}'
+          - name: time
+            value: '{{ inputs.parameters.time }}'
+      - name: getdirections
+        template: getdirections
+        dependencies:
+        - booktable
+        arguments:
+          parameters:
+          - name: start_location
+            value: '{{ inputs.parameters.start_location }}'
+          - name: end_location
+            value: '{{ tasks.booktable.result }}'
+      - name: getrestaurant
+        template: getrestaurant
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: type_of_food
+            value: '{{ inputs.parameters.type_of_food }}'

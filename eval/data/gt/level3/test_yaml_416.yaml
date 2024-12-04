@@ -1,0 +1,47 @@
+# index: 416
+# query: Hi, I'm John. Could you reserve a table for dinner at my favorite cuisine restaurant tomorrow at 7pm?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-416-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getuserid
+        template: getuserid
+        arguments:
+          parameters:
+          - name: username
+            value: '{{ inputs.parameters.username }}'
+      - name: reservetable
+        template: reservetable
+        dependencies:
+        - findrestaurantbycuisine
+        arguments:
+          parameters:
+          - name: restaurant_ID
+            value: '{{ tasks.findrestaurantbycuisine.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: time
+            value: '{{ inputs.parameters.time }}'
+      - name: getuserpreferredcuisine
+        template: getuserpreferredcuisine
+        dependencies:
+        - getuserid
+        arguments:
+          parameters:
+          - name: user_ID
+            value: '{{ tasks.getuserid.result }}'
+      - name: findrestaurantbycuisine
+        template: findrestaurantbycuisine
+        dependencies:
+        - getuserpreferredcuisine
+        arguments:
+          parameters:
+          - name: cuisine
+            value: '{{ tasks.getuserpreferredcuisine.result }}'

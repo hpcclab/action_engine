@@ -1,0 +1,53 @@
+# index: 889
+# query: I'm going to visit Toronto this Wednesday, can you suggest some outdoor activities and an Italian restaurant for me depending on the weather?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-889-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findoutdooractivities
+        template: findoutdooractivities
+        dependencies:
+        - getweatherforecast
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: weatherForecast
+            value: '{{ tasks.getweatherforecast.result }}'
+      - name: plandayout
+        template: plandayout
+        dependencies:
+        - findoutdooractivities
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: activities
+            value: '{{ tasks.findoutdooractivities.result }}'
+          - name: restaurants
+            value: '{{ tasks.findrestaurants.result }}'
+      - name: getweatherforecast
+        template: getweatherforecast
+        dependencies:
+        - findrestaurants
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: findrestaurants
+        template: findrestaurants
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: cuisineType
+            value: '{{ inputs.parameters.cuisineType }}'

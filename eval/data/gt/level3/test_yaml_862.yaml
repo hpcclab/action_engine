@@ -1,0 +1,49 @@
+# index: 862
+# query: I'm a 26-year-old man and want to work on my wellness. Can you help?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-862-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: createwellnessplan
+        template: createwellnessplan
+        dependencies:
+        - getdietplan
+        arguments:
+          parameters:
+          - name: DietPlan
+            value: '{{ tasks.getdietplan.result }}'
+          - name: ExerciseRoutine
+            value: '{{ tasks.getexerciseroutine.result }}'
+      - name: getdietplan
+        template: getdietplan
+        dependencies:
+        - gethealthinformation
+        arguments:
+          parameters:
+          - name: HealthInformation
+            value: '{{ tasks.gethealthinformation.result }}'
+      - name: gethealthinformation
+        template: gethealthinformation
+        dependencies:
+        - getexerciseroutine
+        arguments:
+          parameters:
+          - name: age
+            value: '{{ inputs.parameters.age }}'
+          - name: gender
+            value: '{{ inputs.parameters.gender }}'
+      - name: getexerciseroutine
+        template: getexerciseroutine
+        dependencies:
+        - gethealthinformation
+        arguments:
+          parameters:
+          - name: HealthInformation
+            value: '{{ tasks.gethealthinformation.result }}'

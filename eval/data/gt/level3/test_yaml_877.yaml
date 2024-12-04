@@ -1,0 +1,47 @@
+# index: 877
+# query: I'm thinking of taking a trip to New York. How much will it cost for accommodation, food, and tourist attractions?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-877-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getmealcost
+        template: getmealcost
+        dependencies:
+        - getsightseeingcost
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: getsightseeingcost
+        template: getsightseeingcost
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: gethotelroomrate
+        template: gethotelroomrate
+        dependencies:
+        - getmealcost
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: calculatevacationcost
+        template: calculatevacationcost
+        dependencies:
+        - gethotelroomrate
+        arguments:
+          parameters:
+          - name: roomRate
+            value: '{{ tasks.gethotelroomrate.result }}'
+          - name: mealCost
+            value: '{{ tasks.getmealcost.result }}'
+          - name: sightSeeingCost
+            value: '{{ tasks.getsightseeingcost.result }}'

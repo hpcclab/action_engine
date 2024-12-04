@@ -1,0 +1,37 @@
+# index: 605
+# query: Can I take 'The Catcher in the Rye' with my email id mike@gmail.com?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-605-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: email2userid
+        template: email2userid
+        dependencies:
+        - booktitle2bookid
+        arguments:
+          parameters:
+          - name: email
+            value: '{{ inputs.parameters.email }}'
+      - name: booktitle2bookid
+        template: booktitle2bookid
+        arguments:
+          parameters:
+          - name: book_title
+            value: '{{ inputs.parameters.book_title }}'
+      - name: borrowbook
+        template: borrowbook
+        dependencies:
+        - email2userid
+        arguments:
+          parameters:
+          - name: User_ID
+            value: '{{ tasks.email2userid.result }}'
+          - name: Book_ID
+            value: '{{ tasks.booktitle2bookid.result }}'

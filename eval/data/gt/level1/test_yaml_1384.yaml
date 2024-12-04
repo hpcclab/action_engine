@@ -1,0 +1,29 @@
+# index: 1384
+# query: What is the value of the book with ISBN '1029384756' written by J.R.R. Tolkien?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1384-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: authordetails
+        template: authordetails
+        arguments:
+          parameters:
+          - name: author_name
+            value: '{{ inputs.parameters.author_name }}'
+      - name: bookvalue
+        template: bookvalue
+        dependencies:
+        - authordetails
+        arguments:
+          parameters:
+          - name: ISBN
+            value: '{{ inputs.parameters.ISBN }}'
+          - name: authorDetails
+            value: '{{ tasks.authordetails.result }}'

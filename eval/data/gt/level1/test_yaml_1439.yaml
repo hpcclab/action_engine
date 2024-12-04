@@ -1,0 +1,31 @@
+# index: 1439
+# query: I want to watch 'The Dark Knight' on Saturday evening.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1439-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: bookmovie
+        template: bookmovie
+        dependencies:
+        - searchfilm
+        arguments:
+          parameters:
+          - name: film_id
+            value: '{{ tasks.searchfilm.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: show_time
+            value: '{{ inputs.parameters.show_time }}'
+      - name: searchfilm
+        template: searchfilm
+        arguments:
+          parameters:
+          - name: title
+            value: '{{ inputs.parameters.title }}'

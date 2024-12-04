@@ -1,0 +1,37 @@
+# index: 727
+# query: Can you add the movie 'Interstellar' to Sarah's watchlist 'Sci-fi Movies' with her username sarah_sci?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-727-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: watchlistname2id
+        template: watchlistname2id
+        dependencies:
+        - moviename2id
+        arguments:
+          parameters:
+          - name: watchlist_name
+            value: '{{ inputs.parameters.watchlist_name }}'
+      - name: addmovietowatchlist
+        template: addmovietowatchlist
+        dependencies:
+        - watchlistname2id
+        arguments:
+          parameters:
+          - name: watchlist_ID
+            value: '{{ tasks.watchlistname2id.result }}'
+          - name: movie_ID
+            value: '{{ tasks.moviename2id.result }}'
+      - name: moviename2id
+        template: moviename2id
+        arguments:
+          parameters:
+          - name: movie_name
+            value: '{{ inputs.parameters.movie_name }}'

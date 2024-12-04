@@ -1,0 +1,29 @@
+# index: 790
+# query: My cruise to Miami has been rescheduled. Can you find and reserve a hotel nearby for me?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-790-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findnearbyhotels
+        template: findnearbyhotels
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: bookhotel
+        template: bookhotel
+        dependencies:
+        - findnearbyhotels
+        arguments:
+          parameters:
+          - name: hotel_name
+            value: '{{ tasks.findnearbyhotels.result }}'
+          - name: city
+            value: '{{ inputs.parameters.city }}'

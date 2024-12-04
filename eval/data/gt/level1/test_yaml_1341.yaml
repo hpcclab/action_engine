@@ -1,0 +1,31 @@
+# index: 1341
+# query: I am planning to travel from Paris to Rome this Sunday, can you help me with the flight booking?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1341-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findflights
+        template: findflights
+        arguments:
+          parameters:
+          - name: city1
+            value: '{{ inputs.parameters.city1 }}'
+          - name: city2
+            value: '{{ inputs.parameters.city2 }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: bookflight
+        template: bookflight
+        dependencies:
+        - findflights
+        arguments:
+          parameters:
+          - name: flight
+            value: '{{ tasks.findflights.result }}'

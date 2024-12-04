@@ -1,0 +1,37 @@
+# index: 540
+# query: What is the weather forecast for the location of the Coachella festival on the day it starts?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-540-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findeventdate
+        template: findeventdate
+        arguments:
+          parameters:
+          - name: event_name
+            value: '{{ inputs.parameters.event_name }}'
+      - name: getweatherforecast
+        template: getweatherforecast
+        dependencies:
+        - findeventcity
+        arguments:
+          parameters:
+          - name: city_name
+            value: '{{ tasks.findeventcity.result }}'
+          - name: date
+            value: '{{ tasks.findeventdate.result }}'
+      - name: findeventcity
+        template: findeventcity
+        dependencies:
+        - findeventdate
+        arguments:
+          parameters:
+          - name: event_name
+            value: '{{ inputs.parameters.event_name }}'

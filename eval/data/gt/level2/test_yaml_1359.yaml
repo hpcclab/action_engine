@@ -1,0 +1,39 @@
+# index: 1359
+# query: I am planning to visit Tokyo on 15th September. Can you assist me with flight, hotel and activity plan?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1359-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: flightdetails
+        template: flightdetails
+        arguments:
+          parameters:
+          - name: destination
+            value: '{{ inputs.parameters.destination }}'
+          - name: departure_date
+            value: '{{ inputs.parameters.departure_date }}'
+      - name: hotelbooking
+        template: hotelbooking
+        dependencies:
+        - flightdetails
+        arguments:
+          parameters:
+          - name: flight_info
+            value: '{{ tasks.flightdetails.result }}'
+      - name: activityplanning
+        template: activityplanning
+        dependencies:
+        - hotelbooking
+        arguments:
+          parameters:
+          - name: hotel_reservation
+            value: '{{ tasks.hotelbooking.result }}'
+          - name: destination
+            value: '{{ inputs.parameters.destination }}'

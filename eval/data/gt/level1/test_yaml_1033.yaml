@@ -1,0 +1,31 @@
+# index: 1033
+# query: I am in Seattle and I need to purchase 3 packs of Vitamin C. Can you identify a pharmacy where it's available and order it for me?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1033-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: pharmacylocator
+        template: pharmacylocator
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: ordermedicine
+        template: ordermedicine
+        dependencies:
+        - pharmacylocator
+        arguments:
+          parameters:
+          - name: pharmacy
+            value: '{{ tasks.pharmacylocator.result }}'
+          - name: medicine_name
+            value: '{{ inputs.parameters.medicine_name }}'
+          - name: quantity
+            value: '{{ inputs.parameters.quantity }}'

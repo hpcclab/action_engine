@@ -1,7 +1,6 @@
 #env file
 *.env
 .env
-eval/*
 db/api_info/vectordb
 
 # Created by https://www.toptal.com/developers/gitignore/api/linux,python

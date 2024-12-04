@@ -1,0 +1,37 @@
+# index: 18
+# query: May I request the addition of 'Hey Jude' to Emma's 'Classic Disco Hits' playlist?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-18-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: addsongtoplaylist
+        template: addsongtoplaylist
+        dependencies:
+        - playlistname2id
+        arguments:
+          parameters:
+          - name: playlist_ID
+            value: '{{ tasks.playlistname2id.result }}'
+          - name: song_ID
+            value: '{{ tasks.songname2id.result }}'
+      - name: playlistname2id
+        template: playlistname2id
+        dependencies:
+        - songname2id
+        arguments:
+          parameters:
+          - name: playlist_name
+            value: '{{ inputs.parameters.playlist_name }}'
+      - name: songname2id
+        template: songname2id
+        arguments:
+          parameters:
+          - name: song_name
+            value: '{{ inputs.parameters.song_name }}'

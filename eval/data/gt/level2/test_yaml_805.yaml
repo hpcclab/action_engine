@@ -1,0 +1,39 @@
+# index: 805
+# query: Can you find me a romance movie and reserve four tickets for its earliest showtime in San Francisco?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-805-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: reservetickets
+        template: reservetickets
+        dependencies:
+        - getshowtimes
+        arguments:
+          parameters:
+          - name: showtime
+            value: '{{ tasks.getshowtimes.result }}'
+          - name: number_of_tickets
+            value: '{{ inputs.parameters.number_of_tickets }}'
+      - name: findmovie
+        template: findmovie
+        arguments:
+          parameters:
+          - name: genre
+            value: '{{ inputs.parameters.genre }}'
+      - name: getshowtimes
+        template: getshowtimes
+        dependencies:
+        - findmovie
+        arguments:
+          parameters:
+          - name: movie_title
+            value: '{{ tasks.findmovie.result }}'
+          - name: city
+            value: '{{ inputs.parameters.city }}'

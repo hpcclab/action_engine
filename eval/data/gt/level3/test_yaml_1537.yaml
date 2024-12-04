@@ -1,0 +1,53 @@
+# index: 1537
+# query: I'm in New York City and want to watch the movie 'Inception'. How much will the ticket cost and how long will the entire outing take?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1537-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findnearestcinema
+        template: findnearestcinema
+        dependencies:
+        - getticketprice
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: movie
+            value: '{{ inputs.parameters.movie }}'
+      - name: calculatetotalmovieoutingtime
+        template: calculatetotalmovieoutingtime
+        dependencies:
+        - gettraveltime
+        arguments:
+          parameters:
+          - name: travelTime
+            value: '{{ tasks.gettraveltime.result }}'
+          - name: movieLength
+            value: '{{ inputs.parameters.movieLength }}'
+      - name: getticketprice
+        template: getticketprice
+        dependencies:
+        - findnearestcinema
+        arguments:
+          parameters:
+          - name: cinema
+            value: '{{ tasks.findnearestcinema.result }}'
+          - name: movie
+            value: '{{ inputs.parameters.movie }}'
+      - name: gettraveltime
+        template: gettraveltime
+        dependencies:
+        - findnearestcinema
+        arguments:
+          parameters:
+          - name: start
+            value: '{{ inputs.parameters.start }}'
+          - name: destination
+            value: '{{ tasks.findnearestcinema.result }}'

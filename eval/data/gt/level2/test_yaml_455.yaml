@@ -1,0 +1,37 @@
+# index: 455
+# query: Can you find the book 'Harry Potter' and share its review on my Facebook page?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-455-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: sharereview
+        template: sharereview
+        dependencies:
+        - getbookreview
+        arguments:
+          parameters:
+          - name: review
+            value: '{{ tasks.getbookreview.result }}'
+          - name: social_media_platform
+            value: '{{ inputs.parameters.social_media_platform }}'
+      - name: searchbook
+        template: searchbook
+        arguments:
+          parameters:
+          - name: title
+            value: '{{ inputs.parameters.title }}'
+      - name: getbookreview
+        template: getbookreview
+        dependencies:
+        - searchbook
+        arguments:
+          parameters:
+          - name: book_id
+            value: '{{ tasks.searchbook.result }}'

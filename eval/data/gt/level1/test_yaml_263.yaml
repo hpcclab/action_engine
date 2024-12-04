@@ -1,0 +1,29 @@
+# index: 263
+# query: What do you suggest to wear in Paris on May 15th?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-263-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getweatherforecast
+        template: getweatherforecast
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: recommendoutfit
+        template: recommendoutfit
+        dependencies:
+        - getweatherforecast
+        arguments:
+          parameters:
+          - name: weather
+            value: '{{ tasks.getweatherforecast.result }}'
