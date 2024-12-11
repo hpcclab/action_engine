@@ -1,24 +1,30 @@
 """
-This file creates function vector databese from original API infomation list
-Specifically, using FAISS with all-MiniLM-L6-L2 we vectorize summarized decription of each function 
-for further Top-k function selection
+This file creates a function vector database from the original API information list.
+Specifically, using FAISS with an OpenAI embedding model ("text-embedding-3-large"),
+we vectorize the summarized description of each function for further Top-k function selection.
 """
-
-from langchain_community.vectorstores import FAISS
-from langchain.embeddings import SentenceTransformerEmbeddings
 
 import pandas as pd
 import numpy as np
 import os
 import time
 import pickle
+from dotenv import load_dotenv
+
+from langchain_community.vectorstores import FAISS
+from langchain.embeddings import OpenAIEmbeddings
+# Load environment variables
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 path = "./db/api_info/"
 passage_data = pd.read_csv(path + "api_information.csv")
+if not os.getenv("OPENAI_API_KEY"):
+    os.environ["OPENAI_API_KEY"] = openai_api_key
 
-embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+embedding_function = OpenAIEmbeddings(model="text-embedding-3-large")
 
-start=time.time()
+start = time.time()
 metadatas = []
 for index, row in passage_data.iterrows():
     doc_meta = {

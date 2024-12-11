@@ -1,23 +1,28 @@
 import time
 import csv
 import json
-
+from dotenv import load_dotenv
+import os
 from langchain_community.vectorstores import FAISS
-from langchain.embeddings import SentenceTransformerEmbeddings
+from langchain.embeddings import OpenAIEmbeddings
 
 from .llms import call_llm
 from .schemas.workflow import Task_Apis
 from .utilities import escape_json
 
-# Local
-# filepath = "/home/UNT/ae0589/Desktop/HPCC/AutomaticWorkflowGeneration/ActionEngine/db/api_info/"
-# Cloud
+
 filepath = "./db/api_info/"
 filename = filepath + 'api_information.json'
 NO_FUNC = False
 
-#load faiss
-embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+# Load environment variables
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
+if not os.getenv("OPENAI_API_KEY"):
+    os.environ["OPENAI_API_KEY"] = openai_api_key
+
+embedding_function = OpenAIEmbeddings(model="text-embedding-3-large")
 loaded_faiss = FAISS.load_local(filepath + 'vectordb/LangChain_FAISS/', embedding_function, "api_vec", allow_dangerous_deserialization=True)
 
 # def read_json_to_dict(filename):
@@ -67,9 +72,6 @@ def retry_find_func(task_description: str, api_info, user_query, subtask):
 
 def func_identifier(model_name, task_list, user_query, db_name="api_vec"):
     #load faiss
-    embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
-    loaded_faiss = FAISS.load_local(filepath + 'vectordb/LangChain_FAISS/', embedding_function, db_name, allow_dangerous_deserialization=True)
-
     global NO_FUNC
     api_info = read_json_to_dict(filename)
     
@@ -77,8 +79,6 @@ def func_identifier(model_name, task_list, user_query, db_name="api_vec"):
     Use this prompt for no function found edge case
     Also, add the ", If none is applicable N/A" to Task_Api schema
     Example:
-
-
     """
     # SYSTEM_PROMPT = """
     # You will be given a main objective, sub-task info, and available APIs' information.
@@ -89,7 +89,6 @@ def func_identifier(model_name, task_list, user_query, db_name="api_vec"):
     # Make sure to select the API if the task matches the API description.
     # If any of available APIs are not applicable to the subtask, make sure to return N/A.
     # """
-
 
     non_func_list, selected_functions = [], []
     for i in range(len(task_list)):

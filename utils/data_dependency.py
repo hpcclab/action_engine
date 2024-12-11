@@ -4,10 +4,22 @@ Identifying dependencies between functions
 from .llm import call_llm
 from .schemas.workflow import TaskOutputDescription, DependentParams
 from .utilities import escape_json
-
+from dotenv import load_dotenv
 import json
 import re
+import os
 
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+from langchain.embeddings import OpenAIEmbeddings
+# Load environment variables
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
+if not os.getenv("OPENAI_API_KEY"):
+    os.environ["OPENAI_API_KEY"] = openai_api_key
+
+embedding_function = OpenAIEmbeddings(model="text-embedding-3-large")
 def semantic_wf_to_list(semantic_wf):
   """
   Extracting number and storing into the list
@@ -24,7 +36,6 @@ def semantic_wf_to_list(semantic_wf):
   matches = re.findall(pattern, str(semantic_wf))
   # Convert the matched strings into lists of integers
   result = [[int(num) for num in match.split(',')] if ',' in match else [int(match)] for match in matches]
-  
   return result
 
 def generate_dependency_dict(list_of_dependencies):
@@ -66,10 +77,6 @@ def form_output_description(selected_functions):
             """
         response = call_llm(TaskOutputDescription, "TaskOutputDescription", escape_json(SYSTEM_PROMPT), escape_json(USER_PROMPT))
         selected_functions[i]["output description"] = response["task_output_description"]
-    data = {
-            "sys_prompt": SYSTEM_PROMPT,
-            "selected_functions": selected_functions
-            }
     return selected_functions
 
 def add_dependecy(semantic_wf, selected_functions):
@@ -95,6 +102,7 @@ def add_dependecy(semantic_wf, selected_functions):
                 if f't{dep_api["task_num"]}' == dependency:
                     for param in dep_api["output_parameters_with_datatype"]:
                         dependency_outputs[dependency] = {
+                            "output_param_name": param["name"],
                             "output_data_type": param["datatype"],
                             "output_description": param["description"]
                         }
@@ -114,22 +122,89 @@ def list_to_dict_list(param_list:list) -> list:
             result_list.append({param_name: param_value})
     return result_list
 
+def rerank_parameters(current_param, past_output_params):
+    """
+    Reranks past output parameters based on semantic similarity to the current parameter.
+
+    Args:
+        current_param (dict): The current parameter with keys `name`, `description`, and `datatype`.
+        past_output_params (list): List of dictionaries containing past output parameters with structure like:
+                                   [{'node_id': {'output_param_name': ..., 'output_data_type': ..., 'output_description': ...}}]
+
+    Returns:
+        list: Reranked list of past output parameters with similarity scores included.
+    """
+    embedding_function = OpenAIEmbeddings(model="text-embedding-ada-002")
+
+    # Prepare embeddings
+    candidate_descriptions = [
+        param[list(param.keys())[0]]['output_description'] for param in past_output_params
+    ]
+    candidate_embeddings = embedding_function.embed_documents(candidate_descriptions)
+    current_param_embedding = embedding_function.embed_query(current_param['description'])
+
+    # Compute cosine similarity
+    similarity_scores = cosine_similarity([current_param_embedding], candidate_embeddings)[0]
+
+    # Add similarity scores to past output parameters
+    for idx, param in enumerate(past_output_params):
+        node_key = list(param.keys())[0]
+        param[node_key]['similarity_score'] = similarity_scores[idx]
+
+    # Rerank based on similarity score
+    reranked_params = sorted(
+        past_output_params,
+        key=lambda x: list(x.values())[0]['similarity_score'],
+        reverse=True
+    )
+    return reranked_params
+
+def similarity_threshhold_filter(past_output_params, similarity_threshold=0.70):
+    """
+    Filters past output parameters based on a similarity score threshold.
+
+    Args:
+        past_output_params (list): List of dictionaries containing past output parameters, 
+                                   each including a 'similarity_score' key.
+        similarity_threshold (float): Minimum similarity score required to qualify as a high-quality candidate.
+
+    Returns:
+        list: Filtered list of high-quality candidates, or an empty list if none meet the threshold.
+    """
+    high_quality_candidates = [
+        param for param in past_output_params 
+        if list(param.values())[0]['similarity_score'] >= similarity_threshold
+    ]
+
+    return high_quality_candidates if high_quality_candidates else []
+
 def confirm_dependency(semantic_wf, selected_functions):
     selected_functions = add_dependecy(semantic_wf, selected_functions)
+    # print(json.dumps(selected_functions, indent=4))
 
     for i in range(len(selected_functions)):
         param_list = []
         for p in selected_functions[i]["input_parameters_with_datatype"]:
+            print("*" * 40)
+            print(f"Current params: {p}")
             past_output_params = []
             for api_idx, api in enumerate(selected_functions[:i+1]):
                 if api["dependency_output"]:
                     for dep in api["dependency_output"]:
                         dependency_key = f"t{api_idx}" 
-                        print(dependency_key)
                         if dependency_key in dep:
                             output_data_type = dep[dependency_key]["output_data_type"]
                             if output_data_type.lower() == p["datatype"].lower():
                                 past_output_params.append(dep)
+
+            if past_output_params:
+                rerunked_params = rerank_parameters(p, past_output_params)
+                past_output_params = similarity_threshhold_filter(rerunked_params)
+                print("*"*40)
+                print(past_output_params)
+                print("*"*40)
+            print(f"Filtered Past params: {past_output_params}")
+
             SYSTEM_PROMPT = f"""
                 Objective:
                 This task is to identify which past output parameters can be used as dependencies for the current parameter of an API call. The goal is to find dependencies by matching the current parameter’s data type and purpose with relevant outputs from past functions. **If there is no match in both data type and description, return an empty value for that parameter without selecting any past output.**
