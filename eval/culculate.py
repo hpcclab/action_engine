@@ -195,7 +195,6 @@ def main():
         "FewShot CoT": "./eval/data/predict/LLMs/FewShot/gpt-4o/",
         "Action Engine": "./eval/data/predict/AE/gpt-3.5-turbo/"
     }
-
     for config_name, input_dir in configurations.items():
         process_all_files(input_dir, all_data, config_name, num_bootstrap_samples=1000)
 

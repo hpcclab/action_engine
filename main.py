@@ -27,8 +27,8 @@ Choose from below
 """
 
 model_name = "gpt-4o"
-user_query = "Create a graffiti-style image from a text prompt, enhance its quality, resize it to 800x600, convert it to a PDF, and send it via email."
-
+# user_query = "Create a graffiti-style image from a text prompt, enhance its quality, resize it to 800x600, convert it to a PDF, and send it via email."
+user_query ="It will be perfect if you play music that matches my mood. This is Anna."
 def main(user_query: str):
     model = get_model(model_name)
     task_list = subtask_diviser(model, user_query)

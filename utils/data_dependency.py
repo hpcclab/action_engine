@@ -58,7 +58,6 @@ def form_output_description(selected_functions):
         Do not make any assumptions; you must not make up any information.
         Generate the task-specific description ONLY from the given information.
         """
-
     for i in range(len(selected_functions)):
         USER_PROMPT = f"""
             Task Description: {selected_functions[i]["task_description"]},
@@ -121,6 +120,16 @@ def confirm_dependency(semantic_wf, selected_functions):
     for i in range(len(selected_functions)):
         param_list = []
         for p in selected_functions[i]["input_parameters_with_datatype"]:
+            past_output_params = []
+            for api_idx, api in enumerate(selected_functions[:i+1]):
+                if api["dependency_output"]:
+                    for dep in api["dependency_output"]:
+                        dependency_key = f"t{api_idx}" 
+                        print(dependency_key)
+                        if dependency_key in dep:
+                            output_data_type = dep[dependency_key]["output_data_type"]
+                            if output_data_type.lower() == p["datatype"].lower():
+                                past_output_params.append(dep)
             SYSTEM_PROMPT = f"""
                 Objective:
                 This task is to identify which past output parameters can be used as dependencies for the current parameter of an API call. The goal is to find dependencies by matching the current parameter’s data type and purpose with relevant outputs from past functions. **If there is no match in both data type and description, return an empty value for that parameter without selecting any past output.**
@@ -128,7 +137,7 @@ def confirm_dependency(semantic_wf, selected_functions):
                 Instruction:
                 Current task number: t{i+1}
                 Current parameter information: {p},
-                Past output parameters: {[api["dependency_output"] for api in selected_functions[:i+1]]}
+                Past output parameters: {past_output_params}
 
                 You will receive:
                 - The current parameter information, which includes the parameter name, expected data type, and description.
@@ -166,11 +175,6 @@ def confirm_dependency(semantic_wf, selected_functions):
                 Answer:
                 """
             response = call_llm(DependentParams, "DependentParams", escape_json(SYSTEM_PROMPT), escape_json(USER_PROMPT))
-            # print("*"*40)
-            a = [api["dependency_output"] for api in selected_functions[:i+1]]
-            # print(f"Current params: {p}")
-            # print(f"past params: {a}")
-            # print(response)
             params = [param_list.append(i) for i in response["DependentParams"]]
         selected_functions[i]["depended_params"] = list_to_dict_list(param_list)
     # print(SYSTEM_PROMPT + USER_PROMPT)

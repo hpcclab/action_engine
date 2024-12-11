@@ -182,7 +182,7 @@ process_files(gt_dir, pred_dir, output_dir)
 
 # Action Engine
 gt_dir = "./eval/data/gt/"
-pred_dir = "./eval/data/predict/AE/gpt-4o/"
+pred_dir = "./eval/data/predict/AE/gpt-3.5-turbo/"
 output_dir = "./eval/data/predict/AE/gpt-3.5-turbo/"
 process_files(gt_dir, pred_dir, output_dir)
 for level in levels:
