@@ -1,0 +1,15 @@
+Results Memo
+
+11_13_2024
+all 300 data
+This is the result for original data dependency method where just used LLM to classify user direct input or datadependency
+-> topological ordering -> LLM Claasify -> (U, D)
+
+12_10_2024
+all 300 data
+This is the result for new data dependency method where 
+- I changed to superior embeding model (Open AI text-embedding-3-large)
+- Improved Data Dependency method
+    - Add data type filter
+    - Embedding similarity rerunking 
+
