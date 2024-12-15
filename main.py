@@ -34,7 +34,7 @@ def main(user_query: str):
     task_list = subtask_diviser(model, user_query)
     # print(json.dumps(task_list, indent=4))
     selected_functions, NO_FUNC, non_func_list = func_identifier(model, task_list["Tasks"], user_query)
-    # print(json.dumps(selected_functions, indent=4))
+    print(json.dumps(selected_functions, indent=4))
     # print(len(selected_functions))
     semantic_wf = wf_optimizer(user_query, task_list)
     # print(json.dumps(semantic_wf, indent=4))

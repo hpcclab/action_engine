@@ -44,6 +44,8 @@ def calculate_topological_lcs_score(gold_topology, predict_topology):
     return lcs_length / max_length if max_length > 0 else 0
 
 # Core Functions
+import json
+
 def calculate_metrics(raw_dataset):
     """Calculates evaluation scores for ToolLearning given the dataset."""
     correct_format_num = 0
@@ -57,64 +59,118 @@ def calculate_metrics(raw_dataset):
     topological_score_sum = 0
     topological_score_count = 0
 
-    for data in raw_dataset:
+    for data_idx, data in enumerate(raw_dataset):
         gold_answer_str = data['gold_data']["conversations"][0]["value"]
-        gold_answer = json.loads(escape_json(gold_answer_str))
-        gold_api_num += len(gold_answer)
+        try:
+            # Ensure gold_answer is a list of API dicts
+            gold_answer = json.loads(escape_json(gold_answer_str))
+        except Exception as e:
+            print(f"Error parsing gold_answer at index {data_idx}: {e}")
+            gold_answer = []
         
-        for gold_api in gold_answer:
-            gold_param_num += len(gold_api['parameters'])
+        if not isinstance(gold_answer, list):
+            print(f"Gold answer is not a list at index {data_idx}. Got: {type(gold_answer)}")
+            gold_answer = []
+        
+        # Count gold APIs and parameters
+        gold_api_num += len(gold_answer)
+        print(data["Id"])
+        for gold_api in gold_answer[::-1]:
+            if "parameters" in gold_api and isinstance(gold_api["parameters"], dict):
+                gold_param_num += len(gold_api['parameters'])
+            else:
+                print(f"Gold API at index {data_idx} does not have a parameters dict.")
 
-        if data['predict'] and isinstance(data['predict'][0], list) and len(data['predict'][0]) > 0:
-            predict_answer = data['predict'][0]
-            correct_format_num += 1
+        # Handle predictions
+        predict_answer = []
+        # Check the structure of `data['predict']`
+        if 'predict' in data and isinstance(data['predict'], list) and len(data['predict']) > 0:
+            # Usually predictions: data['predict'][0] might be a list of predicted APIs
+            if isinstance(data['predict'][0], list) and len(data['predict'][0]) > 0:
+                predict_answer = data['predict'][0]
+                correct_format_num += 1
+            else:
+                # If predict[0] is not a non-empty list, this may not be a valid prediction format
+                pass
+        else:
+            # No valid predictions present
+            pass
 
-            for predict_api in predict_answer:
-                if "api" in predict_api:
-                    predict_api_num += 1
-                    if "parameters" in predict_api and isinstance(predict_api["parameters"], dict):
-                        predict_param_num += len(predict_api["parameters"])
-                    gold_idx = next(
-                        (idx for idx, gold in enumerate(gold_answer) if gold["api"] == predict_api["api"]), -1
-                    )
-                    if gold_idx != -1:
-                        correct_api_num += 1
+        # Count predicted APIs and match with gold
+        for predict_api in predict_answer:
+            if not isinstance(predict_api, dict):
+                continue
+            if "api" in predict_api:
+                predict_api_num += 1
+                # Count predicted parameters if valid
+                if "parameters" in predict_api and isinstance(predict_api["parameters"], dict):
+                    predict_param_num += len(predict_api["parameters"])
+                else:
+                    # Parameters missing or not a dict
+                    pass
+
+                # Attempt to find a matching gold API (normalize strings)
+                predict_api_name = str(predict_api["api"]).strip().lower()
+                gold_idx = next(
+                    (idx for idx, gold_item in enumerate(gold_answer) 
+                     if "api" in gold_item and str(gold_item["api"]).strip().lower() == predict_api_name),
+                    -1
+                )
+                
+                if gold_idx != -1:
+                    # Found a correct API match
+                    correct_api_num += 1
+                    gold_item = gold_answer[gold_idx]
+                    # Match parameters
+                    if "parameters" in gold_item and isinstance(gold_item["parameters"], dict) \
+                       and "parameters" in predict_api and isinstance(predict_api["parameters"], dict):
                         for param_name, param_value in predict_api["parameters"].items():
-                            if (
-                                param_name in gold_answer[gold_idx]["parameters"]
-                                and str(param_value) == str(gold_answer[gold_idx]["parameters"][param_name])
-                            ):
+                            gold_value = gold_item["parameters"].get(param_name)
+                            if gold_value is not None and str(param_value) == str(gold_value):
                                 correct_param_num += 1
+            else:
+                # Predicted item does not have 'api' key
+                pass
 
-        if 'topology' in data['gold_data'] and len(data['predict']) > 1 and isinstance(data['predict'][1], dict):
-            gold_topology = data['gold_data']['topology']
+        # Topological score calculation
+        # Ensure both gold_data['topology'] and data['predict'][1]['topology'] exist
+        if 'topology' in data['gold_data'] and len(data['predict']) > 1 \
+           and isinstance(data['predict'][1], dict) and 'topology' in data['predict'][1]:
+            gold_topology = data['gold_data']['topology'][::-1]
             predict_topology = data['predict'][1]['topology']
             topological_accuracy_score = calculate_topological_lcs_score(gold_topology, predict_topology)
             topological_score_sum += topological_accuracy_score
             topological_score_count += 1
         else:
+            # Print debug info if topology is missing
             if 'topology' not in data['gold_data']:
-                print("noo topology in ground truth")
-            if not len(data['predict']) > 1:
-                print("length of prediction smaller than 1")
-            print(data['Id'])
+                print("No topology in ground truth for data Id:", data.get('Id', 'unknown_id'))
+            if not (len(data['predict']) > 1 and isinstance(data['predict'][1], dict) and 'topology' in data['predict'][1]):
+                print("Prediction missing topology for data Id:", data.get('Id', 'unknown_id'))
+
+    # After processing all data:
+    print("*"*40)
+    print("Gold API count:", gold_api_num)
+    print("Predicted API count:", predict_api_num)
+    print("Correct API count:", correct_api_num)
 
     result_dict = {}
-    result_dict["AMOUNT"] = correct_format_num / len(raw_dataset)
-    result_dict["P_api"] = correct_api_num / predict_api_num if predict_api_num > 0 else 0.0
-    result_dict["R_api"] = correct_api_num / gold_api_num if gold_api_num > 0 else 0.0
-    result_dict["F1_api"] = (
-        2 * result_dict["P_api"] * result_dict["R_api"] / (result_dict["P_api"] + result_dict["R_api"])
-        if result_dict["P_api"] > 0 and result_dict["R_api"] > 0
-        else 0.0
-    )
-    result_dict["P_param"] = correct_param_num / predict_param_num if predict_param_num > 0 else 0.0
-    result_dict["R_param"] = correct_param_num / gold_param_num if gold_param_num > 0 else 0.0
-    result_dict["F1_param"] = (
-        2 * result_dict["P_param"] * result_dict["R_param"] / (result_dict["P_param"] + result_dict["R_param"])
-        if result_dict["P_param"] > 0 and result_dict["R_param"] > 0
-        else 0.0
-    )
+    total_samples = len(raw_dataset) if len(raw_dataset) > 0 else 1
+    result_dict["AMOUNT"] = correct_format_num / total_samples
+    result_dict["P_api"] = (correct_api_num / predict_api_num) if predict_api_num > 0 else 0.0
+    result_dict["R_api"] = (correct_api_num / gold_api_num) if gold_api_num > 0 else 0.0
+    if result_dict["P_api"] > 0 and result_dict["R_api"] > 0:
+        result_dict["F1_api"] = 2 * result_dict["P_api"] * result_dict["R_api"] / (result_dict["P_api"] + result_dict["R_api"])
+    else:
+        result_dict["F1_api"] = 0.0
+
+    result_dict["P_param"] = (correct_param_num / predict_param_num) if predict_param_num > 0 else 0.0
+    result_dict["R_param"] = (correct_param_num / gold_param_num) if gold_param_num > 0 else 0.0
+    if result_dict["P_param"] > 0 and result_dict["R_param"] > 0:
+        result_dict["F1_param"] = 2 * result_dict["P_param"] * result_dict["R_param"] / (result_dict["P_param"] + result_dict["R_param"])
+    else:
+        result_dict["F1_param"] = 0.0
+
     result_dict["topological_ordering_accuracy"] = (
         topological_score_sum / topological_score_count if topological_score_count > 0 else 0.0
     )

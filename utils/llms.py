@@ -119,6 +119,7 @@ def call_llm(model, pydantic_schema, schema_name, system_prompt, user_prompt, ma
         else:
             # Handle open-source models with the text-generation pipeline
             combined_prompt = f"{system_prompt}\n{user_prompt}"
+            print(type(combined_prompt))
             result = model(
                 combined_prompt, 
                 max_new_tokens=500,  
@@ -127,7 +128,6 @@ def call_llm(model, pydantic_schema, schema_name, system_prompt, user_prompt, ma
                 temperature=0.7
             )
             raw_output = result[0]['generated_text']
-            
             # Extract JSON answer from the raw output using the dedicated function
             response = extract_json_answer(raw_output)
 
