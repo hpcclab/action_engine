@@ -1,13 +1,13 @@
 from pprint import pprint
 import sys 
 import os
+from dotenv import load_dotenv
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../..")))
-import time
+
 from utils.llms import call_llm, get_model
 from utils.utilities import escape_json
 from utils.schemas.workflow import ArgoYAML
-from langchain_community.vectorstores import FAISS
-from langchain.embeddings import SentenceTransformerEmbeddings
 import time
 import json
 # from ruamel.yaml import YAML
@@ -22,9 +22,23 @@ model_name = "gpt-4o"
 # Load the appropriate model
 model_instance = get_model(model_name)
 
-topk_nums = 10
-#load faiss
-embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+# Number of to feed into prompt
+topk_nums = 20
+
+from langchain_community.vectorstores import FAISS
+from langchain.embeddings import OpenAIEmbeddings
+filepath = "./db/api_info/"
+filename = filepath + 'api_information.json'
+NO_FUNC = False
+
+# Load environment variables
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
+if not os.getenv("OPENAI_API_KEY"):
+    os.environ["OPENAI_API_KEY"] = openai_api_key
+
+embedding_function = OpenAIEmbeddings(model="text-embedding-3-large")
 loaded_faiss = FAISS.load_local(db_filepath + 'vectordb/LangChain_FAISS/', embedding_function, "api_vec", allow_dangerous_deserialization=True)
 
 def find_topk_functions(task: str, api_info, k):

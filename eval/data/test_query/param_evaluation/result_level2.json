@@ -4930,6 +4930,96 @@
         ]
     },
     {
+        "Id": 971,
+        "Selected_Functions": [
+            {
+                "name": "CurrencyConversion",
+                "format": "CurrencyConversion(from_currency, to_currency) -> conversion_rate",
+                "Id": 366,
+                "description": "This API provides the conversion rate from one currency to another.",
+                "summary": "This API provides the conversion rate from one currency to another.",
+                "input_parameters_with_datatype": [
+                    {
+                        "name": "from_currency",
+                        "description": "the currency to convert from",
+                        "datatype": "String"
+                    },
+                    {
+                        "name": "to_currency",
+                        "description": "the currency to convert to",
+                        "datatype": "String"
+                    }
+                ],
+                "output_parameters_with_datatype": [
+                    {
+                        "name": "conversion_rate",
+                        "description": "the conversion rate from the 'from_currency' to the 'to_currency'",
+                        "datatype": "Float"
+                    }
+                ],
+                "url": null,
+                "method": null,
+                "task_num": 1,
+                "task_description": "Retrieve the price of item ID: 999 in Euros."
+            },
+            {
+                "name": "CalculatePrice",
+                "format": "CalculatePrice(price, conversion_rate) -> converted_price",
+                "Id": 368,
+                "description": "This API provides the final price of an item after currency conversion.",
+                "summary": "This API provides the final price of an item after currency conversion.",
+                "input_parameters_with_datatype": [
+                    {
+                        "name": "price",
+                        "description": "the price of the item",
+                        "datatype": "Float"
+                    },
+                    {
+                        "name": "conversion_rate",
+                        "description": "the conversion rate from the original currency to the target currency",
+                        "datatype": "Float"
+                    }
+                ],
+                "output_parameters_with_datatype": [
+                    {
+                        "name": "converted_price",
+                        "description": "the final price of the item after currency conversion",
+                        "datatype": "Float"
+                    }
+                ],
+                "url": null,
+                "method": null,
+                "task_num": 2,
+                "task_description": "Calculate the price of item ID: 999 in Japanese Yen using the current exchange rate."
+            },
+            {
+                "name": "ItemPrice",
+                "format": "ItemPrice(item_id) -> price",
+                "Id": 367,
+                "description": "This API provides the price of an item.",
+                "summary": "This API provides the price of an item.",
+                "input_parameters_with_datatype": [
+                    {
+                        "name": "item_id",
+                        "description": "the ID of the item",
+                        "datatype": "Integer"
+                    }
+                ],
+                "output_parameters_with_datatype": [
+                    {
+                        "name": "price",
+                        "description": "the price of the item",
+                        "datatype": "Float"
+                    }
+                ],
+                "url": null,
+                "method": null,
+                "task_num": 3,
+                "task_description": "Convert the price of item ID: 999 from Euros to Japanese Yen."
+            }
+        ]
+    },
+    {
         "Id": 1011,
         "Selected_Functions": [
             {
@@ -5101,6 +5191,96 @@
                 "method": null,
                 "task_num": 3,
                 "task_description": "Book a table for 3 people at the selected Italian restaurant for 8 pm."
+            }
+        ]
+    },
+    {
+        "Id": 1410,
+        "Selected_Functions": [
+            {
+                "name": "BooksByAuthor",
+                "format": "BooksByAuthor(author_id) -> book_list",
+                "Id": 727,
+                "description": "This API is to find the books written by the author.",
+                "summary": "This API is to find the books written by the author.",
+                "input_parameters_with_datatype": [
+                    {
+                        "name": "author_id",
+                        "description": "the ID of the author",
+                        "datatype": "Integer"
+                    }
+                ],
+                "output_parameters_with_datatype": [
+                    {
+                        "name": "book_list",
+                        "description": "the list of books written by the author",
+                        "datatype": "List of Strings"
+                    }
+                ],
+                "url": null,
+                "method": null,
+                "task_num": 1,
+                "task_description": "Identify the author of the book 'The Hobbit'."
+            },
+            {
+                "name": "BookFinder",
+                "format": "BookFinder(genre, author, year) -> book",
+                "Id": 91,
+                "description": "This API is to find a specific book by genre, author, and year.",
+                "summary": "This API is to find a specific book by genre, author, and year.",
+                "input_parameters_with_datatype": [
+                    {
+                        "name": "genre",
+                        "description": "the genre of the book",
+                        "datatype": "String"
+                    },
+                    {
+                        "name": "author",
+                        "description": "the author of the book",
+                        "datatype": "String"
+                    },
+                    {
+                        "name": "year",
+                        "description": "the year the book was published",
+                        "datatype": "String"
+                    }
+                ],
+                "output_parameters_with_datatype": [
+                    {
+                        "name": "book",
+                        "description": "the specific book matching the given criteria",
+                        "datatype": "String"
+                    }
+                ],
+                "url": null,
+                "method": null,
+                "task_num": 2,
+                "task_description": "Find other books written by the author identified in the previous step."
+            },
+            {
+                "name": "AuthorOfBook",
+                "format": "AuthorOfBook(book_id) -> author_id",
+                "Id": 726,
+                "description": "This API is to find the author's ID by the book's ID.",
+                "summary": "This API is to find the author's ID by the book's ID.",
+                "input_parameters_with_datatype": [
+                    {
+                        "name": "book_id",
+                        "description": "the ID of the book",
+                        "datatype": "Integer"
+                    }
+                ],
+                "output_parameters_with_datatype": [
+                    {
+                        "name": "author_id",
+                        "description": "the ID of the author",
+                        "datatype": "Integer"
+                    }
+                ],
+                "url": null,
+                "method": null,
+                "task_num": 3,
+                "task_description": "Provide a list of books written by the author of 'The Hobbit'."
             }
         ]
     },

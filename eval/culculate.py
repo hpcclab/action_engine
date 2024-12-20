@@ -74,7 +74,6 @@ def calculate_metrics(raw_dataset):
         
         # Count gold APIs and parameters
         gold_api_num += len(gold_answer)
-        print(data["Id"])
         for gold_api in gold_answer[::-1]:
             if "parameters" in gold_api and isinstance(gold_api["parameters"], dict):
                 gold_param_num += len(gold_api['parameters'])

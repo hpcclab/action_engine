@@ -185,8 +185,8 @@ def confirm_dependency(semantic_wf, selected_functions):
     for i in range(len(selected_functions)):
         param_list = []
         for p in selected_functions[i]["input_parameters_with_datatype"]:
-            print("*" * 40)
-            print(f"Current params: {p}")
+            # print("*" * 40)
+            # print(f"Current params: {p}")
             past_output_params = []
             for api_idx, api in enumerate(selected_functions[:i+1]):
                 if api["dependency_output"]:
@@ -200,10 +200,10 @@ def confirm_dependency(semantic_wf, selected_functions):
             if past_output_params:
                 rerunked_params = rerank_parameters(p, past_output_params)
                 past_output_params = similarity_threshhold_filter(rerunked_params)
-                print("*"*40)
-                print(past_output_params)
-                print("*"*40)
-            print(f"Filtered Past params: {past_output_params}")
+            #     print("*"*40)
+            #     print(past_output_params)
+            #     print("*"*40)
+            # print(f"Filtered Past params: {past_output_params}")
 
             SYSTEM_PROMPT = f"""
                 Objective:

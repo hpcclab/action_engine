@@ -7970,6 +7970,136 @@
         ]
     },
     {
+        "Id": 887,
+        "Selected_Functions": [
+            {
+                "name": "FindRestaurants",
+                "format": "FindRestaurants(city, cuisineType) -> restaurants",
+                "Id": 310,
+                "description": "This API is to find restaurants of a specific cuisine type in a specific city.",
+                "summary": "This API is to find restaurants of a specific cuisine type in a specific city.",
+                "input_parameters_with_datatype": [
+                    {
+                        "name": "city",
+                        "description": "the name of the city",
+                        "datatype": "String"
+                    },
+                    {
+                        "name": "cuisineType",
+                        "description": "the specific cuisine type",
+                        "datatype": "String"
+                    }
+                ],
+                "output_parameters_with_datatype": [
+                    {
+                        "name": "restaurants",
+                        "description": "the restaurants of the specific cuisine type in the specific city",
+                        "datatype": "List"
+                    }
+                ],
+                "url": null,
+                "method": null,
+                "task_num": 1,
+                "task_description": "Get the weather forecast for London on Friday."
+            },
+            {
+                "name": "GetWeatherForecast",
+                "format": "GetWeatherForecast(city, date) -> weather report",
+                "Id": 89,
+                "description": "This API returns the weather forecast of a specified city on a specific date.",
+                "summary": "This API returns the weather forecast of a specified city on a specific date.",
+                "input_parameters_with_datatype": [
+                    {
+                        "name": "city",
+                        "description": "the name of the city",
+                        "datatype": "String"
+                    },
+                    {
+                        "name": "date",
+                        "description": "the specific date",
+                        "datatype": "Date"
+                    }
+                ],
+                "output_parameters_with_datatype": [
+                    {
+                        "name": "weather report",
+                        "description": "the weather forecast",
+                        "datatype": "String"
+                    }
+                ],
+                "url": null,
+                "method": null,
+                "task_num": 2,
+                "task_description": "Find outdoor activities in London that are suitable for the weather on Friday."
+            },
+            {
+                "name": "PlanDayOut",
+                "format": "PlanDayOut(city, activities, restaurants) -> dayPlan",
+                "Id": 311,
+                "description": "This API is to plan a day out including outdoor activities and restaurants in a specific city.",
+                "summary": "This API is to plan a day out including outdoor activities and restaurants in a specific city.",
+                "input_parameters_with_datatype": [
+                    {
+                        "name": "city",
+                        "description": "the name of the city",
+                        "datatype": "String"
+                    },
+                    {
+                        "name": "activities",
+                        "description": "the suitable outdoor activities",
+                        "datatype": "List"
+                    },
+                    {
+                        "name": "restaurants",
+                        "description": "the restaurants",
+                        "datatype": "List"
+                    }
+                ],
+                "output_parameters_with_datatype": [
+                    {
+                        "name": "dayPlan",
+                        "description": "the plan for a day out including outdoor activities and restaurants",
+                        "datatype": "String"
+                    }
+                ],
+                "url": null,
+                "method": null,
+                "task_num": 3,
+                "task_description": "Find a Chinese restaurant in London."
+            },
+            {
+                "name": "FindOutdoorActivities",
+                "format": "FindOutdoorActivities(city, weatherForecast) -> activities",
+                "Id": 309,
+                "description": "This API is to find suitable outdoor activities based on the city and weather forecast.",
+                "summary": "This API is to find suitable outdoor activities based on the city and weather forecast.",
+                "input_parameters_with_datatype": [
+                    {
+                        "name": "city",
+                        "description": "the name of the city",
+                        "datatype": "String"
+                    },
+                    {
+                        "name": "weatherForecast",
+                        "description": "the weather forecast of the city",
+                        "datatype": "String"
+                    }
+                ],
+                "output_parameters_with_datatype": [
+                    {
+                        "name": "activities",
+                        "description": "the suitable outdoor activities based on the city and weather forecast",
+                        "datatype": "List"
+                    }
+                ],
+                "url": null,
+                "method": null,
+                "task_num": 4,
+                "task_description": "Plan a day out in London with the recommended outdoor activities and Chinese restaurant."
+            }
+        ]
+    },
+    {
         "Id": 889,
         "Selected_Functions": [
             {
