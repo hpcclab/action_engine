@@ -41,7 +41,7 @@ def main(user_query: str):
     # print(json.dumps(semantic_wf, indent=4))
     selected_functions, user_inputs, dependent_params = confirm_dependency(semantic_wf, selected_functions)
     # print(json.dumps(selected_functions, indent=4))
-
+    
     # with open("final_selected_functions.json", 'w') as f:
     #     json.dump(selected_functions, f, indent=4)
     # with open("user_inputs.json", 'w') as f:

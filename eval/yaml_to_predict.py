@@ -169,22 +169,29 @@ def write_jsonl(file_path, data):
 levels = ["level1", "level2", "level3"]
 
 # # Zroshot CoT
-gt_dir = "./eval/data/gt/"
-pred_dir = "./eval/data/predict/LLMs/ZeroShot/gpt-4o/"
-output_dir = "./eval/data/predict/LLMs/ZeroShot/gpt-4o/"
-process_files(gt_dir, pred_dir, output_dir)
+# gt_dir = "./eval/data/gt/"
+# pred_dir = "./eval/data/predict/LLMs/ZeroShot/gpt-4o/"
+# output_dir = "./eval/data/predict/LLMs/ZeroShot/gpt-4o/"
+# process_files(gt_dir, pred_dir, output_dir)
 
 # # Zroshot CoT
-gt_dir = "./eval/data/gt/"
-pred_dir = "./eval/data/predict/LLMs/FewShot/gpt-4o/"
-output_dir = "./eval/data/predict/LLMs/FewShot/gpt-4o/"
-process_files(gt_dir, pred_dir, output_dir)
+# gt_dir = "./eval/data/gt/"
+# pred_dir = "./eval/data/predict/LLMs/FewShot/gpt-4o/"
+# output_dir = "./eval/data/predict/LLMs/FewShot/gpt-4o/"
+# process_files(gt_dir, pred_dir, output_dir)
 
 # Action Engine
+# gt_dir = "./eval/data/gt/"
+# pred_dir = "./eval/data/predict/AE/gpt-4o/"
+# output_dir = "./eval/data/predict/AE/gpt-4o/"
+# process_files(gt_dir, pred_dir, output_dir)
+
+# Action Engine Reverse
 gt_dir = "./eval/data/gt/"
-pred_dir = "./eval/data/predict/AE/gpt-4o/"
-output_dir = "./eval/data/predict/AE/gpt-4o/"
+pred_dir = "./eval/data/predict/AE_Reverse/gpt-3.5-turbo/"
+output_dir = "./eval/data/predict/AE_Reverse/gpt-3.5-turbo/"
 process_files(gt_dir, pred_dir, output_dir)
+
 for level in levels:
     try:
         output_file = os.path.join(output_dir, f"testdata_{level}.jsonl")

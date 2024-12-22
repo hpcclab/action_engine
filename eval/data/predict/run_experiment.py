@@ -4,9 +4,10 @@ import subprocess
 commands = [
     # "python -m eval.data.predict.fewshot_COT",
     # "python -m eval.data.predict.generate_yaml",
-    "python -m eval.data.predict.generate_param_eval",
+    # "python -m eval.data.predict.generate_param_eval",
     # "python -m eval.data.predict.zeroshot_COT_param",
     # "python -m eval.data.predict.fewshot_COT_param",
+    "python -m eval.data.predict.rae_generate_yaml",
     "python eval/yaml_to_predict.py",
     "python eval/culculate.py",
     "python eval/plot.py",
