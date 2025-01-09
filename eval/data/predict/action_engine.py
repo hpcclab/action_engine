@@ -11,7 +11,6 @@ from utils.func_identifier import func_identifier
 from utils.wf_optimizer import wf_optimizer
 from utils.data_dependency import confirm_dependency
 from utils.argo_compiler import yaml_compiler
-from utils.missing_func import missing_func
 from utils.llms import get_model
 #cloud
 filepath = "./"
@@ -25,7 +24,7 @@ Choose from below
 "meta-llama/Llama-3.2-3B-Instruct"
 "google/gemma-2b-it"
 """
-model_name = "gpt-3.5-turbo"
+model_name = "gpt-4o"
 
 import time  # Optional: for adding a delay between retries
 
@@ -43,8 +42,8 @@ def generate_yaml_file_from_query(user_query: str, max_retries=3):
             model = get_model(model_name)
             task_list = subtask_diviser(model, user_query)
             selected_functions, NO_FUNC, non_func_list = func_identifier(model, task_list["Tasks"], user_query)
-            semantic_wf = wf_optimizer(user_query, task_list)
-            selected_functions, user_inputs, dependent_params = confirm_dependency(semantic_wf, selected_functions)
+            semantic_wf = wf_optimizer(model, user_query, task_list)
+            selected_functions, user_inputs, dependent_params = confirm_dependency(model, semantic_wf, selected_functions)
             
             # Workflow compilation
             argo_wf = yaml_compiler(selected_functions, user_inputs)

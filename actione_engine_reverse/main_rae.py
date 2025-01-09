@@ -16,6 +16,7 @@ class ReverseActionEngine:
     def __init__(self, model):
         # Initialize any required state, such as references to LLM, API repository, etc.
         self.user_request = None
+        self.visited_apis = set()
         self.model = model
         self.final_output_description = None
         self.selected_apis = []
@@ -46,31 +47,62 @@ class ReverseActionEngine:
         Recursively resolve inputs for the given API by checking if the user request 
         provides them directly, or by finding other APIs to produce them.
         """
+        # Prevent cycles
+        if api['name'] in self.visited_apis:
+            print(f"Cycle detected: API {api['name']} is revisited.")
+            return "failure"
+        self.visited_apis.add(api['name'])
+
         param_values = {}
         for param in api.get('input_parameters_with_datatype', []):
-            extracted_param = can_fulfill_directly(self.model, user_request, param) or not "None"
-            if extracted_param and not extracted_param["value"] == "None":
-                print("Extracted from user input")
+            # Attempt to fulfill parameter directly
+            extracted_param = can_fulfill_directly(self.model, user_request, param)
+            # print(f"Attempting to fulfill parameter '{param['name']}' directly. Result: {extracted_param}")
+
+            if isinstance(extracted_param, dict) and "value" in extracted_param and extracted_param["value"] != "None":
+                # print("Extracted from user input")
                 param_values[param["name"]] = extracted_param["value"]
             else:
-                # Parameter not directly provided, need to find another API
-                print("Extracted from API")
+                # print(f"Parameter '{param['name']}' could not be directly fulfilled. Resolving using another API.")
                 param_output_desc = get_param_output_description(self.model, param)
+                # print(f"Param output description: {param_output_desc}")
+                
                 sub_candidate_apis = find_apis_by_output_description(param_output_desc["description"])
                 if not sub_candidate_apis:
+                    print(f"No API found to resolve {param['name']}.")
+                    self.visited_apis.remove(api['name'])  # Clean up visited set
                     return "failure"
+                
                 chosen_sub_api = select_best_api(self.model, sub_candidate_apis, param_output_desc)
-                print(chosen_sub_api)
-                print(param_output_desc)
-                print(">"*40)
+                if chosen_sub_api == api:  # Prevent self-dependency
+                    print(f"Error: API {api['name']} depends on itself for {param['name']}.")
+                    self.visited_apis.remove(api['name'])  # Clean up visited set
+                    return "failure"
+                
                 # Recursively get the sub-workflow string
-                param_api = self.build_workflow_for_api(chosen_sub_api, user_request)
-                if param_api is None or param_api == "failure":
+                # print(f"Chosen sub API: {chosen_sub_api['name']}")
+                try:
+                    param_api = self.build_workflow_for_api(chosen_sub_api, user_request)
+                    if param_api is None or param_api == "failure":
+                        print(f"Failed to resolve {param['name']} via API {chosen_sub_api['name']}.")
+                        self.visited_apis.remove(api['name'])  # Clean up visited set
+                        return "failure"
+                except KeyError as e:
+                    print(f"KeyError during recursive call: {e}")
+                    self.visited_apis.remove(api['name'])
+                    return "failure"
+                except Exception as e:
+                    print(f"Unexpected error during recursive call: {e}")
+                    self.visited_apis.remove(api['name'])
                     return "failure"
 
                 # Store the entire sub-workflow call (string) in the param_values
                 param_values[param["name"]] = param_api
 
         # Once all parameters are resolved, create the workflow node (string)
-        return create_workflow(api, param_values)
-    
+        workflow = create_workflow(api, param_values)
+
+        # Clean up visited set for successful resolution
+        self.visited_apis.remove(api['name'])
+        return workflow
+        

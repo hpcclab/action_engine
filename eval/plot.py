@@ -1,6 +1,7 @@
 import json
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 # Load the JSON data
 file_path = './eval/scores/dag_scores.json'  # Replace with your file path
@@ -10,7 +11,6 @@ with open(file_path, 'r') as file:
 # Extract the scores data
 data = data[0]["scores"]
 levels = ["testdata_level1", "testdata_level2", "testdata_level3"]
-methods = ["ZeroShot CoT", "FewShot CoT", "Action Engine"]
 
 # List of all metrics to plot
 metrics = [
@@ -21,14 +21,13 @@ metrics = [
 
 # Directory to save plots
 output_dir = "./eval/plots/"
-import os
 os.makedirs(output_dir, exist_ok=True)
 
 # Process the data for each metric
 for metric in metrics:
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(12, 6))
     x = np.arange(len(levels))
-    width = 0.25  # Bar width
+    width = 0.15  # Adjusted bar width for 6 methods
 
     for i, score in enumerate(data):
         method = list(score.keys())[0]
@@ -52,7 +51,7 @@ for metric in metrics:
     ax.set_xlabel("Levels")
     ax.set_ylabel(metric)
     ax.set_title(f"{metric} Scores with Confidence Intervals")
-    ax.set_xticks(x + width)
+    ax.set_xticks(x + (len(data) - 1) * width / 2)  # Center the tick labels
     ax.set_xticklabels(levels)
     ax.legend()
     ax.grid(True, linestyle="--", alpha=0.6)
@@ -64,4 +63,4 @@ for metric in metrics:
     output_file = os.path.join(output_dir, f"{metric}.png")
     plt.tight_layout()
     plt.savefig(output_file)
-    plt.close(fig)  # Close the figure to save memory
+    plt.close(fig)  

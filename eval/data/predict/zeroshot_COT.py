@@ -161,7 +161,7 @@ def main():
             results.append(generated_wf)
         
         try:
-            out_dir_path = "./eval/data/predict/LLMs/ZeroShot/" + model_name
+            out_dir_path = "./eval/data/predict/LLMs/ZeroShot-CoT/" + model_name
             os.makedirs(out_dir_path, exist_ok=True)
             file_name = f"{level_name}_result.json"
             output_file_path = os.path.join(out_dir_path, file_name)

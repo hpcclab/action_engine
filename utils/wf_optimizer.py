@@ -1,7 +1,7 @@
-from .llm import call_llm
+from .llms import call_llm
 from .schemas.workflow import Workflow
 from .utilities import escape_json
-def wf_optimizer(user_query, task_list):
+def wf_optimizer(model, user_query, task_list):
     SYSTEM_PROMPT = f"""
     Instruction:
     User Request - {user_query}
@@ -49,7 +49,7 @@ def wf_optimizer(user_query, task_list):
     Answer:
     """
 
-    semantic_wf = call_llm(Workflow, "Workflow", escape_json(SYSTEM_PROMPT), escape_json(USER_PROMPT))
+    semantic_wf = call_llm(model, Workflow, "Workflow", escape_json(SYSTEM_PROMPT), escape_json(USER_PROMPT))
     return semantic_wf["Workflow"]
 
 """

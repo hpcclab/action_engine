@@ -1,7 +1,7 @@
 """
 Identifying dependencies between functions
 """
-from .llm import call_llm
+from .llms import call_llm
 from .schemas.workflow import TaskOutputDescription, DependentParams
 from .utilities import escape_json
 from dotenv import load_dotenv
@@ -61,7 +61,7 @@ def generate_dependency_dict(list_of_dependencies):
 
     return dependency_dict
 
-def form_output_description(selected_functions):
+def form_output_description(model, selected_functions):
     SYSTEM_PROMPT = """
         You will be given a task, API functionality description, and API expected output description.
         The API is selected for the task, but the API output description is just for a general use case.
@@ -75,11 +75,11 @@ def form_output_description(selected_functions):
             API Functionality Description: {selected_functions[i]["description"]}
             API Output Description: {selected_functions[i]["output_parameters_with_datatype"]}
             """
-        response = call_llm(TaskOutputDescription, "TaskOutputDescription", escape_json(SYSTEM_PROMPT), escape_json(USER_PROMPT))
+        response = call_llm(model, TaskOutputDescription, "TaskOutputDescription", escape_json(SYSTEM_PROMPT), escape_json(USER_PROMPT))
         selected_functions[i]["output description"] = response["task_output_description"]
     return selected_functions
 
-def add_dependecy(semantic_wf, selected_functions):
+def add_dependecy(model, semantic_wf, selected_functions):
     # generate_dependency_dict -> {1: [], 2: [1], 3: [2]}
     dependency_dict = generate_dependency_dict(semantic_wf_to_list(semantic_wf))
     # Adding dependency.
@@ -88,7 +88,7 @@ def add_dependecy(semantic_wf, selected_functions):
         selected_functions[i]["dependencies"] = [f"t{dp}" for dp in dependency_dict[i+1]]
 
     # generate output description
-    selected_functions = form_output_description(selected_functions)
+    selected_functions = form_output_description(model, selected_functions)
 
     # Dictionary to hold dependency output information
     dependency_output = {} 
@@ -178,8 +178,8 @@ def similarity_threshhold_filter(past_output_params, similarity_threshold=0.70):
 
     return high_quality_candidates if high_quality_candidates else []
 
-def confirm_dependency(semantic_wf, selected_functions):
-    selected_functions = add_dependecy(semantic_wf, selected_functions)
+def confirm_dependency(model, semantic_wf, selected_functions):
+    selected_functions = add_dependecy(model, semantic_wf, selected_functions)
     # print(json.dumps(selected_functions, indent=4))
 
     for i in range(len(selected_functions)):
@@ -249,7 +249,7 @@ def confirm_dependency(semantic_wf, selected_functions):
             USER_PROMPT = f"""
                 Answer:
                 """
-            response = call_llm(DependentParams, "DependentParams", escape_json(SYSTEM_PROMPT), escape_json(USER_PROMPT))
+            response = call_llm(model, DependentParams, "DependentParams", escape_json(SYSTEM_PROMPT), escape_json(USER_PROMPT))
             params = [param_list.append(i) for i in response["DependentParams"]]
         selected_functions[i]["depended_params"] = list_to_dict_list(param_list)
     # print(SYSTEM_PROMPT + USER_PROMPT)
