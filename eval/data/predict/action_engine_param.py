@@ -61,9 +61,8 @@ def generate_yaml_file_from_query(user_query: str, selected_f,  max_retries=3):
             # selected_functions, NO_FUNC, non_func_list = func_identifier(model, task_list["Tasks"], user_query)
             task_list = extract_subtasks(selected_f)
             selected_functions = selected_f["Selected_Functions"]
-            semantic_wf = wf_optimizer(user_query, task_list)
-            selected_functions, user_inputs, dependent_params = confirm_dependency(semantic_wf, selected_functions)
-            
+            semantic_wf = wf_optimizer(model, user_query, task_list)
+            selected_functions, user_inputs, dependent_params = confirm_dependency(model, semantic_wf, selected_functions)
             # Workflow compilation
             argo_wf = yaml_compiler(selected_functions, user_inputs)
             # If everything succeeds, return success

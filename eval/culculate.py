@@ -243,12 +243,12 @@ def main():
 
     # Process configurations
     configurations = {
-        # "ZeroShot": "./eval/data/predict/01_15_2025/top_30/LLMs/ZeroShot/gpt-4o/",
-        # "ZeroShot CoT": "./eval/data/predict/01_15_2025/top_30/LLMs/ZeroShot-CoT/gpt-4o/",
-        "FewShot": "./eval/data/predict/01_15_2025/top_30/LLMs/FewShot/gpt-4o/",
-        "FewShot CoT": "./eval/data/predict/01_15_2025/top_30/LLMs/FewShot-CoT/gpt-4o/",
-        "Action Engine": "./eval/data/predict/01_15_2025/top_30/AE/gpt-4o/",
-        "Reverse Chain": "./eval/data/predict/01_15_2025/top_30/AE_Reverse/gpt-4o/"
+        # "ZeroShot": "./eval/data/predict/LLMs/ZeroShot/gpt-4o/",
+        # "ZeroShot CoT": "./eval/data/predict/LLMs/ZeroShot-CoT/gpt-4o/",
+        "FewShot": "./eval/data/predict/LLMs/FewShot/gpt-4o/",
+        "FewShot CoT": "./eval/data/predict/LLMs/FewShot-CoT/gpt-4o/",
+        "Action Engine": "./eval/data/predict/AE/gpt-4o/",
+        # "Reverse Chain": "./eval/data/predict/AE_Reverse/gpt-4o/"
     }
     for config_name, input_dir in configurations.items():
         process_all_files(input_dir, all_data, config_name, num_bootstrap_samples=1000)

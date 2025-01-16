@@ -28,7 +28,7 @@ def read_json_to_dict(filename):
         api_info = json.load(file)
     return api_info
 
-def find_topk_functions(task: str, k=20) -> list:
+def find_topk_functions(task: str, k=40) -> list:
     api_info = read_json_to_dict(filename)
     top_k = loaded_faiss.similarity_search_with_score(task, k)
     selected_id = [top_k[j][0].metadata["id"] for j in range(k)]

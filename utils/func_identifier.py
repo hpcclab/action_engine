@@ -92,7 +92,7 @@ def func_identifier(model_name, task_list, user_query, db_name="api_vec"):
     non_func_list, selected_functions = [], []
     for i in range(len(task_list)):
     # for i in range(0, 1): #Test
-        topk_functions = find_topk_functions(task_list[i]["subtask_description"], api_info, 30)
+        topk_functions = find_topk_functions(task_list[i]["subtask_description"], api_info, 40)
         # Extract only the 'Id', 'name', and 'summary' fields for each item
         extracted_data = [{'name': item['name'], 'summary': item['summary']} for item in topk_functions]
     
