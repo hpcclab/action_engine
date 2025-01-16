@@ -43,9 +43,6 @@ def calculate_topological_lcs_score(gold_topology, predict_topology):
     max_length = max(len(gold_topology), len(predict_topology))
     return lcs_length / max_length if max_length > 0 else 0
 
-# Core Functions
-import json
-
 def calculate_metrics(raw_dataset):
     """Calculates evaluation scores for ToolLearning given the dataset."""
     correct_format_num = 0
@@ -148,10 +145,10 @@ def calculate_metrics(raw_dataset):
                 print("Prediction missing topology for data Id:", data.get('Id', 'unknown_id'))
 
     # After processing all data:
-    print("*"*40)
-    print("Gold API count:", gold_api_num)
-    print("Predicted API count:", predict_api_num)
-    print("Correct API count:", correct_api_num)
+    # print("*"*40)
+    # print("Gold API count:", gold_api_num)
+    # print("Predicted API count:", predict_api_num)
+    # print("Correct API count:", correct_api_num)
 
     result_dict = {}
     total_samples = len(raw_dataset) if len(raw_dataset) > 0 else 1
@@ -215,8 +212,8 @@ def process_all_files(input_dir, all_data, config_name, num_bootstrap_samples=10
 
         # Read the dataset
         raw_dataset = read_jsonl(input_path)
-        print("*"*40)
-        print(len(raw_dataset))
+        # print("*"*40)
+        # print(len(raw_dataset))
         # Compute point estimates
         point_estimate = calculate_metrics(raw_dataset)
 
@@ -246,12 +243,12 @@ def main():
 
     # Process configurations
     configurations = {
-        "ZeroShot": "./eval/data/predict/LLMs/ZeroShot/gpt-4o/",
-        "ZeroShot CoT": "./eval/data/predict/LLMs/ZeroShot-CoT/gpt-4o/",
-        "FewShot": "./eval/data/predict/LLMs/FewShot/gpt-4o/",
-        "FewShot CoT": "./eval/data/predict/LLMs/FewShot-CoT/gpt-4o/",
-        "Action Engine": "./eval/data/predict/AE/gpt-4o/",
-        "Action Engine Reverse": "./eval/data/predict/AE_Reverse/gpt-4o/"
+        # "ZeroShot": "./eval/data/predict/01_15_2025/top_30/LLMs/ZeroShot/gpt-4o/",
+        # "ZeroShot CoT": "./eval/data/predict/01_15_2025/top_30/LLMs/ZeroShot-CoT/gpt-4o/",
+        "FewShot": "./eval/data/predict/01_15_2025/top_30/LLMs/FewShot/gpt-4o/",
+        "FewShot CoT": "./eval/data/predict/01_15_2025/top_30/LLMs/FewShot-CoT/gpt-4o/",
+        "Action Engine": "./eval/data/predict/01_15_2025/top_30/AE/gpt-4o/",
+        "Reverse Chain": "./eval/data/predict/01_15_2025/top_30/AE_Reverse/gpt-4o/"
     }
     for config_name, input_dir in configurations.items():
         process_all_files(input_dir, all_data, config_name, num_bootstrap_samples=1000)

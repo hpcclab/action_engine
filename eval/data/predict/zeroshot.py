@@ -23,7 +23,7 @@ model_name = "gpt-4o"
 model_instance = get_model(model_name)
 
 # Number of to feed into prompt
-topk_nums = 20
+topk_nums = 30
 
 from langchain_community.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings

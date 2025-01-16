@@ -23,7 +23,7 @@ model_name = "gpt-4o"
 model_instance = get_model(model_name)
 
 # Number of to feed into prompt
-topk_nums = 20
+topk_nums = 30
 
 from langchain_community.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
@@ -62,6 +62,7 @@ def generate_yaml_wf_from_query(query, selected_functions, model_name="gpt-4o", 
             for f in selected_functions:
                 filtered_func = {key: value for key, value in f.items() if key not in ['task_num', 'task_description']}
                 topk_functions.append(filtered_func)
+            
             # System and user prompts
             SYSTEM_PROMPT = f'''
             Your task is to create Argo HTTP DAG workflows in YAML format based on user queries and available API information. 
@@ -188,8 +189,6 @@ def generate_yaml_wf_from_query(query, selected_functions, model_name="gpt-4o", 
                     parameters:
                     - name: user_ID
                         value: '{{ tasks.getuserid.result }}'
-
-                        
             '''
 
 

@@ -1,0 +1,71 @@
+Processed 99 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_10/LLMs/ZeroShot/gpt-4o/testdata_level1.jsonl
+Processed 100 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_10/LLMs/ZeroShot/gpt-4o/testdata_level2.jsonl
+Processed 98 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_10/LLMs/ZeroShot/gpt-4o/testdata_level3.jsonl
+Processed 100 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_10/LLMs/ZeroShot/gpt-4o/testdata_level1.jsonl
+Processed 100 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_10/LLMs/ZeroShot/gpt-4o/testdata_level2.jsonl
+Processed 100 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_10/LLMs/ZeroShot/gpt-4o/testdata_level3.jsonl
+Processed 96 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_10/LLMs/FewShot/gpt-4o/testdata_level1.jsonl
+Processed 89 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_10/LLMs/FewShot/gpt-4o/testdata_level2.jsonl
+Processed 91 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_10/LLMs/FewShot/gpt-4o/testdata_level3.jsonl
+Processed 99 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_10/LLMs/FewShot-CoT/gpt-4o/testdata_level1.jsonl
+Processed 96 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_10/LLMs/FewShot-CoT/gpt-4o/testdata_level2.jsonl
+Processed 99 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_10/LLMs/FewShot-CoT/gpt-4o/testdata_level3.jsonl
+Processed 100 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_10/AE/gpt-4o/testdata_level1.jsonl
+Processed 99 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_10/AE/gpt-4o/testdata_level2.jsonl
+Processed 100 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_10/AE/gpt-4o/testdata_level3.jsonl
+Processed 73 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_10/AE_Reverse/gpt-4o/testdata_level1.jsonl
+Processed 86 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_10/AE_Reverse/gpt-4o/testdata_level2.jsonl
+Processed 59 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_10/AE_Reverse/gpt-4o/testdata_level3.jsonl
+Results for ZeroShot saved
+Results for ZeroShot CoT saved
+Results for FewShot saved
+Results for FewShot CoT saved
+Results for Action Engine saved
+Results for Reverse Chain saved
+/home/UNT/ae0589/project/action_engine/eval/plot.py:64: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap("tab10", num_methods)
+Processed 99 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_20/LLMs/ZeroShot/gpt-4o/testdata_level1.jsonl
+Processed 100 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_20/LLMs/ZeroShot/gpt-4o/testdata_level2.jsonl
+Processed 99 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_20/LLMs/ZeroShot/gpt-4o/testdata_level3.jsonl
+Processed 100 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_20/LLMs/ZeroShot/gpt-4o/testdata_level1.jsonl
+Processed 100 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_20/LLMs/ZeroShot/gpt-4o/testdata_level2.jsonl
+Processed 100 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_20/LLMs/ZeroShot/gpt-4o/testdata_level3.jsonl
+Processed 98 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_20/LLMs/FewShot/gpt-4o/testdata_level1.jsonl
+Processed 98 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_20/LLMs/FewShot/gpt-4o/testdata_level2.jsonl
+Processed 99 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_20/LLMs/FewShot/gpt-4o/testdata_level3.jsonl
+Processed 99 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_20/LLMs/FewShot-CoT/gpt-4o/testdata_level1.jsonl
+Processed 96 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_20/LLMs/FewShot-CoT/gpt-4o/testdata_level2.jsonl
+Processed 99 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_20/LLMs/FewShot-CoT/gpt-4o/testdata_level3.jsonl
+Processed 100 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_20/AE/gpt-4o/testdata_level1.jsonl
+Processed 99 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_20/AE/gpt-4o/testdata_level2.jsonl
+Processed 100 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_20/AE/gpt-4o/testdata_level3.jsonl
+Processed 78 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_20/AE_Reverse/gpt-4o/testdata_level1.jsonl
+Processed 79 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_20/AE_Reverse/gpt-4o/testdata_level2.jsonl
+Processed 59 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_20/AE_Reverse/gpt-4o/testdata_level3.jsonl
+Results for ZeroShot saved
+Results for ZeroShot CoT saved
+Results for FewShot saved
+Results for FewShot CoT saved
+Results for Action Engine saved
+Results for Reverse Chain saved
+/home/UNT/ae0589/project/action_engine/eval/plot.py:64: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap("tab10", num_methods)
+
+Processed 93 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_30/LLMs/FewShot/gpt-4o/testdata_level1.jsonl
+Processed 87 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_30/LLMs/FewShot/gpt-4o/testdata_level2.jsonl
+Processed 84 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_30/LLMs/FewShot/gpt-4o/testdata_level3.jsonl
+Processed 97 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_30/LLMs/FewShot-CoT/gpt-4o/testdata_level1.jsonl
+Processed 92 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_30/LLMs/FewShot-CoT/gpt-4o/testdata_level2.jsonl
+Processed 98 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_30/LLMs/FewShot-CoT/gpt-4o/testdata_level3.jsonl
+Processed 100 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_30/AE/gpt-4o/testdata_level1.jsonl
+Processed 99 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_30/AE/gpt-4o/testdata_level2.jsonl
+Processed 100 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_30/AE/gpt-4o/testdata_level3.jsonl
+Processed 85 entries for level1 and saved to ./eval/data/predict/01_15_2025/top_30/AE_Reverse/gpt-4o/testdata_level1.jsonl
+Processed 84 entries for level2 and saved to ./eval/data/predict/01_15_2025/top_30/AE_Reverse/gpt-4o/testdata_level2.jsonl
+Processed 57 entries for level3 and saved to ./eval/data/predict/01_15_2025/top_30/AE_Reverse/gpt-4o/testdata_level3.jsonl
+Results for FewShot saved
+Results for FewShot CoT saved
+Results for Action Engine saved
+Results for Reverse Chain saved
+/home/UNT/ae0589/project/action_engine/eval/plot.py:64: MatplotlibDeprecationWarning: The get_cmap function was deprecated in Matplotlib 3.7 and will be removed in 3.11. Use ``matplotlib.colormaps[name]`` or ``matplotlib.colormaps.get_cmap()`` or ``pyplot.get_cmap()`` instead.
+  colors = plt.cm.get_cmap("tab10", num_methods)

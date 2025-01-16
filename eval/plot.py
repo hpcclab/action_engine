@@ -1,7 +1,23 @@
 import json
-import matplotlib.pyplot as plt
-import numpy as np
 import os
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import seaborn as sns
+
+# Optional: Use Seaborn style for better aesthetics
+plt.style.use("seaborn-v0_8-whitegrid")
+
+# Adjust global font settings
+mpl.rcParams["font.size"] = 43
+mpl.rcParams["axes.labelsize"] = 43
+mpl.rcParams["axes.titlesize"] = 43
+mpl.rcParams["xtick.labelsize"] = 43
+mpl.rcParams["ytick.labelsize"] = 43
+mpl.rcParams["legend.fontsize"] = 43
+mpl.rcParams["font.weight"] = "black"
+mpl.rcParams["axes.labelweight"] = "black"
+mpl.rcParams["axes.titleweight"] = "black"
 
 # Load the JSON data
 file_path = './eval/scores/dag_scores.json'  # Replace with your file path
@@ -10,24 +26,61 @@ with open(file_path, 'r') as file:
 
 # Extract the scores data
 data = data[0]["scores"]
-levels = ["testdata_level1", "testdata_level2", "testdata_level3"]
 
-# List of all metrics to plot
-metrics = [
-    "P_api", "R_api", "F1_api",
-    "P_param", "R_param", "F1_param",
-    "topological_ordering_accuracy"
-]
+# Label mappings
+level_mapping = {
+    "testdata_level1": "Level - 1",
+    "testdata_level2": "Level - 2",
+    "testdata_level3": "Level - 3"
+}
+metric_mapping = {
+    "P_api": "Precision - Function Selection",
+    "R_api": "Recall - Function Selection",
+    "F1_api": "F1 - Function Selection",
+    "P_param": "Precision - Parameter",
+    "R_param": "Recall - Parameter",
+    "F1_param": "F1 - Parameter",
+    "topological_ordering_accuracy": "LCD - Topological Order"
+}
+title_mapping = {
+    "P_api": "Precision Score for\nFunction Selection",
+    "R_api": "Recall Score for\nFunction Selection",
+    "F1_api": "F1 Score for\nFunction Selection",
+    "P_param": "Precision Score for\nParameter",
+    "R_param": "Recall Score for\nParameter",
+    "F1_param": "F1 Score for\nParameter",
+    "topological_ordering_accuracy": "LCD Score for\nTopological Order"
+}
+
+levels = list(level_mapping.keys())
+metrics = list(metric_mapping.keys())
 
 # Directory to save plots
 output_dir = "./eval/plots/"
 os.makedirs(output_dir, exist_ok=True)
 
+# Create a discrete color map for the number of methods
+num_methods = 6
+colors = plt.cm.get_cmap("tab10", num_methods)
+
+color_mapping = {
+    "ZeroShot": colors(0),  
+    "ZeroShot CoT": colors(1),  
+    "FewShot": colors(2), 
+    "FewShot CoT": colors(3),  
+    "Action Engine": colors(4),  
+    "Reverse Chain": colors(5),  
+    # Add more methods as needed
+}
+
+# Default color for methods not in the mapping
+default_color = "#7f7f7f"  # Gray as fallback
+
 # Process the data for each metric
 for metric in metrics:
-    fig, ax = plt.subplots(figsize=(12, 6))
+    fig, ax = plt.subplots(figsize=(16, 8))  # Larger figure size
     x = np.arange(len(levels))
-    width = 0.15  # Adjusted bar width for 6 methods
+    width = 0.15  # Adjust bar width as needed
 
     for i, score in enumerate(data):
         method = list(score.keys())[0]
@@ -37,30 +90,64 @@ for metric in metrics:
         ci_lower = [method_data[level][metric]["confidence_interval"][0] for level in levels]
         ci_upper = [method_data[level][metric]["confidence_interval"][1] for level in levels]
 
+        # Convert to numpy arrays for easier calculations
+        values_arr = np.array(values)
+        lower_err = values_arr - np.array(ci_lower)
+        upper_err = np.array(ci_upper) - values_arr
+
+        # Determine the color for the method
+        bar_color = color_mapping.get(method, default_color)
+
         # Plot bars with error bars for confidence intervals
         ax.bar(
             x + i * width,
-            values,
+            values_arr,
             width,
             label=method,
-            yerr=[np.array(values) - np.array(ci_lower), np.array(ci_upper) - np.array(values)],
-            capsize=5,
+            yerr=[lower_err, upper_err],
+            capsize=8,  # Larger cap size
+            color=bar_color,  # Use the predefined color for this method
+            edgecolor="black"
         )
-
     # Customize the plot for the current metric
-    ax.set_xlabel("Levels")
-    ax.set_ylabel(metric)
-    ax.set_title(f"{metric} Scores with Confidence Intervals")
-    ax.set_xticks(x + (len(data) - 1) * width / 2)  # Center the tick labels
-    ax.set_xticklabels(levels)
-    ax.legend()
+    ax.set_xlabel("Level of Dataset", fontsize=43, labelpad=10, weight='bold')
+    ax.set_ylabel(metric_mapping[metric], fontsize=43, labelpad=10, weight='bold')
+    ax.set_xticks(x + (num_methods - 1) * width / 2)
+    ax.set_xticklabels([level_mapping[level] for level in levels], fontsize=43)
     ax.grid(True, linestyle="--", alpha=0.6)
+    ax.set_ylim(0, 1)  # Force y-axis to range from 0 to 1
 
-    # Scale y-axis to a maximum of 1
-    ax.set_ylim(0, 1)
+    # Tight layout and save the plot
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    # Save as PDF
+    output_file_pdf = os.path.join(output_dir, f"{metric}.pdf")
+    plt.savefig(output_file_pdf, format='pdf', dpi=600)  # High DPI for clear text
+    plt.close(fig)
 
-    # Save the plot as an image
-    output_file = os.path.join(output_dir, f"{metric}.png")
-    plt.tight_layout()
-    plt.savefig(output_file)
-    plt.close(fig)  
+# Create a standalone figure for the legend
+fig, ax = plt.subplots(figsize=(16, 2))  # Adjust size to fit all legend entries
+ax.axis('off')  # Turn off the axes
+
+# Extract colors assigned to methods and create a legend with method names
+handles = []
+for method, color in color_mapping.items():
+    handles.append(
+        mpl.patches.Patch(
+            color=color, label=method  # Use the consistent color and method name
+        )
+    )
+
+# Add the legend to the figure
+legend = ax.legend(
+    handles=handles,
+    loc="center",
+    bbox_to_anchor=(0.5, 0.5),
+    ncol=len(color_mapping),  # Number of columns
+    fontsize=40,       # Match your plot font size
+    frameon=False      # Remove the legend frame for consistency
+)
+
+# Save the legend as a standalone PDF
+output_file_pdf = os.path.join(output_dir, "legend.pdf")
+plt.savefig(output_file_pdf, format='pdf', dpi=600, bbox_inches='tight')  # High DPI for clear text
+plt.close(fig)

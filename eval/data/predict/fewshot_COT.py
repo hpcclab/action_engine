@@ -23,7 +23,7 @@ model_name = "gpt-4o"
 model_instance = get_model(model_name)
 
 # Number of to feed into prompt
-topk_nums = 20
+topk_nums = 10
 
 from langchain_community.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
@@ -198,8 +198,6 @@ def generate_yaml_wf_from_query(query, model_name="gpt-4o", max_retries=3):
                     parameters:
                     - name: user_ID
                         value: '{{ tasks.getuserid.result }}'
-
-                        
             '''
 
 

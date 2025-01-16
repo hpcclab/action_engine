@@ -170,38 +170,39 @@ levels = ["level1", "level2", "level3"]
 
 # # Zroshot
 # gt_dir = "./eval/data/gt/"
-# pred_dir = "./eval/data/predict/LLMs/ZeroShot/gpt-4o/"
-# output_dir = "./eval/data/predict/LLMs/ZeroShot/gpt-4o/"
+# pred_dir = "./eval/data/predict/01_15_2025/top_30/LLMs/ZeroShot/gpt-4o/"
+# output_dir = "./eval/data/predict/01_15_2025/top_30/LLMs/ZeroShot/gpt-4o/"
 # process_files(gt_dir, pred_dir, output_dir)
 
 # # Zroshot CoT
 # gt_dir = "./eval/data/gt/"
-# pred_dir = "./eval/data/predict/LLMs/ZeroShot-CoT/gpt-4o/"
-# output_dir = "./eval/data/predict/LLMs/ZeroShot/gpt-4o/"
+# pred_dir = "./eval/data/predict/01_15_2025/top_30/LLMs/ZeroShot-CoT/gpt-4o/"
+# output_dir = "./eval/data/predict/01_15_2025/top_30/LLMs/ZeroShot/gpt-4o/"
 # process_files(gt_dir, pred_dir, output_dir)
 
-# # FewShot
-# gt_dir = "./eval/data/gt/"
-# pred_dir = "./eval/data/predict/LLMs/FewShot/gpt-4o/"
-# output_dir = "./eval/data/predict/LLMs/FewShot/gpt-4o/"
-# process_files(gt_dir, pred_dir, output_dir)
+# FewShot
+gt_dir = "./eval/data/gt/"
+pred_dir = "./eval/data/predict/01_15_2025/top_30/LLMs/FewShot/gpt-4o/"
+output_dir = "./eval/data/predict/01_15_2025/top_30/LLMs/FewShot/gpt-4o/"
+process_files(gt_dir, pred_dir, output_dir)
 
-# # FewShot CoT
-# gt_dir = "./eval/data/gt/"
-# pred_dir = "./eval/data/predict/LLMs/FewShot-CoT/gpt-4o/"
-# output_dir = "./eval/data/predict/LLMs/FewShot/gpt-4o/"
-# process_files(gt_dir, pred_dir, output_dir)
+# FewShot CoT
+gt_dir = "./eval/data/gt/"
+pred_dir = "./eval/data/predict/01_15_2025/top_30/LLMs/FewShot-CoT/gpt-4o/"
+output_dir = "./eval/data/predict/01_15_2025/top_30/LLMs/FewShot-CoT/gpt-4o/"
+process_files(gt_dir, pred_dir, output_dir)
 
 #Action Engine
 gt_dir = "./eval/data/gt/"
-pred_dir = "./eval/data/predict/AE/gpt-4o/"
-output_dir = "./eval/data/predict/AE/gpt-4o/"
+pred_dir = "./eval/data/predict/01_15_2025/top_30/AE/gpt-4o/"
+output_dir = "./eval/data/predict/01_15_2025/top_30/AE/gpt-4o/"
 process_files(gt_dir, pred_dir, output_dir)
 
 # Action Engine Reverse
-# gt_dir = "./eval/data/gt/"
-# pred_dir = "./eval/data/predict/AE_Reverse/gpt-4o/"
-# output_dir = "./eval/data/predict/AE_Reverse/gpt-4o/"
+gt_dir = "./eval/data/gt/"
+pred_dir = "./eval/data/predict/01_15_2025/top_30/AE_Reverse/gpt-4o/"
+output_dir = "./eval/data/predict/01_15_2025/top_30/AE_Reverse/gpt-4o/"
+
 process_files(gt_dir, pred_dir, output_dir)
 
 for level in levels:

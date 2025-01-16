@@ -86,6 +86,7 @@ def main():
                         "workflow": argo_wf
                     }
             results.append(generated_wf)
+            print("Level: ", level_name, "Index: ", item["Index"], "Status: ", success_staus)
         
         try:
             out_dir_path = "./eval/data/predict/AE/" + model_name
