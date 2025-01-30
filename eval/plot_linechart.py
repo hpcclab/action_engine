@@ -1,96 +1,174 @@
 import matplotlib.pyplot as plt
-import numpy as np
 import seaborn as sns
 import json
 import os
+import pandas as pd
+import os
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib as mpl
 
-# Optional: Use Seaborn style for better aesthetics
-plt.style.use("seaborn-v0_8-whitegrid")
-
-# Load the JSON data
-file_path = './eval/scores/dag_scores.json'  # Replace with your file path
+file_path = "/home/UNT/ae0589/project/action_engine/eval/scores/dag_scores.json" 
 with open(file_path, 'r') as file:
-    experiment_results = json.load(file)
+    data = json.load(file)
 
-# Extract scores for each top-k value
-top_k_values = [10, 20, 30]  # Adjust as needed
-methods = ["FewShot", "FewShot CoT", "Action Engine", "Reverse Chain"]
-metrics = ["F1_api", "F1_param"]  # Customize metrics if needed
-levels = ["testdata_level1", "testdata_level2", "testdata_level3"]
+records = []
+for entry in data:
+    timestamp = entry["timestamp"]
+    for score in entry["scores"]:
+        for method, results in score.items():
+            for level, metrics in results["results"].items():
+                for metric, values in metrics.items():
+                    records.append({
+                        "timestamp": timestamp,
+                        "method": method,
+                        "level": level,
+                        "metric": metric,
+                        "value": values["value"],
+                        "ci_lower": values["confidence_interval"][0],
+                        "ci_upper": values["confidence_interval"][1]
+                    })
 
-# Prepare data for plotting
-plot_data = {metric: {method: [] for method in methods} for metric in metrics}
-ci_data = {metric: {method: [] for method in methods} for metric in metrics}
+df = pd.DataFrame(records)
 
-# Process data
-for idx, experiment in enumerate(experiment_results):
-    for method in methods:
-        index = methods.index(method)
-        for metric in metrics:
-            if method in experiment["scores"][index]:
-                print(method)
-                method_results = experiment["scores"][index][method].get("results", {})
-                values = []
-                confidence_intervals = []
-                for level in levels:
-                    if level in method_results:
-                        metric_data = method_results[level].get(metric, {})
-                        if "value" in metric_data and "confidence_interval" in metric_data:
-                            value = metric_data["value"]
-                            ci = metric_data["confidence_interval"]
-                            values.append(value)
-                            confidence_intervals.append((ci[1] - ci[0]) / 2)  # Half-width for error bands
-                if values:  # Ensure we have values before calculating mean
-                    print(len(values))
-                    plot_data[metric][method].append(np.mean(values))
-                    ci_data[metric][method].append(np.mean(confidence_intervals))
-print(plot_data)
-# Ensure data consistency: Pad missing data to match the length of top_k_values
-for metric in metrics:
-    for method in methods:
-        mean_values = plot_data[metric][method]
-        ci_values = ci_data[metric][method]
-        if len(mean_values) < len(top_k_values):
-            missing_count = len(top_k_values) - len(mean_values)
-            mean_values.extend([None] * missing_count)
-            ci_values.extend([None] * missing_count)
 
-# Visualization
-fig, axes = plt.subplots(1, len(metrics), figsize=(24, 8), sharey=False)
-colors = sns.color_palette("tab10", len(methods))
+unique_timestamps = df["timestamp"].unique()
+print(unique_timestamps)
 
-for ax, metric in zip(axes, metrics):
-    for i, method in enumerate(methods):
-        mean_values = plot_data[metric][method]
-        ci_values = ci_data[metric][method]
-        
-        # Filter out None values
-        valid_indices = [idx for idx, val in enumerate(mean_values) if val is not None]
-        filtered_top_k = [top_k_values[idx] for idx in valid_indices]
-        filtered_means = [mean_values[idx] for idx in valid_indices]
-        filtered_cis = [ci_values[idx] for idx in valid_indices]
-        
-        if filtered_top_k:  # Check if there is data to plot
-            ax.plot(filtered_top_k, filtered_means, label=method, color=colors[i], marker='o', linewidth=2)
-            ax.fill_between(
-                filtered_top_k,
-                np.array(filtered_means) - np.array(filtered_cis),
-                np.array(filtered_means) + np.array(filtered_cis),
-                color=colors[i],
-                alpha=0.2
-            )
-    ax.set_title(f"{metric} over Top-k", fontsize=18, weight='bold')
-    ax.set_xlabel("Top-k Values", fontsize=14)
-    ax.set_ylabel(f"{metric} Score", fontsize=14)
-    ax.legend(fontsize=12)
-    ax.grid(True)
+timestamp_labels = {
+    "2025-01-15 19:58:40": "top-10",
+    "2025-01-15 19:56:53": "top-20",
+    "2025-01-15 19:54:42": "top-30",
+    "2025-01-16 10:29:38": "top-40",
+}
 
-# Adjust layout and save the figure
-plt.tight_layout()
+df["label"] = df["timestamp"].map(timestamp_labels)
 
-# Directory to save plots
-output_dir = "./eval/plots/linechart/"
+df_filtered = df[~df["method"].isin(["ZeroShot", "ZeroShot CoT"])]
+df_filtered = df_filtered[df_filtered["metric"].isin(["F1_api", "F1_param", "topological_ordering_accuracy"])]
+df_filtered.drop(columns=["timestamp"], inplace=True)
+df_filtered.drop(columns=["ci_lower", "ci_upper"], inplace=True)
+label_order = ["top-10", "top-20", "top-30", "top-40"]
+df_filtered["label"] = pd.Categorical(df_filtered["label"], categories=label_order, ordered=True)
+df_filtered = df_filtered.sort_values(by="label")
+
+
+
+# -------------------------------------------------------------------------
+# Global RC settings
+# -------------------------------------------------------------------------
+mpl.rcParams['font.size'] = 15
+mpl.rcParams['axes.labelsize'] = 15
+mpl.rcParams['axes.titlesize'] = 15
+mpl.rcParams['xtick.labelsize'] = 20
+mpl.rcParams['ytick.labelsize'] = 15
+mpl.rcParams['legend.fontsize'] = 15
+mpl.rcParams['font.weight'] = "black"
+mpl.rcParams['axes.labelweight'] = "black"
+mpl.rcParams['axes.titleweight'] = "black"
+
+# Embed-friendly
+mpl.rcParams['pdf.fonttype'] = 42
+mpl.rcParams['ps.fonttype'] = 42
+
+# -------------------------------------------------------------------------
+# Metrics and label mapping
+# -------------------------------------------------------------------------
+metrics = ["F1_api", "F1_param", "topological_ordering_accuracy"]
+metric_mapping = {
+    "P_api": "Precision - Function Selection",
+    "R_api": "Recall - Function Selection",
+    "F1_api": "F1 - Function Selection",
+    "P_param": "Precision - Parameter",
+    "R_param": "Recall - Parameter",
+    "F1_param": "F1 - Parameter",
+    "topological_ordering_accuracy": "LCD - Topological Order"
+}
+
+level = "testdata_level3"
+output_dir = "/home/UNT/ae0589/project/action_engine/eval/plots/linechart/"
 os.makedirs(output_dir, exist_ok=True)
-output_file_pdf = os.path.join(output_dir, "ablation_results_topk.pdf")
-plt.savefig(output_file_pdf, format='pdf', dpi=600, bbox_inches='tight')  # High DPI for clear text
+
+# -------------------------------------------------------------------------
+# Style parameters
+# -------------------------------------------------------------------------
+linecols = ['red', 'mediumblue', 'green', 'purple']
+line_styles = ['x-', 'o--', 'D-.', 's:']
+marker_size = 8
+linewidth = 3
+method_order = ["FewShot", "FewShot CoT", "Action Engine", "Reverse Chain"]
+
+# Suppose df_filtered is your DataFrame
+# df_filtered = ...
+
+# -------------------------------------------------------------------------
+# Plot loop
+# -------------------------------------------------------------------------
+for metric in metrics:
+    # Filter data
+    subset = df_filtered[(df_filtered["level"] == level) & (df_filtered["metric"] == metric)]
+
+    # Main figure
+    fig, ax = plt.subplots(figsize=(6, 4))
+
+    # Plot each method
+    for i, method in enumerate(method_order):
+        df_method = subset[subset["method"] == method]
+
+        plt.plot(
+            df_method["label"], 
+            df_method["value"],
+            line_styles[i],
+            color=linecols[i],
+            linewidth=linewidth,
+            markersize=marker_size,
+            label=method
+        )
+
+    ax.set_ylim(0, 0.5)
+    ax.set_ylabel(metric_mapping[metric], fontsize=20, labelpad=10, weight='bold')
+    ax.set_xlabel("", fontsize=15, weight="bold")
+    plt.grid(True, alpha=0.3)
+
+    # Main legend in the upper left; you can also remove it if desired
+    # main_legend = ax.legend(loc='upper left', frameon=False)
+
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+
+    # Save the main plot
+    output_file_pdf = os.path.join(output_dir, f"{metric}.pdf")
+    plt.savefig(output_file_pdf, format='pdf', dpi=600, 
+                bbox_inches='tight', transparent=True)
+
+    # --------------------------------------------------------
+    # Save the legend only, aligned horizontally in one row
+    # --------------------------------------------------------
+    # Extract handles and labels from the current legend
+    handles, labels = ax.get_legend_handles_labels()
+
+    # Create a new figure for the legend only
+    fig_legend = plt.figure(figsize=(6, 1.2))  # wider than it is tall
+    # Put the legend in the center, single row with ncol=4
+    fig_legend.legend(
+        handles,
+        labels,
+        loc='center',
+        frameon=False,
+        ncol=len(method_order),     # 4 methods → 4 columns
+        columnspacing=1.5,         # adjust spacing between legend entries
+        handlelength=2,            # length of the line in the legend
+        handletextpad=1            # space between line/marker and text
+    )
+
+# Save the legend PDF
+legend_file_pdf = os.path.join(output_dir, f"legend.pdf")
+fig_legend.savefig(legend_file_pdf, format='pdf', dpi=600,
+                    bbox_inches='tight', transparent=True)
+
+# Close
+plt.close(fig_legend)
+
+# Show or close the main plot
+plt.show()
 plt.close(fig)

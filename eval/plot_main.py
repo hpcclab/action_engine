@@ -115,7 +115,7 @@ for metric in metrics:
     ax.set_xticks(x + (num_methods - 1) * width / 2)
     ax.set_xticklabels([level_mapping[level] for level in levels], fontsize=43)
     ax.grid(True, linestyle="--", alpha=0.6)
-    ax.set_ylim(0, 1)  # Force y-axis to range from 0 to 1
+    ax.set_ylim(0, 0.6)  # Force y-axis to range from 0 to 1
 
     # Tight layout and save the plot
     plt.tight_layout(rect=[0, 0, 1, 0.95])
