@@ -205,50 +205,56 @@ def confirm_dependency(model, semantic_wf, selected_functions):
             #     print("*"*40)
             # print(f"Filtered Past params: {past_output_params}")
 
-            SYSTEM_PROMPT = f"""
-                Objective:
-                This task is to identify which past output parameters can be used as dependencies for the current parameter of an API call. The goal is to find dependencies by matching the current parameter’s data type and purpose with relevant outputs from past functions. **If there is no match in both data type and description, return an empty value for that parameter without selecting any past output.**
+        SYSTEM_PROMPT = f"""
+            Objective:
+            This task is to identify which past output parameters can be used as dependencies for the current parameter of an API call. 
+            The goal is to find dependencies by matching the current parameter’s data type and purpose with relevant outputs from past functions. 
+            If there is no match in both data type and description, return an empty value for that parameter without selecting any past output.
 
-                Instruction:
-                Current task number: t{i+1}
-                Current parameter information: {p},
-                Past output parameters: {past_output_params}
+            Instruction:
+            Current task number: t{i+1}
+            Current parameter information: {p},
+            Past output parameters: {past_output_params}
 
-                You will receive:
-                - The current parameter information, which includes the parameter name, expected data type, and description.
-                - A list of past outputs from previous tasks, each containing an output data type, task number, and description.
+            You will receive:
+            - The current parameter information, which includes the parameter name, expected data type, and description.
+            - A list of past outputs from previous tasks, each containing an output data type, task number, and description.
 
-                Task:
-                1. Review the current parameter's data type and description and match it with past outputs based on two criteria: data type alignment and purpose/context alignment in descriptions.
-                2. For each required parameter:
-                - **Data Type Matching**: Only consider past outputs that have the same data type as the current parameter.
-                - **Description Matching**: Evaluate whether the past output's description aligns with the purpose or context of the current parameter description.
-                    - Consider an output relevant if its description indicates similar use or context to the current parameter.
-                3. Select the most relevant past output if both criteria are met.
+            Task:
+            1. Review the current parameter's data type and description and match it with past outputs based on two criteria: 
+                data type alignment and purpose/context alignment in descriptions.
+            2. For each required parameter:
+                - Data Type Matching: Only consider past outputs that have the same data type as the current parameter.
+                - Description Matching: Evaluate whether the past output's description aligns with the purpose or context 
+                    of the current parameter description.
+                - Consider an output relevant if its description indicates similar use or context to the current parameter.
+            3. Select the most relevant past output if both criteria are met.
                 - If multiple outputs are relevant, select the most recent one by task number.
-                4. **If no past output matches both criteria (data type and description alignment), return an empty value for that parameter.**
+            4. If no past output matches both criteria (data type and description alignment), return an empty value for that parameter.
 
-                Example Matching Process:
-                - If a required parameter has a type of `binary_image_file` and describes a need for an animated image, a past output with the same type and a similar description about an animated image would be considered a match.
-                - If the required parameter specifies a type of `int` with a description about width, but no past outputs contain an integer type with a related purpose, it would be unmatched and should return an empty value for the parameter.
+            Example Matching Process:
+            - If a required parameter has a type of `binary_image_file` and describes a need for an animated image, 
+                a past output with the same type and a similar description about an animated image would be considered a match.
+            - If the required parameter specifies a type of `int` with a description about width, but no past outputs contain 
+                an integer type with a related purpose, it would be unmatched and should return an empty value for the parameter.
 
-                Examples:
-                OUTPUT EXAMPLE:
-                {{
-                    "DependentParams": [
-                        {{
-                            "param_name": "<name of the required parameter>",
-                            "param_value": "<matching task number (e.g., t2) or empty if no match>"
-                        }}
-                    ]
-                }}
+            Examples:
+            OUTPUT EXAMPLE:
+            {{
+                "DependentParams": [
+                    {{
+                        "param_name": "<name of the required parameter>",
+                        "param_value": "<matching task number (e.g., t2) or empty if no match>"
+                    }}
+                ]
+            }}
 
-                You must only generate the Answer. Your answer must be in JSON format. 
-                Your Answer format must start with "```json" and end with "```".
-                """
-            USER_PROMPT = f"""
-                Answer:
-                """
+            You must only generate the Answer. Your answer must be in JSON format. 
+            Your Answer format must start with "```json" and end with "```".
+            """
+        USER_PROMPT = f"""
+            Answer:
+            """
             response = call_llm(model, DependentParams, "DependentParams", escape_json(SYSTEM_PROMPT), escape_json(USER_PROMPT))
             params = [param_list.append(i) for i in response["DependentParams"]]
         selected_functions[i]["depended_params"] = list_to_dict_list(param_list)

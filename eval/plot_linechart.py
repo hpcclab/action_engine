@@ -9,10 +9,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
+
 file_path = "/home/UNT/ae0589/project/action_engine/eval/scores/dag_scores.json" 
 with open(file_path, 'r') as file:
     data = json.load(file)
-
+plt.style.use("seaborn-v0_8-whitegrid")
 records = []
 for entry in data:
     timestamp = entry["timestamp"]
@@ -58,19 +59,21 @@ df_filtered = df_filtered.sort_values(by="label")
 # -------------------------------------------------------------------------
 # Global RC settings
 # -------------------------------------------------------------------------
+mpl.rcParams["font.family"] = "DejaVu Sans"  # Or any preferred font
 mpl.rcParams['font.size'] = 15
 mpl.rcParams['axes.labelsize'] = 15
 mpl.rcParams['axes.titlesize'] = 15
-mpl.rcParams['xtick.labelsize'] = 20
+mpl.rcParams['xtick.labelsize'] = 15
 mpl.rcParams['ytick.labelsize'] = 15
 mpl.rcParams['legend.fontsize'] = 15
-mpl.rcParams['font.weight'] = "black"
-mpl.rcParams['axes.labelweight'] = "black"
-mpl.rcParams['axes.titleweight'] = "black"
+mpl.rcParams["font.weight"] = "black"
+mpl.rcParams["axes.labelweight"] = "black"
+mpl.rcParams["axes.titleweight"] = "black"
 
 # Embed-friendly
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42
+
 
 # -------------------------------------------------------------------------
 # Metrics and label mapping
@@ -93,7 +96,7 @@ os.makedirs(output_dir, exist_ok=True)
 # -------------------------------------------------------------------------
 # Style parameters
 # -------------------------------------------------------------------------
-linecols = ['red', 'mediumblue', 'green', 'purple']
+linecols = ['#9467bd', '#e377c2', '#bcbd22', '#17becf']
 line_styles = ['x-', 'o--', 'D-.', 's:']
 marker_size = 8
 linewidth = 3
@@ -127,7 +130,7 @@ for metric in metrics:
         )
 
     ax.set_ylim(0, 0.5)
-    ax.set_ylabel(metric_mapping[metric], fontsize=20, labelpad=10, weight='bold')
+    ax.set_ylabel(metric_mapping[metric], fontsize=17, labelpad=10, weight='bold')
     ax.set_xlabel("", fontsize=15, weight="bold")
     plt.grid(True, alpha=0.3)
 

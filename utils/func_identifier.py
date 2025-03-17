@@ -50,7 +50,7 @@ def find_topk_functions(task: str, api_info, k):
 
 def retry_find_func(task_description: str, api_info, user_query, subtask):
     SYSTEM_PROMPT = """
-    You will be given a main objective, sub-task info, and available API information.
+    You will be given a main objective, sub-task infomation, and available API information.
     Let's think step by step.
     Your task is to select the most suitable API for the given subtask from available APIs, and extract information.
     Please compare task_descriptoin and API information carefully and choose the API. 

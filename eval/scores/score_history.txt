@@ -1,6 +1,551 @@
 [
     {
-        "timestamp": "2025-01-16 10:29:38", 
+        "timestamp": "2025-01-16 15:56:35",
+        "scores": [
+            {
+                "FewShot": {
+                    "results": {
+                        "testdata_level1": {
+                            "AMOUNT": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "P_api": {
+                                "value": 0.8203883495145631,
+                                "confidence_interval": [
+                                    0.7512409671101506,
+                                    0.8866995073891626
+                                ]
+                            },
+                            "R_api": {
+                                "value": 0.8578680203045685,
+                                "confidence_interval": [
+                                    0.7918781725888325,
+                                    0.9141522003959189
+                                ]
+                            },
+                            "F1_api": {
+                                "value": 0.838709677419355,
+                                "confidence_interval": [
+                                    0.7725793404615067,
+                                    0.900990099009901
+                                ]
+                            },
+                            "P_param": {
+                                "value": 0.6113989637305699,
+                                "confidence_interval": [
+                                    0.5294039838157485,
+                                    0.6912686429187723
+                                ]
+                            },
+                            "R_param": {
+                                "value": 0.6395663956639567,
+                                "confidence_interval": [
+                                    0.5581896937178628,
+                                    0.7142950635751683
+                                ]
+                            },
+                            "F1_param": {
+                                "value": 0.6251655629139073,
+                                "confidence_interval": [
+                                    0.5419760342181734,
+                                    0.7020465382414648
+                                ]
+                            },
+                            "topological_ordering_accuracy": {
+                                "value": 0.6666666666666665,
+                                "confidence_interval": [
+                                    0.6003401360544218,
+                                    0.7296343537414965
+                                ]
+                            }
+                        },
+                        "testdata_level2": {
+                            "AMOUNT": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "P_api": {
+                                "value": 0.8732876712328768,
+                                "confidence_interval": [
+                                    0.8129251700680272,
+                                    0.931740614334471
+                                ]
+                            },
+                            "R_api": {
+                                "value": 0.8614864864864865,
+                                "confidence_interval": [
+                                    0.7986571454749525,
+                                    0.9175468125394487
+                                ]
+                            },
+                            "F1_api": {
+                                "value": 0.8673469387755103,
+                                "confidence_interval": [
+                                    0.8060221484327462,
+                                    0.9238642880988863
+                                ]
+                            },
+                            "P_param": {
+                                "value": 0.6305732484076433,
+                                "confidence_interval": [
+                                    0.5548650968367533,
+                                    0.6976241900647948
+                                ]
+                            },
+                            "R_param": {
+                                "value": 0.6359743040685225,
+                                "confidence_interval": [
+                                    0.5634673504560517,
+                                    0.7002477740491684
+                                ]
+                            },
+                            "F1_param": {
+                                "value": 0.6332622601279319,
+                                "confidence_interval": [
+                                    0.5611919579492458,
+                                    0.6977766547366562
+                                ]
+                            },
+                            "topological_ordering_accuracy": {
+                                "value": 0.6136363636363633,
+                                "confidence_interval": [
+                                    0.5580808080808081,
+                                    0.6658249158249153
+                                ]
+                            }
+                        },
+                        "testdata_level3": {
+                            "AMOUNT": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "P_api": {
+                                "value": 0.9386666666666666,
+                                "confidence_interval": [
+                                    0.8909574468085106,
+                                    0.9781435654620985
+                                ]
+                            },
+                            "R_api": {
+                                "value": 0.9386666666666666,
+                                "confidence_interval": [
+                                    0.8915343915343915,
+                                    0.9784366576819407
+                                ]
+                            },
+                            "F1_api": {
+                                "value": 0.9386666666666666,
+                                "confidence_interval": [
+                                    0.8915980997159368,
+                                    0.9771273810098324
+                                ]
+                            },
+                            "P_param": {
+                                "value": 0.7564766839378239,
+                                "confidence_interval": [
+                                    0.690583369931196,
+                                    0.8200735822508862
+                                ]
+                            },
+                            "R_param": {
+                                "value": 0.7711267605633803,
+                                "confidence_interval": [
+                                    0.705379052303136,
+                                    0.8362792828398966
+                                ]
+                            },
+                            "F1_param": {
+                                "value": 0.7637314734088927,
+                                "confidence_interval": [
+                                    0.6975140956125382,
+                                    0.8261074283486061
+                                ]
+                            },
+                            "topological_ordering_accuracy": {
+                                "value": 0.5923469387755101,
+                                "confidence_interval": [
+                                    0.5484651360544217,
+                                    0.6350382653061225
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "FewShot CoT": {
+                    "results": {
+                        "testdata_level1": {
+                            "AMOUNT": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "P_api": {
+                                "value": 0.83,
+                                "confidence_interval": [
+                                    0.7574257425742574,
+                                    0.8928571428571429
+                                ]
+                            },
+                            "R_api": {
+                                "value": 0.8556701030927835,
+                                "confidence_interval": [
+                                    0.7875647668393783,
+                                    0.917098445595855
+                                ]
+                            },
+                            "F1_api": {
+                                "value": 0.8426395939086294,
+                                "confidence_interval": [
+                                    0.7731926626732138,
+                                    0.9025888324873096
+                                ]
+                            },
+                            "P_param": {
+                                "value": 0.6293333333333333,
+                                "confidence_interval": [
+                                    0.5487918432344553,
+                                    0.7074518951284735
+                                ]
+                            },
+                            "R_param": {
+                                "value": 0.6519337016574586,
+                                "confidence_interval": [
+                                    0.572148482699414,
+                                    0.731929761759688
+                                ]
+                            },
+                            "F1_param": {
+                                "value": 0.6404341926729987,
+                                "confidence_interval": [
+                                    0.5615859817233342,
+                                    0.7197964669738863
+                                ]
+                            },
+                            "topological_ordering_accuracy": {
+                                "value": 0.6708333333333333,
+                                "confidence_interval": [
+                                    0.603107638888889,
+                                    0.734375
+                                ]
+                            }
+                        },
+                        "testdata_level2": {
+                            "AMOUNT": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "P_api": {
+                                "value": 0.8823529411764706,
+                                "confidence_interval": [
+                                    0.8269746011149558,
+                                    0.934968113171015
+                                ]
+                            },
+                            "R_api": {
+                                "value": 0.8703071672354948,
+                                "confidence_interval": [
+                                    0.8141575887111601,
+                                    0.924150921114785
+                                ]
+                            },
+                            "F1_api": {
+                                "value": 0.8762886597938145,
+                                "confidence_interval": [
+                                    0.8213013049052496,
+                                    0.9270497403461855
+                                ]
+                            },
+                            "P_param": {
+                                "value": 0.6387096774193548,
+                                "confidence_interval": [
+                                    0.5683223389851155,
+                                    0.7103690178743033
+                                ]
+                            },
+                            "R_param": {
+                                "value": 0.6442516268980477,
+                                "confidence_interval": [
+                                    0.572026412731826,
+                                    0.7114640110505488
+                                ]
+                            },
+                            "F1_param": {
+                                "value": 0.6414686825053995,
+                                "confidence_interval": [
+                                    0.5704834631013177,
+                                    0.7120762837735252
+                                ]
+                            },
+                            "topological_ordering_accuracy": {
+                                "value": 0.6028911564625846,
+                                "confidence_interval": [
+                                    0.5501488095238093,
+                                    0.6547831632653056
+                                ]
+                            }
+                        },
+                        "testdata_level3": {
+                            "AMOUNT": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "P_api": {
+                                "value": 0.9400544959128065,
+                                "confidence_interval": [
+                                    0.8943017629904559,
+                                    0.9790400938740595
+                                ]
+                            },
+                            "R_api": {
+                                "value": 0.9400544959128065,
+                                "confidence_interval": [
+                                    0.8930359747204667,
+                                    0.9807705479452055
+                                ]
+                            },
+                            "F1_api": {
+                                "value": 0.9400544959128065,
+                                "confidence_interval": [
+                                    0.8940160232383808,
+                                    0.9794829559730869
+                                ]
+                            },
+                            "P_param": {
+                                "value": 0.7588652482269503,
+                                "confidence_interval": [
+                                    0.6944184491978609,
+                                    0.8197573656845754
+                                ]
+                            },
+                            "R_param": {
+                                "value": 0.7753623188405797,
+                                "confidence_interval": [
+                                    0.7117421487388628,
+                                    0.8366865100103572
+                                ]
+                            },
+                            "F1_param": {
+                                "value": 0.7670250896057348,
+                                "confidence_interval": [
+                                    0.7025394465864573,
+                                    0.8280998222121884
+                                ]
+                            },
+                            "topological_ordering_accuracy": {
+                                "value": 0.6046874999999999,
+                                "confidence_interval": [
+                                    0.5604036458333334,
+                                    0.649665798611111
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "Action Engine": {
+                    "results": {
+                        "testdata_level1": {
+                            "AMOUNT": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "P_api": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "R_api": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "F1_api": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "P_param": {
+                                "value": 0.660377358490566,
+                                "confidence_interval": [
+                                    0.5931664012912513,
+                                    0.7240528591712921
+                                ]
+                            },
+                            "R_param": {
+                                "value": 0.6657608695652174,
+                                "confidence_interval": [
+                                    0.5999861878453039,
+                                    0.7282329069634049
+                                ]
+                            },
+                            "F1_param": {
+                                "value": 0.6630581867388362,
+                                "confidence_interval": [
+                                    0.5974331336525553,
+                                    0.726069415614369
+                                ]
+                            },
+                            "topological_ordering_accuracy": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        },
+                        "testdata_level2": {
+                            "AMOUNT": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "P_api": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "R_api": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "F1_api": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "P_param": {
+                                "value": 0.5428571428571428,
+                                "confidence_interval": [
+                                    0.4799974874371859,
+                                    0.6053417525773195
+                                ]
+                            },
+                            "R_param": {
+                                "value": 0.5543766578249337,
+                                "confidence_interval": [
+                                    0.4971906144861296,
+                                    0.6075268817204301
+                                ]
+                            },
+                            "F1_param": {
+                                "value": 0.5485564304461943,
+                                "confidence_interval": [
+                                    0.4884311751894703,
+                                    0.6069637512588831
+                                ]
+                            },
+                            "topological_ordering_accuracy": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        },
+                        "testdata_level3": {
+                            "AMOUNT": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "P_api": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "R_api": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "F1_api": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            "P_param": {
+                                "value": 0.581267217630854,
+                                "confidence_interval": [
+                                    0.5351321068968128,
+                                    0.6323149890837914
+                                ]
+                            },
+                            "R_param": {
+                                "value": 0.5877437325905293,
+                                "confidence_interval": [
+                                    0.5449375431548553,
+                                    0.6318792280143255
+                                ]
+                            },
+                            "F1_param": {
+                                "value": 0.5844875346260388,
+                                "confidence_interval": [
+                                    0.5414335295111511,
+                                    0.6322935524958142
+                                ]
+                            },
+                            "topological_ordering_accuracy": {
+                                "value": 1.0,
+                                "confidence_interval": [
+                                    1.0,
+                                    1.0
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "timestamp": "2025-01-16 10:29:38",
         "scores": [
             {
                 "FewShot": {
@@ -1810,7 +2355,7 @@
         ]
     },
     {
-        "timestamp": "2025-01-15 19:56:53", 
+        "timestamp": "2025-01-15 19:56:53",
         "scores": [
             {
                 "ZeroShot": {
