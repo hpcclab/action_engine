@@ -1,0 +1,7 @@
+[
+  {
+    "Id": 42,
+    "status": "Success",
+    "workflow": "apiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName: outfit-selection-workflow-\nspec:\n  entrypoint: main\n  templates:\n  - name: main\n    dag:\n      tasks:\n      - name: getweather\n        template: getweather\n        arguments:\n          parameters:\n          - name: city\n            value: '{{{{ inputs.parameters.city }}}}'\n      - name: selectoutfit\n        template: selectoutfit\n        dependencies:\n        - getweather\n        arguments:\n          parameters:\n          - name: weather\n            value: '{{{{ tasks.getweather.result }}}}'\n          - name: occasion\n            value: '{{{{ inputs.parameters.occasion }}}}'\n  - name: getweather\n    inputs:\n      parameters:\n      - name: city\n    container:\n      image: appropriate-image-for-getweather-api\n      command: [sh, -c]\n      args: [\"get-weather {{inputs.parameters.city}}\"]\n  - name: selectoutfit\n    inputs:\n      parameters:\n      - name: weather\n      - name: occasion\n    container:\n      image: appropriate-image-for-selectoutfit-api\n      command: [sh, -c]\n      args: [\"select-outfit --weather={{inputs.parameters.weather}} --occasion={{inputs.parameters.occasion}}\"]"
+  }
+]

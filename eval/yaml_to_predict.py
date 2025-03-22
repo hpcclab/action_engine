@@ -168,7 +168,33 @@ def write_jsonl(file_path, data):
 
 levels = ["level1", "level2", "level3"]
 
-# # # Zroshot
+### Qwen ###
+# Zroshot
+gt_dir = "./eval/data/gt/"
+pred_dir = "./eval/data/predict/LLMs/ZeroShot/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/"
+output_dir = "./eval/data/predict/LLMs/ZeroShot/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/"
+process_files(gt_dir, pred_dir, output_dir)
+
+# Zroshot CoT
+gt_dir = "./eval/data/gt/"
+pred_dir = "./eval/data/predict/LLMs/ZeroShot-CoT/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/"
+output_dir = "./eval/data/predict/LLMs/ZeroShot-CoT/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/"
+process_files(gt_dir, pred_dir, output_dir)
+
+# FewShot
+gt_dir = "./eval/data/gt/"
+pred_dir = "./eval/data/predict/LLMs/FewShot/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/"
+output_dir = "./eval/data/predict/LLMs/FewShot/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/"
+process_files(gt_dir, pred_dir, output_dir)
+
+# FewShot CoT
+gt_dir = "./eval/data/gt/"
+pred_dir = "./eval/data/predict/LLMs/FewShot-CoT/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/"
+output_dir = "./eval/data/predict/LLMs/FewShot-CoT/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/"
+process_files(gt_dir, pred_dir, output_dir)
+
+### GPT-4o ###  
+# # Zroshot
 # gt_dir = "./eval/data/gt/"
 # pred_dir = "./eval/data/predict/LLMs/ZeroShot/gpt-4o/"
 # output_dir = "./eval/data/predict/LLMs/ZeroShot/gpt-4o/"
@@ -180,23 +206,23 @@ levels = ["level1", "level2", "level3"]
 # output_dir = "./eval/data/predict/LLMs/ZeroShot/gpt-4o/"
 # process_files(gt_dir, pred_dir, output_dir)
 
-# FewShot
-gt_dir = "./eval/data/gt/"
-pred_dir = "./eval/data/predict/LLMs/FewShot/gpt-4o/"
-output_dir = "./eval/data/predict/LLMs/FewShot/gpt-4o/"
-process_files(gt_dir, pred_dir, output_dir)
+# # FewShot
+# gt_dir = "./eval/data/gt/"
+# pred_dir = "./eval/data/predict/LLMs/FewShot/gpt-4o/"
+# output_dir = "./eval/data/predict/LLMs/FewShot/gpt-4o/"
+# process_files(gt_dir, pred_dir, output_dir)
 
-# FewShot CoT
-gt_dir = "./eval/data/gt/"
-pred_dir = "./eval/data/predict/LLMs/FewShot-CoT/gpt-4o/"
-output_dir = "./eval/data/predict/LLMs/FewShot-CoT/gpt-4o/"
-process_files(gt_dir, pred_dir, output_dir)
+# # FewShot CoT
+# gt_dir = "./eval/data/gt/"
+# pred_dir = "./eval/data/predict/LLMs/FewShot-CoT/gpt-4o/"
+# output_dir = "./eval/data/predict/LLMs/FewShot-CoT/gpt-4o/"
+# process_files(gt_dir, pred_dir, output_dir)
 
-#Action Engine
-gt_dir = "./eval/data/gt/"
-pred_dir = "./eval/data/predict/AE/gpt-4o/"
-output_dir = "./eval/data/predict/AE/gpt-4o/"
-process_files(gt_dir, pred_dir, output_dir)
+# #Action Engine
+# gt_dir = "./eval/data/gt/"
+# pred_dir = "./eval/data/predict/AE/gpt-4o/"
+# output_dir = "./eval/data/predict/AE/gpt-4o/"
+# process_files(gt_dir, pred_dir, output_dir)
 
 # # Action Engine Reverse
 # gt_dir = "./eval/data/gt/"

@@ -1,0 +1,9 @@
+[
+  {
+    "Id": 42,
+    "status": "Success",
+    "workflow": {
+      "error": "Unexpected model output format."
+    }
+  }
+]
