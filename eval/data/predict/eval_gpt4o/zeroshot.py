@@ -8,6 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.
 from utils.llms import call_llm, get_model
 from utils.utilities import escape_json
 from utils.schemas.workflow import ArgoYAML
+from .prompts import ZERO_SHOT_SYSTEM_PROMPT, ZERO_SHOT_USER_PROMPT
 import time
 import json
 # from ruamel.yaml import YAML
@@ -20,10 +21,10 @@ db_filepath = "./db/api_info/"
 # LLM model name
 model_name = "gpt-4o"
 # Load the appropriate model
-model_instance = get_model(model_name)
+model_instance, _ = get_model(model_name)
 
 # Number of to feed into prompt
-topk_nums = 30
+topk_nums = 10
 
 from langchain_community.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
@@ -72,39 +73,9 @@ def generate_yaml_wf_from_query(query, model_name="gpt-4o", max_retries=3):
             # Find top-k functions
             topk_functions = find_topk_functions(query, api_info, topk_nums)
 
-            # System and user prompts
-            SYSTEM_PROMPT = f'''
-            Your task is to create Argo HTTP DAG workflows in YAML format based on user queries and available API information. 
-            Ensure the workflow is generated in a valid Argo YAML format without any additional text.
+            SYSTEM_PROMPT = ZERO_SHOT_SYSTEM_PROMPT
+            USER_PROMPT = ZERO_SHOT_USER_PROMPT.format(query=query, topk_functions=topk_functions)
 
-            Follow these specific guidelines when generating the YAML file:
-            1. For each parameter in the workflow:
-            - If the parameter value is dependent on the result of another API, use the format: 
-                `{{{{ tasks.<dependency API name>.result }}}}`.
-                Example:
-                ```yaml
-                - name: weather
-                value: '{{{{ tasks.checkweather.result }}}}'
-                ```
-
-            - If the parameter value is independent and comes from user input, use the format:
-                `{{{{ inputs.parameters.<parameter name> }}}}`.
-                Example:
-                ```yaml
-                - name: occasion
-                value: '{{{{ inputs.parameters.occasion }}}}'
-                ```
-
-            2. Ensure the workflow is generated in a valid Argo YAML format without any additional text.
-            '''
-
-
-            USER_PROMPT = f"""
-            User Query: {query}
-            APIs: {topk_functions}
-            Please generate the Argo HTTP DAG workflows in YAML format.
-            """
-            
             # Call the LLM
             response = call_llm(
                 model=model_instance,  # Pass the loaded model instance
@@ -113,17 +84,17 @@ def generate_yaml_wf_from_query(query, model_name="gpt-4o", max_retries=3):
                 system_prompt=escape_json(SYSTEM_PROMPT),
                 user_prompt=escape_json(USER_PROMPT)
             )
-            response_yaml = response["extracted_yaml"]
+            
 
             # Use StringIO to dump YAML to a string
             yaml_buffer = StringIO()
-            yaml.dump(response_yaml, yaml_buffer)
+            yaml.dump(response, yaml_buffer)
             yaml_string = yaml_buffer.getvalue()
             yaml_buffer.close()
 
             yaml_data = yaml.load(yaml_string, Loader=yaml.loader.Loader)
 
-            return "Success", yaml_data
+            return "Success", yaml_data["extracted_yaml"]
 
         except Exception as e:
             print(f"Attempt {attempt} failed: {e}")

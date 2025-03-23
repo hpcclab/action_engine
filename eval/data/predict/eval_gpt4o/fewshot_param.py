@@ -20,7 +20,7 @@ db_filepath = "./db/api_info/"
 # LLM model name
 model_name = "gpt-4o"
 # Load the appropriate model
-model_instance = get_model(model_name)
+model_instance, _ = get_model(model_name)
 
 # Number of to feed into prompt
 topk_nums = 20

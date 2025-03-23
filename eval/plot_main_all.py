@@ -75,6 +75,8 @@ color_mapping = {method: colors(nums[i]) for i, method in enumerate(unique_metho
 # Fallback color
 default_color = "#7f7f7f"
 
+# ...existing code...
+
 # Plotting loop
 for metric in metrics:
     fig, ax = plt.subplots(figsize=(18, 8))
@@ -113,7 +115,13 @@ for metric in metrics:
     ax.set_ylabel(metric_mapping[metric], labelpad=10)
     ax.set_xticks(x + (num_methods / 2 - 0.5) * width)
     ax.set_xticklabels([level_mapping[level] for level in levels])
-    ax.set_ylim(0, 0.6)  # Adjust if needed
+
+    # Set y-axis limit conditionally
+    if metric in ["P_param", "R_param", "F1_param"]:
+        ax.set_ylim(0, 0.4)  # Adjust y-axis max to 0.4 for specific metrics
+    else:
+        ax.set_ylim(0, 0.6)  # Default y-axis max
+
     ax.grid(True, linestyle="--", alpha=0.6)
 
     plt.tight_layout(rect=[0, 0, 1, 0.95])

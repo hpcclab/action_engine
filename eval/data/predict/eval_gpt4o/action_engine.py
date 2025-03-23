@@ -39,7 +39,7 @@ def generate_yaml_file_from_query(user_query: str, max_retries=3):
     for attempt in range(1, max_retries + 1):
         try:
             # Model setup and task division
-            model = get_model(model_name)
+            model, _ = get_model(model_name)
             task_list = subtask_diviser(model, user_query)
             selected_functions, NO_FUNC, non_func_list = func_identifier(model, task_list["Tasks"], user_query)
             semantic_wf = wf_optimizer(model, user_query, task_list)

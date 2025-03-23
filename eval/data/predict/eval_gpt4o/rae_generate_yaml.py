@@ -128,7 +128,7 @@ def function_call_to_yaml(parser, function_call: str):
 
         
 def main():
-    model = get_model(model_name)
+    model, _ = get_model(model_name)
     parser = DependencyParser()
     ReverseAE = ReverseActionEngine(model)
 

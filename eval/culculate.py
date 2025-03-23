@@ -242,20 +242,20 @@ def main():
     output_file = "./eval/scores/dag_scores.json"
 
     # Process configurations
-    # configurations = {
-    #     "ZeroShot": "./eval/data/predict/LLMs/ZeroShot/gpt-4o/",
-    #     "ZeroShot CoT": "./eval/data/predict/LLMs/ZeroShot-CoT/gpt-4o/",
-    #     "FewShot": "./eval/data/predict/LLMs/FewShot/gpt-4o/",
-    #     "FewShot CoT": "./eval/data/predict/LLMs/FewShot-CoT/gpt-4o/",
-    #     "Action Engine": "./eval/data/predict/AE/gpt-4o/",
-    #     "Reverse Chain": "./eval/data/predict/AE_Reverse/gpt-4o/"
-    # }
     configurations = {
-        "ZeroShot": "./eval/data/predict/LLMs/ZeroShot/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/",
-        "ZeroShot CoT": "./eval/data/predict/LLMs/ZeroShot-CoT/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/",
-        "FewShot": "./eval/data/predict/LLMs/FewShot/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/",
-        "FewShot CoT": "./eval/data/predict/LLMs/FewShot-CoT/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/",
+        "ZeroShot": "./eval/data/predict/LLMs/ZeroShot/gpt-4o/",
+        "ZeroShot CoT": "./eval/data/predict/LLMs/ZeroShot-CoT/gpt-4o/",
+        # "FewShot": "./eval/data/predict/LLMs/FewShot/gpt-4o/",
+        # "FewShot CoT": "./eval/data/predict/LLMs/FewShot-CoT/gpt-4o/",
+        # "Action Engine": "./eval/data/predict/AE/gpt-4o/",
+        # "Reverse Chain": "./eval/data/predict/AE_Reverse/gpt-4o/"
     }
+    # configurations = {
+    #     "ZeroShot": "./eval/data/predict/LLMs/ZeroShot/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/",
+    #     "ZeroShot CoT": "./eval/data/predict/LLMs/ZeroShot-CoT/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/",
+    #     "FewShot": "./eval/data/predict/LLMs/FewShot/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/",
+    #     "FewShot CoT": "./eval/data/predict/LLMs/FewShot-CoT/Qwen/Qwen2.5-Coder-32B-Instruct-GPTQ-Int8/",
+    # }
     for config_name, input_dir in configurations.items():
         process_all_files(input_dir, all_data, config_name, num_bootstrap_samples=1000)
 

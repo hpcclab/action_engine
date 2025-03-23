@@ -43,22 +43,7 @@ def get_model(model_name):
         print("------------Qwen model loaded across GPUs.------------")
         return _loaded_pipeline, tokenizer
 
-    else:
-        print("------------Geeral model loaded.------------")
-        # Load tokenizer and model for HuggingFace models
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
-        model = AutoModelForCausalLM.from_pretrained(
-            model_name, 
-            device_map="auto",
-            torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
-        )
-        _loaded_pipeline = pipeline(
-            "text-generation",
-            model=model,
-            tokenizer=tokenizer
-        )
-
-    return _loaded_pipeline
+    return _loaded_model, None
 
 def extract_json_answer(text, max_retries=2):
     """
@@ -173,20 +158,22 @@ def call_llm(model, pydantic_schema, schema_name, system_prompt, user_prompt, ma
                 temperature=0.7
             )
             raw_output = result[0]['generated_text']
+            
             # Extract JSON answer from the raw output using the dedicated function
             if not schema_name == "ArgoYAML":
                 response = extract_json_answer(raw_output)
             else:
-                response = extract_yaml_answer(raw_output)
+                response = raw_output["extracted_yaml"]
+                # response = extract_yaml_answer(response)
 
         # Check if the response is a valid extraction (not an error)
         if isinstance(response, (list, dict)) and "error" not in response:
             # print("Extraction successful.")
-            return response
+            return response 
         else:
             # Log the retry attempt and reason for failure
             print(f"Attempt {attempt + 1}/{max_retries} failed. Reason: {response.get('error', 'Unknown error')}")
-
+            continue
     # If all attempts fail, return the last error response
     return response
 
