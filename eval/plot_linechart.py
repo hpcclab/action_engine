@@ -80,13 +80,13 @@ mpl.rcParams['ps.fonttype'] = 42
 # -------------------------------------------------------------------------
 metrics = ["F1_api", "F1_param", "topological_ordering_accuracy"]
 metric_mapping = {
-    "P_api": "Precision - Function Selection",
-    "R_api": "Recall - Function Selection",
-    "F1_api": "F1 - Function Selection",
-    "P_param": "Precision - Parameter",
-    "R_param": "Recall - Parameter",
-    "F1_param": "F1 - Parameter",
-    "topological_ordering_accuracy": "LCD - Topological Order"
+    "P_api": "Precision",
+    "R_api": "Recall",
+    "F1_api": "F1",
+    "P_param": "Precision",
+    "R_param": "Recall",
+    "F1_param": "F1",
+    "topological_ordering_accuracy": "LCD"
 }
 
 level = "testdata_level3"
@@ -100,7 +100,7 @@ linecols = ['#9467bd', '#e377c2', '#bcbd22', '#17becf']
 line_styles = ['x-', 'o--', 'D-.', 's:']
 marker_size = 8
 linewidth = 3
-method_order = ["FewShot", "FewShot CoT", "Action Engine", "Reverse Chain"]
+method_order = ["FewShot (GPT-4o)", "FewShot CoT (GPT-4o)", "Action Engine", "Reverse Chain"]
 
 # Suppose df_filtered is your DataFrame
 # df_filtered = ...

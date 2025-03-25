@@ -164,7 +164,7 @@ def call_llm(model, pydantic_schema, schema_name, system_prompt, user_prompt, ma
                 response = extract_json_answer(raw_output)
             else:
                 response = raw_output["extracted_yaml"]
-                # response = extract_yaml_answer(response)
+                response = extract_yaml_answer(response)
 
         # Check if the response is a valid extraction (not an error)
         if isinstance(response, (list, dict)) and "error" not in response:

@@ -34,13 +34,13 @@ level_mapping = {
     "testdata_level3": "Level - 3"
 }
 metric_mapping = {
-    "P_api": "Precision - Function Selection",
-    "R_api": "Recall - Function Selection",
-    "F1_api": "F1 - Function Selection",
-    "P_param": "Precision - Parameter",
-    "R_param": "Recall - Parameter",
-    "F1_param": "F1 - Parameter",
-    "topological_ordering_accuracy": "LCD - Topological Order"
+    "P_api": "Precision",
+    "R_api": "Recall",
+    "F1_api": "F1",
+    "P_param": "Precision",
+    "R_param": "Recall",
+    "F1_param": "F1",
+    "topological_ordering_accuracy": "LCD"
 }
 title_mapping = {
     "P_api": "Precision Score for\nFunction Selection",
@@ -66,8 +66,8 @@ colors = plt.cm.get_cmap("tab10", num_methods)
 color_mapping = {
     # "ZeroShot": colors(0),  
     # "ZeroShot CoT": colors(1),  
-    "FewShot": colors(2), 
-    "FewShot CoT": colors(3),  
+    "FewShot (GPT-4o)": colors(2), 
+    "FewShot CoT (GPT-4o)": colors(3),  
     "Action Engine": colors(4),  
     # "Reverse Chain": colors(5),  
     # Add more methods as needed
@@ -121,7 +121,7 @@ for metric in metrics:
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     # Save as PDF
     output_file_pdf = os.path.join(output_dir, f"{metric}.pdf")
-    plt.savefig(output_file_pdf, format='pdf', dpi=600)  # High DPI for clear text
+    plt.savefig(output_file_pdf, format='pdf', dpi=600,  bbox_inches='tight')  # High DPI for clear text
     plt.close(fig)
 
 # Create a standalone figure for the legend

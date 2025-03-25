@@ -9,12 +9,12 @@ import seaborn as sns
 plt.style.use("seaborn-v0_8-whitegrid")
 
 # Adjust global font settings
-mpl.rcParams["font.size"] = 43
-mpl.rcParams["axes.labelsize"] = 43
-mpl.rcParams["axes.titlesize"] = 43
-mpl.rcParams["xtick.labelsize"] = 43
-mpl.rcParams["ytick.labelsize"] = 43
-mpl.rcParams["legend.fontsize"] = 43
+mpl.rcParams["font.size"] = 60
+mpl.rcParams["axes.labelsize"] = 50
+mpl.rcParams["axes.titlesize"] = 50
+mpl.rcParams["xtick.labelsize"] = 50
+mpl.rcParams["ytick.labelsize"] = 60
+mpl.rcParams["legend.fontsize"] = 60
 mpl.rcParams["font.weight"] = "black"
 mpl.rcParams["axes.labelweight"] = "black"
 mpl.rcParams["axes.titleweight"] = "black"
@@ -34,13 +34,13 @@ level_mapping = {
     "testdata_level3": "Level - 3"
 }
 metric_mapping = {
-    "P_api": "Precision - Function Selection",
-    "R_api": "Recall - Function Selection",
-    "F1_api": "F1 - Function Selection",
-    "P_param": "Precision - Parameter",
-    "R_param": "Recall - Parameter",
-    "F1_param": "F1 - Parameter",
-    "topological_ordering_accuracy": "LCD - Topological Order"
+    "P_api": "Precision",
+    "R_api": "Recall",
+    "F1_api": "F1",
+    "P_param": "Precision",
+    "R_param": "Recall",
+    "F1_param": "F1",
+    "topological_ordering_accuracy": "LCD"
 }
 title_mapping = {
     "P_api": "Precision Score for\nFunction Selection",
@@ -51,7 +51,6 @@ title_mapping = {
     "F1_param": "F1 Score for\nParameter",
     "topological_ordering_accuracy": "LCD Score for\nTopological Order"
 }
-
 levels = list(level_mapping.keys())
 metrics = list(metric_mapping.keys())
 
@@ -64,13 +63,12 @@ num_methods = 6
 colors = plt.cm.get_cmap("tab10", num_methods)
 
 color_mapping = {
-    "ZeroShot": colors(0),  
-    "ZeroShot CoT": colors(1),  
-    "FewShot": colors(2), 
-    "FewShot CoT": colors(3),  
+    "ZeroShot (GPT-4o)": colors(0),  
+    "ZeroShot CoT (GPT-4o)": colors(1),  
+    "FewShot (GPT-4o)": colors(2), 
+    "FewShot CoT (GPT-4o)": colors(3),  
     "Action Engine": colors(4),  
     "Reverse Chain": colors(5),  
-    # Add more methods as needed
 }
 
 # Default color for methods not in the mapping
@@ -114,6 +112,14 @@ for metric in metrics:
     ax.set_ylabel(metric_mapping[metric], fontsize=43, labelpad=10, weight='bold')
     ax.set_xticks(x + (num_methods - 1) * width / 2)
     ax.set_xticklabels([level_mapping[level] for level in levels], fontsize=43)
+
+    # Set y-axis limit conditionally
+    if metric in ["P_param", "R_param", "F1_param"]:
+        ax.set_yticks([0.0, 0.2, 0.4, 0.6])
+ # Adjust y-axis max to 0.4 for specific metrics
+    else:
+        ax.set_yticks([0.0, 0.2, 0.4, 0.6])
+  # Default y-axis max
     ax.grid(True, linestyle="--", alpha=0.6)
     ax.set_ylim(0, 0.6)  # Force y-axis to range from 0 to 1
 
@@ -121,11 +127,11 @@ for metric in metrics:
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     # Save as PDF
     output_file_pdf = os.path.join(output_dir, f"{metric}.pdf")
-    plt.savefig(output_file_pdf, format='pdf', dpi=600)  # High DPI for clear text
+    plt.savefig(output_file_pdf, format='pdf', dpi=600, bbox_inches='tight')  # High DPI for clear text
     plt.close(fig)
 
 # Create a standalone figure for the legend
-fig, ax = plt.subplots(figsize=(16, 2))  # Adjust size to fit all legend entries
+fig, ax = plt.subplots(figsize=(6, 1.2))  # Adjust size to fit all legend entries
 ax.axis('off')  # Turn off the axes
 
 # Extract colors assigned to methods and create a legend with method names

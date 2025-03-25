@@ -10,12 +10,12 @@ plt.style.use("seaborn-v0_8-whitegrid")
 
 # Adjust global font settings for readability
 mpl.rcParams.update({
-    "font.size": 34,
-    "axes.labelsize": 34,
-    "axes.titlesize": 34,
-    "xtick.labelsize": 30,
-    "ytick.labelsize": 30,
-    "legend.fontsize": 30,
+    "font.size": 60,
+    "axes.labelsize":  50,
+    "axes.titlesize":  50,
+    "xtick.labelsize":  50,
+    "ytick.labelsize":  57,
+    "legend.fontsize":  60,
     "font.weight": "black",
     "axes.labelweight": "black",
     "axes.titleweight": "black",
@@ -36,13 +36,13 @@ level_mapping = {
     "testdata_level3": "Level - 3"
 }
 metric_mapping = {
-    "P_api": "Precision - Function Selection",
-    "R_api": "Recall - Function Selection",
-    "F1_api": "F1 - Function Selection",
-    "P_param": "Precision - Parameter",
-    "R_param": "Recall - Parameter",
-    "F1_param": "F1 - Parameter",
-    "topological_ordering_accuracy": "LCD - Topological Order"
+    "P_api": "Precision",
+    "R_api": "Recall",
+    "F1_api": "F1",
+    "P_param": "Precision",
+    "R_param": "Recall",
+    "F1_param": "F1",
+    "topological_ordering_accuracy": "LCD"
 }
 title_mapping = {
     "P_api": "Precision Score for\nFunction Selection",
@@ -117,20 +117,22 @@ for metric in metrics:
     ax.set_xticklabels([level_mapping[level] for level in levels])
 
     # Set y-axis limit conditionally
-    if metric in ["P_param", "R_param", "F1_param"]:
-        ax.set_ylim(0, 0.4)  # Adjust y-axis max to 0.4 for specific metrics
+    if metric in ["P_param", "R_param", "F1_param", "topological_ordering_accuracy"]:
+        ax.set_yticks([0.0, 0.2, 0.4])
+ # Adjust y-axis max to 0.4 for specific metrics
     else:
-        ax.set_ylim(0, 0.6)  # Default y-axis max
+        ax.set_yticks([0.0, 0.2, 0.4, 0.5])
+  # Default y-axis max
 
     ax.grid(True, linestyle="--", alpha=0.6)
 
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     output_file_pdf = os.path.join(output_dir, f"{metric}.pdf")
-    plt.savefig(output_file_pdf, format='pdf', dpi=600)
+    plt.savefig(output_file_pdf, format='pdf', dpi=600, bbox_inches='tight')
     plt.close(fig)
 
 # Create a standalone figure for the legend
-fig, ax = plt.subplots(figsize=(20, 2.5))
+fig, ax = plt.subplots(figsize=(6, 1.2))
 ax.axis('off')
 
 handles = [
