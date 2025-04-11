@@ -64,12 +64,12 @@ num_methods = 6
 colors = plt.cm.get_cmap("tab10", num_methods)
 
 color_mapping = {
-    # "ZeroShot": colors(0),  
-    # "ZeroShot CoT": colors(1),  
+    "ZeroShot": colors(0),  
+    "ZeroShot CoT": colors(1),  
     "FewShot (GPT-4o)": colors(2), 
     "FewShot CoT (GPT-4o)": colors(3),  
     "Action Engine": colors(4),  
-    # "Reverse Chain": colors(5),  
+    "Reverse Chain": colors(5),  
     # Add more methods as needed
 }
 

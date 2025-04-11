@@ -32,37 +32,37 @@ user_query ="It will be perfect if you play music that matches my mood. This is 
 def main(user_query: str):
     model = get_model(model_name)
     task_list = subtask_diviser(model, user_query)
-    # print(json.dumps(task_list, indent=4))
+    print(json.dumps(task_list, indent=4))
     selected_functions, NO_FUNC, non_func_list = func_identifier(model, task_list["Tasks"], user_query)
     print(selected_functions)
     print(json.dumps(selected_functions, indent=4))
-    # print(len(selected_functions))
+    print(len(selected_functions))
     semantic_wf = wf_optimizer(user_query, task_list)
-    # print(json.dumps(semantic_wf, indent=4))
+    print(json.dumps(semantic_wf, indent=4))
     selected_functions, user_inputs, dependent_params = confirm_dependency(semantic_wf, selected_functions)
-    # print(json.dumps(selected_functions, indent=4))
+    print(json.dumps(selected_functions, indent=4))
     
-    # with open("final_selected_functions.json", 'w') as f:
-    #     json.dump(selected_functions, f, indent=4)
-    # with open("user_inputs.json", 'w') as f:
-    #     json.dump(user_inputs, f, indent=4)
-    # with open("dependent_params.json", 'w') as f:
-    #     json.dump(dependent_params, f, indent=4)
+    with open("final_selected_functions.json", 'w') as f:
+        json.dump(selected_functions, f, indent=4)
+    with open("user_inputs.json", 'w') as f:
+        json.dump(user_inputs, f, indent=4)
+    with open("dependent_params.json", 'w') as f:
+        json.dump(dependent_params, f, indent=4)
     argo_wf = yaml_compiler(selected_functions, user_inputs)
     print(argo_wf)
-    # if not no_func:
-    #     semantic_wf = wf_optimizer(user_query, task_list)
-    #     selected_functions, user_inputs, dependent_params = confirm_dependency(semantic_wf, selected_functions)
-    #     print(json.dumps(selected_functions, indent=4))
+    if not no_func:
+        semantic_wf = wf_optimizer(user_query, task_list)
+        selected_functions, user_inputs, dependent_params = confirm_dependency(semantic_wf, selected_functions)
+        print(json.dumps(selected_functions, indent=4))
 
-    #     argo_wf = yaml_compiler(selected_functions, user_inputs)
-    # else:
-    #     # print(non_func_list)
-    #     message = missing_func(non_func_list)
-    #     return message
+        argo_wf = yaml_compiler(selected_functions, user_inputs)
+    else:
+        # print(non_func_list)
+        message = missing_func(non_func_list)
+        return message
+    print(json.dumps(selected_functions, indent=4))
+    # print("-------------------")
     # print(json.dumps(selected_functions, indent=4))
-    # # print("-------------------")
-    # # print(json.dumps(selected_functions, indent=4))
     
 
     try:

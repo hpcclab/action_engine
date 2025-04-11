@@ -115,13 +115,15 @@ for metric in metrics:
 
     # Set y-axis limit conditionally
     if metric in ["P_param", "R_param", "F1_param"]:
-        ax.set_yticks([0.0, 0.2, 0.4, 0.6])
+        ax.set_yticks([0.0, 0.2, 0.4])
+        ax.set_ylim(0, 0.4)  # Explicitly set the y-axis range        
  # Adjust y-axis max to 0.4 for specific metrics
     else:
         ax.set_yticks([0.0, 0.2, 0.4, 0.6])
+        ax.set_ylim(0, 0.6)  # Force y-axis to range from 0 to 1
   # Default y-axis max
     ax.grid(True, linestyle="--", alpha=0.6)
-    ax.set_ylim(0, 0.6)  # Force y-axis to range from 0 to 1
+    
 
     # Tight layout and save the plot
     plt.tight_layout(rect=[0, 0, 1, 0.95])
