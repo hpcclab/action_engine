@@ -24,36 +24,6 @@ login(huggingface_token)
 _loaded_model = None
 _loaded_pipeline = None
 
-# Function to get the appropriate model based on the provided identifier
-# def get_model(model_name):
-#     global _loaded_model, _loaded_pipeline
-    
-#     # If the model is already loaded, return it
-#     if _loaded_model is not None:
-#         return _loaded_pipeline if _loaded_pipeline else _loaded_model
-
-#     # Load the model based on the model_name
-#     if model_name == "gpt-4o":
-#         _loaded_model = ChatOpenAI(model="gpt-4o", temperature=0, api_key=openai_api_key)
-#     elif model_name == "gpt-3.5-turbo":
-#         _loaded_model = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, api_key=openai_api_key)
-#     else:
-#         # Load tokenizer and model for HuggingFace models
-#         tokenizer = AutoTokenizer.from_pretrained(model_name)
-#         model = AutoModelForCausalLM.from_pretrained(
-#             model_name, 
-#             device_map="auto",
-#             torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
-#         )
-#         # Use a text generation pipeline
-#         _loaded_pipeline = pipeline(
-#             "text-generation",
-#             model=model,
-#             tokenizer=tokenizer
-#         )
-    
-#     return _loaded_pipeline if _loaded_pipeline else _loaded_model
-
 def get_model(model_name):
     print("Model Name: ", model_name)
     global tokenizer, _loaded_pipeline
