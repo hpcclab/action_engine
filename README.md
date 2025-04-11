@@ -2,7 +2,7 @@
 
 **Authors**: Akiharu Esashi, Pawissanutt Lertpongrujikorn, Mohsen Amini Salehi  
 📍 University of North Texas  
-🔗 [Project Website](https://hpcclab.org/) | 📜 [Preprint](#) | 📁 [Dataset & Code](https://github.com/hpcclab/action_engine)
+🔗 [Project Website](https://hpcclab.org/) | 📜 [Preprint](UnderReview) 
 
 ---
 
@@ -93,12 +93,3 @@ We gratefully acknowledge **Chameleon Cloud** for providing the computational re
 
 - 📧 Akiharu Esashi: [akiharuesashi@my.unt.edu](mailto:akiharuesashi@my.unt.edu)  
 - 💼 Mohsen Amini Salehi: [mohsen.aminisalehi@unt.edu](mailto:mohsen.aminisalehi@unt.edu)
-
----
-
-> _“Simplifying serverless. Empowering developers.”_  
-> — Action Engine Team
-
----
-
-Let me know if you'd like this turned into a live markdown preview or styled with badges, GitHub Actions, or demo video embed!
