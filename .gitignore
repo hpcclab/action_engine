@@ -6,7 +6,7 @@ db/api_info/vectordb
 # Created by https://www.toptal.com/developers/gitignore/api/linux,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=linux,python
 
-
+./output_file/*
 
 ### Linux ##
 *~
