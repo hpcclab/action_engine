@@ -31,10 +31,14 @@ model_name = "gpt-4o"
 user_query ="It will be perfect if you play music that matches my mood. This is Anna."
 def main(user_query: str):
     model = get_model(model_name)
+    ## Subtask Diviser
     task_list = subtask_diviser(model, user_query)
+    ## Function Identifier
     selected_functions, NO_FUNC, non_func_list = func_identifier(model, task_list["Tasks"], user_query)
+    ## Data Dependency Manager 
     semantic_wf = wf_optimizer(model, user_query, task_list)
     selected_functions, user_inputs, dependent_params = confirm_dependency(model, semantic_wf, selected_functions)
+    ## DAG YAML Compiler
     argo_wf = yaml_compiler(selected_functions, user_inputs)
 
     ################
