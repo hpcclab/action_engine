@@ -5,68 +5,76 @@ metadata:
 spec:
   arguments:
     parameters:
-    - name: username
-    - name: playlist_name
-    - name: song_name
+    - name: user_name
+    - name: user_name
   entrypoint: main
   templates:
   - name: main
     inputs:
       parameters:
-      - name: username
-      - name: playlist_name
-      - name: song_name
+      - name: user_name
+      - name: user_name
     dag:
       tasks:
       - name: t1
         template: username2id
         arguments:
           parameters:
-          - name: username
-            value: '{{ inputs.parameters.username }}'
+          - name: user_name
+            value: '{{ inputs.parameters.user_name }}'
         dependencies: []
       - name: t2
-        template: playlistname2id
+        template: getusermood
         arguments:
           parameters:
-          - name: playlist_name
-            value: '{{ inputs.parameters.playlist_name }}'
+          - name: user_name
+            value: '{{ inputs.parameters.user_name }}'
         dependencies:
         - t1
       - name: t3
-        template: addsongtoplaylist
+        template: recommendsong
         arguments:
           parameters:
-          - name: song_name
-            value: '{{ inputs.parameters.song_name }}'
-          - name: user_ID
-            value: '{{ tasks.t1.result }}'
-          - name: playlist_ID
+          - name: user_mood
             value: '{{ tasks.t2.result }}'
         dependencies:
         - t2
+      - name: t4
+        template: playmusic
+        arguments:
+          parameters:
+          - name: song_title
+            value: '{{ tasks.t3.result }}'
+        dependencies:
+        - t3
   - name: username2id
     inputs:
       parameters:
-      - name: username
+      - name: user_name
     http:
       method:
       url:
       successCondition: response.statusCode == 200
-  - name: playlistname2id
+  - name: getusermood
     inputs:
       parameters:
-      - name: playlist_name
+      - name: user_name
     http:
       method:
       url:
       successCondition: response.statusCode == 200
-  - name: addsongtoplaylist
+  - name: recommendsong
     inputs:
       parameters:
-      - name: user_ID
-      - name: playlist_ID
-      - name: song_name
+      - name: user_mood
+    http:
+      method:
+      url:
+      successCondition: response.statusCode == 200
+  - name: playmusic
+    inputs:
+      parameters:
+      - name: song_title
     http:
       method:
       url:

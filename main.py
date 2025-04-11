@@ -14,7 +14,7 @@ from ruamel.yaml import YAML
 yaml = YAML()
 
 #cloud
-filepath = "/home/cc/AutomaticWorkflowGeneration/ActionEngine/"
+filepath = "./"
 
 """
 Choose from below
@@ -32,43 +32,30 @@ user_query ="It will be perfect if you play music that matches my mood. This is 
 def main(user_query: str):
     model = get_model(model_name)
     task_list = subtask_diviser(model, user_query)
-    print(json.dumps(task_list, indent=4))
     selected_functions, NO_FUNC, non_func_list = func_identifier(model, task_list["Tasks"], user_query)
-    print(selected_functions)
-    print(json.dumps(selected_functions, indent=4))
-    print(len(selected_functions))
-    semantic_wf = wf_optimizer(user_query, task_list)
-    print(json.dumps(semantic_wf, indent=4))
-    selected_functions, user_inputs, dependent_params = confirm_dependency(semantic_wf, selected_functions)
-    print(json.dumps(selected_functions, indent=4))
-    
-    with open("final_selected_functions.json", 'w') as f:
-        json.dump(selected_functions, f, indent=4)
-    with open("user_inputs.json", 'w') as f:
-        json.dump(user_inputs, f, indent=4)
-    with open("dependent_params.json", 'w') as f:
-        json.dump(dependent_params, f, indent=4)
+    semantic_wf = wf_optimizer(model, user_query, task_list)
+    selected_functions, user_inputs, dependent_params = confirm_dependency(model, semantic_wf, selected_functions)
     argo_wf = yaml_compiler(selected_functions, user_inputs)
-    print(argo_wf)
-    if not no_func:
-        semantic_wf = wf_optimizer(user_query, task_list)
-        selected_functions, user_inputs, dependent_params = confirm_dependency(semantic_wf, selected_functions)
-        print(json.dumps(selected_functions, indent=4))
 
-        argo_wf = yaml_compiler(selected_functions, user_inputs)
-    else:
-        # print(non_func_list)
-        message = missing_func(non_func_list)
-        return message
-    print(json.dumps(selected_functions, indent=4))
-    # print("-------------------")
-    # print(json.dumps(selected_functions, indent=4))
-    
+    ################
+    # Only if you want to test the missing function function
+    ################
+    # if not no_func:
+    #     semantic_wf = wf_optimizer(user_query, task_list)
+    #     selected_functions, user_inputs, dependent_params = confirm_dependency(semantic_wf, selected_functions)
+    #     print(json.dumps(selected_functions, indent=4))
+
+    #     argo_wf = yaml_compiler(selected_functions, user_inputs)
+    # else:
+    #     message = missing_func(non_func_list)
+    #     return message
 
     try:
-        with open(filepath + "output_file/argo_workflow.yaml", "w") as yaml_file:
+        saved_path = filepath + "output_file/argo_workflow.yaml"
+        with open(saved_path, "w") as yaml_file:
             yaml.dump(argo_wf, yaml_file)
-        return "Success"
+            print("-"*50)
+        return f"YAML Workflow is Successfully Saved at {saved_path}"
     except Exception as e:
         return f"Error saving file: {e}"
     return True

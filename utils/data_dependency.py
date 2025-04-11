@@ -255,8 +255,8 @@ def confirm_dependency(model, semantic_wf, selected_functions):
         USER_PROMPT = f"""
             Answer:
             """
-            response = call_llm(model, DependentParams, "DependentParams", escape_json(SYSTEM_PROMPT), escape_json(USER_PROMPT))
-            params = [param_list.append(i) for i in response["DependentParams"]]
+        response = call_llm(model, DependentParams, "DependentParams", escape_json(SYSTEM_PROMPT), escape_json(USER_PROMPT))
+        params = [param_list.append(i) for i in response["DependentParams"]]
         selected_functions[i]["depended_params"] = list_to_dict_list(param_list)
     # print(SYSTEM_PROMPT + USER_PROMPT)
     # print(response)
