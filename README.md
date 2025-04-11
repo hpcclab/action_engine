@@ -1,7 +1,3 @@
-Here's a clean and professional `README.md` tailored for your GitHub repository, highlighting the key strengths and contributions of your project **Action Engine** while making it accessible and visually appealing to both technical and non-technical audiences:
-
----
-
 # 🧠⚙️ Action Engine: Automatic Workflow Generation in FaaS
 
 **Authors**: Akiharu Esashi, Pawissanutt Lertpongrujikorn, Mohsen Amini Salehi  
