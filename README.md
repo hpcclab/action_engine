@@ -1,3 +1,7 @@
+Here's a clean and professional `README.md` tailored for your GitHub repository, highlighting the key strengths and contributions of your project **Action Engine** while making it accessible and visually appealing to both technical and non-technical audiences:
+
+---
+
 # 🧠⚙️ Action Engine: Automatic Workflow Generation in FaaS
 
 **Authors**: Akiharu Esashi, Pawissanutt Lertpongrujikorn, Mohsen Amini Salehi  
@@ -64,39 +68,6 @@ We evaluated Action Engine using the Reverse Chain dataset against various basel
 1. **Action Engine Framework**: Open-source, plug-and-play system for FaaS automation.
 2. **Novel Evaluation Benchmark**: Extends the Reverse Chain dataset for complex multi-step tasks.
 3. **LLM Workflow Adaptation**: Redefines tool-augmented LLM stages for cloud-native applications.
-
----
-
-## 📦 Installation & Usage
-
-```bash
-# Clone the repository
-git clone https://github.com/hpcclab/action_engine.git
-cd action_engine
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the Action Engine
-python run_action_engine.py --query "What is the most popular cafe in Boston and what's on their menu?"
-```
-
-📎 Requires Python 3.9+ and access to an LLM model (e.g., OpenAI GPT-4 API or HuggingFace models).
-
----
-
-## 🧪 Examples
-
-> 🔎 **Query**: _"Add 'Imagine' by John Lennon to Jenny’s Chill Vibes playlist"_
-
-**Generated Workflow**:
-```yaml
-- name: username2id
-- name: playlistname2id
-- name: addsongtoplaylist
-```
-
-Each step corresponds to a FaaS function, with accurate data flow and parameter passing.
 
 ---
 
