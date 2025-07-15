@@ -187,23 +187,65 @@ HUGGINGFACE_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # Add any other API keys or secrets here
 ```
 
-> **Tip:**  
-> - Never commit your `.env` file to version control (it is already in `.gitignore`).
-> - You can add any other API keys (e.g., for OpenAI, AWS, etc.) in this file.
+The application will automatically load these environment variables if you have `python-dotenv` installed.
+
+### Step 5: Configure AWS IAM Permissions
+
+Your AWS user needs the following permissions to run the Action Engine:
+
+**Required IAM Policies:**
+- `AWSStepFunctionsFullAccess` - For creating and managing Step Functions
+- `AWSLambdaRole` - For Lambda function execution
+- `IAMFullAccess` - For IAM role management
+- `S3AutomaticWorkflowFilesAccess` - For S3 file operations
+
+**How to attach policies:**
+
+1. **Go to AWS Console** → IAM → Users
+2. **Click on your user** (e.g., `action-engine-test`)
+3. **Go to "Permissions" tab**
+4. **Click "Add permissions"**
+5. **Choose "Attach existing policies directly"**
+6. **Search and select the required policies:**
+   - `AWSStepFunctionsFullAccess`
+   - `AWSLambdaRole` 
+   - `IAMFullAccess`
+7. **Click "Next" and "Add permissions"**
+
+**Alternative: Create a custom policy** for more restrictive access:
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "states:*",
+                "lambda:*",
+                "iam:*",
+                "s3:*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+### Step 6: Load Environment Variables
 
 The application will automatically load these environment variables if you have `python-dotenv` installed.
 
-### Step 6: Create Required Directories
+### Step 7: Create Required Directories
 ```bash
 mkdir -p output_file
 chmod 755 output_file
 ```
 
-### Step 7: Set Up S3 Bucket
+### Step 8: Set Up S3 Bucket
 - Create an S3 bucket named `automatic-workflow-files` (or update the code/config to use your bucket)
 - Ensure your IAM role has access to this bucket
 
-### Step 8: Start the Server
+### Step 9: Start the Server
 ```bash
 uvicorn main:app --reload
 ```
