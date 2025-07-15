@@ -1,0 +1,29 @@
+# index: 305
+# query: What's the recommended clothing in Sydney on 25th December?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-305-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getweatherforecast
+        template: getweatherforecast
+        arguments:
+          parameters:
+          - name: location
+            value: '{{ inputs.parameters.location }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: getclothingrecommendation
+        template: getclothingrecommendation
+        dependencies:
+        - getweatherforecast
+        arguments:
+          parameters:
+          - name: weather_info
+            value: '{{ tasks.getweatherforecast.result }}'

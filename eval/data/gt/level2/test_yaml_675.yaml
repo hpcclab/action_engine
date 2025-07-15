@@ -1,0 +1,39 @@
+# index: 675
+# query: Is it possible for Mark to borrow 'To Kill a Mockingbird' until next Monday?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-675-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: booknametoid
+        template: booknametoid
+        arguments:
+          parameters:
+          - name: book_name
+            value: '{{ inputs.parameters.book_name }}'
+      - name: usernametoid
+        template: usernametoid
+        dependencies:
+        - booknametoid
+        arguments:
+          parameters:
+          - name: user_name
+            value: '{{ inputs.parameters.user_name }}'
+      - name: borrowbook
+        template: borrowbook
+        dependencies:
+        - usernametoid
+        arguments:
+          parameters:
+          - name: user_ID
+            value: '{{ tasks.usernametoid.result }}'
+          - name: book_ID
+            value: '{{ tasks.booknametoid.result }}'
+          - name: return_date
+            value: '{{ inputs.parameters.return_date }}'

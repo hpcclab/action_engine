@@ -1,0 +1,108 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: art-generation-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+    dag:
+      tasks:
+      - name: t1
+        template: tti_charcoal_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a charcoal art style image depicting the Renaissance period.
+        dependencies: []
+      - name: t2
+        template: tti_pastel_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a pastel art style image depicting the Baroque period.
+        dependencies: []
+      - name: t3
+        template: tti_painting_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a painting art style image depicting the Victorian era.
+        dependencies: []
+      - name: t4
+        template: tti_ukiyoe_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a ukiyo-e art style image depicting the Edo period.
+        dependencies: []
+      - name: t5
+        template: tti_charcoal_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Enhance the quality of the charcoal art style image depicting the
+              Renaissance period.
+        dependencies: []
+      - name: t6
+        template: tti_pastel_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Enhance the quality of the pastel art style image depicting the
+              Baroque period.
+        dependencies: []
+      - name: t7
+        template: tti_painting_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Enhance the quality of the painting art style image depicting the
+              Victorian era.
+        dependencies: []
+      - name: t8
+        template: tti_ukiyoe_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Enhance the quality of the ukiyo-e art style image depicting the
+              Edo period.
+        dependencies: []
+  - name: tti_charcoal_art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: <charcoal_art_api_url>
+      successCondition: response.statusCode == 200
+  - name: tti_pastel_art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: <pastel_art_api_url>
+      successCondition: response.statusCode == 200
+  - name: tti_painting_art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: <painting_art_api_url>
+      successCondition: response.statusCode == 200
+  - name: tti_ukiyoe_art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: <ukiyoe_art_api_url>
+      successCondition: response.statusCode == 200

@@ -1,0 +1,118 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+    dag:
+      tasks:
+      - name: t1
+        dependencies:
+        - t1
+        template: generate-pastel-art-1
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{tasks.t1.results}}'
+      - name: t2
+        dependencies:
+        - t1
+        template: convert-pastel-art-to-jpeg
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{tasks.t1.results}}'
+      - name: t3
+        dependencies:
+        - t2
+        template: resize-image
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t2.results}}'
+          - name: width
+            value: 1024
+          - name: height
+            value: 768
+      - name: t4
+        dependencies:
+        - t3
+        template: enhance-image
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t3.results}}'
+      - name: t5
+        dependencies:
+        - t4
+        template: email-enhanced-image
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t4.results}}'
+  - name: generate-pastel-art-1
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://tti-pastel-art-endpoint/generate_pastel_image/
+      headers:
+        Content-Type: application/json
+      body: '{"prompt": "{{inputs.parameters.prompt}}"}'
+      successCondition: response.statusCode == 200
+  - name: convert-pastel-art-to-jpeg
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://tti-pastel-art-endpoint/generate_pastel_image/
+      headers:
+        Content-Type: application/json
+      body: '{"prompt": "{{inputs.parameters.prompt}}"}'
+      successCondition: response.statusCode == 200
+  - name: resize-image
+    inputs:
+      parameters:
+      - name: file
+      - name: width
+      - name: height
+    http:
+      method: POST
+      url: http://image-resizing-endpoint/resize_image/
+      headers:
+        Content-Type: multipart/form-data
+      body: '{"file": "{{inputs.parameters.file}}", "width": "{{inputs.parameters.width}}",
+        "height": "{{inputs.parameters.height}}"}'
+      successCondition: response.statusCode == 200
+  - name: enhance-image
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://image-enhancement-endpoint/image_enhance/
+      headers:
+        Content-Type: multipart/form-data
+      body: '{"file": "{{inputs.parameters.file}}"}'
+      successCondition: response.statusCode == 200
+  - name: email-enhanced-image
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://email-endpoint/send_email/
+      headers:
+        Content-Type: multipart/form-data
+      body: '{"file": "{{inputs.parameters.file}}", "email": "friend@example.com"}'
+      successCondition: response.statusCode == 200

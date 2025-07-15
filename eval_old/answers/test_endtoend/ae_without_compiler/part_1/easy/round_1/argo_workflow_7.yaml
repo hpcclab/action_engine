@@ -1,0 +1,57 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-dag-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-Graffiti-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{workflow.parameters.prompt}}'
+      - name: t2
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 800
+          - name: height
+            value: 600
+          - name: file
+            value: '{{tasks.t1.outputs.art}}'
+        dependencies: [t1]
+  - name: tti-Graffiti-Art
+    inputs:
+      parameters:
+      - name: prompt
+    outputs:
+      parameters:
+      - name: art
+        valueFrom:
+          path: /tmp/art.png
+    container:
+      image: artifact-generator:latest
+      command: [python, -c]
+      args: ["from artifacts import generate_graffiti_art; generate_graffiti_art('{{inputs.parameters.prompt}}',
+          '/tmp/art.png')"]
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    container:
+      image: image-resizer:latest
+      command: [python, -c]
+      args: ['from image_resize import resize_image; ', "resize_image('{{inputs.parameters.file}}',
+          '{{inputs.parameters.width}}', '{{inputs.parameters.height}}', '/tmp/resized_image.png')"]
+    outputs:
+      parameters:
+      - name: resized-file
+        valueFrom:
+          path: /tmp/resized_image.png

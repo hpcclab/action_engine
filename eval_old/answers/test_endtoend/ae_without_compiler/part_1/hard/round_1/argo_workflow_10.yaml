@@ -1,0 +1,91 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Labrador Retriever
+
+      - name: t2
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: German Shepherd
+
+      - name: t3
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Golden Retriever
+
+      - name: t4
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Bulldog
+
+      - name: t5
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Poodle
+
+      - name: t6
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Beagle
+
+      - name: t7
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Rottweiler
+
+      - name: t8
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Dachshund
+
+      - name: t9
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Siberian Husky
+
+      - name: t10
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Shih Tzu
+
+  - name: tti-sketching-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_sketching_image
+      headers:
+        Content-Type: application/json
+      body: '{"prompt": "{{inputs.parameters.prompt}}"}'
+      successCondition: response.statusCode == 200

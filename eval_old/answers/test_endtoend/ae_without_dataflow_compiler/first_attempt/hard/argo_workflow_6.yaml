@@ -1,0 +1,94 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-charcoal-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a charcoal art style image depicting the Renaissance period.
+      - name: t2
+        template: tti-pastel-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a pastel art style image depicting the Baroque period.
+      - name: t3
+        template: tti-painting-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a painting art style image depicting the Victorian era.
+      - name: t4
+        template: tti-ukiyoe-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a ukiyo-e art style image depicting the Edo period.
+      - name: t5
+        template: tti-charcoal-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Enhance the quality of the charcoal art style image depicting the
+              Renaissance period.
+      - name: t6
+        template: tti-pastel-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Enhance the quality of the pastel art style image depicting the
+              Baroque period.
+      - name: t7
+        template: tti-painting-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Enhance the quality of the painting art style image depicting the
+              Victorian era.
+      - name: t8
+        template: tti-ukiyoe-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Enhance the quality of the ukiyo-e art style image depicting the
+              Edo period.
+  - name: tti-charcoal-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://localhost:8000/generate_charcoal_image/
+      successCondition: response.statusCode == 200
+  - name: tti-pastel-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://localhost:8000/generate_pastel_image/
+      successCondition: response.statusCode == 200
+  - name: tti-painting-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://localhost:8000/generate_painting_image/
+      successCondition: response.statusCode == 200
+  - name: tti-ukiyoe-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://localhost:8000/generate_ukiyoe_image/
+      successCondition: response.statusCode == 200

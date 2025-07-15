@@ -1,0 +1,49 @@
+# index: 111
+# query: Is it possible to book a restaurant with 4 stars for Michael this Sunday, 6:30pm? He enjoys Japanese cuisine.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-111-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: bookrestaurant
+        template: bookrestaurant
+        dependencies:
+        - recommendrestaurant
+        arguments:
+          parameters:
+          - name: restaurant_name
+            value: '{{ tasks.recommendrestaurant.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: time
+            value: '{{ inputs.parameters.time }}'
+      - name: username2id
+        template: username2id
+        arguments:
+          parameters:
+          - name: user_name
+            value: '{{ inputs.parameters.user_name }}'
+      - name: recommendrestaurant
+        template: recommendrestaurant
+        dependencies:
+        - getuserlocation
+        arguments:
+          parameters:
+          - name: location
+            value: '{{ tasks.getuserlocation.result }}'
+          - name: star_level
+            value: '{{ inputs.parameters.star_level }}'
+      - name: getuserlocation
+        template: getuserlocation
+        dependencies:
+        - username2id
+        arguments:
+          parameters:
+          - name: user_ID
+            value: '{{ tasks.username2id.result }}'

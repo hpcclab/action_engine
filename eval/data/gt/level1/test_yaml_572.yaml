@@ -1,0 +1,29 @@
+# index: 572
+# query: Can you acquire the book 'Pride and Prejudice' for user789?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-572-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: buybook
+        template: buybook
+        dependencies:
+        - booktitle2isbn
+        arguments:
+          parameters:
+          - name: user_ID
+            value: '{{ inputs.parameters.user_ID }}'
+          - name: ISBN
+            value: '{{ tasks.booktitle2isbn.result }}'
+      - name: booktitle2isbn
+        template: booktitle2isbn
+        arguments:
+          parameters:
+          - name: book_title
+            value: '{{ inputs.parameters.book_title }}'

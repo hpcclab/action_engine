@@ -1,0 +1,37 @@
+# index: 582
+# query: Can you book a flight for LH 1112 on July 15th?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-582-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: dateconversion
+        template: dateconversion
+        arguments:
+          parameters:
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: flightcode2id
+        template: flightcode2id
+        dependencies:
+        - dateconversion
+        arguments:
+          parameters:
+          - name: Flight_code
+            value: '{{ inputs.parameters.Flight_code }}'
+      - name: bookflight
+        template: bookflight
+        dependencies:
+        - flightcode2id
+        arguments:
+          parameters:
+          - name: Flight_ID
+            value: '{{ tasks.flightcode2id.result }}'
+          - name: date
+            value: '{{ tasks.dateconversion.result }}'

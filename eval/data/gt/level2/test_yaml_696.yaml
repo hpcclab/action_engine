@@ -1,0 +1,41 @@
+# index: 696
+# query: Can you reserve a room in 'Sheraton' hotel in 'Boston' from 10th October to 15th October?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-696-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: bookroom
+        template: bookroom
+        dependencies:
+        - citynametoid
+        arguments:
+          parameters:
+          - name: city_ID
+            value: '{{ tasks.citynametoid.result }}'
+          - name: hotel_ID
+            value: '{{ tasks.hotelnametoid.result }}'
+          - name: check_in_date
+            value: '{{ inputs.parameters.check_in_date }}'
+          - name: check_out_date
+            value: '{{ inputs.parameters.check_out_date }}'
+      - name: citynametoid
+        template: citynametoid
+        dependencies:
+        - hotelnametoid
+        arguments:
+          parameters:
+          - name: city_name
+            value: '{{ inputs.parameters.city_name }}'
+      - name: hotelnametoid
+        template: hotelnametoid
+        arguments:
+          parameters:
+          - name: hotel_name
+            value: '{{ inputs.parameters.hotel_name }}'

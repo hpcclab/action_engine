@@ -1,0 +1,101 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-mosaic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{workflow.parameters.prompt}}'
+      - name: t2
+        template: tti-pastel-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{workflow.parameters.prompt}}'
+        dependencies: []
+
+      - name: t3
+        template: tti-graffiti-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{workflow.parameters.prompt}}'
+        dependencies: []
+
+      - name: t4
+        template: tti-mosaic-art-enhanced
+        dependencies: [t1, t2, t3]
+
+      - name: t5
+        template: tti-mosaic-art-resized
+        dependencies: [t4]
+      - name: t6
+        template: image-enhancement
+        dependencies: [t5]
+
+      - name: t7
+        template: tti-mosaic-art-email
+        dependencies: [t6]
+
+  - name: tti-mosaic-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: '{{workflow.parameters.mosaic_art_url}}'
+      successCondition: response.statusCode == 200
+
+  - name: tti-pastel-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: '{{workflow.parameters.pastel_art_url}}'
+      successCondition: response.statusCode == 200
+
+  - name: tti-graffiti-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: '{{workflow.parameters.graffiti_art_url}}'
+      successCondition: response.statusCode == 200
+
+  - name: tti-mosaic-art-enhanced
+    inputs: {}
+    http:
+      method: POST
+      url: '{{workflow.parameters.mosaic_art_enhanced_url}}'
+      successCondition: response.statusCode == 200
+
+  - name: tti-mosaic-art-resized
+    inputs: {}
+    http:
+      method: POST
+      url: '{{workflow.parameters.mosaic_art_resized_url}}'
+      successCondition: response.statusCode == 200
+
+  - name: image-enhancement
+    inputs: {}
+    http:
+      method: POST
+      url: '{{workflow.parameters.image_enhancement_url}}'
+      successCondition: response.statusCode == 200
+
+  - name: tti-mosaic-art-email
+    inputs: {}
+    http:
+      method: POST
+      url: '{{workflow.parameters.mosaic_art_email_url}}'
+      successCondition: response.statusCode == 200

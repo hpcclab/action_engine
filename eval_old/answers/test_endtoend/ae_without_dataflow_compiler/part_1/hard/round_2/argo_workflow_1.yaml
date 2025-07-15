@@ -1,0 +1,102 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-mosaic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A serene mountain landscape during sunrise
+      - name: t2
+        template: tti-pastel-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A serene mountain landscape during sunrise
+        dependencies: [t1]
+      - name: t3
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A serene mountain landscape during sunrise
+        dependencies: [t2]
+      - name: t4
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 1920
+          - name: height
+            value: 1080
+          - name: file
+            value: '{{tasks.t3.outputs.result}}'
+        dependencies: [t3]
+      - name: t5
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t4.outputs.result}}'
+        dependencies: [t4]
+      - name: t6
+        template: tti-mosaic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A serene mountain landscape during sunrise
+        dependencies: [t5]
+
+  - name: tti-mosaic-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://YOUR_API_URL/tti_mosaic_art/
+      successCondition: response.statusCode == 200
+
+  - name: tti-pastel-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://YOUR_API_URL/tti_pastel_art/
+      successCondition: response.statusCode == 200
+
+  - name: tti-sketching-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://YOUR_API_URL/tti_sketching_art/
+      successCondition: response.statusCode == 200
+
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://YOUR_API_URL/resize_image/
+      successCondition: response.statusCode == 200
+
+  - name: image-enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://YOUR_API_URL/image_enhance/
+      successCondition: response.statusCode == 200

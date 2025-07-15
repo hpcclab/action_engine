@@ -1,0 +1,39 @@
+# index: 1259
+# query: Can you book a hotel and a restaurant in Miami on August 25th?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1259-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: restaurantlocator
+        template: restaurantlocator
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: hotelsearch
+        template: hotelsearch
+        dependencies:
+        - restaurantlocator
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: reservationbooking
+        template: reservationbooking
+        dependencies:
+        - hotelsearch
+        arguments:
+          parameters:
+          - name: hotelDetails
+            value: '{{ tasks.hotelsearch.result }}'
+          - name: restaurantLocations
+            value: '{{ tasks.restaurantlocator.result }}'

@@ -1,0 +1,39 @@
+# index: 933
+# query: Can you provide a lactose-free dish from a Chinese restaurant in Houston?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-933-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: suggestfood
+        template: suggestfood
+        dependencies:
+        - getmenu
+        arguments:
+          parameters:
+          - name: menu
+            value: '{{ tasks.getmenu.result }}'
+          - name: dietary_preferences
+            value: '{{ inputs.parameters.dietary_preferences }}'
+      - name: findrestaurant
+        template: findrestaurant
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: cuisine
+            value: '{{ inputs.parameters.cuisine }}'
+      - name: getmenu
+        template: getmenu
+        dependencies:
+        - findrestaurant
+        arguments:
+          parameters:
+          - name: restaurant_name
+            value: '{{ tasks.findrestaurant.result }}'

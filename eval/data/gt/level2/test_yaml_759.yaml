@@ -1,0 +1,35 @@
+# index: 759
+# query: What should I wear in New York this weekend?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-759-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: weatherforecast
+        template: weatherforecast
+        dependencies:
+        - locatecity
+        arguments:
+          parameters:
+          - name: coordinates
+            value: '{{ tasks.locatecity.result }}'
+      - name: locatecity
+        template: locatecity
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: getclothingadvice
+        template: getclothingadvice
+        dependencies:
+        - weatherforecast
+        arguments:
+          parameters:
+          - name: weather
+            value: '{{ tasks.weatherforecast.result }}'

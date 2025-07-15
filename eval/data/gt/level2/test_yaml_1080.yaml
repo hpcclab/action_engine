@@ -1,0 +1,41 @@
+# index: 1080
+# query: I want to set an appointment with an ophthalmologist for Michael Johnson on 5th October at 10:00 AM
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1080-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: finddoctor
+        template: finddoctor
+        dependencies:
+        - findpatient
+        arguments:
+          parameters:
+          - name: specialty
+            value: '{{ inputs.parameters.specialty }}'
+      - name: findpatient
+        template: findpatient
+        arguments:
+          parameters:
+          - name: patientname
+            value: '{{ inputs.parameters.patientname }}'
+      - name: createappointment
+        template: createappointment
+        dependencies:
+        - finddoctor
+        arguments:
+          parameters:
+          - name: doctorId
+            value: '{{ tasks.finddoctor.result }}'
+          - name: patientId
+            value: '{{ tasks.findpatient.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: time
+            value: '{{ inputs.parameters.time }}'

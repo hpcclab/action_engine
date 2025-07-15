@@ -1,0 +1,110 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+    dag:
+      tasks:
+      - name: t1
+        template: tti_Graffiti_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.username }}'
+        dependencies: []
+
+      - name: t2
+        template: tti_Mosaic_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.username }}'
+        dependencies:
+        - t1
+
+      - name: t3
+        template: tti_Ukiyo_e_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.username }}'
+        dependencies:
+        - t2
+
+      - name: t4
+        template: Image_Resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 1080
+          - name: height
+            value: 720
+          - name: file
+            value: '{{ tasks.t3.outputs.result }}'
+        dependencies:
+        - t3
+
+      - name: t5
+        template: Image_Enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ tasks.t2.outputs.result }}'
+        dependencies:
+        - t4
+
+  - name: tti_Graffiti_Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_graffiti_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti_Mosaic_Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_mosaic_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti_Ukiyo_e_Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_ukiyoe_image/
+      successCondition: response.statusCode == 200
+
+  - name: Image_Resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/resize_image/
+      successCondition: response.statusCode == 200
+
+  - name: Image_Enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/image_enhance/
+      successCondition: response.statusCode == 200

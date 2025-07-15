@@ -1,0 +1,166 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  arguments:
+    parameters:
+    - name: width
+    - name: height
+    - name: prompt
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: prompt
+    dag:
+      tasks:
+      - name: t1
+        template: tti-animation-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: "{{inputs.parameters.prompt}}"
+      - name: t2
+        template: tti-charcoal-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: "{{inputs.parameters.prompt}}"
+        dependencies: [t1]
+      - name: t3
+        template: tti-digital-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: "{{inputs.parameters.prompt}}"
+        dependencies: [t2]
+      - name: t4
+        template: tti-futuristic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: "{{inputs.parameters.prompt}}"
+        dependencies: [t3]
+      - name: t5
+        template: tti-graffiti-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: "{{inputs.parameters.prompt}}"
+        dependencies: [t4]
+      - name: t6
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: "{{inputs.parameters.prompt}}"
+        dependencies: [t5]
+      - name: t7
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: "{{inputs.parameters.width}}"
+          - name: height
+            value: "{{inputs.parameters.height}}"
+          - name: file
+            value: "{{tasks.t1.outputs.result}}"
+        dependencies: [t6]
+      - name: t8
+        template: image-to-pdf-conversion
+        arguments:
+          parameters:
+          - name: file
+            value: "{{tasks.t7.outputs.result}}"
+        dependencies: [t7]
+      - name: t9
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: "{{tasks.t8.outputs.result}}"
+        dependencies: [t8]
+      - name: t10
+        template: send-email
+        arguments:
+          parameters:
+          - name: file
+            value: "{{tasks.t9.outputs.result}}"
+        dependencies: [t9]
+
+  - name: tti-animation-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_anime_image/
+      body:
+        prompt: "{{inputs.parameters.prompt}}"
+      successCondition: response.statusCode == 200
+
+  - name: tti-charcoal-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_charcoal_image/
+      body:
+        prompt: "{{inputs.parameters.prompt}}"
+      successCondition: response.statusCode == 200
+
+  - name: tti-digital-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_digital_image/
+      body:
+        prompt: "{{inputs.parameters.prompt}}"
+      successCondition: response.statusCode == 200
+
+  - name: tti-futuristic-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_futuristic_image/
+      body:
+        prompt: "{{inputs.parameters.prompt}}"
+      successCondition: response.statusCode == 200
+
+  - name: tti-graffiti-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_grafiti_image/
+      body:
+        prompt: "{{inputs.parameters.prompt}}"
+      successCondition: response.statusCode == 200
+
+  - name: tti-sketching-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_sketching_image/
+      body:
+        prompt: "{{inputs.parameters.prompt}}"
+      successCondition: response.statusCode == 200
+
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file

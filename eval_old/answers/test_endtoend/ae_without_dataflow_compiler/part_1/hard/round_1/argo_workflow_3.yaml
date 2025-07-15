@@ -1,0 +1,152 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti_Mosaic_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate an image of a black cat in mosaic art style.
+      - name: t2
+        template: tti_Pastel_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate an image of a black cat in pastel art style.
+      - name: t3
+        template: tti_Graffiti_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate an image of a black cat in graffiti art style.
+      - name: t4
+        template: Image_Enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ tasks.t1.outputs.result }}'
+        dependencies: [t1]
+      - name: t5
+        template: Resize_Image
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ tasks.t4.outputs.result }}'
+        dependencies: [t4]
+      - name: t6
+        template: Convert_Format
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ tasks.t5.outputs.result }}'
+        dependencies: [t5]
+      - name: t7
+        template: Email_Image
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ tasks.t6.outputs.result }}'
+        dependencies: [t6]
+
+  - name: tti_Mosaic_Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://your-mosaic-art-api-endpoint.com/generate_mosaic_image/
+      body: |
+        {
+          "prompt": "{{ inputs.parameters.prompt }}"
+        }
+      successCondition: response.statusCode == 200
+
+  - name: tti_Pastel_Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://your-pastel-art-api-endpoint.com/generate_pastel_image/
+      body: |
+        {
+          "prompt": "{{ inputs.parameters.prompt }}"
+        }
+      successCondition: response.statusCode == 200
+
+  - name: tti_Graffiti_Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://your-graffiti-art-api-endpoint.com/generate_graffiti_image/
+      body: |
+        {
+          "prompt": "{{ inputs.parameters.prompt }}"
+        }
+      successCondition: response.statusCode == 200
+
+  - name: Image_Enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://your-image-enhancement-api-endpoint.com/image_enhance/
+      body: |
+        {
+          "file": "{{ inputs.parameters.file }}"
+        }
+      successCondition: response.statusCode == 200
+
+  - name: Resize_Image
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://your-image-resize-api-endpoint.com/resize/
+      body: |
+        {
+          "file": "{{ inputs.parameters.file }}",
+          "width": 1920,
+          "height": 1080
+        }
+      successCondition: response.statusCode == 200
+
+  - name: Convert_Format
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://your-format-convert-api-endpoint.com/convert/
+      body: |
+        {
+          "file": "{{ inputs.parameters.file }}",
+          "format": "png"
+        }
+      successCondition: response.statusCode == 200
+
+  - name: Email_Image
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://your-email-api-endpoint.com/send_email/
+      body: |
+        {
+          "file": "{{ inputs.parameters.file }}",
+          "recipient": "recipient@example.com",
+          "subject": "Mosaic Art Image of Black Cat"
+        }
+      successCondition: response.statusCode == 200

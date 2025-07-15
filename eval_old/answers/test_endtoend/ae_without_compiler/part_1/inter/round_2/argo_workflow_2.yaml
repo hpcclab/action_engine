@@ -1,0 +1,53 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n  - name: main\n    dag:\n    \
+\  tasks:\n      - name: t1\n        template: tti-charcoal-art\n        arguments:\n\
+\          parameters:\n          - name: prompt\n            value: \"Generate a
+charcoal art image of a serene forest.\"\n      \n      - name: t2\n        dependencies:
+[t1]\n        template: image-resizing\n        arguments:\n          parameters:\n\
+\          - name: width\n            value: 1920\n          - name: height\n    \
+\        value: 1080\n          - name: file\n            value: \"{{tasks.t1.outputs.artifact.charcoal_image}}\"\
+\n      \n      - name: t3\n        dependencies: [t2]\n        template: image-to-pdf-conversion\n\
+\        arguments:\n          parameters:\n          - name: file\n            value:
+\"{{tasks.t2.outputs.artifact.resized_image}}\"\n\n  - name: tti-charcoal-art\n  \
+\  inputs:\n      parameters:\n      - name: prompt\n    outputs:\n      artifacts:\n\
+\      - name: charcoal_image\n        path: /tmp/charcoal_image.png\n    container:\n\
+\      image: python:3.8-slim\n      command: [python, -c]\n      args:\n      - |\n\
+\        from fastapi import FastAPI, HTTPException\n        from fastapi.responses
+import FileResponse\n        import torch\n        from PIL import Image\n       \
+\ from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler\n   \
+\     from pathlib import Path\n\n        app = FastAPI()\n\n        def load_model():\n\
+\            model_id = 'Falah/charcoal-style'\n            pipe = StableDiffusionPipeline.from_pretrained(model_id,
+torch_dtype=torch.float16)\n            pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n\
+\            pipe = pipe.to('cuda')\n            return pipe\n\n        def process_data(prompt,
+pipe):\n            response = pipe(prompt).images[0]\n            return response\n\
+\n        @app.post(\"/generate_charcoal_image/\")\n        async def generate_image(prompt:
+str):\n            try:\n                pipe = load_model()\n                prompt
+= \"Charcoal-style picture: \" + prompt\n                response = process_data(prompt,
+pipe)\n                response.save('/tmp/charcoal_image.png')\n                image_path
+= Path('/tmp/charcoal_image.png')\n                return {\"file_path\": str(image_path)}\n\
+\            except Exception as e:\n                raise HTTPException(status_code=500,
+detail=str(e))\n\n  - name: image-resizing\n    inputs:\n      parameters:\n     \
+\ - name: width\n      - name: height\n      - name: file\n    outputs:\n      artifacts:\n\
+\      - name: resized_image\n        path: /tmp/resized_image.png\n    container:\n\
+\      image: python:3.8-slim\n      command: [python, -c]\n      args:\n      - |\n\
+\        from fastapi import FastAPI, HTTPException, File, UploadFile\n        from
+fastapi.responses import FileResponse\n        from PIL import Image\n        import
+io\n        import os\n\n        app = FastAPI()\n\n        @app.post('/resize_image/')\n\
+\        async def resize_image(width: int, height: int, file: UploadFile):\n    \
+\        try:\n                contents = await file.read()\n                image
+= Image.open(io.BytesIO(contents))\n                resized = image.resize((width,
+height))\n                filename = \"/tmp/resized_image.png\"\n                resized.save(filename)\n\
+\                return {\"file_path\": filename}\n            except Exception as
+e:\n                raise HTTPException(status_code=500, detail=str(e))\n\n  - name:
+image-to-pdf-conversion\n    inputs:\n      parameters:\n      - name: file\n    outputs:\n\
+\      artifacts:\n      - name: pdf_file\n        path: /tmp/output.pdf\n    container:\n\
+\      image: python:3.8-slim\n      command: [python, -c]\n      args:\n      - |\n\
+\        from fastapi import FastAPI, HTTPException, UploadFile\n        from fastapi.responses
+import FileResponse\n        from pathlib import Path\n        from PIL import Image\n\
+\        import img2pdf\n\n        app = FastAPI()\n        supported_extensions =
+[\".JPEG\", \".PNG\", \".GIF\", \".BMP\", \".TIFF\", \".PBM\", \".PGM\", \".PPM\"\
+]\n\n        def check_file_extension(file_path):\n            file_extension = file_path.suffix.upper()\n\
+\            if file_extension not in supported_extensions:\n                return
+False\n            return True\n\n        @app.post(\"/convert_to_pdf/\")\n      \
+\  async def image_to_pdf(file: UploadFile):\n            try:\n                file_path
+= Path(file.filename)\n                file_name = file_path.stem"

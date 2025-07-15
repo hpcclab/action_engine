@@ -1,0 +1,29 @@
+# index: 787
+# query: My bus to Chicago is running late. Could you search and book a close hotel for me?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-787-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findnearbyhotels
+        template: findnearbyhotels
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: bookhotel
+        template: bookhotel
+        dependencies:
+        - findnearbyhotels
+        arguments:
+          parameters:
+          - name: hotel_name
+            value: '{{ tasks.findnearbyhotels.result }}'
+          - name: city
+            value: '{{ inputs.parameters.city }}'

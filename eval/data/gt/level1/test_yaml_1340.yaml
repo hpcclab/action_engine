@@ -1,0 +1,31 @@
+# index: 1340
+# query: I need to go from Dallas to Seattle next Wednesday, can you help me reserve a flight?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1340-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findflights
+        template: findflights
+        arguments:
+          parameters:
+          - name: city1
+            value: '{{ inputs.parameters.city1 }}'
+          - name: city2
+            value: '{{ inputs.parameters.city2 }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: bookflight
+        template: bookflight
+        dependencies:
+        - findflights
+        arguments:
+          parameters:
+          - name: flight
+            value: '{{ tasks.findflights.result }}'

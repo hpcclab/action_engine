@@ -1,0 +1,55 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n    - name: main\n      dag:\n\
+\        tasks:\n          - name: t1\n            template: tti-Pastel-Art\n    \
+\        arguments:\n              parameters:\n                - name: prompt\n \
+\                 value: \"Create a pastel art image of 'A peaceful beach at sunrise'.\"\
+\n          - name: t2\n            template: Image-Enhancement\n            arguments:\n\
+\              parameters:\n                - name: file\n                  value:
+'{{tasks.t1.outputs.parameters.output_image}}'\n            dependencies:\n      \
+\        - t1\n\n    - name: tti-Pastel-Art\n      inputs:\n        parameters:\n\
+\          - name: prompt\n      outputs:\n        parameters:\n          - name:
+output_image\n            valueFrom:\n              path: /outputs/generated_img.png\n\
+\      script:\n        image: python:3.8\n        command: [python]\n        source:
+|\n          from fastapi import FastAPI, HTTPException\n          from fastapi.responses
+import FileResponse\n          from PIL import Image\n          from diffusers import
+StableDiffusionPipeline, DPMSolverMultistepScheduler\n          import torch\n   \
+\       from pathlib import Path\n          import sys\n\n          app = FastAPI()\n\
+\n          def load_model():\n              model_id = 'JamesFlare/pastel-mix'\n\
+\              pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)\n\
+\              pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n\
+\              pipe = pipe.to('cuda')\n              return pipe\n\n          def
+process_data(prompt, pipe):\n              response = pipe(prompt).images[0]\n   \
+\           return response\n\n          @app.post(\"/generate_pastel_image/\")\n\
+\          async def generate_image(prompt:str):\n              try:\n           \
+\       pipe = load_model()\n                  prompt = \"Pastel-style picture: \"\
+\ + prompt\n                  response = process_data(prompt, pipe)\n            \
+\      response.save('/outputs/generated_img.png')\n                  image_path =
+Path('/outputs/generated_img.png')\n                  if not image_path.is_file():\n\
+\                      return {\"error\": \"Image not found on the server\"}\n   \
+\               return FileResponse(image_path)\n              except Exception as
+e:\n                  raise HTTPException(status_code=500, detail=str(e))\n\n    -
+name: Image-Enhancement\n      inputs:\n        parameters:\n          - name: file\n\
+\            valueFrom:\n              path: /inputs/input_image.png\n      outputs:\n\
+\        parameters:\n          - name: output_image\n            valueFrom:\n   \
+\           path: /outputs/final_image.jpg\n      script:\n        image: python:3.8\n\
+\        command: [python]\n        source: |\n          from fastapi import FastAPI,
+HTTPException, UploadFile\n          from fastapi.responses import FileResponse\n\
+\          from pathlib import Path\n          import cv2\n          import numpy
+as np\n          from PIL import Image\n          import sys\n\n          app = FastAPI()\n\
+\n          SUPPORTED_FORMATS = [\n              \".bmp\", \".dib\",\n           \
+\   \".jpeg\", \".jpg\", \".jpe\",\n              \".jp2\",\n              \".png\"\
+,\n              \".webp\", \".avif\",\n              \".pbm\", \".pgm\", \".ppm\"\
+, \".pxm\", \".pnm\",\n              \".pfm\",\n              \".sr\", \".ras\",\n\
+\              \".tiff\", \".tif\",\n              \".exr\", \".hdr\", \".pic\"\n\
+\          ]\n\n          @app.post('/image_enhance/')\n          async def enhance_image(file:
+UploadFile):\n              try:\n                  image_name = '/inputs/input_image.png'\n\
+\                  img = cv2.imread(image_name)\n                  denoised_image
+= cv2.fastNlMeansDenoisingColored(img, None, 10, 10, 7, 21)\n                  contrast_stretched_image
+= cv2.normalize(denoised_image, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1)\n    \
+\              kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]], np.float32)\n\
+\                  sharpened_image = cv2.filter2D(contrast_stretched_image, -1, kernel=kernel)\n\
+\                  brightness_image = cv2.convertScaleAbs(sharpened_image, alpha=1,
+beta=5)\n                  gamma = 1.5\n                  lookup_table = np.array([((i
+/ 255.0) ** gamma) * 255 for i in np.arange(0, 256)]).astype(\"uint8\")\n        \
+\          gamma_corrected_image = cv2.LUT(brightness_image, lookup_table)\n     \
+\             final_name = '/outputs/final_image.jpg'\n                  cv2.imwrite(final_name,"

@@ -1,0 +1,33 @@
+# index: 102
+# query: I want to go to Berlin from 20th November to 25th November. Reserve me a hotel with free Wi-Fi.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-102-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: bookhotel
+        template: bookhotel
+        dependencies:
+        - searchhotel
+        arguments:
+          parameters:
+          - name: hotel_name
+            value: '{{ tasks.searchhotel.result }}'
+          - name: check_in_date
+            value: '{{ inputs.parameters.check_in_date }}'
+          - name: check_out_date
+            value: '{{ inputs.parameters.check_out_date }}'
+      - name: searchhotel
+        template: searchhotel
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: hotel_preferences
+            value: '{{ inputs.parameters.hotel_preferences }}'

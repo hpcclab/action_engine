@@ -1,0 +1,41 @@
+# index: 1112
+# query: Can I find a restaurant near the theatre showing 'Inception' and make a reservation?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1112-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getmovietime
+        template: getmovietime
+        dependencies:
+        - getmovietime
+        arguments:
+          parameters:
+          - name: movie_name
+            value: '{{ inputs.parameters.movie_name }}'
+      - name: makereservation
+        template: makereservation
+        dependencies:
+        - findrestaurant
+        arguments:
+          parameters:
+          - name: RestaurantOptions
+            value: '{{ tasks.findrestaurant.result }}'
+          - name: ShowTime
+            value: '{{ tasks.getmovietime.result }}'
+      - name: findrestaurant
+        template: findrestaurant
+        dependencies:
+        - getmovietime
+        arguments:
+          parameters:
+          - name: movie_name
+            value: '{{ inputs.parameters.movie_name }}'
+          - name: ShowTime
+            value: '{{ tasks.getmovietime.result }}'

@@ -1,0 +1,48 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  arguments:\n    parameters:\n    - name: prompt\n      value: \"\
+sunset over the ocean\"\n    - name: email\n      value: \"colleague@example.com\"\
+\n  entrypoint: main\n  templates:\n  - name: main\n    inputs:\n      parameters:\n\
+\      - name: prompt\n      - name: email\n    dag:\n      tasks:\n      - name:
+t1\n        template: tti_Pastel_Art\n        arguments:\n          parameters:\n\
+\          - name: prompt\n            value: '{{inputs.parameters.prompt}}'\n   \
+\   - name: t2\n        template: Image_Enhancement\n        arguments:\n        \
+\  parameters:\n          - name: file\n            value: '{{tasks.t1.outputs.parameters.image}}'\n\
+\        dependencies: [t1]\n      - name: t3\n        template: Email_Sending\n \
+\       arguments:\n          parameters:\n          - name: file\n            value:
+'{{tasks.t2.outputs.parameters.enhanced_image}}'\n          - name: email\n      \
+\      value: '{{inputs.parameters.email}}'\n        dependencies: [t2]\n\n  - name:
+tti_Pastel_Art\n    inputs:\n      parameters:\n      - name: prompt\n    outputs:\n\
+\      parameters:\n      - name: image\n        valueFrom:\n          path: /tmp/generated_img.png\n\
+\    script:\n      image: python:3.7\n      command: [python]\n      source: |\n\
+\        from fastapi import FastAPI\n        from fastapi.responses import FileResponse\n\
+\        from PIL import Image\n        from diffusers import StableDiffusionPipeline,
+DPMSolverMultistepScheduler\n        import torch\n        from pathlib import Path\n\
+\n        app = FastAPI()\n\n        def load_model():\n            model_id = 'JamesFlare/pastel-mix'\n\
+\            pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)\n\
+\            pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n\
+\            pipe = pipe.to('cuda')\n            return pipe\n\n        def process_data(prompt,
+pipe):\n            response = pipe(prompt).images[0]\n            response.save('/tmp/generated_img.png')\n\
+\n        prompt = \"Pastel-style picture: \" + \"{{inputs.parameters.prompt}}\"\n\
+\        pipe = load_model()\n        process_data(prompt, pipe)\n\n        response
+= FileResponse('/tmp/generated_img.png')\n\n  - name: Image_Enhancement\n    inputs:\n\
+\      parameters:\n      - name: file\n    outputs:\n      parameters:\n      - name:
+enhanced_image\n        valueFrom:\n          path: /tmp/final_image.jpg\n    script:\n\
+\      image: python:3.7\n      command: [python]\n      source: |\n        from fastapi
+import FastAPI, File, UploadFile\n        from fastapi.responses import FileResponse\n\
+\        from pathlib import Path\n        import cv2\n        import numpy as np\n\
+\        from PIL import Image\n\n        app = FastAPI()\n\n        def enhance_image(file_path):\n\
+\            img = cv2.imread(file_path)\n            denoised_image = cv2.fastNlMeansDenoisingColored(img,
+None, 10, 10, 7, 21)\n            contrast_stretched_image = cv2.normalize(denoised_image,
+None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1)\n            kernel = np.array([[0, -1,
+0], [-1, 5, -1], [0, -1, 0]], np.float32)\n            sharpened_image = cv2.filter2D(contrast_stretched_image,
+-1, kernel=kernel)\n            brightness_image = cv2.convertScaleAbs(sharpened_image,
+alpha=1, beta=5)\n            gamma = 1.5\n            lookup_table = np.array([((i
+/ 255.0) ** gamma) * 255 for i in np.arange(0, 256)]).astype(\"uint8\")\n        \
+\    gamma_corrected_image = cv2.LUT(brightness_image, lookup_table)\n           \
+\ final_name = '/tmp/final_image.jpg'\n            cv2.imwrite(final_name, gamma_corrected_image)\n\
+\n        file_path = '{{inputs.parameters.file}}'\n        enhance_image(file_path)\n\
+\n  - name: Email_Sending\n    inputs:\n      parameters:\n      - name: file\n  \
+\    - name: email\n    script:\n      image: python:3.7\n      command: [python]\n\
+\      source: |\n        import smtplib\n        from email.mime.multipart import
+MIMEMultipart\n        from email.mime.base import MIMEBase\n        from email.mime.text
+import MIMEText\n        from email.utils import formatdate"

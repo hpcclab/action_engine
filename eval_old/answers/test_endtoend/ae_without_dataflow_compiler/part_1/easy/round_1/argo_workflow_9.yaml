@@ -1,0 +1,61 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-dag-wf-\nspec:\n  entrypoint: main\n  templates:\n    - name: main\n      dag:\n\
+\        tasks:\n          - name: t1\n            template: tti-sketching-art\n \
+\           arguments:\n              parameters:\n                - name: prompt\n\
+\                  value: \"A bustling marketplace\"\n          - name: t2\n     \
+\       template: image-to-pdf-conversion\n            arguments:\n              parameters:\n\
+\                - name: filePath\n                  value: '{{tasks.t1.outputs.parameters.imagePath}}'\n\
+\            dependencies: [t1]\n\n    - name: tti-sketching-art\n      inputs:\n\
+\        parameters:\n          - name: prompt\n      outputs:\n        parameters:\n\
+\          - name: imagePath\n            valueFrom:\n              jsonPath: '{.result.imagePath}'\n\
+\      script:\n        image: python:3.8\n        command: [python]\n        source:
+|\n          from fastapi import FastAPI, HTTPException\n          from fastapi.responses
+import FileResponse\n          from pathlib import Path\n          import torch\n\
+\          from diffusers import (\n              StableDiffusionXLPipeline, \n  \
+\            EulerAncestralDiscreteScheduler,\n              AutoencoderKL\n     \
+\     )\n          import json\n\n          app = FastAPI()\n\n          @app.post(\"\
+/generate_sketching_image/\")\n          async def generate_image(prompt:str):\n \
+\             try:\n                  lora_model_id = \"Linaqruf/sketch-style-xl-lora\"\
+\n                  lora_filename = \"sketch-style-xl.safetensors\"\n            \
+\      vae = AutoencoderKL.from_pretrained(\n                      \"madebyollin/sdxl-vae-fp16-fix\"\
+, \n                      torch_dtype=torch.float16\n                  )\n       \
+\           pipe = StableDiffusionXLPipeline.from_pretrained(\n                  \
+\    \"Linaqruf/animagine-xl-2.0\", \n                      vae=vae,\n           \
+\           torch_dtype=torch.float16, \n                      use_safetensors=True,
+\n                      variant=\"fp16\"\n                  )\n                  pipe.scheduler
+= EulerAncestralDiscreteScheduler.from_config(pipe.scheduler.config)\n           \
+\       pipe.to('cuda')\n                  pipe.load_lora_weights(lora_model_id, weight_name=lora_filename)\n\
+\                  pipe.fuse_lora(lora_scale=0.6)\n                  prompt = \"Monochrome,
+Greyscale Sketch-style picture: \" + prompt\n                  negative_prompt = \"\
+lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits,
+cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark,
+username, blurry\"\n                  image = pipe(\n                      prompt,
+\n                      negative_prompt=negative_prompt, \n                      width=1024,\n\
+\                      height=1024,\n                      guidance_scale=12,\n  \
+\                    num_inference_steps=50\n                  ).images[0]\n     \
+\             pipe.unfuse_lora()\n                  image_path = \"generated_img.png\"\
+\n                  image.save(image_path)\n                  if not Path(image_path).is_file():\n\
+\                      return {\"error\": \"Image not found on the server\"}\n   \
+\               \n                  response = json.dumps({\"imagePath\": image_path})\n\
+\                  print(response)  # The response will be captured as JSON\n    \
+\          except Exception as e:\n                  raise HTTPException(status_code=500,
+detail=str(e))\n\n    - name: image-to-pdf-conversion\n      inputs:\n        parameters:\n\
+\          - name: filePath\n      script:\n        image: python:3.8\n        command:
+[python]\n        source: |\n          from fastapi import FastAPI, File, UploadFile,
+HTTPException\n          from fastapi.responses import FileResponse\n          from
+pathlib import Path\n          from PIL import Image\n          import img2pdf\n \
+\         import json\n\n          app = FastAPI()\n          \n          supported_extensions
+= [\".JPEG\", \".PNG\", \".GIF\", \".BMP\", \".TIFF\", \".PBM\", \".PGM\", \".PPM\"\
+]\n          \n          def check_file_extension(file_path):\n              file_extension
+= Path(file_path).suffix.upper()\n              if file_extension not in supported_extensions:\n\
+\                  return False\n              return True\n\n          @app.post(\"\
+/convert_to_pdf/\")\n          async def image_to_pdf(file: UploadFile):\n       \
+\       try:\n                  file_path = Path(file.filename)\n                \
+\  file_name = file_path.stem\n                  \n                  if not check_file_extension(file_path):\n\
+\                      return {\"error\": \"Unsupported format\"}\n\n            \
+\      contents = await file.read()\n                  pdf_bytes = img2pdf.convert(contents)\n\
+\                  \n                  pdf_file_path = f'{file_name}.pdf'\n      \
+\            \n                  with open(pdf_file_path, 'wb') as pdf_file:\n   \
+\                   pdf_file.write(pdf_bytes)\n                  \n              \
+\    response = FileResponse(pdf_file_path, media_type=\"application/pdf\", filename=\"\
+output.pdf\")\n                  response"

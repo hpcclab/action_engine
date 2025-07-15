@@ -1,0 +1,15 @@
+[{'ae': 
+{'easy': ['Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success'], 
+'inter': ['Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success'], 
+'hard': ['Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success','Success', 'Success']}}]
+
+
+
+
+Sep12 14:18 afte fixed dd
+Failed Hard 4
+
+Sep 15 1:48 pm
+[{'ae': {'easy': ['Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success'], 
+'inter': ['Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success'], 
+'hard': ['Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', "Failed:'selected_API'", 'Success', 'Success']}}]

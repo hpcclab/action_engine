@@ -1,0 +1,49 @@
+# index: 741
+# query: Can you reserve a seat on the bus route '99Z' for user with id '33344' on June 30th at 5 PM?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-741-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: routetolocation
+        template: routetolocation
+        arguments:
+          parameters:
+          - name: route
+            value: '{{ inputs.parameters.route }}'
+      - name: useridtoname
+        template: useridtoname
+        dependencies:
+        - checkbusschedule
+        arguments:
+          parameters:
+          - name: userId
+            value: '{{ inputs.parameters.userId }}'
+      - name: checkbusschedule
+        template: checkbusschedule
+        dependencies:
+        - routetolocation
+        arguments:
+          parameters:
+          - name: location_coordinates
+            value: '{{ tasks.routetolocation.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: time
+            value: '{{ inputs.parameters.time }}'
+      - name: bookbusseat
+        template: bookbusseat
+        dependencies:
+        - useridtoname
+        arguments:
+          parameters:
+          - name: user_name
+            value: '{{ tasks.useridtoname.result }}'
+          - name: bus_schedule_info
+            value: '{{ tasks.checkbusschedule.result }}'

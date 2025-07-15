@@ -1,0 +1,31 @@
+# index: 291
+# query: I need details for the earliest flight from Boston to Miami on 20th August.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-291-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getflightdetails
+        template: getflightdetails
+        dependencies:
+        - searchflight
+        arguments:
+          parameters:
+          - name: flight_id
+            value: '{{ tasks.searchflight.result }}'
+      - name: searchflight
+        template: searchflight
+        arguments:
+          parameters:
+          - name: city_from
+            value: '{{ inputs.parameters.city_from }}'
+          - name: city_to
+            value: '{{ inputs.parameters.city_to }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'

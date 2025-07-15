@@ -1,0 +1,45 @@
+# index: 418
+# query: I have a card with the ID '9876', can I afford a product with the ID 'abc123' using this card?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-418-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: enoughbalance
+        template: enoughbalance
+        dependencies:
+        - orderproduct
+        arguments:
+          parameters:
+          - name: product_price
+            value: '{{ tasks.orderproduct.result }}'
+          - name: card_balance
+            value: '{{ tasks.checkcardbalance.result }}'
+      - name: card2number
+        template: card2number
+        arguments:
+          parameters:
+          - name: card_id
+            value: '{{ inputs.parameters.card_id }}'
+      - name: orderproduct
+        template: orderproduct
+        dependencies:
+        - checkcardbalance
+        arguments:
+          parameters:
+          - name: product_id
+            value: '{{ inputs.parameters.product_id }}'
+      - name: checkcardbalance
+        template: checkcardbalance
+        dependencies:
+        - card2number
+        arguments:
+          parameters:
+          - name: card_number
+            value: '{{ tasks.card2number.result }}'

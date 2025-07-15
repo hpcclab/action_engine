@@ -1,0 +1,63 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: user_name
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: user_name
+    dag:
+      tasks:
+      - name: t1
+        template: getusermood
+        arguments:
+          parameters:
+          - name: user_name
+            value: '{{ inputs.parameters.user_name }}'
+        dependencies: []
+      - name: t2
+        template: recommendsong
+        arguments:
+          parameters:
+          - name: user_mood
+            value: '{{ tasks.t1.result }}'
+        dependencies:
+        - t1
+      - name: t3
+        template: playmusic
+        arguments:
+          parameters:
+          - name: song_title
+            value: '{{ tasks.t2.result }}'
+        dependencies:
+        - t2
+  - name: getusermood
+    inputs:
+      parameters:
+      - name: user_name
+    http:
+      method:
+      url:
+      successCondition: response.statusCode == 200
+  - name: recommendsong
+    inputs:
+      parameters:
+      - name: user_mood
+    http:
+      method:
+      url:
+      successCondition: response.statusCode == 200
+  - name: playmusic
+    inputs:
+      parameters:
+      - name: song_title
+    http:
+      method:
+      url:
+      successCondition: response.statusCode == 200

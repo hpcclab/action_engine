@@ -1,0 +1,27 @@
+# index: 1397
+# query: I am planning to take the Shinkansen from Tokyo today, what should I wear?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1397-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: weatherinfo
+        template: weatherinfo
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: outfitsuggestion
+        template: outfitsuggestion
+        dependencies:
+        - weatherinfo
+        arguments:
+          parameters:
+          - name: weather_conditions
+            value: '{{ tasks.weatherinfo.result }}'

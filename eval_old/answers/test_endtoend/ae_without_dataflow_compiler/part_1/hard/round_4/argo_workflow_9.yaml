@@ -1,0 +1,49 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n  - name: main\n    dag:\n    \
+\  tasks:\n      - name: t1\n        template: tti-animation-art\n        arguments:\n\
+\          parameters:\n          - name: prompt\n            value: \"Create a digital
+art image of a modern cityscape in animation style.\"\n      - name: t2\n        template:
+tti-charcoal-art\n        arguments:\n          parameters:\n          - name: prompt\n\
+\            value: \"Create a digital art image of a modern cityscape in charcoal
+style.\"\n        dependencies: [t1]\n      - name: t3\n        template: tti-digital-art\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: \"Create a digital art image of a modern cityscape in digital art style.\"\
+\n        dependencies: [t2]\n      - name: t4\n        template: tti-futuristic-art\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: \"Create a digital art image of a modern cityscape in futuristic art style.\"\
+\n        dependencies: [t3]\n      - name: t5\n        template: tti-graffiti-art\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: \"Create a digital art image of a modern cityscape in graffiti art style.\"\
+\n        dependencies: [t4]\n      - name: t6\n        template: tti-sketching-art\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: \"Enhance the animation style image of the modern cityscape.\"\n        dependencies:
+[t5]\n      - name: t7\n        template: image-resizing\n        arguments:\n   \
+\       parameters:\n          - name: file\n            value: \"{{tasks.t6.outputs.result}}\"\
+\n          - name: width\n            value: 500\n          - name: height\n    \
+\        value: 500\n        dependencies: [t6]\n      - name: t8\n        template:
+image-to-pdf-conversion\n        arguments:\n          parameters:\n          - name:
+file\n            value: \"{{tasks.t7.outputs.result}}\"\n        dependencies: [t7]\n\
+\      - name: t9\n        template: image-enhancement\n        arguments:\n     \
+\     parameters:\n          - name: file\n            value: \"{{tasks.t8.outputs.result}}\"\
+\n        dependencies: [t8]\n      - name: t10\n        template: email-art\n   \
+\     arguments:\n          parameters:\n          - name: file\n            value:
+\"{{tasks.t9.outputs.result}}\"\n        dependencies: [t9]\n  \n  - name: tti-animation-art\n\
+\    inputs:\n      parameters:\n      - name: prompt\n    http:\n      method: POST\n\
+\      url: \"http://your-api-url/tti_animation_art\"\n      successCondition: \"
+response.statusCode == 200\"\n\n  - name: tti-charcoal-art\n    inputs:\n      parameters:\n\
+\      - name: prompt\n    http:\n      method: POST\n      url: \"http://your-api-url/tti_charcoal_art\"\
+\n      successCondition: \"response.statusCode == 200\"\n  \n  - name: tti-digital-art\n\
+\    inputs:\n      parameters:\n      - name: prompt\n    http:\n      method: POST\n\
+\      url: \"http://your-api-url/tti_digital_art\"\n      successCondition: \"response.statusCode
+== 200\"\n  \n  - name: tti-futuristic-art\n    inputs:\n      parameters:\n     \
+\ - name: prompt\n    http:\n      method: POST\n      url: \"http://your-api-url/tti_futuristic_art\"\
+\n      successCondition: \"response.statusCode == 200\"\n\n  - name: tti-graffiti-art\n\
+\    inputs:\n      parameters:\n      - name: prompt\n    http:\n      method: POST\n\
+\      url: \"http://your-api-url/tti_graffiti_art\"\n      successCondition: \"response.statusCode
+== 200\"\n\n  - name: tti-sketching-art\n    inputs:\n      parameters:\n      - name:
+prompt\n    http:\n      method: POST\n      url: \"http://your-api-url/tti_sketching_art\"\
+\n      successCondition: \"response.statusCode == 200\"\n\n  - name: image-resizing\n\
+\    inputs:\n      parameters:\n      - name: file\n      - name: width\n      -
+name: height\n    http:\n      method: POST\n      url: \"http://your-api-url/image_resizing\"\
+\n      successCondition: \"response.statusCode == 200\"\n\n  - name: image-to-pdf-conversion\n\
+\    inputs:\n      parameters:"

@@ -1,0 +1,142 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+    dag:
+      tasks:
+      - name: t1
+        template: tti-Sketching-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: 'Monochrome, Greyscale Sketch-style picture: technological advancements
+              of computers in the early 1900s.'
+        dependencies: []
+      - name: t2
+        template: tti-Sketching-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: 'Monochrome, Greyscale Sketch-style picture: technological advancements
+              of computers in the 1950s.'
+        dependencies: []
+      - name: t3
+        template: tti-Sketching-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: 'Monochrome, Greyscale Sketch-style picture: technological advancements
+              of computers in the 2020s.'
+        dependencies: []
+      - name: t4
+        template: tti-Sketching-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: [t1, t2, t3]
+      - name: t5
+        template: tti-Sketching-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: [t4]
+      - name: t6
+        template: tti-Futuristic-Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: [t4, t5]
+      - name: t7
+        template: send-email
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: [t6]
+
+  - name: tti-Sketching-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://your-sketching-art-api-endpoint
+      headers:
+        Content-Type: application/json
+      body: '{"prompt": "{{inputs.parameters.prompt}}"}'
+      successCondition: response.statusCode == 200
+
+  - name: tti-Futuristic-Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://your-futuristic-art-api-endpoint
+      headers:
+        Content-Type: application/json
+      body: '{"prompt": "{{inputs.parameters.prompt}}"}'
+      successCondition: response.statusCode == 200
+
+  - name: send-email
+    inputs:
+      parameters:
+      - name: prompt
+    script:
+      image: python:3.8
+      command: [python]
+      source: |-
+        import smtplib
+        from email.mime.multipart import MIMEMultipart
+        from email.mime.text import MIMEText
+        from email.mime.base import MIMEBase
+        from email import encoders
+
+        # Email configuration
+        sender_address = 'your-email@example.com'
+        receiver_address = 'recipient-email@example.com'
+        sender_password = 'your-email-password'
+
+        mail_content = '''Hello,
+        Please find attached the PNG format image generated for the 2020s.
+        Best regards'''
+
+        # Setup the MIME
+        message = MIMEMultipart()
+        message['From'] = sender_address
+        message['To'] = receiver_address
+        message['Subject'] = 'PNG Image of Technological Advancements of Computers in the 2020s'
+
+        # Attach body and image
+        message.attach(MIMEText(mail_content, 'plain'))
+
+        attach_file_name = 'generated_img.png'
+        attach_file = open(attach_file_name, 'rb')  # Open the file in binary mode
+        payload = MIMEBase('application', 'octate-stream')
+        payload.set_payload(attach_file.read())
+        encoders.encode_base64(payload)
+        payload.add_header('Content-Disposition', f'attachment; filename={attach_file_name}')
+        message.attach(payload)
+
+        # Create SMTP session
+        session = smtplib.SMTP('smtp.gmail.com', 587)
+        session.starttls()  # Enable security
+        session.login(sender_address, sender_password)  # Login with mail_id and password
+        text = message.as_string()
+        session.sendmail(sender_address, receiver_address, text)
+        session.quit()
+
+        print('Mail Sent')

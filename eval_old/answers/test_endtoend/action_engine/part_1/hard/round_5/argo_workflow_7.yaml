@@ -1,0 +1,157 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: prompt
+    - name: prompt
+    - name: prompt
+    - name: prompt
+    - name: width
+    - name: height
+    - name: file
+    - name: width
+    - name: height
+    - name: file
+    - name: file
+    - name: output_format
+    - name: file
+    - name: output_format
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: prompt
+      - name: prompt
+      - name: prompt
+      - name: prompt
+      - name: width
+      - name: height
+      - name: file
+      - name: width
+      - name: height
+      - name: file
+      - name: file
+      - name: output_format
+      - name: file
+      - name: output_format
+    dag:
+      tasks:
+      - name: t1
+        template: tti-animation-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies: []
+      - name: t2
+        template: tti-animation-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies: []
+      - name: t3
+        template: tti-animation-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies:
+        - t1
+        - t2
+      - name: t4
+        template: tti-futuristic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies:
+        - t1
+        - t2
+      - name: t5
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: '{{ inputs.parameters.width }}'
+          - name: height
+            value: '{{ inputs.parameters.height }}'
+          - name: file
+            value: '{{ inputs.parameters.file }}'
+        dependencies:
+        - t3
+        - t4
+      - name: t6
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: '{{ inputs.parameters.width }}'
+          - name: height
+            value: '{{ inputs.parameters.height }}'
+          - name: file
+            value: '{{ inputs.parameters.file }}'
+        dependencies:
+        - t3
+        - t4
+      - name: t7
+        template: image-format-converter
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ inputs.parameters.file }}'
+          - name: output_format
+            value: '{{ inputs.parameters.output_format }}'
+        dependencies:
+        - t5
+        - t6
+      - name: t8
+        template: image-format-converter
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ inputs.parameters.file }}'
+          - name: output_format
+            value: '{{ inputs.parameters.output_format }}'
+        dependencies:
+        - t5
+        - t6
+  - name: tti-animation-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: tti-futuristic-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: image-format-converter
+    inputs:
+      parameters:
+      - name: file
+      - name: output_format
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200

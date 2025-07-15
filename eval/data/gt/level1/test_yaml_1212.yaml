@@ -1,0 +1,29 @@
+# index: 1212
+# query: What should I dress for a cycle in Berlin if I start from Paris now?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1212-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getweather
+        template: getweather
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: getclothingadvice
+        template: getclothingadvice
+        dependencies:
+        - getweather
+        arguments:
+          parameters:
+          - name: weather
+            value: '{{ tasks.getweather.result }}'
+          - name: activity
+            value: '{{ inputs.parameters.activity }}'

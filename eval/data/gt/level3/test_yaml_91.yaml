@@ -1,0 +1,47 @@
+# index: 91
+# query: Please book a 2-star hotel for James this Wednesday.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-91-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: recommendhotel
+        template: recommendhotel
+        dependencies:
+        - getcity
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ tasks.getcity.result }}'
+          - name: star_level
+            value: '{{ inputs.parameters.star_level }}'
+      - name: bookhotel
+        template: bookhotel
+        dependencies:
+        - recommendhotel
+        arguments:
+          parameters:
+          - name: hotel_name
+            value: '{{ tasks.recommendhotel.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: getcity
+        template: getcity
+        dependencies:
+        - getuserid
+        arguments:
+          parameters:
+          - name: user_ID
+            value: '{{ tasks.getuserid.result }}'
+      - name: getuserid
+        template: getuserid
+        arguments:
+          parameters:
+          - name: username
+            value: '{{ inputs.parameters.username }}'

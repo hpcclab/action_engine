@@ -1,0 +1,45 @@
+# index: 670
+# query: I am in Tokyo and I am interested in seeing the movie 'Spirited Away'. Can you assist me in reserving a ticket?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-670-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: checktime
+        template: checktime
+        dependencies:
+        - getcinema
+        arguments:
+          parameters:
+          - name: cinema_name
+            value: '{{ tasks.getcinema.result }}'
+          - name: movie
+            value: '{{ inputs.parameters.movie }}'
+      - name: getcinema
+        template: getcinema
+        dependencies:
+        - checktime
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: movie
+            value: '{{ inputs.parameters.movie }}'
+      - name: bookticket
+        template: bookticket
+        dependencies:
+        - getcinema
+        arguments:
+          parameters:
+          - name: cinema_name
+            value: '{{ tasks.getcinema.result }}'
+          - name: movie
+            value: '{{ inputs.parameters.movie }}'
+          - name: show_time
+            value: '{{ tasks.checktime.result }}'

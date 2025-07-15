@@ -1,0 +1,35 @@
+# index: 122
+# query: I'm Michael, can you play music that suits my mood?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-122-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: recommendsong
+        template: recommendsong
+        dependencies:
+        - getusermood
+        arguments:
+          parameters:
+          - name: user_mood
+            value: '{{ tasks.getusermood.result }}'
+      - name: getusermood
+        template: getusermood
+        arguments:
+          parameters:
+          - name: user_name
+            value: '{{ inputs.parameters.user_name }}'
+      - name: playmusic
+        template: playmusic
+        dependencies:
+        - recommendsong
+        arguments:
+          parameters:
+          - name: song_title
+            value: '{{ tasks.recommendsong.result }}'

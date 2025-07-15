@@ -1,0 +1,105 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-graffiti-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Create a graffiti art image of a bustling city street with vibrant
+              colors and street performers.
+      - name: t2
+        template: tti-mosaic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Create a mosaic art image of the same city street but in a more
+              abstract form.
+        dependencies: [t1]
+      - name: t3
+        template: tti-ukiyoe-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Create a ukiyo-e art image of the city street with traditional
+              Japanese elements.
+        dependencies: [t1]
+      - name: t4
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.result}}'
+          - name: width
+            value: '1080'
+          - name: height
+            value: '720'
+        dependencies: [t1]
+      - name: t5
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t2.outputs.result}}'
+        dependencies: [t2]
+      - name: t6
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t3.outputs.result}}'
+        dependencies: [t3]
+
+  - name: tti-graffiti-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_grafiti_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti-mosaic-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_mosaic_image/
+      successCondition: response.statusCode == 200
+
+  - name: tti-ukiyoe-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/generate_ukiyoe_image/
+      successCondition: response.statusCode == 200
+
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/resize_image/
+      successCondition: response.statusCode == 200
+
+  - name: image-enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/image_enhance/
+      successCondition: response.statusCode == 200

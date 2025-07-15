@@ -1,0 +1,47 @@
+# index: 645
+# query: This is 'RobertBrown'. Could you schedule a service for my auto at the nearest service center?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-645-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getusercar
+        template: getusercar
+        dependencies:
+        - getservicestationnearme
+        arguments:
+          parameters:
+          - name: user_name
+            value: '{{ inputs.parameters.user_name }}'
+      - name: bookcarservice
+        template: bookcarservice
+        dependencies:
+        - getusercar
+        arguments:
+          parameters:
+          - name: car_id
+            value: '{{ tasks.getusercar.result }}'
+          - name: service_station_id
+            value: '{{ tasks.getservicestationnearme.result }}'
+          - name: user_name
+            value: '{{ inputs.parameters.user_name }}'
+      - name: getservicestationnearme
+        template: getservicestationnearme
+        dependencies:
+        - getuserlocation
+        arguments:
+          parameters:
+          - name: user_location
+            value: '{{ tasks.getuserlocation.result }}'
+      - name: getuserlocation
+        template: getuserlocation
+        arguments:
+          parameters:
+          - name: user_name
+            value: '{{ inputs.parameters.user_name }}'

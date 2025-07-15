@@ -1,0 +1,86 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: prompt
+        value: Generate a charcoal art image of a serene forest.
+    dag:
+      tasks:
+      - name: t1
+        template: tti-charcoal-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{workflow.parameters.prompt}}'
+      - name: t2
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: '1920'
+          - name: height
+            value: '1080'
+          - name: file
+            value: '{{tasks.t1.outputs.artifact.file}}'
+        dependencies: [t1]
+      - name: t3
+        template: image-to-pdf-conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t2.outputs.artifact.file}}'
+        dependencies: [t2]
+
+  - name: tti-charcoal-art
+    inputs:
+      parameters:
+      - name: prompt
+    outputs:
+      artifacts:
+      - name: file
+        path: /generated_img.png
+    container:
+      image: my-charcoal-art-api-image
+      command: [python, -c]
+      args: ["import requests, json; response = requests.post('http://my-charcoal-art-api/generate_charcoal_image/',
+          json={'prompt': '{{inputs.parameters.prompt}}'}); with open('/generated_img.png',
+          'wb') as f: f.write(response.content)"]
+
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    outputs:
+      artifacts:
+      - name: file
+        path: /resized_image.png
+    container:
+      image: my-image-resizing-api-image
+      command: [python, -c]
+      args: ["import requests, json; files = {'file': open('{{inputs.parameters.file}}',
+          'rb')}; response = requests.post('http://my-image-resizing-api/resize_image/',
+          data={'width': {{inputs.parameters.width}}, 'height': {{inputs.parameters.height}}},
+          files=files); with open('/resized_image.png', 'wb') as f: f.write(response.content)"]
+
+  - name: image-to-pdf-conversion
+    inputs:
+      parameters:
+      - name: file
+    outputs:
+      artifacts:
+      - name: file
+        path: /output.pdf
+    container:
+      image: my-image-to-pdf-api-image
+      command: [python, -c]
+      args: ["import requests, json; files = {'file': open('{{inputs.parameters.file}}',
+          'rb')}; response = requests.post('http://my-image-to-pdf-api/convert_to_pdf/',
+          files=files); with open('/output.pdf', 'wb') as f: f.write(response.content)"]

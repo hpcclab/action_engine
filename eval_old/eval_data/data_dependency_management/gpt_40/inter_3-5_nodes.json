@@ -1,0 +1,821 @@
+[
+    {
+        "id": 1,
+        "selected_apis": [
+            {
+                "name": "tti_futuristic_art"
+            },
+            {
+                "name": "tti_digital_art"
+            },
+            {
+                "name": "image_to_pdf_conversion"
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_futuristic_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "tti_digital_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "selected_apis": [
+            {
+                "name": "tti_charcoal_art"
+            },
+            {
+                "name": "image_resizing"
+            },
+            {
+                "name": "image_to_pdf_conversion"
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_charcoal_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "image_resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [
+                    "width",
+                    "height"
+                ],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "selected_apis": [
+            {
+                "name": "tti_pastel_art"
+            },
+            {
+                "name": "image_enhancement"
+            },
+            {
+                "name": "tti_pastel_art"
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_pastel_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "image_enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "tti_pastel_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "selected_apis": [
+            {
+                "name": "tti_sketching_art"
+            },
+            {
+                "name": "tti_sketching_art"
+            },
+            {
+                "name": "image_resizing"
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_sketching_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "tti_sketching_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "image_resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [
+                    "width",
+                    "height"
+                ],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "selected_apis": [
+            {
+                "name": "tti_futuristic_art"
+            },
+            {
+                "name": "image_to_pdf_conversion"
+            },
+            {
+                "name": "image_resizing"
+            },
+            {
+                "name": "image_enhancement"
+            },
+            {
+                "name": "send_email"
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_futuristic_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [
+                    "width",
+                    "height"
+                ],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "send_email",
+                "all_params": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_text",
+                    "message_subject",
+                    "file"
+                ],
+                "user_input": [
+                    "sender_address",
+                    "receiver_address",
+                    "message_text",
+                    "message_subject"
+                ],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "selected_apis": [
+            {
+                "name": "tti_charcoal_art"
+            },
+            {
+                "name": "tti_charcoal_art"
+            },
+            {
+                "name": "image_resizing"
+            },
+            {
+                "name": "image_enhancement"
+            },
+            {
+                "name": "image_to_pdf_conversion"
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_charcoal_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "tti_charcoal_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "image_resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [
+                    "width",
+                    "height"
+                ],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "selected_apis": [
+            {
+                "name": "tti_pastel_art"
+            },
+            {
+                "name": "image_enhancement"
+            },
+            {
+                "name": "image_resizing"
+            },
+            {
+                "name": "image_enhancement"
+            },
+            {
+                "name": "image_enhancement"
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_pastel_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "image_enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [
+                    "width",
+                    "height"
+                ],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "selected_apis": [
+            {
+                "name": "tti_futuristic_art"
+            },
+            {
+                "name": "image_resizing"
+            },
+            {
+                "name": "image_enhancement"
+            },
+            {
+                "name": "image_to_pdf_conversion"
+            },
+            {
+                "name": "image_to_pdf_conversion"
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_futuristic_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "image_resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [
+                    "width",
+                    "height"
+                ],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "selected_apis": [
+            {
+                "name": "tti_sketching_art"
+            },
+            {
+                "name": "image_resizing"
+            },
+            {
+                "name": "image_enhancement"
+            },
+            {
+                "name": "image_to_pdf_conversion"
+            },
+            {
+                "name": "image_to_pdf_conversion"
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_sketching_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "image_resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [
+                    "width",
+                    "height"
+                ],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_to_pdf_conversion",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "selected_apis": [
+            {
+                "name": "tti_pastel_art"
+            },
+            {
+                "name": "image_enhancement"
+            },
+            {
+                "name": "image_resizing"
+            },
+            {
+                "name": "image_enhancement"
+            },
+            {
+                "name": "image_enhancement"
+            }
+        ],
+        "param_dependency_management": [
+            {
+                "name": "tti_pastel_art",
+                "all_params": [
+                    "prompt"
+                ],
+                "user_input": [
+                    "prompt"
+                ],
+                "dependent_params": [],
+                "dependent_params_with_source": []
+            },
+            {
+                "name": "image_enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_resizing",
+                "all_params": [
+                    "width",
+                    "height",
+                    "file"
+                ],
+                "user_input": [
+                    "width",
+                    "height"
+                ],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            },
+            {
+                "name": "image_enhancement",
+                "all_params": [
+                    "file"
+                ],
+                "user_input": [],
+                "dependent_params": [
+                    "file"
+                ],
+                "dependent_params_with_source": [
+                    {
+                        "file": "t1"
+                    }
+                ]
+            }
+        ]
+    }
+]

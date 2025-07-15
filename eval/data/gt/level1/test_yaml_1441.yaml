@@ -1,0 +1,31 @@
+# index: 1441
+# query: Want to catch 'Jurassic Park' on Monday evening.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1441-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: bookmovie
+        template: bookmovie
+        dependencies:
+        - searchfilm
+        arguments:
+          parameters:
+          - name: film_id
+            value: '{{ tasks.searchfilm.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: show_time
+            value: '{{ inputs.parameters.show_time }}'
+      - name: searchfilm
+        template: searchfilm
+        arguments:
+          parameters:
+          - name: title
+            value: '{{ inputs.parameters.title }}'

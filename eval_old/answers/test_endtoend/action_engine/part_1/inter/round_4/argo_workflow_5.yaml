@@ -1,0 +1,121 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: prompt
+    - name: width
+    - name: height
+    - name: sender_address
+    - name: receiver_address
+    - name: message_text
+    - name: message_subject
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: prompt
+      - name: width
+      - name: height
+      - name: sender_address
+      - name: receiver_address
+      - name: message_text
+      - name: message_subject
+    dag:
+      tasks:
+      - name: t1
+        template: tti-futuristic-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ inputs.parameters.prompt }}'
+        dependencies: []
+      - name: t2
+        template: image-to-pdf-conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ tasks.t1.result }}'
+        dependencies:
+        - t1
+      - name: t3
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: '{{ inputs.parameters.width }}'
+          - name: height
+            value: '{{ inputs.parameters.height }}'
+        dependencies:
+        - t2
+      - name: t4
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ tasks.t1.result }}'
+        dependencies:
+        - t3
+      - name: t5
+        template: send-email
+        arguments:
+          parameters:
+          - name: sender_address
+            value: '{{ inputs.parameters.sender_address }}'
+          - name: receiver_address
+            value: '{{ inputs.parameters.receiver_address }}'
+          - name: message_text
+            value: '{{ inputs.parameters.message_text }}'
+          - name: message_subject
+            value: '{{ inputs.parameters.message_subject }}'
+        dependencies:
+        - t4
+  - name: tti-futuristic-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: image-to-pdf-conversion
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: image-enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: send-email
+    inputs:
+      parameters:
+      - name: sender_address
+      - name: receiver_address
+      - name: message_text
+      - name: message_subject
+      - name: file
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200

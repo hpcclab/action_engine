@@ -1,0 +1,49 @@
+# index: 1520
+# query: Can you schedule a meeting for user 'alice' from 2 pm to 3 pm PST?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1520-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: username2email
+        template: username2email
+        dependencies:
+        - gettimezonebylocation
+        arguments:
+          parameters:
+          - name: username
+            value: '{{ inputs.parameters.username }}'
+      - name: schedulemeeting
+        template: schedulemeeting
+        dependencies:
+        - username2email
+        arguments:
+          parameters:
+          - name: user_email
+            value: '{{ tasks.username2email.result }}'
+          - name: start_time
+            value: '{{ inputs.parameters.start_time }}'
+          - name: end_time
+            value: '{{ inputs.parameters.end_time }}'
+          - name: timezone
+            value: '{{ tasks.gettimezonebylocation.result }}'
+      - name: gettimezonebylocation
+        template: gettimezonebylocation
+        dependencies:
+        - getuserlocationbyusername
+        arguments:
+          parameters:
+          - name: location
+            value: '{{ tasks.getuserlocationbyusername.result }}'
+      - name: getuserlocationbyusername
+        template: getuserlocationbyusername
+        arguments:
+          parameters:
+          - name: username
+            value: '{{ inputs.parameters.username }}'

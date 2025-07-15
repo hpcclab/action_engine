@@ -1,0 +1,48 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  arguments:\n    parameters:\n    - name: width\n      value: \"\
+1024\"\n    - name: height\n      value: \"768\"\n    - name: email\n      value:
+\"friend@example.com\"\n  entrypoint: main\n  templates:\n  - name: main\n    inputs:\n\
+\      parameters:\n      - name: width\n      - name: height\n      - name: email\n\
+\    dag:\n      tasks:\n      - name: t1\n        template: tti-pastel-art\n    \
+\    arguments:\n          parameters:\n          - name: prompt\n            value:
+\"serene beach at sunset with palm trees\"\n      - name: t2\n        template: convert-image\n\
+\        arguments:\n          parameters:\n          - name: file\n            value:
+\"{{tasks.t1.outputs.result}}\"\n        dependencies:\n        - t1\n      - name:
+t3\n        template: resize-image\n        arguments:\n          parameters:\n  \
+\        - name: width\n            value: \"{{inputs.parameters.width}}\"\n     \
+\     - name: height\n            value: \"{{inputs.parameters.height}}\"\n      \
+\    - name: file\n            value: \"{{tasks.t2.outputs.result}}\"\n        dependencies:\n\
+\        - t2\n      - name: t4\n        template: enhance-image\n        arguments:\n\
+\          parameters:\n          - name: file\n            value: \"{{tasks.t3.outputs.result}}\"\
+\n        dependencies:\n        - t3\n      - name: t5\n        template: send-email\n\
+\        arguments:\n          parameters:\n          - name: file\n            value:
+\"{{tasks.t4.outputs.result}}\"\n          - name: email\n            value: \"{{inputs.parameters.email}}\"\
+\n        dependencies:\n        - t4\n\n  - name: tti-pastel-art\n    inputs:\n \
+\     parameters:\n      - name: prompt\n    http:\n      method: POST\n      url:
+http://example.com/tti_pastel_art\n      successCondition: response.statusCode ==
+200\n      body: |\n        {\n          \"prompt\": \"{{inputs.parameters.prompt}}\"\
+\n        }\n      headers:\n        Content-Type: application/json\n\n  - name: convert-image\n\
+\    inputs:\n      parameters:\n      - name: file\n    script:\n      image: python:3.8\n\
+\      command: [python]\n      source: |\n        import PIL.Image\n        image
+= PIL.Image.open('{{inputs.parameters.file}}')\n        new_file = \"converted_image.jpeg\"\
+\n        image.save(new_file, \"JPEG\")\n        print(new_file)\n\n  - name: resize-image\n\
+\    inputs:\n      parameters:\n      - name: width\n      - name: height\n     \
+\ - name: file\n    script:\n      image: python:3.8\n      command: [python]\n  \
+\    source: |\n        from PIL import Image\n        image = Image.open('{{inputs.parameters.file}}')\n\
+\        resized_image = image.resize(({{inputs.parameters.width}}, {{inputs.parameters.height}}))\n\
+\        resized_image.save('resized_image.png')\n        print('resized_image.png')\n\
+\n  - name: enhance-image\n    inputs:\n      parameters:\n      - name: file\n  \
+\  script:\n      image: python:3.8\n      command: [python]\n      source: |\n  \
+\      import cv2\n        import numpy as np\n        from PIL import Image\n\n \
+\       # Load image\n        image = cv2.imread('{{inputs.parameters.file}}')\n\n\
+\        # Denoising\n        denoised_image = cv2.fastNlMeansDenoisingColored(image,
+None, 10, 10, 7, 21)\n\n        # Contrast Stretching\n        contrast_stretched_image
+= cv2.normalize(denoised_image, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1)\n\n  \
+\      # Sharpening\n        kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]],
+np.float32)\n        sharpened_image = cv2.filter2D(contrast_stretched_image, -1,
+kernel=kernel)\n\n        # Adjusting Brightness\n        brightness_image = cv2.convertScaleAbs(sharpened_image,
+alpha=1, beta=5)\n\n        # Gamma Correction\n        gamma = 1.5\n        lookup_table
+= np.array([((i / 255.0) ** gamma) * 255 for i in np.arange(0, 256)]).astype(\"uint8\"\
+)\n        gamma_corrected_image = cv2.LUT(brightness_image, lookup_table)\n\n   \
+\     final_image_name = 'enhanced_image.jpg'\n        cv2.imwrite(final_image_name,
+gamma_corrected_image)"

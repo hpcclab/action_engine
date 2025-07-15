@@ -1,0 +1,49 @@
+# index: 113
+# query: Would you mind helping me book a restaurant with 2-star rating this Monday, 7pm? The reserver is Ava and she likes Mexican food.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-113-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: bookrestaurant
+        template: bookrestaurant
+        dependencies:
+        - recommendrestaurant
+        arguments:
+          parameters:
+          - name: restaurant_name
+            value: '{{ tasks.recommendrestaurant.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: time
+            value: '{{ inputs.parameters.time }}'
+      - name: username2id
+        template: username2id
+        arguments:
+          parameters:
+          - name: user_name
+            value: '{{ inputs.parameters.user_name }}'
+      - name: recommendrestaurant
+        template: recommendrestaurant
+        dependencies:
+        - getuserlocation
+        arguments:
+          parameters:
+          - name: location
+            value: '{{ tasks.getuserlocation.result }}'
+          - name: star_level
+            value: '{{ inputs.parameters.star_level }}'
+      - name: getuserlocation
+        template: getuserlocation
+        dependencies:
+        - username2id
+        arguments:
+          parameters:
+          - name: user_ID
+            value: '{{ tasks.username2id.result }}'

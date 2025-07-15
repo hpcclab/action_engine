@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: prompt
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+    parameters:
+    - name: prompt
+    dag:
+      tasks:
+      - name: t1
+        template: tti-sketching-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+        dependencies: []
+
+  - name: tti-sketching-art
+    inputs:
+    parameters:
+    - name: prompt
+    http:
+      method: POST
+      url: /generate_sketching_image/ # URL should be provided here
+      successCondition: response.statusCode == 200

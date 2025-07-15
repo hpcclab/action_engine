@@ -1,0 +1,719 @@
+Collecting accelerate==1.0.1 (from -r requirements.txt (line 1))
+  Using cached accelerate-1.0.1-py3-none-any.whl.metadata (19 kB)
+Collecting aiohappyeyeballs==2.4.3 (from -r requirements.txt (line 2))
+  Using cached aiohappyeyeballs-2.4.3-py3-none-any.whl.metadata (6.1 kB)
+Collecting aiohttp==3.10.10 (from -r requirements.txt (line 3))
+  Using cached aiohttp-3.10.10-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.6 kB)
+Requirement already satisfied: aiosignal==1.3.1 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 4)) (1.3.1)
+Collecting alembic==1.14.0 (from -r requirements.txt (line 5))
+  Using cached alembic-1.14.0-py3-none-any.whl.metadata (7.4 kB)
+Requirement already satisfied: annotated-types==0.7.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 6)) (0.7.0)
+Requirement already satisfied: anyio==4.6.2.post1 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 7)) (4.6.2.post1)
+Collecting asttokens (from -r requirements.txt (line 8))
+  Using cached asttokens-3.0.0-py3-none-any.whl.metadata (4.7 kB)
+Requirement already satisfied: attrs==24.2.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 9)) (24.2.0)
+Collecting banal==1.0.6 (from -r requirements.txt (line 10))
+  Using cached banal-1.0.6-py2.py3-none-any.whl.metadata (1.4 kB)
+Requirement already satisfied: certifi==2024.8.30 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 11)) (2024.8.30)
+Requirement already satisfied: charset-normalizer==3.4.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 12)) (3.4.0)
+Collecting comm (from -r requirements.txt (line 13))
+  Using cached comm-0.2.2-py3-none-any.whl.metadata (3.7 kB)
+Collecting contourpy==1.3.0 (from -r requirements.txt (line 14))
+  Using cached contourpy-1.3.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.4 kB)
+Requirement already satisfied: cycler==0.12.1 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 15)) (0.12.1)
+Requirement already satisfied: dataclasses-json==0.6.7 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 16)) (0.6.7)
+Collecting datasets==3.1.0 (from -r requirements.txt (line 17))
+  Using cached datasets-3.1.0-py3-none-any.whl.metadata (20 kB)
+Collecting debugpy (from -r requirements.txt (line 18))
+  Using cached debugpy-1.8.14-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.3 kB)
+Collecting decorator (from -r requirements.txt (line 19))
+  Using cached decorator-5.2.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting dill==0.3.8 (from -r requirements.txt (line 20))
+  Using cached dill-0.3.8-py3-none-any.whl.metadata (10 kB)
+Requirement already satisfied: distro==1.9.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 21)) (1.9.0)
+Collecting docstring_parser==0.16 (from -r requirements.txt (line 22))
+  Using cached docstring_parser-0.16-py3-none-any.whl.metadata (3.0 kB)
+Requirement already satisfied: exceptiongroup in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 23)) (1.2.2)
+Collecting executing (from -r requirements.txt (line 24))
+  Using cached executing-2.2.0-py2.py3-none-any.whl.metadata (8.9 kB)
+Collecting faiss-gpu-cu12==1.8.0.2 (from -r requirements.txt (line 25))
+  Using cached faiss_gpu_cu12-1.8.0.2-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (7.5 kB)
+Requirement already satisfied: filelock==3.16.1 in /home/UNT/ae0589/.local/lib/python3.10/site-packages (from -r requirements.txt (line 26)) (3.16.1)
+Collecting fire==0.7.0 (from -r requirements.txt (line 27))
+  Using cached fire-0.7.0-py3-none-any.whl
+Collecting fonttools==4.54.1 (from -r requirements.txt (line 28))
+  Using cached fonttools-4.54.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (163 kB)
+Collecting frozenlist==1.4.1 (from -r requirements.txt (line 29))
+  Using cached frozenlist-1.4.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting fsspec==2024.9.0 (from -r requirements.txt (line 30))
+  Using cached fsspec-2024.9.0-py3-none-any.whl.metadata (11 kB)
+Requirement already satisfied: greenlet==3.1.1 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 31)) (3.1.1)
+Requirement already satisfied: h11==0.14.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 32)) (0.14.0)
+Collecting httpcore==1.0.6 (from -r requirements.txt (line 33))
+  Using cached httpcore-1.0.6-py3-none-any.whl.metadata (21 kB)
+Requirement already satisfied: httpx==0.27.2 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 34)) (0.27.2)
+Collecting huggingface-hub==0.26.0 (from -r requirements.txt (line 35))
+  Using cached huggingface_hub-0.26.0-py3-none-any.whl.metadata (13 kB)
+Requirement already satisfied: idna==3.10 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 36)) (3.10)
+Requirement already satisfied: importlib_metadata in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 37)) (8.6.1)
+Collecting ipykernel (from -r requirements.txt (line 38))
+  Using cached ipykernel-6.29.5-py3-none-any.whl.metadata (6.3 kB)
+Collecting ipython (from -r requirements.txt (line 39))
+  Using cached ipython-8.35.0-py3-none-any.whl.metadata (5.1 kB)
+Collecting jedi (from -r requirements.txt (line 40))
+  Using cached jedi-0.19.2-py2.py3-none-any.whl.metadata (22 kB)
+Requirement already satisfied: Jinja2==3.1.4 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 41)) (3.1.4)
+Collecting jiter==0.6.1 (from -r requirements.txt (line 42))
+  Using cached jiter-0.6.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
+Requirement already satisfied: joblib==1.4.2 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 43)) (1.4.2)
+Requirement already satisfied: jsonpatch==1.33 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 44)) (1.33)
+Requirement already satisfied: jsonpointer==3.0.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 45)) (3.0.0)
+Requirement already satisfied: jsonschema==4.23.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 46)) (4.23.0)
+Requirement already satisfied: jsonschema-specifications==2024.10.1 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 47)) (2024.10.1)
+Collecting jupyter_client (from -r requirements.txt (line 48))
+  Using cached jupyter_client-8.6.3-py3-none-any.whl.metadata (8.3 kB)
+Collecting jupyter_core (from -r requirements.txt (line 49))
+  Using cached jupyter_core-5.7.2-py3-none-any.whl.metadata (3.4 kB)
+Requirement already satisfied: kiwisolver==1.4.7 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 50)) (1.4.7)
+Collecting langchain==0.3.4 (from -r requirements.txt (line 51))
+  Using cached langchain-0.3.4-py3-none-any.whl.metadata (7.1 kB)
+Collecting langchain-community==0.3.3 (from -r requirements.txt (line 52))
+  Using cached langchain_community-0.3.3-py3-none-any.whl.metadata (2.8 kB)
+Collecting langchain-core==0.3.12 (from -r requirements.txt (line 53))
+  Using cached langchain_core-0.3.12-py3-none-any.whl.metadata (6.3 kB)
+Collecting langchain-text-splitters==0.3.0 (from -r requirements.txt (line 54))
+  Using cached langchain_text_splitters-0.3.0-py3-none-any.whl.metadata (2.3 kB)
+Collecting langsmith==0.1.136 (from -r requirements.txt (line 55))
+  Using cached langsmith-0.1.136-py3-none-any.whl.metadata (13 kB)
+Collecting Levenshtein==0.26.1 (from -r requirements.txt (line 56))
+  Using cached levenshtein-0.26.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.2 kB)
+Collecting Mako==1.3.6 (from -r requirements.txt (line 57))
+  Using cached Mako-1.3.6-py3-none-any.whl.metadata (2.9 kB)
+Requirement already satisfied: MarkupSafe==3.0.2 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 58)) (3.0.2)
+Collecting marshmallow==3.23.0 (from -r requirements.txt (line 59))
+  Using cached marshmallow-3.23.0-py3-none-any.whl.metadata (7.6 kB)
+Collecting matplotlib==3.9.2 (from -r requirements.txt (line 60))
+  Using cached matplotlib-3.9.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Collecting matplotlib-inline (from -r requirements.txt (line 61))
+  Using cached matplotlib_inline-0.1.7-py3-none-any.whl.metadata (3.9 kB)
+Collecting mistral_common==1.4.4 (from -r requirements.txt (line 62))
+  Using cached mistral_common-1.4.4-py3-none-any.whl.metadata (4.6 kB)
+Collecting mistral_inference==1.5.0 (from -r requirements.txt (line 63))
+  Using cached mistral_inference-1.5.0-py3-none-any.whl.metadata (14 kB)
+Requirement already satisfied: mpmath==1.3.0 in /home/UNT/ae0589/.local/lib/python3.10/site-packages (from -r requirements.txt (line 64)) (1.3.0)
+Requirement already satisfied: multidict==6.1.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 65)) (6.1.0)
+Collecting multiprocess==0.70.16 (from -r requirements.txt (line 66))
+  Using cached multiprocess-0.70.16-py310-none-any.whl.metadata (7.2 kB)
+Requirement already satisfied: mypy-extensions==1.0.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 67)) (1.0.0)
+Requirement already satisfied: nest_asyncio in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 68)) (1.6.0)
+Collecting networkx==3.4.1 (from -r requirements.txt (line 69))
+  Using cached networkx-3.4.1-py3-none-any.whl.metadata (6.3 kB)
+Collecting numpy==1.26.4 (from -r requirements.txt (line 70))
+  Using cached numpy-1.26.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+Collecting nvidia-cublas-cu12==12.1.3.1 (from -r requirements.txt (line 71))
+  Using cached nvidia_cublas_cu12-12.1.3.1-py3-none-manylinux1_x86_64.whl.metadata (1.5 kB)
+Collecting nvidia-cuda-cupti-cu12==12.1.105 (from -r requirements.txt (line 72))
+  Using cached nvidia_cuda_cupti_cu12-12.1.105-py3-none-manylinux1_x86_64.whl.metadata (1.6 kB)
+Collecting nvidia-cuda-nvrtc-cu12==12.1.105 (from -r requirements.txt (line 73))
+  Using cached nvidia_cuda_nvrtc_cu12-12.1.105-py3-none-manylinux1_x86_64.whl.metadata (1.5 kB)
+Collecting nvidia-cuda-runtime-cu12==12.1.105 (from -r requirements.txt (line 74))
+  Using cached nvidia_cuda_runtime_cu12-12.1.105-py3-none-manylinux1_x86_64.whl.metadata (1.5 kB)
+Requirement already satisfied: nvidia-cudnn-cu12==9.1.0.70 in /home/UNT/ae0589/.local/lib/python3.10/site-packages (from -r requirements.txt (line 75)) (9.1.0.70)
+Collecting nvidia-cufft-cu12==11.0.2.54 (from -r requirements.txt (line 76))
+  Using cached nvidia_cufft_cu12-11.0.2.54-py3-none-manylinux1_x86_64.whl.metadata (1.5 kB)
+Collecting nvidia-curand-cu12==10.3.2.106 (from -r requirements.txt (line 77))
+  Using cached nvidia_curand_cu12-10.3.2.106-py3-none-manylinux1_x86_64.whl.metadata (1.5 kB)
+Collecting nvidia-cusolver-cu12==11.4.5.107 (from -r requirements.txt (line 78))
+  Using cached nvidia_cusolver_cu12-11.4.5.107-py3-none-manylinux1_x86_64.whl.metadata (1.6 kB)
+Collecting nvidia-cusparse-cu12==12.1.0.106 (from -r requirements.txt (line 79))
+  Using cached nvidia_cusparse_cu12-12.1.0.106-py3-none-manylinux1_x86_64.whl.metadata (1.6 kB)
+Collecting nvidia-nccl-cu12==2.20.5 (from -r requirements.txt (line 80))
+  Using cached nvidia_nccl_cu12-2.20.5-py3-none-manylinux2014_x86_64.whl.metadata (1.8 kB)
+Collecting nvidia-nvjitlink-cu12==12.6.77 (from -r requirements.txt (line 81))
+  Using cached nvidia_nvjitlink_cu12-12.6.77-py3-none-manylinux2014_x86_64.whl.metadata (1.5 kB)
+Collecting nvidia-nvtx-cu12==12.1.105 (from -r requirements.txt (line 82))
+  Using cached nvidia_nvtx_cu12-12.1.105-py3-none-manylinux1_x86_64.whl.metadata (1.7 kB)
+Collecting openai==1.52.0 (from -r requirements.txt (line 83))
+  Using cached openai-1.52.0-py3-none-any.whl.metadata (24 kB)
+Collecting orjson==3.10.7 (from -r requirements.txt (line 84))
+  Using cached orjson-3.10.7-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (50 kB)
+Requirement already satisfied: packaging in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 85)) (23.2)
+Requirement already satisfied: pandas==2.2.3 in /home/UNT/ae0589/.local/lib/python3.10/site-packages (from -r requirements.txt (line 86)) (2.2.3)
+Collecting parso (from -r requirements.txt (line 87))
+  Using cached parso-0.8.4-py2.py3-none-any.whl.metadata (7.7 kB)
+Collecting pexpect (from -r requirements.txt (line 88))
+  Using cached pexpect-4.9.0-py2.py3-none-any.whl.metadata (2.5 kB)
+Collecting pickleshare (from -r requirements.txt (line 89))
+  Using cached pickleshare-0.7.5-py2.py3-none-any.whl.metadata (1.5 kB)
+Collecting pillow==10.4.0 (from -r requirements.txt (line 90))
+  Using cached pillow-10.4.0-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (9.2 kB)
+Collecting platformdirs (from -r requirements.txt (line 91))
+  Using cached platformdirs-4.3.7-py3-none-any.whl.metadata (11 kB)
+Collecting prompt_toolkit (from -r requirements.txt (line 92))
+  Using cached prompt_toolkit-3.0.50-py3-none-any.whl.metadata (6.6 kB)
+Collecting propcache==0.2.0 (from -r requirements.txt (line 93))
+  Using cached propcache-0.2.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.7 kB)
+Collecting protobuf==5.28.2 (from -r requirements.txt (line 94))
+  Using cached protobuf-5.28.2-cp38-abi3-manylinux2014_x86_64.whl.metadata (592 bytes)
+Requirement already satisfied: psutil in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 95)) (6.1.0)
+Collecting ptyprocess (from -r requirements.txt (line 96))
+  Using cached ptyprocess-0.7.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting pure_eval (from -r requirements.txt (line 97))
+  Using cached pure_eval-0.2.3-py3-none-any.whl.metadata (6.3 kB)
+Collecting pyarrow==18.0.0 (from -r requirements.txt (line 98))
+  Using cached pyarrow-18.0.0-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (3.3 kB)
+Requirement already satisfied: pydantic==2.9.2 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 99)) (2.9.2)
+Collecting pydantic-settings==2.6.0 (from -r requirements.txt (line 100))
+  Using cached pydantic_settings-2.6.0-py3-none-any.whl.metadata (3.5 kB)
+Requirement already satisfied: pydantic_core==2.23.4 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 101)) (2.23.4)
+Requirement already satisfied: Pygments in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 102)) (2.18.0)
+Requirement already satisfied: pyparsing==3.2.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 103)) (3.2.0)
+Requirement already satisfied: python-dateutil==2.9.0.post0 in /home/UNT/ae0589/.local/lib/python3.10/site-packages (from -r requirements.txt (line 104)) (2.9.0.post0)
+Requirement already satisfied: python-dotenv==1.0.1 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 105)) (1.0.1)
+Requirement already satisfied: pytz==2024.2 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 106)) (2024.2)
+Requirement already satisfied: PyYAML==6.0.2 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 107)) (6.0.2)
+Requirement already satisfied: pyzmq in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 108)) (26.4.0)
+Collecting RapidFuzz==3.10.1 (from -r requirements.txt (line 109))
+  Using cached rapidfuzz-3.10.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+Collecting referencing==0.35.1 (from -r requirements.txt (line 110))
+  Using cached referencing-0.35.1-py3-none-any.whl.metadata (2.8 kB)
+Collecting regex==2024.9.11 (from -r requirements.txt (line 111))
+  Using cached regex-2024.9.11-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (40 kB)
+Requirement already satisfied: requests==2.32.3 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 112)) (2.32.3)
+Requirement already satisfied: requests-toolbelt==1.0.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 113)) (1.0.0)
+Collecting rpds-py==0.20.0 (from -r requirements.txt (line 114))
+  Using cached rpds_py-0.20.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.2 kB)
+Collecting ruamel.yaml==0.18.6 (from -r requirements.txt (line 115))
+  Using cached ruamel.yaml-0.18.6-py3-none-any.whl.metadata (23 kB)
+Collecting ruamel.yaml.clib==0.2.8 (from -r requirements.txt (line 116))
+  Using cached ruamel.yaml.clib-0.2.8-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl.metadata (2.2 kB)
+Requirement already satisfied: safetensors==0.4.5 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 117)) (0.4.5)
+Requirement already satisfied: scikit-learn==1.5.2 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 118)) (1.5.2)
+Requirement already satisfied: scipy==1.14.1 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 119)) (1.14.1)
+Collecting sentence-transformers==3.2.0 (from -r requirements.txt (line 120))
+  Using cached sentence_transformers-3.2.0-py3-none-any.whl.metadata (10 kB)
+Requirement already satisfied: sentencepiece==0.2.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 121)) (0.2.0)
+Collecting simple-parsing==0.1.6 (from -r requirements.txt (line 122))
+  Using cached simple_parsing-0.1.6-py3-none-any.whl.metadata (7.3 kB)
+Requirement already satisfied: six in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 123)) (1.16.0)
+Requirement already satisfied: sniffio==1.3.1 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 124)) (1.3.1)
+Collecting SQLAlchemy==1.4.54 (from -r requirements.txt (line 125))
+  Using cached SQLAlchemy-1.4.54-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (10 kB)
+Collecting stack-data (from -r requirements.txt (line 126))
+  Using cached stack_data-0.6.3-py3-none-any.whl.metadata (18 kB)
+Collecting sympy==1.13.3 (from -r requirements.txt (line 127))
+  Using cached sympy-1.13.3-py3-none-any.whl.metadata (12 kB)
+Collecting tenacity==9.0.0 (from -r requirements.txt (line 128))
+  Using cached tenacity-9.0.0-py3-none-any.whl.metadata (1.2 kB)
+Collecting termcolor==2.5.0 (from -r requirements.txt (line 129))
+  Using cached termcolor-2.5.0-py3-none-any.whl.metadata (6.1 kB)
+Requirement already satisfied: threadpoolctl==3.5.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 130)) (3.5.0)
+Collecting tiktoken==0.7.0 (from -r requirements.txt (line 131))
+  Using cached tiktoken-0.7.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+Collecting tokenizers==0.20.1 (from -r requirements.txt (line 132))
+  Using cached tokenizers-0.20.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.7 kB)
+Collecting torch==2.4.1 (from -r requirements.txt (line 133))
+  Using cached torch-2.4.1-cp310-cp310-manylinux1_x86_64.whl.metadata (26 kB)
+Collecting tornado (from -r requirements.txt (line 134))
+  Using cached tornado-6.4.2-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.5 kB)
+Collecting tqdm==4.66.5 (from -r requirements.txt (line 135))
+  Using cached tqdm-4.66.5-py3-none-any.whl.metadata (57 kB)
+Collecting traitlets (from -r requirements.txt (line 136))
+  Using cached traitlets-5.14.3-py3-none-any.whl.metadata (10 kB)
+Collecting transformers==4.45.2 (from -r requirements.txt (line 137))
+  Using cached transformers-4.45.2-py3-none-any.whl.metadata (44 kB)
+Collecting triton==3.0.0 (from -r requirements.txt (line 138))
+  Using cached triton-3.0.0-1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (1.3 kB)
+Requirement already satisfied: typing-inspect==0.9.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 139)) (0.9.0)
+Requirement already satisfied: typing_extensions in /home/UNT/ae0589/.local/lib/python3.10/site-packages (from -r requirements.txt (line 140)) (4.12.2)
+Requirement already satisfied: tzdata==2024.2 in /home/UNT/ae0589/.local/lib/python3.10/site-packages (from -r requirements.txt (line 141)) (2024.2)
+Requirement already satisfied: urllib3==2.2.3 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 142)) (2.2.3)
+Collecting wcwidth (from -r requirements.txt (line 143))
+  Using cached wcwidth-0.2.13-py2.py3-none-any.whl.metadata (14 kB)
+Collecting xformers==0.0.28.post1 (from -r requirements.txt (line 144))
+  Using cached xformers-0.0.28.post1-cp310-cp310-manylinux_2_28_x86_64.whl.metadata (1.0 kB)
+Collecting xxhash==3.5.0 (from -r requirements.txt (line 145))
+  Using cached xxhash-3.5.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (12 kB)
+Collecting yarl==1.15.5 (from -r requirements.txt (line 146))
+  Using cached yarl-1.15.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+Requirement already satisfied: zipp in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 147)) (3.21.0)
+Requirement already satisfied: vllm in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from -r requirements.txt (line 148)) (0.8.3)
+Requirement already satisfied: async-timeout<5.0,>=4.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from aiohttp==3.10.10->-r requirements.txt (line 3)) (4.0.3)
+Requirement already satisfied: cachetools in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (5.5.2)
+Requirement already satisfied: blake3 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (1.0.4)
+Requirement already satisfied: py-cpuinfo in /home/UNT/ae0589/.local/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (9.0.0)
+INFO: pip is looking at multiple versions of vllm to determine which version is compatible with other requirements. This could take a while.
+Collecting vllm (from -r requirements.txt (line 148))
+  Using cached vllm-0.8.2-cp38-abi3-manylinux1_x86_64.whl.metadata (27 kB)
+  Using cached vllm-0.8.1-cp38-abi3-manylinux1_x86_64.whl.metadata (26 kB)
+  Using cached vllm-0.8.0-cp38-abi3-manylinux1_x86_64.whl.metadata (26 kB)
+  Using cached vllm-0.7.3-cp38-abi3-manylinux1_x86_64.whl.metadata (25 kB)
+Collecting numba==0.60.0 (from vllm->-r requirements.txt (line 148))
+  Using cached numba-0.60.0-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.7 kB)
+Collecting vllm (from -r requirements.txt (line 148))
+  Using cached vllm-0.7.2-cp38-abi3-manylinux1_x86_64.whl.metadata (12 kB)
+  Using cached vllm-0.7.1-cp38-abi3-manylinux1_x86_64.whl.metadata (12 kB)
+  Using cached vllm-0.7.0-cp38-abi3-manylinux1_x86_64.whl.metadata (12 kB)
+Requirement already satisfied: fastapi!=0.113.*,!=0.114.0,>=0.107.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (0.115.6)
+Requirement already satisfied: uvicorn[standard] in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (0.32.1)
+Requirement already satisfied: prometheus_client>=0.18.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (0.21.1)
+Requirement already satisfied: prometheus-fastapi-instrumentator>=7.0.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (7.1.0)
+Requirement already satisfied: lm-format-enforcer<0.11,>=0.10.9 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (0.10.11)
+Requirement already satisfied: outlines==0.1.11 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (0.1.11)
+Requirement already satisfied: lark==1.2.2 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (1.2.2)
+Requirement already satisfied: xgrammar>=0.1.6 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (0.1.17)
+Requirement already satisfied: partial-json-parser in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (0.2.1.1.post5)
+Requirement already satisfied: msgspec in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (0.19.0)
+Requirement already satisfied: gguf==0.10.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (0.10.0)
+INFO: pip is still looking at multiple versions of vllm to determine which version is compatible with other requirements. This could take a while.
+  Using cached vllm-0.6.6.post1-cp38-abi3-manylinux1_x86_64.whl.metadata (11 kB)
+  Using cached vllm-0.6.6-cp38-abi3-manylinux1_x86_64.whl.metadata (11 kB)
+  Using cached vllm-0.6.5-cp38-abi3-manylinux1_x86_64.whl.metadata (11 kB)
+  Using cached vllm-0.6.4.post1-cp38-abi3-manylinux1_x86_64.whl.metadata (10 kB)
+Collecting outlines<0.1,>=0.0.43 (from vllm->-r requirements.txt (line 148))
+  Using cached outlines-0.0.46-py3-none-any.whl.metadata (15 kB)
+Collecting vllm (from -r requirements.txt (line 148))
+  Using cached vllm-0.6.4-cp38-abi3-manylinux1_x86_64.whl.metadata (10 kB)
+Collecting lm-format-enforcer==0.10.6 (from vllm->-r requirements.txt (line 148))
+  Using cached lm_format_enforcer-0.10.6-py3-none-any.whl.metadata (16 kB)
+Requirement already satisfied: einops in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (0.8.1)
+Collecting compressed-tensors==0.8.0 (from vllm->-r requirements.txt (line 148))
+  Using cached compressed_tensors-0.8.0-py3-none-any.whl.metadata (6.8 kB)
+Requirement already satisfied: ray>=2.9 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (2.43.0)
+Collecting nvidia-ml-py>=12.560.30 (from vllm->-r requirements.txt (line 148))
+  Using cached nvidia_ml_py-12.570.86-py3-none-any.whl.metadata (8.7 kB)
+INFO: This is taking longer than usual. You might need to provide the dependency resolver with stricter constraints to reduce runtime. See https://pip.pypa.io/warnings/backtracking for guidance. If you want to abort this run, press Ctrl + C.
+Collecting vllm (from -r requirements.txt (line 148))
+  Using cached vllm-0.6.3.post1-cp38-abi3-manylinux1_x86_64.whl.metadata (10 kB)
+Collecting compressed-tensors==0.6.0 (from vllm->-r requirements.txt (line 148))
+  Using cached compressed_tensors-0.6.0-py3-none-any.whl.metadata (6.8 kB)
+Collecting vllm (from -r requirements.txt (line 148))
+  Using cached vllm-0.6.3-cp38-abi3-manylinux1_x86_64.whl.metadata (10 kB)
+  Using cached vllm-0.6.2-cp38-abi3-manylinux1_x86_64.whl.metadata (2.4 kB)
+  Using cached vllm-0.6.1.post2-cp38-abi3-manylinux1_x86_64.whl.metadata (2.4 kB)
+Collecting gguf==0.9.1 (from vllm->-r requirements.txt (line 148))
+  Using cached gguf-0.9.1-py3-none-any.whl.metadata (3.3 kB)
+Collecting vllm (from -r requirements.txt (line 148))
+  Using cached vllm-0.6.1.post1-cp38-abi3-manylinux1_x86_64.whl.metadata (2.3 kB)
+  Using cached vllm-0.6.1-cp38-abi3-manylinux1_x86_64.whl.metadata (2.3 kB)
+  Using cached vllm-0.6.0-cp38-abi3-manylinux1_x86_64.whl.metadata (2.2 kB)
+  Using cached vllm-0.5.5-cp38-abi3-manylinux1_x86_64.whl.metadata (2.0 kB)
+Collecting librosa (from vllm->-r requirements.txt (line 148))
+  Using cached librosa-0.11.0-py3-none-any.whl.metadata (8.7 kB)
+Collecting soundfile (from vllm->-r requirements.txt (line 148))
+  Using cached soundfile-0.13.1-py2.py3-none-manylinux_2_28_x86_64.whl.metadata (16 kB)
+Collecting vllm (from -r requirements.txt (line 148))
+  Using cached vllm-0.5.4-cp38-abi3-manylinux1_x86_64.whl.metadata (1.8 kB)
+Collecting cmake>=3.21 (from vllm->-r requirements.txt (line 148))
+  Using cached cmake-4.0.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.3 kB)
+Requirement already satisfied: ninja in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from vllm->-r requirements.txt (line 148)) (1.11.1.4)
+Collecting lm-format-enforcer==0.10.3 (from vllm->-r requirements.txt (line 148))
+  Using cached lm_format_enforcer-0.10.3-py3-none-any.whl.metadata (16 kB)
+Collecting vllm (from -r requirements.txt (line 148))
+  Using cached vllm-0.5.3.post1-cp38-abi3-manylinux1_x86_64.whl.metadata (1.8 kB)
+  Using cached vllm-0.5.3-cp38-abi3-manylinux1_x86_64.whl.metadata (1.8 kB)
+  Using cached vllm-0.5.2-cp38-abi3-manylinux1_x86_64.whl.metadata (1.8 kB)
+  Using cached vllm-0.5.1-cp310-cp310-manylinux1_x86_64.whl.metadata (8.2 kB)
+Collecting lm-format-enforcer==0.10.1 (from vllm->-r requirements.txt (line 148))
+  Using cached lm_format_enforcer-0.10.1-py3-none-any.whl.metadata (16 kB)
+Collecting vllm (from -r requirements.txt (line 148))
+  Using cached vllm-0.5.0.post1-cp310-cp310-manylinux1_x86_64.whl.metadata (8.1 kB)
+  Using cached vllm-0.5.0-cp310-cp310-manylinux1_x86_64.whl.metadata (8.3 kB)
+  Using cached vllm-0.4.3-cp310-cp310-manylinux1_x86_64.whl.metadata (7.8 kB)
+Collecting outlines==0.0.34 (from vllm->-r requirements.txt (line 148))
+  Using cached outlines-0.0.34-py3-none-any.whl.metadata (13 kB)
+Collecting vllm (from -r requirements.txt (line 148))
+  Using cached vllm-0.4.2-cp310-cp310-manylinux1_x86_64.whl.metadata (9.1 kB)
+  Using cached vllm-0.4.1-cp310-cp310-manylinux1_x86_64.whl.metadata (8.9 kB)
+  Using cached vllm-0.4.0.post1-cp310-cp310-manylinux1_x86_64.whl.metadata (8.6 kB)
+  Using cached vllm-0.4.0-cp310-cp310-manylinux1_x86_64.whl.metadata (8.6 kB)
+  Using cached vllm-0.3.3-cp310-cp310-manylinux1_x86_64.whl.metadata (7.8 kB)
+  Using cached vllm-0.3.2-cp310-cp310-manylinux1_x86_64.whl.metadata (7.5 kB)
+  Using cached vllm-0.3.1-cp310-cp310-manylinux1_x86_64.whl.metadata (7.4 kB)
+  Using cached vllm-0.3.0-cp310-cp310-manylinux1_x86_64.whl.metadata (7.4 kB)
+  Using cached vllm-0.2.7-cp310-cp310-manylinux1_x86_64.whl.metadata (6.8 kB)
+  Using cached vllm-0.2.6-cp310-cp310-manylinux1_x86_64.whl.metadata (6.7 kB)
+  Using cached vllm-0.2.5-cp310-cp310-manylinux1_x86_64.whl.metadata (6.5 kB)
+  Using cached vllm-0.2.4-cp310-cp310-manylinux1_x86_64.whl.metadata (6.8 kB)
+  Using cached vllm-0.2.3-cp310-cp310-manylinux1_x86_64.whl.metadata (6.4 kB)
+  Using cached vllm-0.2.2-cp310-cp310-manylinux1_x86_64.whl.metadata (6.4 kB)
+  Using cached vllm-0.2.1.post1-cp310-cp310-manylinux1_x86_64.whl.metadata (6.2 kB)
+  Using cached vllm-0.2.0-cp310-cp310-manylinux1_x86_64.whl.metadata (8.0 kB)
+  Using cached vllm-0.1.7-cp310-cp310-manylinux1_x86_64.whl.metadata (6.7 kB)
+  Using cached vllm-0.1.6-cp310-cp310-manylinux1_x86_64.whl.metadata (6.6 kB)
+  Using cached vllm-0.1.5-cp310-cp310-manylinux1_x86_64.whl.metadata (6.6 kB)
+  Using cached vllm-0.1.4-cp310-cp310-manylinux1_x86_64.whl.metadata (6.4 kB)
+  Using cached vllm-0.1.3.tar.gz (102 kB)
+  Installing build dependencies: started
+  Installing build dependencies: still running...
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+  Using cached vllm-0.1.2.tar.gz (93 kB)
+  Installing build dependencies: started
+  Installing build dependencies: still running...
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting fschat (from vllm->-r requirements.txt (line 148))
+  Using cached fschat-0.2.36-py3-none-any.whl.metadata (20 kB)
+Requirement already satisfied: starlette<0.42.0,>=0.40.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from fastapi!=0.113.*,!=0.114.0,>=0.107.0->vllm->-r requirements.txt (line 148)) (0.41.3)
+Collecting markdown2[all] (from fschat->vllm->-r requirements.txt (line 148))
+  Using cached markdown2-2.5.3-py3-none-any.whl.metadata (2.1 kB)
+Collecting nh3 (from fschat->vllm->-r requirements.txt (line 148))
+  Using cached nh3-0.2.21-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.0 kB)
+Requirement already satisfied: rich>=10.0.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from fschat->vllm->-r requirements.txt (line 148)) (13.9.4)
+Collecting shortuuid (from fschat->vllm->-r requirements.txt (line 148))
+  Using cached shortuuid-1.0.13-py3-none-any.whl.metadata (5.8 kB)
+Requirement already satisfied: click>=7.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from ray>=2.9->vllm->-r requirements.txt (line 148)) (8.1.7)
+Requirement already satisfied: msgpack<2.0.0,>=1.0.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from ray>=2.9->vllm->-r requirements.txt (line 148)) (1.1.0)
+Requirement already satisfied: markdown-it-py>=2.2.0 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from rich>=10.0.0->fschat->vllm->-r requirements.txt (line 148)) (3.0.0)
+Collecting wavedrom (from markdown2[all]->fschat->vllm->-r requirements.txt (line 148))
+  Using cached wavedrom-2.0.3.post3.tar.gz (137 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting latex2mathml (from markdown2[all]->fschat->vllm->-r requirements.txt (line 148))
+  Using cached latex2mathml-3.77.0-py3-none-any.whl.metadata (14 kB)
+Requirement already satisfied: mdurl~=0.1 in /home/UNT/ae0589/.pyenv/versions/3.10.11/lib/python3.10/site-packages (from markdown-it-py>=2.2.0->rich>=10.0.0->fschat->vllm->-r requirements.txt (line 148)) (0.1.2)
+Collecting svgwrite (from wavedrom->markdown2[all]->fschat->vllm->-r requirements.txt (line 148))
+  Using cached svgwrite-1.4.3-py3-none-any.whl.metadata (8.8 kB)
+WARNING: The candidate selected for download or install is a yanked version: 'langsmith' candidate (version 0.1.136 at https://files.pythonhosted.org/packages/20/cc/e559a369fd3811534563e568ee7077fdc1698d86d99afe28d5167e692787/langsmith-0.1.136-py3-none-any.whl (from https://pypi.org/simple/langsmith/) (requires-python:<4.0,>=3.8.1))
+Reason for being yanked: <none given>
+Using cached accelerate-1.0.1-py3-none-any.whl (330 kB)
+Using cached aiohappyeyeballs-2.4.3-py3-none-any.whl (14 kB)
+Using cached aiohttp-3.10.10-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.2 MB)
+Using cached alembic-1.14.0-py3-none-any.whl (233 kB)
+Using cached banal-1.0.6-py2.py3-none-any.whl (6.1 kB)
+Using cached contourpy-1.3.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (322 kB)
+Using cached datasets-3.1.0-py3-none-any.whl (480 kB)
+Using cached dill-0.3.8-py3-none-any.whl (116 kB)
+Using cached docstring_parser-0.16-py3-none-any.whl (36 kB)
+Using cached faiss_gpu_cu12-1.8.0.2-cp310-cp310-manylinux_2_28_x86_64.whl (66.1 MB)
+Using cached fonttools-4.54.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.6 MB)
+Using cached frozenlist-1.4.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (239 kB)
+Using cached fsspec-2024.9.0-py3-none-any.whl (179 kB)
+Using cached httpcore-1.0.6-py3-none-any.whl (78 kB)
+Using cached huggingface_hub-0.26.0-py3-none-any.whl (447 kB)
+Using cached jiter-0.6.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (325 kB)
+Using cached langchain-0.3.4-py3-none-any.whl (1.0 MB)
+Using cached langchain_community-0.3.3-py3-none-any.whl (2.4 MB)
+Using cached langchain_core-0.3.12-py3-none-any.whl (407 kB)
+Using cached langchain_text_splitters-0.3.0-py3-none-any.whl (25 kB)
+Using cached langsmith-0.1.136-py3-none-any.whl (296 kB)
+Using cached levenshtein-0.26.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (162 kB)
+Using cached Mako-1.3.6-py3-none-any.whl (78 kB)
+Using cached marshmallow-3.23.0-py3-none-any.whl (49 kB)
+Using cached matplotlib-3.9.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (8.3 MB)
+Using cached mistral_common-1.4.4-py3-none-any.whl (6.0 MB)
+Using cached mistral_inference-1.5.0-py3-none-any.whl (30 kB)
+Using cached multiprocess-0.70.16-py310-none-any.whl (134 kB)
+Using cached networkx-3.4.1-py3-none-any.whl (1.7 MB)
+Using cached numpy-1.26.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (18.2 MB)
+Using cached nvidia_cublas_cu12-12.1.3.1-py3-none-manylinux1_x86_64.whl (410.6 MB)
+Using cached nvidia_cuda_cupti_cu12-12.1.105-py3-none-manylinux1_x86_64.whl (14.1 MB)
+Using cached nvidia_cuda_nvrtc_cu12-12.1.105-py3-none-manylinux1_x86_64.whl (23.7 MB)
+Using cached nvidia_cuda_runtime_cu12-12.1.105-py3-none-manylinux1_x86_64.whl (823 kB)
+Using cached nvidia_cufft_cu12-11.0.2.54-py3-none-manylinux1_x86_64.whl (121.6 MB)
+Using cached nvidia_curand_cu12-10.3.2.106-py3-none-manylinux1_x86_64.whl (56.5 MB)
+Using cached nvidia_cusolver_cu12-11.4.5.107-py3-none-manylinux1_x86_64.whl (124.2 MB)
+Using cached nvidia_cusparse_cu12-12.1.0.106-py3-none-manylinux1_x86_64.whl (196.0 MB)
+Using cached nvidia_nccl_cu12-2.20.5-py3-none-manylinux2014_x86_64.whl (176.2 MB)
+Using cached nvidia_nvjitlink_cu12-12.6.77-py3-none-manylinux2014_x86_64.whl (19.7 MB)
+Using cached nvidia_nvtx_cu12-12.1.105-py3-none-manylinux1_x86_64.whl (99 kB)
+Using cached openai-1.52.0-py3-none-any.whl (386 kB)
+Using cached orjson-3.10.7-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (141 kB)
+Using cached pillow-10.4.0-cp310-cp310-manylinux_2_28_x86_64.whl (4.5 MB)
+Using cached propcache-0.2.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (208 kB)
+Using cached protobuf-5.28.2-cp38-abi3-manylinux2014_x86_64.whl (316 kB)
+Using cached pyarrow-18.0.0-cp310-cp310-manylinux_2_28_x86_64.whl (40.0 MB)
+Using cached pydantic_settings-2.6.0-py3-none-any.whl (28 kB)
+Using cached rapidfuzz-3.10.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.1 MB)
+Using cached referencing-0.35.1-py3-none-any.whl (26 kB)
+Using cached regex-2024.9.11-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (782 kB)
+Using cached rpds_py-0.20.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (354 kB)
+Using cached ruamel.yaml-0.18.6-py3-none-any.whl (117 kB)
+Using cached ruamel.yaml.clib-0.2.8-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl (526 kB)
+Using cached sentence_transformers-3.2.0-py3-none-any.whl (255 kB)
+Using cached simple_parsing-0.1.6-py3-none-any.whl (112 kB)
+Using cached SQLAlchemy-1.4.54-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.6 MB)
+Using cached sympy-1.13.3-py3-none-any.whl (6.2 MB)
+Using cached tenacity-9.0.0-py3-none-any.whl (28 kB)
+Using cached termcolor-2.5.0-py3-none-any.whl (7.8 kB)
+Using cached tiktoken-0.7.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.1 MB)
+Using cached tokenizers-0.20.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+Using cached torch-2.4.1-cp310-cp310-manylinux1_x86_64.whl (797.1 MB)
+Using cached tqdm-4.66.5-py3-none-any.whl (78 kB)
+Using cached transformers-4.45.2-py3-none-any.whl (9.9 MB)
+Using cached triton-3.0.0-1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (209.4 MB)
+Using cached xformers-0.0.28.post1-cp310-cp310-manylinux_2_28_x86_64.whl (16.7 MB)
+Using cached xxhash-3.5.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (194 kB)
+Using cached yarl-1.15.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (314 kB)
+Using cached asttokens-3.0.0-py3-none-any.whl (26 kB)
+Using cached comm-0.2.2-py3-none-any.whl (7.2 kB)
+Using cached debugpy-1.8.14-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.6 MB)
+Using cached decorator-5.2.1-py3-none-any.whl (9.2 kB)
+Using cached executing-2.2.0-py2.py3-none-any.whl (26 kB)
+Using cached ipykernel-6.29.5-py3-none-any.whl (117 kB)
+Using cached ipython-8.35.0-py3-none-any.whl (830 kB)
+Using cached jedi-0.19.2-py2.py3-none-any.whl (1.6 MB)
+Using cached jupyter_client-8.6.3-py3-none-any.whl (106 kB)
+Using cached jupyter_core-5.7.2-py3-none-any.whl (28 kB)
+Using cached matplotlib_inline-0.1.7-py3-none-any.whl (9.9 kB)
+Using cached parso-0.8.4-py2.py3-none-any.whl (103 kB)
+Using cached pexpect-4.9.0-py2.py3-none-any.whl (63 kB)
+Using cached pickleshare-0.7.5-py2.py3-none-any.whl (6.9 kB)
+Using cached platformdirs-4.3.7-py3-none-any.whl (18 kB)
+Using cached prompt_toolkit-3.0.50-py3-none-any.whl (387 kB)
+Using cached ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
+Using cached pure_eval-0.2.3-py3-none-any.whl (11 kB)
+Using cached stack_data-0.6.3-py3-none-any.whl (24 kB)
+Using cached tornado-6.4.2-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (437 kB)
+Using cached traitlets-5.14.3-py3-none-any.whl (85 kB)
+Using cached wcwidth-0.2.13-py2.py3-none-any.whl (34 kB)
+Using cached fschat-0.2.36-py3-none-any.whl (256 kB)
+Using cached nh3-0.2.21-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (739 kB)
+Using cached shortuuid-1.0.13-py3-none-any.whl (10 kB)
+Using cached latex2mathml-3.77.0-py3-none-any.whl (73 kB)
+Using cached markdown2-2.5.3-py3-none-any.whl (48 kB)
+Using cached svgwrite-1.4.3-py3-none-any.whl (67 kB)
+Building wheels for collected packages: vllm, wavedrom
+  Building wheel for vllm (pyproject.toml): started
+  Building wheel for vllm (pyproject.toml): still running...
+  Building wheel for vllm (pyproject.toml): still running...
+  Building wheel for vllm (pyproject.toml): still running...
+  Building wheel for vllm (pyproject.toml): still running...
+  Building wheel for vllm (pyproject.toml): still running...
+  Building wheel for vllm (pyproject.toml): finished with status 'done'
+  Created wheel for vllm: filename=vllm-0.1.2-cp310-cp310-linux_x86_64.whl size=13554533 sha256=e0d07ae0c188d12211bdac6a55b3d458f7bdb8475c105e6a96456a15b30efdda
+  Stored in directory: /home/UNT/ae0589/.cache/pip/wheels/33/f6/13/4ed094f723c43ec6a6c96810bfe3e884d1eef29c1bc26f3678
+  Building wheel for wavedrom (setup.py): started
+  Building wheel for wavedrom (setup.py): finished with status 'done'
+  Created wheel for wavedrom: filename=wavedrom-2.0.3.post3-py2.py3-none-any.whl size=30083 sha256=5c66cdf893b0dfd69fabeaac9c8d2eb7b8f3bf0f7de751a68aa12f2eb855e489
+  Stored in directory: /home/UNT/ae0589/.cache/pip/wheels/9c/52/8c/38b454b42f712f325e26f633287484c7dc1ad469e1580c5954
+Successfully built vllm wavedrom
+Installing collected packages: wcwidth, pure_eval, ptyprocess, pickleshare, banal, xxhash, triton, traitlets, tqdm, tornado, termcolor, tenacity, sympy, svgwrite, SQLAlchemy, shortuuid, ruamel.yaml.clib, rpds-py, regex, RapidFuzz, pyarrow, protobuf, propcache, prompt_toolkit, platformdirs, pillow, pexpect, parso, orjson, nvidia-nvtx-cu12, nvidia-nvjitlink-cu12, nvidia-nccl-cu12, nvidia-curand-cu12, nvidia-cufft-cu12, nvidia-cuda-runtime-cu12, nvidia-cuda-nvrtc-cu12, nvidia-cuda-cupti-cu12, nvidia-cublas-cu12, numpy, nh3, networkx, marshmallow, markdown2, Mako, latex2mathml, jiter, httpcore, fsspec, frozenlist, fonttools, executing, docstring_parser, dill, decorator, debugpy, asttokens, aiohappyeyeballs, yarl, wavedrom, tiktoken, stack-data, simple-parsing, ruamel.yaml, referencing, nvidia-cusparse-cu12, multiprocess, matplotlib-inline, Levenshtein, jupyter_core, jedi, huggingface-hub, fire, faiss-gpu-cu12, contourpy, comm, alembic, tokenizers, pydantic-settings, openai, nvidia-cusolver-cu12, matplotlib, langsmith, jupyter_client, ipython, aiohttp, transformers, torch, langchain-core, ipykernel, fschat, xformers, sentence-transformers, mistral_common, langchain-text-splitters, datasets, accelerate, vllm, mistral_inference, langchain, langchain-community
+  Attempting uninstall: triton
+    Found existing installation: triton 3.1.0
+    Uninstalling triton-3.1.0:
+      Successfully uninstalled triton-3.1.0
+  Attempting uninstall: tqdm
+    Found existing installation: tqdm 4.67.1
+    Uninstalling tqdm-4.67.1:
+      Successfully uninstalled tqdm-4.67.1
+  Attempting uninstall: tenacity
+    Found existing installation: tenacity 8.5.0
+    Uninstalling tenacity-8.5.0:
+      Successfully uninstalled tenacity-8.5.0
+  Attempting uninstall: sympy
+    Found existing installation: sympy 1.13.1
+    Uninstalling sympy-1.13.1:
+      Successfully uninstalled sympy-1.13.1
+  Attempting uninstall: SQLAlchemy
+    Found existing installation: SQLAlchemy 2.0.36
+    Uninstalling SQLAlchemy-2.0.36:
+      Successfully uninstalled SQLAlchemy-2.0.36
+  Attempting uninstall: rpds-py
+    Found existing installation: rpds-py 0.24.0
+    Uninstalling rpds-py-0.24.0:
+      Successfully uninstalled rpds-py-0.24.0
+  Attempting uninstall: regex
+    Found existing installation: regex 2024.11.6
+    Uninstalling regex-2024.11.6:
+      Successfully uninstalled regex-2024.11.6
+  Attempting uninstall: protobuf
+    Found existing installation: protobuf 6.30.2
+    Uninstalling protobuf-6.30.2:
+      Successfully uninstalled protobuf-6.30.2
+  Attempting uninstall: propcache
+    Found existing installation: propcache 0.2.1
+    Uninstalling propcache-0.2.1:
+      Successfully uninstalled propcache-0.2.1
+  Attempting uninstall: pillow
+    Found existing installation: pillow 11.1.0
+    Uninstalling pillow-11.1.0:
+      Successfully uninstalled pillow-11.1.0
+  Attempting uninstall: orjson
+    Found existing installation: orjson 3.10.12
+    Uninstalling orjson-3.10.12:
+      Successfully uninstalled orjson-3.10.12
+  Attempting uninstall: nvidia-nvtx-cu12
+    Found existing installation: nvidia-nvtx-cu12 12.4.127
+    Uninstalling nvidia-nvtx-cu12-12.4.127:
+      Successfully uninstalled nvidia-nvtx-cu12-12.4.127
+  Attempting uninstall: nvidia-nvjitlink-cu12
+    Found existing installation: nvidia-nvjitlink-cu12 12.4.127
+    Uninstalling nvidia-nvjitlink-cu12-12.4.127:
+      Successfully uninstalled nvidia-nvjitlink-cu12-12.4.127
+  Attempting uninstall: nvidia-nccl-cu12
+    Found existing installation: nvidia-nccl-cu12 2.21.5
+    Uninstalling nvidia-nccl-cu12-2.21.5:
+      Successfully uninstalled nvidia-nccl-cu12-2.21.5
+  Attempting uninstall: nvidia-curand-cu12
+    Found existing installation: nvidia-curand-cu12 10.3.5.147
+    Uninstalling nvidia-curand-cu12-10.3.5.147:
+      Successfully uninstalled nvidia-curand-cu12-10.3.5.147
+  Attempting uninstall: nvidia-cufft-cu12
+    Found existing installation: nvidia-cufft-cu12 11.2.1.3
+    Uninstalling nvidia-cufft-cu12-11.2.1.3:
+      Successfully uninstalled nvidia-cufft-cu12-11.2.1.3
+  Attempting uninstall: nvidia-cuda-runtime-cu12
+    Found existing installation: nvidia-cuda-runtime-cu12 12.4.127
+    Uninstalling nvidia-cuda-runtime-cu12-12.4.127:
+      Successfully uninstalled nvidia-cuda-runtime-cu12-12.4.127
+  Attempting uninstall: nvidia-cuda-nvrtc-cu12
+    Found existing installation: nvidia-cuda-nvrtc-cu12 12.4.127
+    Uninstalling nvidia-cuda-nvrtc-cu12-12.4.127:
+      Successfully uninstalled nvidia-cuda-nvrtc-cu12-12.4.127
+  Attempting uninstall: nvidia-cuda-cupti-cu12
+    Found existing installation: nvidia-cuda-cupti-cu12 12.4.127
+    Uninstalling nvidia-cuda-cupti-cu12-12.4.127:
+      Successfully uninstalled nvidia-cuda-cupti-cu12-12.4.127
+  Attempting uninstall: nvidia-cublas-cu12
+    Found existing installation: nvidia-cublas-cu12 12.4.5.8
+    Uninstalling nvidia-cublas-cu12-12.4.5.8:
+      Successfully uninstalled nvidia-cublas-cu12-12.4.5.8
+  Attempting uninstall: numpy
+    Found existing installation: numpy 2.1.3
+    Uninstalling numpy-2.1.3:
+      Successfully uninstalled numpy-2.1.3
+  Attempting uninstall: networkx
+    Found existing installation: networkx 3.4.2
+    Uninstalling networkx-3.4.2:
+      Successfully uninstalled networkx-3.4.2
+  Attempting uninstall: marshmallow
+    Found existing installation: marshmallow 3.23.1
+    Uninstalling marshmallow-3.23.1:
+      Successfully uninstalled marshmallow-3.23.1
+  Attempting uninstall: jiter
+    Found existing installation: jiter 0.8.0
+    Uninstalling jiter-0.8.0:
+      Successfully uninstalled jiter-0.8.0
+  Attempting uninstall: httpcore
+    Found existing installation: httpcore 1.0.7
+    Uninstalling httpcore-1.0.7:
+      Successfully uninstalled httpcore-1.0.7
+  Attempting uninstall: fsspec
+    Found existing installation: fsspec 2024.10.0
+    Uninstalling fsspec-2024.10.0:
+      Successfully uninstalled fsspec-2024.10.0
+  Attempting uninstall: frozenlist
+    Found existing installation: frozenlist 1.5.0
+    Uninstalling frozenlist-1.5.0:
+      Successfully uninstalled frozenlist-1.5.0
+  Attempting uninstall: fonttools
+    Found existing installation: fonttools 4.55.0
+    Uninstalling fonttools-4.55.0:
+      Successfully uninstalled fonttools-4.55.0
+  Attempting uninstall: dill
+    Found existing installation: dill 0.3.9
+    Uninstalling dill-0.3.9:
+      Successfully uninstalled dill-0.3.9
+  Attempting uninstall: aiohappyeyeballs
+    Found existing installation: aiohappyeyeballs 2.4.4
+    Uninstalling aiohappyeyeballs-2.4.4:
+      Successfully uninstalled aiohappyeyeballs-2.4.4
+  Attempting uninstall: yarl
+    Found existing installation: yarl 1.18.3
+    Uninstalling yarl-1.18.3:
+      Successfully uninstalled yarl-1.18.3
+  Attempting uninstall: tiktoken
+    Found existing installation: tiktoken 0.8.0
+    Uninstalling tiktoken-0.8.0:
+      Successfully uninstalled tiktoken-0.8.0
+  Attempting uninstall: referencing
+    Found existing installation: referencing 0.36.2
+    Uninstalling referencing-0.36.2:
+      Successfully uninstalled referencing-0.36.2
+  Attempting uninstall: nvidia-cusparse-cu12
+    Found existing installation: nvidia-cusparse-cu12 12.3.1.170
+    Uninstalling nvidia-cusparse-cu12-12.3.1.170:
+      Successfully uninstalled nvidia-cusparse-cu12-12.3.1.170
+  Attempting uninstall: huggingface-hub
+    Found existing installation: huggingface-hub 0.30.2
+    Uninstalling huggingface-hub-0.30.2:
+      Successfully uninstalled huggingface-hub-0.30.2
+  Attempting uninstall: contourpy
+    Found existing installation: contourpy 1.3.1
+    Uninstalling contourpy-1.3.1:
+      Successfully uninstalled contourpy-1.3.1
+  Attempting uninstall: tokenizers
+    Found existing installation: tokenizers 0.21.1
+    Uninstalling tokenizers-0.21.1:
+      Successfully uninstalled tokenizers-0.21.1
+  Attempting uninstall: pydantic-settings
+    Found existing installation: pydantic-settings 2.8.1
+    Uninstalling pydantic-settings-2.8.1:
+      Successfully uninstalled pydantic-settings-2.8.1
+  Attempting uninstall: openai
+    Found existing installation: openai 1.56.1
+    Uninstalling openai-1.56.1:
+      Successfully uninstalled openai-1.56.1
+  Attempting uninstall: nvidia-cusolver-cu12
+    Found existing installation: nvidia-cusolver-cu12 11.6.1.9
+    Uninstalling nvidia-cusolver-cu12-11.6.1.9:
+      Successfully uninstalled nvidia-cusolver-cu12-11.6.1.9
+  Attempting uninstall: matplotlib
+    Found existing installation: matplotlib 3.9.3
+    Uninstalling matplotlib-3.9.3:
+      Successfully uninstalled matplotlib-3.9.3
+  Attempting uninstall: langsmith
+    Found existing installation: langsmith 0.1.147
+    Uninstalling langsmith-0.1.147:
+      Successfully uninstalled langsmith-0.1.147
+  Attempting uninstall: aiohttp
+    Found existing installation: aiohttp 3.11.9
+    Uninstalling aiohttp-3.11.9:
+      Successfully uninstalled aiohttp-3.11.9
+  Attempting uninstall: transformers
+    Found existing installation: transformers 4.51.2
+    Uninstalling transformers-4.51.2:
+      Successfully uninstalled transformers-4.51.2
+  Attempting uninstall: torch
+    Found existing installation: torch 2.5.1
+    Uninstalling torch-2.5.1:
+      Successfully uninstalled torch-2.5.1
+  Attempting uninstall: langchain-core
+    Found existing installation: langchain-core 0.3.51
+    Uninstalling langchain-core-0.3.51:
+      Successfully uninstalled langchain-core-0.3.51
+  Attempting uninstall: xformers
+    Found existing installation: xformers 0.0.29.post2
+    Uninstalling xformers-0.0.29.post2:
+      Successfully uninstalled xformers-0.0.29.post2
+  Attempting uninstall: sentence-transformers
+    Found existing installation: sentence-transformers 3.3.1
+    Uninstalling sentence-transformers-3.3.1:
+      Successfully uninstalled sentence-transformers-3.3.1
+  Attempting uninstall: mistral_common
+    Found existing installation: mistral_common 1.5.4
+    Uninstalling mistral_common-1.5.4:
+      Successfully uninstalled mistral_common-1.5.4
+  Attempting uninstall: langchain-text-splitters
+    Found existing installation: langchain-text-splitters 0.3.8
+    Uninstalling langchain-text-splitters-0.3.8:
+      Successfully uninstalled langchain-text-splitters-0.3.8
+  Attempting uninstall: vllm
+    Found existing installation: vllm 0.8.3
+    Uninstalling vllm-0.8.3:
+      Successfully uninstalled vllm-0.8.3
+  Attempting uninstall: langchain
+    Found existing installation: langchain 0.3.23
+    Uninstalling langchain-0.3.23:
+      Successfully uninstalled langchain-0.3.23
+  Attempting uninstall: langchain-community
+    Found existing installation: langchain-community 0.3.21
+    Uninstalling langchain-community-0.3.21:
+      Successfully uninstalled langchain-community-0.3.21
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+llama-index-core 0.12.0 requires tenacity!=8.4.0,<9.0.0,>=8.2.0, but you have tenacity 9.0.0 which is incompatible.
+llama-index-legacy 0.9.48.post4 requires tenacity<9.0.0,>=8.2.0, but you have tenacity 9.0.0 which is incompatible.
+torchaudio 2.6.0 requires torch==2.6.0, but you have torch 2.4.1 which is incompatible.
+torchvision 0.20.1 requires torch==2.5.1, but you have torch 2.4.1 which is incompatible.
+Successfully installed Levenshtein-0.26.1 Mako-1.3.6 RapidFuzz-3.10.1 SQLAlchemy-1.4.54 accelerate-1.0.1 aiohappyeyeballs-2.4.3 aiohttp-3.10.10 alembic-1.14.0 asttokens-3.0.0 banal-1.0.6 comm-0.2.2 contourpy-1.3.0 datasets-3.1.0 debugpy-1.8.14 decorator-5.2.1 dill-0.3.8 docstring_parser-0.16 executing-2.2.0 faiss-gpu-cu12-1.8.0.2 fire-0.7.0 fonttools-4.54.1 frozenlist-1.4.1 fschat-0.2.36 fsspec-2024.10.0 httpcore-1.0.6 huggingface-hub-0.26.0 ipykernel-6.29.5 ipython-8.35.0 jedi-0.19.2 jiter-0.6.1 jupyter_client-8.6.3 jupyter_core-5.7.2 langchain-0.3.4 langchain-community-0.3.3 langchain-core-0.3.12 langchain-text-splitters-0.3.0 langsmith-0.1.136 latex2mathml-3.77.0 markdown2-2.5.3 marshmallow-3.23.0 matplotlib-3.9.2 matplotlib-inline-0.1.7 mistral_common-1.4.4 mistral_inference-1.5.0 multiprocess-0.70.16 networkx-3.4.1 nh3-0.2.21 numpy-1.26.4 nvidia-cublas-cu12-12.1.3.1 nvidia-cuda-cupti-cu12-12.1.105 nvidia-cuda-nvrtc-cu12-12.1.105 nvidia-cuda-runtime-cu12-12.1.105 nvidia-cufft-cu12-11.0.2.54 nvidia-curand-cu12-10.3.2.106 nvidia-cusolver-cu12-11.4.5.107 nvidia-cusparse-cu12-12.1.0.106 nvidia-nccl-cu12-2.20.5 nvidia-nvjitlink-cu12-12.4.127 nvidia-nvtx-cu12-12.1.105 openai-1.52.0 orjson-3.10.7 parso-0.8.4 pexpect-4.9.0 pickleshare-0.7.5 pillow-10.4.0 platformdirs-4.3.7 prompt_toolkit-3.0.50 propcache-0.2.0 protobuf-5.28.2 ptyprocess-0.7.0 pure_eval-0.2.3 pyarrow-18.0.0 pydantic-settings-2.6.0 referencing-0.35.1 regex-2024.9.11 rpds-py-0.20.0 ruamel.yaml-0.18.6 ruamel.yaml.clib-0.2.8 sentence-transformers-3.2.0 shortuuid-1.0.13 simple-parsing-0.1.6 stack-data-0.6.3 svgwrite-1.4.3 sympy-1.13.1 tenacity-9.0.0 termcolor-2.5.0 tiktoken-0.7.0 tokenizers-0.20.1 torch-2.4.1 tornado-6.4.2 tqdm-4.66.5 traitlets-5.14.3 transformers-4.45.2 triton-3.0.0 vllm-0.1.2 wavedrom-2.0.3.post3 wcwidth-0.2.13 xformers-0.0.28.post1 xxhash-3.5.0 yarl-1.15.5
+
+[notice] A new release of pip is available: 24.3.1 -> 25.0.1
+[notice] To update, run: pip install --upgrade pip

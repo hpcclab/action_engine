@@ -1,0 +1,31 @@
+# index: 251
+# query: I'm in Chicago and I need to book a room for 3 nights starting from tomorrow.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-251-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: bookroom
+        template: bookroom
+        dependencies:
+        - findhotel
+        arguments:
+          parameters:
+          - name: hotel_name
+            value: '{{ tasks.findhotel.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: number_of_nights
+            value: '{{ inputs.parameters.number_of_nights }}'
+      - name: findhotel
+        template: findhotel
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'

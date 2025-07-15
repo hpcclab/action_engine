@@ -1,0 +1,61 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n    - name: main\n      dag:\n\
+\        tasks:\n          - name: t1\n            template: tti-Charcoal-Art\n  \
+\          arguments:\n              parameters:\n                - name: prompt\n\
+\                  value: \"Generate a charcoal art image of a serene forest.\"\n\
+\                \n          - name: t2\n            template: Image-Resizing\n  \
+\          dependencies: [t1]\n            arguments:\n              parameters:\n\
+\                - name: width\n                  value: 1920\n                - name:
+height\n                  value: 1080\n                - name: file\n            \
+\      value: '{{tasks.t1.outputs.parameters.result_file}}'\n                \n  \
+\        - name: t3\n            template: Image-To-PDF-Conversion\n            dependencies:
+[t2]\n            arguments:\n              parameters:\n                - name: file\n\
+\                  value: '{{tasks.t2.outputs.parameters.result_file}}'\n        \
+\        \n    - name: tti-Charcoal-Art\n      inputs:\n        parameters:\n    \
+\      - name: prompt\n      outputs:\n        parameters:\n          - name: result_file\n\
+\            valueFrom:\n              path: \"/tmp/generated_img.png\"\n      script:\n\
+\        image: python:3.9\n        command: [\"python\"]\n        source: |\n   \
+\       from PIL import Image\n          from diffusers import StableDiffusionPipeline,
+DPMSolverMultistepScheduler\n          import torch\n          from fastapi import
+FastAPI, HTTPException\n          from fastapi.responses import FileResponse\n\n \
+\         def load_model():\n              model_id = 'Falah/charcoal-style'\n   \
+\           pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)\n\
+\              pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n\
+\              pipe = pipe.to('cuda')\n              return pipe\n\n          def
+process_data(prompt, pipe):\n              response = pipe(prompt).images[0]\n   \
+\           return response\n\n          def generate_image(prompt):\n           \
+\   try:\n                  pipe = load_model()\n                  prompt = \"Charcoal-style
+picture: \" + prompt\n                  response = process_data(prompt, pipe)\n  \
+\                response.save('/tmp/generated_img.png')\n                  return
+'/tmp/generated_img.png'\n              except Exception as e:\n                 \
+\ raise Exception(f'Error generating image: {str(e)}')\n\n          prompt = \"{{inputs.parameters.prompt}}\"\
+\n          result_file = generate_image(prompt)\n          print(result_file)\n\n\
+\    - name: Image-Resizing\n      inputs:\n        parameters:\n          - name:
+width\n          - name: height\n          - name: file\n      outputs:\n        parameters:\n\
+\          - name: result_file\n            valueFrom:\n              path: \"/tmp/resized_image.png\"\
+\n      script:\n        image: python:3.9\n        command: [\"python\"]\n      \
+\  source: |\n          from fastapi import FastAPI, HTTPException, File, UploadFile\n\
+\          from fastapi.responses import FileResponse\n          from PIL import Image\n\
+\          import io\n          import os\n\n          def resize_image(width, height,
+file_path):\n              try:\n                  image = Image.open(file_path)\n\
+\                  resized = image.resize((width, height))\n                  filename
+= \"/tmp/resized_image.png\"\n                  resized.save(filename)\n         \
+\         return filename\n              except Exception as e:\n                \
+\  raise Exception(f\"Error resizing image: {str(e)}\")\n\n          width = int(\"\
+{{inputs.parameters.width}}\")\n          height = int(\"{{inputs.parameters.height}}\"\
+)\n          file = \"{{inputs.parameters.file}}\"\n\n          result_file = resize_image(width,
+height, file)\n          print(result_file)\n\n    - name: Image-To-PDF-Conversion\n\
+\      inputs:\n        parameters:\n          - name: file\n      outputs:\n    \
+\    parameters:\n          - name: result_file\n            valueFrom:\n        \
+\      path: \"/tmp/output.pdf\"\n      script:\n        image: python:3.9\n     \
+\   command: [\"python\"]\n        source: |\n          from fastapi import FastAPI,
+File, UploadFile, HTTPException\n          from fastapi.responses import FileResponse\n\
+\          from pathlib import Path\n          from PIL import Image\n          import
+img2pdf\n\n          def image_to_pdf(file_path):\n              try:\n          \
+\        file_name = Path(file_path).stem\n                  contents = file_path.read_bytes()\n\
+\                  pdf_bytes = img2pdf.convert(contents)\n                  pdf_file_path
+= f'/tmp/{file_name}.pdf'\n                  with open(pdf_file_path, 'wb') as pdf_file:\n\
+\                      pdf_file.write(pdf_bytes)\n                  return pdf_file_path\n\
+\              except Exception as e:\n                  raise Exception(f\"Error
+converting image to PDF: {str(e)}\")\n\n          file = \"{{inputs.parameters.file}}\"\
+\n          result_file = image_to_pdf(file)\n          print(result_file)"

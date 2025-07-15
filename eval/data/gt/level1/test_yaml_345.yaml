@@ -1,0 +1,33 @@
+# index: 345
+# query: I need to book a table for a Chinese restaurant in New York City for lunch tomorrow.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-345-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: booktable
+        template: booktable
+        dependencies:
+        - getrestaurant
+        arguments:
+          parameters:
+          - name: restaurant_name
+            value: '{{ tasks.getrestaurant.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: time
+            value: '{{ inputs.parameters.time }}'
+      - name: getrestaurant
+        template: getrestaurant
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: cuisine
+            value: '{{ inputs.parameters.cuisine }}'

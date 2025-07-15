@@ -1,0 +1,59 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  arguments:\n    parameters:\n      - name: width\n      - name:
+height\n      - name: prompt\n  entrypoint: main\n  templates:\n    - name: main\n\
+\      inputs:\n        parameters:\n          - name: width\n          - name: height\n\
+\          - name: prompt\n      dag:\n        tasks:\n          - name: t1\n    \
+\        template: tti_animation_art\n            arguments:\n              parameters:\n\
+\                - name: prompt\n                  value: \"{{inputs.parameters.prompt}}\"\
+\n            dependencies: []\n          - name: t2\n            template: tti_charcoal_art\n\
+\            arguments:\n              parameters:\n                - name: prompt\n\
+\                  value: \"{{inputs.parameters.prompt}}\"\n            dependencies:
+[]\n          - name: t3\n            template: tti_digital_art\n            arguments:\n\
+\              parameters:\n                - name: prompt\n                  value:
+\"{{inputs.parameters.prompt}}\"\n            dependencies: []\n          - name:
+t4\n            template: tti_futuristic_art\n            arguments:\n           \
+\   parameters:\n                - name: prompt\n                  value: \"{{inputs.parameters.prompt}}\"\
+\n            dependencies: []\n          - name: t5\n            template: tti_graffiti_art\n\
+\            arguments:\n              parameters:\n                - name: prompt\n\
+\                  value: \"{{inputs.parameters.prompt}}\"\n            dependencies:
+[]\n          - name: t6\n            template: tti_sketching_art\n            arguments:\n\
+\              parameters:\n                - name: prompt\n                  value:
+\"{{inputs.parameters.prompt}}\"\n            dependencies:\n              - t1\n\
+\              - t2\n              - t3\n              - t4\n              - t5\n\
+\          - name: t7\n            template: image_resizing\n            arguments:\n\
+\              parameters:\n                - name: width\n                  value:
+\"{{inputs.parameters.width}}\"\n                - name: height\n                \
+\  value: \"{{inputs.parameters.height}}\"\n                - name: file\n       \
+\           value: \"{{tasks.t6.outputs.result}}\"\n            dependencies:\n  \
+\            - t6\n          - name: t8\n            template: image_to_pdf_conversion\n\
+\            arguments:\n              parameters:\n                - name: file\n\
+\                  value: \"{{tasks.t7.outputs.result}}\"\n            dependencies:\n\
+\              - t7\n          - name: t9\n            template: image_enhancement\n\
+\            arguments:\n              parameters:\n                - name: file\n\
+\                  value: \"{{tasks.t7.outputs.result}}\"\n            dependencies:\n\
+\              - t7\n          - name: t10\n            template: tti_animation_art\n\
+\            arguments:\n              parameters:\n                - name: prompt\n\
+\                  value: \"{{inputs.parameters.prompt}}\"\n            dependencies:\n\
+\              - t8\n              - t9\n\n    - name: tti_animation_art\n      inputs:\n\
+\        parameters:\n          - name: prompt\n      http:\n        method: POST\n\
+\        url: http://example.com/generate_anime_image/\n        successCondition:
+response.statusCode == 200\n    \n    - name: tti_charcoal_art\n      inputs:\n  \
+\      parameters:\n          - name: prompt\n      http:\n        method: POST\n\
+\        url: http://example.com/generate_charcoal_image/\n        successCondition:
+response.statusCode == 200\n        \n    - name: tti_digital_art\n      inputs:\n\
+\        parameters:\n          - name: prompt\n      http:\n        method: POST\n\
+\        url: http://example.com/generate_digital_image/\n        successCondition:
+response.statusCode == 200\n        \n    - name: tti_futuristic_art\n      inputs:\n\
+\        parameters:\n          - name: prompt\n      http:\n        method: POST\n\
+\        url: http://example.com/generate_futuristic_image/\n        successCondition:
+response.statusCode == 200\n        \n    - name: tti_graffiti_art\n      inputs:\n\
+\        parameters:\n          - name: prompt\n      http:\n        method: POST\n\
+\        url: http://example.com/generate_grafiti_image/\n        successCondition:
+response.statusCode == 200\n        \n    - name: tti_sketching_art\n      inputs:\n\
+\        parameters:\n          - name: prompt\n      http:\n        method: POST\n\
+\        url: http://example.com/generate_sketching_image/\n        successCondition:
+response.statusCode == 200\n\n    - name: image_resizing\n      inputs:\n        parameters:\n\
+\          - name: width\n          - name: height\n          - name: file\n     \
+\ http:\n        method: POST\n        url: http://example.com/resize_image/\n   \
+\     successCondition: response.statusCode == 200\n    \n    - name: image_to_pdf_conversion\n\
+\      inputs:\n        parameters:\n          - name: file"

@@ -1,0 +1,39 @@
+# index: 166
+# query: Can I get a ticket for 'Metal Concert' in San Francisco on 15th September?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-166-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: eventname2id
+        template: eventname2id
+        arguments:
+          parameters:
+          - name: Event_name
+            value: '{{ inputs.parameters.Event_name }}'
+      - name: reserveticket
+        template: reserveticket
+        dependencies:
+        - cityname2id
+        arguments:
+          parameters:
+          - name: City_ID
+            value: '{{ tasks.cityname2id.result }}'
+          - name: Event_ID
+            value: '{{ tasks.eventname2id.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: cityname2id
+        template: cityname2id
+        dependencies:
+        - eventname2id
+        arguments:
+          parameters:
+          - name: city_name
+            value: '{{ inputs.parameters.city_name }}'

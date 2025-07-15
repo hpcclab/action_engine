@@ -1,0 +1,50 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n  - name: main\n    dag:\n    \
+\  tasks:\n      - name: t1\n        template: tti-ukiyoe-art\n        arguments:\n\
+\          parameters:\n          - name: prompt\n            value: \"Japanese ukiyoe
+art depiction of the Edo period\" # Prompt for the first task\n          \n      -
+name: t2\n        dependencies: [t1]\n        template: tti-charcoal-art\n       \
+\ arguments:\n          parameters:\n          - name: prompt\n            value:
+\"Charcoal art depiction of the Renaissance period\" # Prompt for the second task\n\
+\n      - name: t3\n        dependencies: [t2]\n        template: tti-pastel-art\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: \"Pastel art depiction of the Baroque period\" # Prompt for the third task\n\
+\n      - name: t4\n        dependencies: [t3]\n        template: tti-painting-art\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: \"Painting art depiction of the Victorian era\" # Prompt for the fourth task\n\
+\n      - name: t5\n        dependencies: [t4]\n        template: tti-ukiyoe-art-enhance\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: \"Enhance the ukiyoe art depiction of the Edo period\" # Prompt for the fifth
+task\n\n      - name: t6\n        dependencies: [t5]\n        template: tti-charcoal-art-enhance\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: \"Enhance the charcoal art depiction of the Renaissance period\" # Prompt
+for the sixth task\n\n      - name: t7\n        dependencies: [t6]\n        template:
+tti-pastel-art-enhance\n        arguments:\n          parameters:\n          - name:
+prompt\n            value: \"Enhance the pastel art depiction of the Baroque period\"\
+\ # Prompt for the seventh task\n\n      - name: t8\n        dependencies: [t7]\n\
+\        template: tti-painting-art-enhance\n        arguments:\n          parameters:\n\
+\          - name: prompt\n            value: \"Enhance the painting art depiction
+of the Victorian era\" # Prompt for the eighth task\n\n  - name: tti-ukiyoe-art\n\
+\    inputs:\n      parameters:\n      - name: prompt\n    http:\n      method: POST\n\
+\      url: http://example.com/ukiyoe/art  # Replace with actual URL\n      params:\n\
+\        prompt: \"{{ inputs.parameters.prompt }}\"\n      successCondition: response.statusCode
+== 200\n\n  - name: tti-charcoal-art\n    inputs:\n      parameters:\n      - name:
+prompt\n    http:\n      method: POST\n      url: http://example.com/charcoal/art\
+\  # Replace with actual URL\n      params:\n        prompt: \"{{ inputs.parameters.prompt
+}}\"\n      successCondition: response.statusCode == 200\n\n  - name: tti-pastel-art\n\
+\    inputs:\n      parameters:\n      - name: prompt\n    http:\n      method: POST\n\
+\      url: http://example.com/pastel/art  # Replace with actual URL\n      params:\n\
+\        prompt: \"{{ inputs.parameters.prompt }}\"\n      successCondition: response.statusCode
+== 200\n\n  - name: tti-painting-art\n    inputs:\n      parameters:\n      - name:
+prompt\n    http:\n      method: POST\n      url: http://example.com/painting/art\
+\  # Replace with actual URL\n      params:\n        prompt: \"{{ inputs.parameters.prompt
+}}\"\n      successCondition: response.statusCode == 200\n  \n  - name: tti-ukiyoe-art-enhance\n\
+\    inputs:\n      parameters:\n      - name: prompt\n    http:\n      method: POST\n\
+\      url: http://example.com/ukiyoe/enhance  # Replace with actual URL\n      params:\n\
+\        prompt: \"{{ inputs.parameters.prompt }}\"\n      successCondition: response.statusCode
+== 200\n\n  - name: tti-charcoal-art-enhance\n    inputs:\n      parameters:\n   \
+\   - name: prompt\n    http:\n      method: POST\n      url: http://example.com/charcoal/enhance\
+\  # Replace with actual URL\n      params:\n        prompt: \"{{ inputs.parameters.prompt
+}}\"\n      successCondition: response.statusCode == 200\n\n  - name: tti-pastel-art-enhance\n\
+\    inputs:\n      parameters:\n      - name: prompt\n    http:\n      method: POST\n\
+\      url: http://example.com/pastel/enhance  # Replace with"

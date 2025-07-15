@@ -1,0 +1,68 @@
+# Core web framework
+fastapi
+uvicorn
+
+# AWS integration
+boto3
+
+# LLM and AI functionality
+openai
+langchain
+langchain-openai
+langchain-community
+transformers
+vllm
+
+# Data processing and embeddings
+faiss-cpu
+sentence-transformers
+
+# Image processing
+Pillow
+
+# File handling and utilities
+python-multipart
+python-dotenv
+ruamel.yaml
+
+# Data science and visualization
+matplotlib
+pytz
+scikit-learn
+
+# Additional utilities
+pydantic
+
+# Additional dependencies from pip list
+aiohttp
+anyio
+attrs
+certifi
+click
+dataclasses-json
+filelock
+huggingface-hub
+httpx
+idna
+importlib_metadata
+jinja2
+jmespath
+jsonschema
+markupsafe
+numpy
+packaging
+pyyaml
+requests
+safetensors
+setuptools
+six
+sniffio
+starlette
+tiktoken
+tokenizers
+tqdm
+typing_extensions
+urllib3
+websockets
+yarl
+

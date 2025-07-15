@@ -1,0 +1,50 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n  - name: main\n    dag:\n    \
+\  tasks:\n      - name: t1\n        template: tti_Sketching_Art\n        arguments:\n\
+\          parameters:\n          - name: prompt\n            value: \"Create a sketch
+of a castle surrounded by a dense forest.\"\n      - name: t2\n        dependencies:
+[t1]\n        template: Image_Resizing\n        arguments:\n          parameters:\n\
+\          - name: width\n            value: \"1280\"\n          - name: height\n\
+\            value: \"720\"\n          - name: file\n            value: \"{{tasks.t1.outputs.artifact.image}}\"\
+\n      - name: t3\n        dependencies: [t2]\n        template: Image_Enhancement\n\
+\        arguments:\n          parameters:\n          - name: file\n            value:
+\"{{tasks.t2.outputs.artifact.image}}\"\n      - name: t4\n        dependencies: [t3]\n\
+\        template: image_to_pdf_conversion\n        arguments:\n          parameters:\n\
+\          - name: file\n            value: \"{{tasks.t3.outputs.artifact.enhanced_image}}\"\
+\n      - name: t5\n        dependencies: [t4]\n        template: email_pdf\n    \
+\    arguments: \n          parameters:\n          - name: file\n            value:
+\"{{tasks.t4.outputs.artifact.pdf}}\"\n\n  templates:\n  - name: tti_Sketching_Art\n\
+\    inputs:\n      parameters:\n      - name: prompt\n    outputs:\n      artifacts:\n\
+\      - name: image\n        path: /tmp/generated_image.png\n    container:\n   \
+\   image: python:3.8\n      command: [python, -c]\n      args: \n      - |\n    \
+\    from fastapi import FastAPI, HTTPException\n        from fastapi.responses import
+FileResponse\n        from subprocess import run\n\n        # Your provided source
+code to generate image\n        code = '''\n        from fastapi import FastAPI, HTTPException\n\
+\        from fastapi.responses import FileResponse\n        from pydantic import
+BaseModel\n        from pathlib import Path\n        import torch\n        from diffusers
+import (StableDiffusionXLPipeline, EulerAncestralDiscreteScheduler, AutoencoderKL)\n\
+\        app = FastAPI()\n        @app.post(\"/generate_sketching_image/\")\n    \
+\    async def generate_image(prompt: str):\n            try:\n                lora_model_id
+= \"Linaqruf/sketch-style-xl-lora\"\n                lora_filename = \"sketch-style-xl.safetensors\"\
+\n                vae = AutoencoderKL.from_pretrained(\n                    \"madebyollin/sdxl-vae-fp16-fix\"\
+, torch_dtype=torch.float16)\n                pipe = StableDiffusionXLPipeline.from_pretrained(\n\
+\                    \"Linaqruf/animagine-xl-2.0\", vae=vae, torch_dtype=torch.float16,
+use_safetensors=True, variant=\"fp16\")\n                pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(pipe.scheduler.config)\n\
+\                pipe.to('cuda')\n                pipe.load_lora_weights(lora_model_id,
+weight_name=lora_filename)\n                pipe.fuse_lora(lora_scale=0.6)\n     \
+\           prompt = \"Monochrome, Greyscale Sketch-style picture: \" + prompt\n \
+\               negative_prompt = \"lowres, bad anatomy, bad hands, text, error, missing
+fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality,
+jpeg artifacts, signature, watermark, username, blurry\"\n                image =
+pipe(prompt, negative_prompt=negative_prompt, width=1024, height=1024, guidance_scale=12,
+num_inference_steps=50).images[0]\n                pipe.unfuse_lora()\n          \
+\      image.save(\"/tmp/generated_img.png\")\n                return FileResponse(\"\
+/tmp/generated_img.png\")\n            except Exception as e:\n                raise
+HTTPException(status_code=500, detail=str(e))\n        '''\n        with open('/tmp/code.py',
+'w') as f:\n            f.write(code)\n        run(['uvicorn', 'code:app', '--host',
+'0.0.0.0', '--port', '8080'])\n  - name: Image_Resizing\n    inputs:\n      parameters:\n\
+\      - name: width\n      - name: height\n      - name: file\n    outputs:\n   \
+\   artifacts:\n      - name: image\n        path: /tmp/resized_image.png\n    container:\n\
+\      image: python:3.8\n      command: [python, -c]\n      args: \n      - |\n \
+\       from fastapi import FastAPI, HTTPException, File, UploadFile\n        from
+fastapi.responses import"

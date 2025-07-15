@@ -1,0 +1,37 @@
+# index: 591
+# query: May I have a recipe for 'Chocolate Cake' using 'Cocoa Powder'?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-591-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getrecipe
+        template: getrecipe
+        dependencies:
+        - recipename2id
+        arguments:
+          parameters:
+          - name: Recipe_ID
+            value: '{{ tasks.recipename2id.result }}'
+          - name: Ingredient_ID
+            value: '{{ tasks.ingredientname2id.result }}'
+      - name: recipename2id
+        template: recipename2id
+        dependencies:
+        - ingredientname2id
+        arguments:
+          parameters:
+          - name: Recipe_name
+            value: '{{ inputs.parameters.Recipe_name }}'
+      - name: ingredientname2id
+        template: ingredientname2id
+        arguments:
+          parameters:
+          - name: Ingredient_name
+            value: '{{ inputs.parameters.Ingredient_name }}'

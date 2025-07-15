@@ -1,0 +1,17 @@
+# index: 920
+# query: I am in Los Angeles and I'm craving Chinese food but I am gluten intolerant. Can you suggest something for me?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-920-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: recommenddish
+        template: recommenddish
+        arguments:
+          parameters: []

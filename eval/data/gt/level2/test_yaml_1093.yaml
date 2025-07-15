@@ -1,0 +1,37 @@
+# index: 1093
+# query: I want to watch a highly rated thriller movie. Please book tickets for it.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1093-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findmovie
+        template: findmovie
+        arguments:
+          parameters:
+          - name: genre
+            value: '{{ inputs.parameters.genre }}'
+          - name: rating
+            value: '{{ inputs.parameters.rating }}'
+      - name: getmovietimes
+        template: getmovietimes
+        dependencies:
+        - findmovie
+        arguments:
+          parameters:
+          - name: movie_name
+            value: '{{ tasks.findmovie.result }}'
+      - name: bookmovietickets
+        template: bookmovietickets
+        dependencies:
+        - getmovietimes
+        arguments:
+          parameters:
+          - name: showtime
+            value: '{{ tasks.getmovietimes.result }}'

@@ -1,0 +1,35 @@
+# index: 910
+# query: My name is Sarah. Can you suggest where I can put my savings based on my expenditures?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-910-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: suggestinvestment
+        template: suggestinvestment
+        dependencies:
+        - calculatesavings
+        arguments:
+          parameters:
+          - name: Savings
+            value: '{{ tasks.calculatesavings.result }}'
+      - name: calculatesavings
+        template: calculatesavings
+        dependencies:
+        - trackspending
+        arguments:
+          parameters:
+          - name: SpendingReport
+            value: '{{ tasks.trackspending.result }}'
+      - name: trackspending
+        template: trackspending
+        arguments:
+          parameters:
+          - name: Username
+            value: '{{ inputs.parameters.Username }}'

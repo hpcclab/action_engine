@@ -1,0 +1,37 @@
+# index: 1049
+# query: I'd like to know the potential cost of my flight to Sydney from San Francisco in June considering the weather conditions.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1049-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: weathereffectprice
+        template: weathereffectprice
+        dependencies:
+        - flightinfo
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: original_price
+            value: '{{ tasks.flightinfo.result }}'
+      - name: flightinfo
+        template: flightinfo
+        arguments:
+          parameters:
+          - name: city_from
+            value: '{{ inputs.parameters.city_from }}'
+          - name: city_to
+            value: '{{ inputs.parameters.city_to }}'
+          - name: date_from
+            value: '{{ inputs.parameters.date_from }}'
+          - name: date_to
+            value: '{{ inputs.parameters.date_to }}'

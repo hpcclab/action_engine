@@ -1,0 +1,170 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+    - name: height
+    - name: file
+    - name: file
+    - name: file
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+      - name: file
+      - name: file
+    dag:
+      tasks:
+      - name: t1
+        template: tti-animation-art
+        arguments:
+          parameters: []
+        dependencies: []
+      - name: t2
+        template: tti-charcoal-art
+        arguments:
+          parameters: []
+        dependencies: []
+      - name: t3
+        template: tti-digital-art
+        arguments:
+          parameters: []
+        dependencies: []
+      - name: t4
+        template: tti-futuristic-art
+        arguments:
+          parameters: []
+        dependencies: []
+      - name: t5
+        template: tti-graffiti-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{ tasks.t5.result }}'
+        dependencies: []
+      - name: t6
+        template: tti-sketching-art
+        arguments:
+          parameters: []
+        dependencies:
+        - t1
+        - t2
+        - t3
+        - t4
+        - t5
+      - name: t7
+        template: image-resizing
+        arguments:
+          parameters:
+          - name: width
+            value: '{{ inputs.parameters.width }}'
+          - name: height
+            value: '{{ inputs.parameters.height }}'
+          - name: file
+            value: '{{ inputs.parameters.file }}'
+        dependencies:
+        - t6
+      - name: t8
+        template: image-to-pdf-conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ inputs.parameters.file }}'
+        dependencies:
+        - t7
+      - name: t9
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{ inputs.parameters.file }}'
+        dependencies:
+        - t7
+      - name: t10
+        template: tti-animation-art
+        arguments:
+          parameters: []
+        dependencies:
+        - t8
+        - t9
+  - name: tti-animation-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: tti-charcoal-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: tti-digital-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: tti-futuristic-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: tti-graffiti-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: tti-sketching-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: image-resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: image-to-pdf-conversion
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: image-enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200

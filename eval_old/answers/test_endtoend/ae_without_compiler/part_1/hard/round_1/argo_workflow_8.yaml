@@ -1,0 +1,75 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t0
+        template: tti_Sketching_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a sketching art style image of the Jomon period (14,000–300
+              BCE)
+      - name: t1
+        template: tti_Sketching_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a sketching art style image of the Nara period (710–794)
+      - name: t2
+        template: tti_Sketching_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a sketching art style image of the Heian period (794–1185)
+      - name: t3
+        template: tti_Sketching_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a sketching art style image of the Kamakura period (1185–1333)
+      - name: t4
+        template: tti_Sketching_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a sketching art style image of the Muromachi period (1336–1573)
+      - name: t5
+        template: tti_Sketching_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a sketching art style image of the Azuchi-Momoyama period
+              (1573–1603)
+      - name: t6
+        template: tti_Sketching_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a sketching art style image of the Edo period (1603–1868)
+      - name: t7
+        template: tti_Sketching_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a sketching art style image of the Meiji period (1868–1912)
+      - name: t8
+        template: tti_Sketching_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a sketching art style image of the Showa period (1926–1989)
+
+  - name: tti_Sketching_Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: <INSERT_API_ENDPOINT_HERE>
+      successCondition: response.statusCode == 200

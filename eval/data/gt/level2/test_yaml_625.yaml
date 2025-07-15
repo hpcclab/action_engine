@@ -1,0 +1,35 @@
+# index: 625
+# query: I want a complete weather report for Paris. Can you do it?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-625-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: weatherinfo
+        template: weatherinfo
+        dependencies:
+        - location2coordinates
+        arguments:
+          parameters:
+          - name: coordinates
+            value: '{{ tasks.location2coordinates.result }}'
+      - name: location2coordinates
+        template: location2coordinates
+        arguments:
+          parameters:
+          - name: location_name
+            value: '{{ inputs.parameters.location_name }}'
+      - name: generateweatherreport
+        template: generateweatherreport
+        dependencies:
+        - weatherinfo
+        arguments:
+          parameters:
+          - name: weather_data
+            value: '{{ tasks.weatherinfo.result }}'

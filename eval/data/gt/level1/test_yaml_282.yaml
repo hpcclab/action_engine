@@ -1,0 +1,31 @@
+# index: 282
+# query: I wonder if I could see the review of a romance movie by Woody Allen in 2011?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-282-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: moviereview
+        template: moviereview
+        dependencies:
+        - moviesuggestion
+        arguments:
+          parameters:
+          - name: movie_name
+            value: '{{ tasks.moviesuggestion.result }}'
+      - name: moviesuggestion
+        template: moviesuggestion
+        arguments:
+          parameters:
+          - name: genre
+            value: '{{ inputs.parameters.genre }}'
+          - name: director
+            value: '{{ inputs.parameters.director }}'
+          - name: year
+            value: '{{ inputs.parameters.year }}'

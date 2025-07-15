@@ -1,0 +1,40 @@
+
+###Initial Generation
+[{'ae_wo_compiler': 
+{
+    'easy': ['Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'There are 2 missing functions that need to be constructed in order to proceed further. These functions are required to complete the task.'], 
+    'inter': ['Success', 'Success', 'Success', 'Success', "Error saving file: local variable 'argo_wf' referenced before assignment", 'Success', 'Success', 'Success', "There is a missing function that is required to send the PDF of the enhanced sketch of the castle surrounded by a dense forest to the colleague's email. Please construct the function to send emails.", 'There are 1 missing function(s) that need to be constructed in order to proceed with the task. The missing function should be able to perform the required task.'], 
+    'hard': ['Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'There is a missing function that needs to be constructed in order to proceed with the task. The task requires converting the resized animation style image of the modern cityscape to JPEG format. Please create a function to handle this conversion.', 'There are 1 missing function(s) that need to be constructed in order to proceed with the task. The missing function should be able to perform the required task.']
+}}]
+
+
+###Final Generation
+[{'ae_wo_compiler': 
+{
+    'easy': ['Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success'], 
+    'inter': ['Success', 'Success', 'Success', 'Success', "Success", 'Success', 'Success', 'Success', "Success", 'Success'], 
+    'hard': ['Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success']
+}}]
+
+
+
+##Scoring 
+Inter 6, 9, failed
+
+
+Easy Dataset scores (%): [66.7, 100.0, 66.7, 100.0, 66.7, 83.3, 75.0, 83.3, 100.0, 83.3]
+****************************************
+Inter Dataset scores (%): [33.3, 80.0, 88.9, 77.8, 96.7, 70.0, 66.7, 73.3, 82.2, 73.3]
+****************************************
+Hard Dataset scores (%): [61.1, 42.2, 32.8, 28.6, 65.8, 22.3, 77.6, 66.7, 40.0, 66.7]
+****************************************
+--------------------------------------------------------------------------------
+Easy Dataset scores (%): [66.7, 33.3, 100.0, 100.0, 100.0, 83.3, 100.0, 100.0, 100.0, 100.0]
+****************************************
+Inter Dataset scores (%): [33.3, 93.3, 76.2, 80.6, 86.7, -inf, 80.0, -inf, 93.3, 86.7]
+****************************************
+Hard Dataset scores (%): [72.2, 50.0, 70.9, 57.1, 72.5, 9.8, 83.7, 100.0, 54.9, 100.0]
+
+
+Sep12 14:18 afte fixed dd
+[{'ae_wo_compiler': {'easy': ['Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success'], 'inter': ['Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success', 'Success'], 'hard': ['Success', 'Success', 'Success', 'Failed: 4', "Failed: local variable 'e' referenced before assignment", 'Success', 'Success', "Failed: local variable 'e' referenced before assignment", "Failed: local variable 'e' referenced before assignment", 'Success']}}]

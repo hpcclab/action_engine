@@ -1,0 +1,29 @@
+# index: 785
+# query: It looks like it's going to be really hot in Dubai today. I can't stand the heat. Can you suggest and book an indoor activity for me?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-785-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: findindooractivities
+        template: findindooractivities
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: bookactivity
+        template: bookactivity
+        dependencies:
+        - findindooractivities
+        arguments:
+          parameters:
+          - name: activity_name
+            value: '{{ tasks.findindooractivities.result }}'
+          - name: city
+            value: '{{ inputs.parameters.city }}'

@@ -1,0 +1,31 @@
+# index: 255
+# query: I will be in New York next week, can you book a room for 5 nights?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-255-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: bookroom
+        template: bookroom
+        dependencies:
+        - findhotel
+        arguments:
+          parameters:
+          - name: hotel_name
+            value: '{{ tasks.findhotel.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+          - name: number_of_nights
+            value: '{{ inputs.parameters.number_of_nights }}'
+      - name: findhotel
+        template: findhotel
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'

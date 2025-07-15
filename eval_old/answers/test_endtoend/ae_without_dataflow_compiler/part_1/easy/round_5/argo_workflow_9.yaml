@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti_Sketching_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A bustling marketplace
+      - name: t2
+        template: image_to_pdf_conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.result}}'  # This assumes the output file from t1 can be referenced like this
+        dependencies: [t1]
+
+  - name: tti_Sketching_Art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://path_to_your_api/tti_Sketching_Art    # Replace with the actual URL
+      body: |
+        {
+          "prompt": "{{inputs.parameters.prompt}}"
+        }
+      successCondition: response.statusCode == 200
+      output:
+        result:
+          jsonPath: '{output_file}'
+
+  - name: image_to_pdf_conversion
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://path_to_your_api/image_to_pdf_conversion    # Replace with the actual URL
+      body: |
+        {
+          "file": "{{inputs.parameters.file}}"
+        }
+      successCondition: response.statusCode == 200
+      output:
+        result:
+          jsonPath: '{output_file}'

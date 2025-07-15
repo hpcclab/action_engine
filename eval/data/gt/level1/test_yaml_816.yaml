@@ -1,0 +1,31 @@
+# index: 816
+# query: I want to know the ingredients of the 'Tandoori Chicken' from an Indian restaurant in Los Angeles.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-816-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: foodfinder
+        template: foodfinder
+        arguments:
+          parameters:
+          - name: cuisine
+            value: '{{ inputs.parameters.cuisine }}'
+          - name: location
+            value: '{{ inputs.parameters.location }}'
+      - name: foodingredients
+        template: foodingredients
+        dependencies:
+        - foodfinder
+        arguments:
+          parameters:
+          - name: dish_name
+            value: '{{ inputs.parameters.dish_name }}'
+          - name: restaurant_name
+            value: '{{ tasks.foodfinder.result }}'

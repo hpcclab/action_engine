@@ -1,0 +1,161 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: prompt
+      value: The prompt to generate images of a black cat in various art styles.
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: prompt
+    dag:
+      tasks:
+      - name: t1
+        template: tti_mosaic_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+      - name: t2
+        dependencies: [t1]
+        template: tti_pastel_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+      - name: t3
+        dependencies: [t1, t2]
+        template: tti_graffiti_art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{inputs.parameters.prompt}}'
+      - name: t4
+        dependencies: [t1]
+        template: image_enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.result}}'
+      - name: t5
+        dependencies: [t1]
+        template: resize_image
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.result}}'
+      - name: t6
+        dependencies: [t1]
+        template: convert_to_png
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.result}}'
+      - name: t7
+        dependencies: [t6]
+        template: email_image
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t6.outputs.result}}'
+
+  - name: tti_mosaic_art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/tti_mosaic_art
+      parameters:
+        body:
+          prompt: '{{inputs.parameters.prompt}}'
+      successCondition: response.statusCode == 200
+      response:
+        body: '{{workflow.outputs.artifacts}}'
+  - name: tti_pastel_art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/tti_pastel_art
+      parameters:
+        body:
+          prompt: '{{inputs.parameters.prompt}}'
+      successCondition: response.statusCode == 200
+      response:
+        body: '{{workflow.outputs.artifacts}}'
+
+  - name: tti_graffiti_art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url: http://example.com/tti_graffiti_art
+      parameters:
+        body:
+          prompt: '{{inputs.parameters.prompt}}'
+      successCondition: response.statusCode == 200
+      response:
+        body: '{{workflow.outputs.artifacts}}'
+
+  - name: image_enhancement
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/image_enhancement
+      parameters:
+        body:
+          file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+      response:
+        body: '{{workflow.outputs.artifacts}}'
+  - name: resize_image
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/resize_image
+      parameters:
+        body:
+          file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+      response:
+        body: '{{workflow.outputs.artifacts}}'
+
+  - name: convert_to_png
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/convert_to_png
+      parameters:
+        body:
+          file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+      response:
+        body: '{{workflow.outputs.artifacts}}'
+
+  - name: email_image
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/email_image
+      parameters:
+        body:
+          file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+      response:
+        body: '{{workflow.outputs.artifacts}}'

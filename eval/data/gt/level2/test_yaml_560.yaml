@@ -1,0 +1,37 @@
+# index: 560
+# query: Can you add the book 'To Kill a Mockingbird' to Harper Lee's library?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-560-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: authorname2id
+        template: authorname2id
+        dependencies:
+        - booktitle2id
+        arguments:
+          parameters:
+          - name: author_name
+            value: '{{ inputs.parameters.author_name }}'
+      - name: addbooktoauthor
+        template: addbooktoauthor
+        dependencies:
+        - authorname2id
+        arguments:
+          parameters:
+          - name: author_ID
+            value: '{{ tasks.authorname2id.result }}'
+          - name: book_ID
+            value: '{{ tasks.booktitle2id.result }}'
+      - name: booktitle2id
+        template: booktitle2id
+        arguments:
+          parameters:
+          - name: book_title
+            value: '{{ inputs.parameters.book_title }}'

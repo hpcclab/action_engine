@@ -1,0 +1,50 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n  - name: main\n    dag:\n    \
+\  tasks:\n      - name: t1\n        template: tti-animation-art\n        arguments:\n\
+\          parameters:\n          - name: prompt\n            value: 'Create a digital
+art image of a modern cityscape in animation style.'\n      - name: t2\n        template:
+tti-charcoal-art\n        arguments:\n          parameters:\n          - name: prompt\n\
+\            value: '{{tasks.t1.outputs.result}}'\n        dependencies: [t1]\n  \
+\    - name: t3\n        template: tti-digital-art\n        arguments:\n         \
+\ parameters:\n          - name: prompt\n            value: '{{tasks.t2.outputs.result}}'\n\
+\        dependencies: [t2]\n      - name: t4\n        template: tti-futuristic-art\n\
+\        arguments:\n          parameters:\n          - name: prompt\n           \
+\ value: '{{tasks.t3.outputs.result}}'\n        dependencies: [t3]\n      - name:
+t5\n        template: tti-graffiti-art\n        arguments:\n          parameters:\n\
+\          - name: prompt\n            value: '{{tasks.t4.outputs.result}}'\n    \
+\    dependencies: [t4]\n      - name: t6\n        template: tti-sketching-art\n \
+\       arguments:\n          parameters:\n          - name: prompt\n            value:
+'{{tasks.t5.outputs.result}}'\n        dependencies: [t5]\n      - name: t7\n    \
+\    template: image-resizing\n        arguments:\n          parameters:\n       \
+\   - name: width\n            value: 500\n          - name: height\n            value:
+500\n          - name: file\n            value: '{{tasks.t6.outputs.result}}'\n  \
+\      dependencies: [t6]\n      - name: t8\n        template: convert-to-jpeg\n \
+\       arguments:\n          parameters:\n          - name: file\n            value:
+'{{tasks.t7.outputs.result}}'\n        dependencies: [t7]\n      - name: t9\n    \
+\    template: image-enhancement\n        arguments:\n          parameters:\n    \
+\      - name: file\n            value: '{{tasks.t8.outputs.result}}'\n        dependencies:
+[t8]\n      - name: t10\n        template: email-image-for-feedback\n        arguments:\n\
+\          parameters:\n          - name: file\n            value: '{{tasks.t9.outputs.result}}'\n\
+\        dependencies: [t9]\n\n  - name: tti-animation-art\n    inputs:\n      parameters:\n\
+\      - name: prompt\n    container:\n      image: appropriate-docker-image\n   \
+\   command: [python]\n      args: [\n        \"-c\",\n        \"from fastapi import
+FastAPI, HTTPException; from fastapi.responses import FileResponse; from PIL import
+Image; from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler;
+import torch; from pydantic import BaseModel; from pathlib import Path; app = FastAPI();
+def load_model(): model_id = 'dreamlike-art/dreamlike-anime-1.0'; pipe = StableDiffusionPipeline.from_pretrained(model_id,
+torch_dtype=torch.float16); pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config);
+pipe = pipe.to('cuda'); return pipe; def process_data(prompt, pipe): response = pipe(prompt).images[0];
+return response; @app.post('/generate_anime_image/') async def generate_image(prompt:
+str): try: pipe = load_model(); prompt = 'Anime-style picture: ' + prompt; response
+= process_data(prompt, pipe); response.save('generated_img.png'); image_path = Path('generated_img.png');
+if not image_path.is_file(): return {'error': 'Image not found on the server'}; return
+FileResponse(image_path); except Exception as e: raise HTTPException(status_code=500,
+detail=str(e))\"\n      ]\n  - name: tti-charcoal-art\n    inputs:\n      parameters:\n\
+\      - name: prompt\n    container:\n      image: appropriate-docker-image\n   \
+\   command: [python]\n      args: [\n        \"-c\",\n        \"from fastapi import
+FastAPI, HTTPException; from fastapi.responses import FileResponse; from PIL import
+Image; from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler;
+import torch; from pydantic import BaseModel; from pathlib import Path; app = FastAPI();
+def load_model(): model_id = 'Falah/charcoal-style'; pipe = StableDiffusionPipeline.from_pretrained(model_id,
+torch_dtype=torch.float16); pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config);
+pipe = pipe.to('cuda'); return pipe; def"

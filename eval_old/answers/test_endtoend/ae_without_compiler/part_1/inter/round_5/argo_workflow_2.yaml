@@ -1,0 +1,72 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti_Charcoal_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Generate a charcoal art image of a serene forest.
+      - name: t2
+        template: Image_Resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 1920
+          - name: height
+            value: 1080
+          - name: file
+            value: '{{tasks.t1.outputs.artifact}}'
+        dependencies: [t1]
+      - name: t3
+        template: image_to_pdf_conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t2.outputs.artifact}}'
+        dependencies: [t2]
+
+  - name: tti_Charcoal_Art
+    inputs:
+      parameters:
+      - name: prompt
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/generate_charcoal_image/
+      body:
+        prompt: '{{inputs.parameters.prompt}}'
+      successCondition: response.statusCode == 200
+
+  - name: Image_Resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/resize_image/
+      body:
+        width: '{{inputs.parameters.width}}'
+        height: '{{inputs.parameters.height}}'
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+
+  - name: image_to_pdf_conversion
+    inputs:
+      parameters:
+      - name: file
+    http:
+      method: POST
+      url: http://example.com/convert_to_pdf/
+      body:
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200

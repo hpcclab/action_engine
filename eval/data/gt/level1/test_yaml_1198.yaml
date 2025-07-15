@@ -1,0 +1,33 @@
+# index: 1198
+# query: I'm staying in Atlanta and I need to find a pharmacy stocking metformin. If available, could you reserve it under my name, Robert Brown?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-1198-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: locatepharmacy
+        template: locatepharmacy
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: drug
+            value: '{{ inputs.parameters.drug }}'
+      - name: reservemedicine
+        template: reservemedicine
+        dependencies:
+        - locatepharmacy
+        arguments:
+          parameters:
+          - name: pharmacy_name
+            value: '{{ tasks.locatepharmacy.result }}'
+          - name: drug
+            value: '{{ inputs.parameters.drug }}'
+          - name: patient_name
+            value: '{{ inputs.parameters.patient_name }}'

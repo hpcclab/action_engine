@@ -1,0 +1,23 @@
+{
+  "StartAt": "t1",
+  "States": {
+    "t1": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-2:559198857332:function:getuserfavouritegenre",
+      "ResultPath": "$",
+      "Next": "t2"
+    },
+    "t2": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-2:559198857332:function:musicrecommend",
+      "ResultPath": "$",
+      "Next": "t3"
+    },
+    "t3": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-2:559198857332:function:playmusic",
+      "ResultPath": "$",
+      "End": true
+    }
+  }
+}

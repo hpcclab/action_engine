@@ -1,0 +1,37 @@
+# index: 972
+# query: What food festivals are currently open in parks in Sydney?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-972-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: foodfestival
+        template: foodfestival
+        dependencies:
+        - openparks
+        arguments:
+          parameters:
+          - name: park
+            value: '{{ tasks.openparks.result }}'
+      - name: currenttime
+        template: currenttime
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+      - name: openparks
+        template: openparks
+        dependencies:
+        - currenttime
+        arguments:
+          parameters:
+          - name: city
+            value: '{{ inputs.parameters.city }}'
+          - name: time
+            value: '{{ tasks.currenttime.result }}'

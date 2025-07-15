@@ -1,0 +1,80 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  arguments:
+    parameters:
+    - name: width
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: width
+    dag:
+      tasks:
+      - name: t1
+        template: tti-animation-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{{{ tasks.t1.result }}}}'
+        dependencies: []
+      - name: t2
+        template: tti-animation-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: '{{{{ tasks.t2.result }}}}'
+        dependencies: []
+  - name: tti-animation-art
+    inputs:
+      parameters:
+      - name: prompt
+    http:
+      method: POST
+      url:
+      successCondition: response.statusCode == 200
+  - name: t3
+    template: tti-animation-art
+    arguments:
+      parameters:
+      - name: prompt
+        value: '{{{{ tasks.t3.result }}}}'
+      dependencies: []
+  - name: t4
+    template: tti-animation-art
+    arguments:
+      parameters:
+      - name: prompt
+        value: '{{{{ tasks.t4.result }}}}'
+      dependencies: []
+  - name: t5
+    template: tti-animation-art
+    arguments:
+      parameters:
+      - name: prompt
+        value: '{{{{ tasks.t5.result }}}}'
+      dependencies: []
+  - name: t6
+    template: tti-animation-art
+    arguments:
+      parameters:
+      - name: prompt
+        value: '{{{{ tasks.t6.result }}}}'
+      dependencies: []
+  - name: t7
+    template: tti-animation-art
+    arguments:
+      parameters:
+      - name: prompt
+        value: '{{{{ tasks.t7.result }}}}'
+      dependencies: []
+  - name: t8
+    template: tti-animation-art
+    arguments:
+      parameters:
+      - name: prompt
+        value: '{{{{ tasks.t8.result }}}}'
+      dependencies: []

@@ -1,0 +1,51 @@
+"```yaml\napiVersion: argoproj.io/v1alpha1\nkind: Workflow\nmetadata:\n  generateName:
+http-wf-\nspec:\n  entrypoint: main\n  templates:\n  - name: main\n    dag:\n    \
+\  tasks:\n      - name: t1\n        template: tti_Futuristic_Art\n        arguments:\n\
+\          parameters:\n          - name: prompt\n            value: 'Create a digital
+art piece of a futuristic cityscape at night, with neon lights and flying cars.'\n\
+\      - name: t2\n        template: Image_Resizing\n        arguments:\n        \
+\  parameters:\n          - name: width\n            value: 1920\n          - name:
+height\n            value: 1080\n          - name: file\n            value: '{{tasks.t1.outputs.parameters.image}}'\n\
+\        dependencies: [t1]\n      - name: t3\n        template: Image_Enhancement\n\
+\        arguments:\n          parameters:\n          - name: file\n            value:
+'{{tasks.t2.outputs.parameters.file}}'\n        dependencies: [t2]\n      - name:
+t4\n        template: image_to_pdf_conversion\n        arguments:\n          parameters:\n\
+\          - name: file\n            value: '{{tasks.t3.outputs.parameters.file}}'\n\
+\        dependencies: [t3]\n      - name: t5\n        template: send_pdf_to_email\n\
+\        arguments:\n          parameters:\n          - name: file\n            value:
+'{{tasks.t4.outputs.parameters.file}}'\n        dependencies: [t4]\n  - name: tti_Futuristic_Art\n\
+\    inputs:\n      parameters:\n      - name: prompt\n    outputs:\n      parameters:\n\
+\      - name: image\n        valueFrom:\n          path: /image-path\n    container:\n\
+\      image: python:3.8-slim\n      command: [python, -c]\n      args:\n      - |\n\
+\        from fastapi import FastAPI, HTTPException\n        from fastapi.responses
+import FileResponse\n\n        from PIL import Image\n        from diffusers import
+StableDiffusionPipeline, DPMSolverMultistepScheduler\n        import torch\n     \
+\   from pydantic import BaseModel\n        from pathlib import Path\n\n        app
+= FastAPI()\n\n        def load_model():\n            model_id = 'nitrosocke/Future-Diffusion'\n\
+\            pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)\n\
+\            pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)\n\
+\            pipe = pipe.to('cuda')\n            return pipe\n\n        def process_data(prompt,
+pipe):\n            response = pipe(prompt).images[0]\n            return response\n\
+\n        prompt = \"Futuristic-style picture: \" + \"{{inputs.parameters.prompt}}\"\
+\n        pipe = load_model()\n        response = process_data(prompt, pipe)\n   \
+\     response.save('/image-path/generated_img.png')\n\n  - name: Image_Resizing\n\
+\    inputs:\n      parameters:\n      - name: width\n      - name: height\n     \
+\ - name: file\n    outputs:\n      parameters:\n      - name: file\n        valueFrom:\n\
+\          path: /resized-image-path/output.png\n    container:\n      image: python:3.8-slim\n\
+\      command: [python, -c]\n      args:\n      - |\n        from fastapi import
+FastAPI, HTTPException, File, UploadFile\n        from fastapi.responses import FileResponse\n\
+\        from PIL import Image\n        import io\n        import os\n\n        width
+= int(\"{{inputs.parameters.width}}\")\n        height = int(\"{{inputs.parameters.height}}\"\
+)\n        file_path = \"{{inputs.parameters.file}}\"\n\n        image = Image.open(file_path)\n\
+\        resized = image.resize((width, height))\n        resized.save(\"/resized-image-path/output.png\"\
+)\n\n  - name: Image_Enhancement\n    inputs:\n      parameters:\n      - name: file\n\
+\    outputs:\n      parameters:\n      - name: file\n        valueFrom:\n       \
+\   path: /enhanced-image-path/final_image.jpg\n    container:\n      image: python:3.8-slim\n\
+\      command: [python, -c]\n      args:\n      - |\n        from fastapi import
+FastAPI, HTTPException, File, UploadFile\n        from fastapi.responses import FileResponse\n\
+\        from pathlib import Path\n        import cv2\n        import numpy as np\n\
+\        from PIL import Image\n\n        file_path = \"{{inputs.parameters.file}}\"\
+\n        image = Image.open(file_path)\n        file_name = 'enhanced_image'\n  \
+\      image.save(file_name)\n\n        img = cv2.imread(file_name)\n        denoised_image
+= cv2.fastNlMeansDenoisingColored(img, None, 10, 10, 7, 21)\n        contrast_stretched_image
+= cv2.normalize(denoised_image, None,"

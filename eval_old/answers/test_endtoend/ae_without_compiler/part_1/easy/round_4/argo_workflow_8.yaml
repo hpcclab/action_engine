@@ -1,0 +1,113 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti-pastel-art
+        arguments:
+          parameters:
+          - name: prompt
+            value: A peaceful beach at sunrise
+      - name: t2
+        template: image-enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{{{ tasks.t1.outputs.artifact }}}}'
+        dependencies: [t1]
+
+  - name: tti-pastel-art
+    inputs:
+      parameters:
+      - name: prompt
+    outputs:
+      artifacts:
+      - name: artifact
+        path: /generated_img.png
+    container:
+      image: python:3.8-slim
+      command: [python, -c]
+      args:
+      - |
+        from fastapi import FastAPI, HTTPException
+        from fastapi.responses import FileResponse
+        from PIL import Image
+        from diffusers import StableDiffusionPipeline, DPMSolverMultistepScheduler
+        import torch
+        from pydantic import BaseModel
+        from pathlib import Path
+
+        app = FastAPI()
+
+        def load_model():
+            model_id = 'JamesFlare/pastel-mix'
+            pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16)
+            pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
+            pipe = pipe.to('cuda')
+            return pipe
+
+        def process_data(prompt, pipe):
+            response = pipe(prompt).images[0]
+            response.save('/generated_img.png')
+
+        @app.post("/generate_pastel_image/")
+        async def generate_image(prompt: str):
+            try:
+                pipe = load_model()
+                prompt = "Pastel-style picture: " + prompt
+                process_data(prompt, pipe)
+                return FileResponse('/generated_img.png')
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=str(e))
+
+  - name: image-enhancement
+    inputs:
+      parameters:
+      - name: file
+    outputs:
+      artifacts:
+      - name: enhanced_image
+        path: /final_pastel_image.jpg
+    container:
+      image: python:3.8-slim
+      command: [python, -c]
+      args:
+      - |-
+        from fastapi import FastAPI, HTTPException, File, UploadFile
+        from fastapi.responses import FileResponse
+        import cv2
+        import numpy as np
+        from PIL import Image
+        from pathlib import Path
+
+        app = FastAPI()
+
+        @app.post('/image_enhance/')
+        async def enhance_image(file: UploadFile):
+            try:
+                image_name = file.filename 
+                image = Image.open(file.file) 
+                image.save("/" + image_name)
+
+                img = cv2.imread("/" + image_name)
+                denoised_image = cv2.fastNlMeansDenoisingColored(img, None, 10, 10, 7, 21)
+                contrast_stretched_image = cv2.normalize(denoised_image, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_8UC1)
+                kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]], np.float32)
+                sharpened_image = cv2.filter2D(contrast_stretched_image, -1, kernel=kernel)
+                brightness_image = cv2.convertScaleAbs(sharpened_image, alpha=1, beta=5)
+                gamma = 1.5
+                lookup_table = np.array([((i / 255.0) ** gamma) * 255 for i in np.arange(0, 256)]).astype("uint8")
+                gamma_corrected_image = cv2.LUT(brightness_image, lookup_table)
+
+                final_name = "/final_pastel_image.jpg"
+                cv2.imwrite(final_name, gamma_corrected_image)
+                
+                return FileResponse(final_name, media_type='image/jpg', filename=final_name)
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=str(e))

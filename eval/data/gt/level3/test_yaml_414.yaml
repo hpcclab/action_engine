@@ -1,0 +1,45 @@
+# index: 414
+# query: I'm Mike, can you book a movie ticket for my favorite genre next Friday?
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-414-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: reservemovieticket
+        template: reservemovieticket
+        dependencies:
+        - searchmoviebygenre
+        arguments:
+          parameters:
+          - name: movie_ID
+            value: '{{ tasks.searchmoviebygenre.result }}'
+          - name: date
+            value: '{{ inputs.parameters.date }}'
+      - name: getuserfavoritegenre
+        template: getuserfavoritegenre
+        dependencies:
+        - getuserid
+        arguments:
+          parameters:
+          - name: user_ID
+            value: '{{ tasks.getuserid.result }}'
+      - name: searchmoviebygenre
+        template: searchmoviebygenre
+        dependencies:
+        - getuserfavoritegenre
+        arguments:
+          parameters:
+          - name: genre
+            value: '{{ tasks.getuserfavoritegenre.result }}'
+      - name: getuserid
+        template: getuserid
+        arguments:
+          parameters:
+          - name: username
+            value: '{{ inputs.parameters.username }}'

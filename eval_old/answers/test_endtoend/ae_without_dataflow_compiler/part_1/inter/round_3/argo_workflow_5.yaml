@@ -1,0 +1,148 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: http-wf-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: t1
+        template: tti_Futuristic_Art
+        arguments:
+          parameters:
+          - name: prompt
+            value: Create a digital art piece of a futuristic cityscape at night.
+      - name: t2
+        dependencies: [t1]
+        template: image_to_pdf_conversion
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t1.outputs.parameters.result}}'
+      - name: t3
+        dependencies: [t2]
+        template: Image_Resizing
+        arguments:
+          parameters:
+          - name: width
+            value: 1920
+          - name: height
+            value: 1080
+          - name: file
+            value: '{{tasks.t2.outputs.parameters.result}}'
+      - name: t4
+        dependencies: [t3]
+        template: Image_Enhancement
+        arguments:
+          parameters:
+          - name: file
+            value: '{{tasks.t3.outputs.parameters.result}}'
+      - name: t5
+        dependencies: [t4]
+        template: send_email
+        arguments:
+          parameters:
+          - name: sender_address
+            value: sender@example.com
+          - name: receiver_address
+            value: receiver@example.com
+          - name: message_text
+            value: Please find the enhanced PDF attached.
+          - name: message_subject
+            value: Enhanced Futuristic Cityscape
+          - name: file
+            value: '{{tasks.t4.outputs.parameters.result}}'
+
+  - name: tti_Futuristic_Art
+    inputs:
+      parameters:
+      - name: prompt
+    outputs:
+      parameters:
+      - name: result
+        valueFrom:
+          path: /tmp/result
+    http:
+      method: POST
+      url: http://future-diffusion.api/generate_futuristic_image/
+      body:
+        prompt: '{{inputs.parameters.prompt}}'
+      successCondition: response.statusCode == 200
+
+  - name: image_to_pdf_conversion
+    inputs:
+      parameters:
+      - name: file
+    outputs:
+      parameters:
+      - name: result
+        valueFrom:
+          path: /tmp/result
+    http:
+      method: POST
+      url: http://image2pdf.api/convert_to_pdf/
+      body:
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+
+  - name: Image_Resizing
+    inputs:
+      parameters:
+      - name: width
+      - name: height
+      - name: file
+    outputs:
+      parameters:
+      - name: result
+        valueFrom:
+          path: /tmp/result
+    http:
+      method: POST
+      url: http://image-resize.api/resize_image/
+      body:
+        width: '{{inputs.parameters.width}}'
+        height: '{{inputs.parameters.height}}'
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+
+  - name: Image_Enhancement
+    inputs:
+      parameters:
+      - name: file
+    outputs:
+      parameters:
+      - name: result
+        valueFrom:
+          path: /tmp/result
+    http:
+      method: POST
+      url: http://image-enhancement.api/image_enhance/
+      body:
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200
+
+  - name: send_email
+    inputs:
+      parameters:
+      - name: sender_address
+      - name: receiver_address
+      - name: message_text
+      - name: message_subject
+      - name: file
+    outputs:
+      parameters:
+      - name: result
+        valueFrom:
+          path: /tmp/result
+    http:
+      method: POST
+      url: http://email-sender.api/send_email/
+      body:
+        sender_address: '{{inputs.parameters.sender_address}}'
+        receiver_address: '{{inputs.parameters.receiver_address}}'
+        message_text: '{{inputs.parameters.message_text}}'
+        message_subject: '{{inputs.parameters.message_subject}}'
+        file: '{{inputs.parameters.file}}'
+      successCondition: response.statusCode == 200

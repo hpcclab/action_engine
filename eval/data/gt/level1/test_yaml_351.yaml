@@ -1,0 +1,31 @@
+# index: 351
+# query: I need to know how to prepare a vegan Japanese meal with tofu and vegetables.
+
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: dependency-workflow-351-
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    dag:
+      tasks:
+      - name: getrecipeinstructions
+        template: getrecipeinstructions
+        dependencies:
+        - searchrecipe
+        arguments:
+          parameters:
+          - name: recipe_name
+            value: '{{ tasks.searchrecipe.result }}'
+      - name: searchrecipe
+        template: searchrecipe
+        arguments:
+          parameters:
+          - name: cuisine
+            value: '{{ inputs.parameters.cuisine }}'
+          - name: diet
+            value: '{{ inputs.parameters.diet }}'
+          - name: ingredients
+            value: '{{ inputs.parameters.ingredients }}'
