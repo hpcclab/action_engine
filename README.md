@@ -13,19 +13,6 @@
 💡 **Why it matters:**  
 Creating FaaS workflows traditionally requires manual effort, specialized platform knowledge (e.g., AWS Step Functions, Google Cloud Composer), and tight coupling with provider-specific APIs. Action Engine **eliminates these challenges** by generating executable, platform-independent workflows from human-readable descriptions — **no manual orchestration needed**.
 
-### ✨ Key Features
-
-- **Natural Language Input**: Describe workflows in plain English
-- **Automatic Generation**: AI-powered workflow creation and optimization  
-- **AWS Integration**: Seamless deployment to AWS Step Functions and Lambda
-- **File Upload Support**: Handle images, documents, and other file types
-- **Web Dashboard**: User-friendly interface for workflow management
-
-![Action Engine Dashboard](frontend/public/images/ae_dashboard.png)
-
-> **Note:** This workflow system is currently designed to run on AWS, leveraging AWS Step Functions, Lambda, and S3 for workflow orchestration, serverless execution, and file storage. With additional development, it could be adapted to other cloud providers (such as Azure Logic Apps, Google Cloud Workflows, etc.).
-
----
 
 ## ⚙️ System Requirements
 
@@ -42,7 +29,12 @@ Creating FaaS workflows traditionally requires manual effort, specialized platfo
 
 ---
 
-## 🛠️ Setup Guide
+## Dashboard Setup Guide
+![Action Engine Dashboard](frontend/public/images/ae_dashboard.png)
+
+> **Note:** This workflow system is currently designed to run on AWS, leveraging AWS Step Functions, Lambda, and S3 for workflow orchestration, serverless execution, and file storage. With additional development, it could be adapted to other cloud providers (such as Azure Logic Apps, Google Cloud Workflows, etc.).
+
+---
 
 ### Step 1: Clone and Navigate
 
