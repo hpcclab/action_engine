@@ -53,7 +53,7 @@ If you use this work, please cite:
 # 🚀 Action Engine Dashboard Setup & Usage Guide
 
 > **Action Engine UI** is a FastAPI-based platform for automatic workflow generation and execution, supporting file uploads, AWS Step Functions integration, and custom API endpoint creation from natural language queries.
-
+![UI　Dashboard](frontend/public/images/ae_dashboard.png)
 ---
 
 ## 📋 Table of Contents
