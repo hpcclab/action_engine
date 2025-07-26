@@ -40,7 +40,6 @@ Creating FaaS workflows traditionally requires manual effort, specialized platfo
 
 ```bash
 git clone https://github.com/Doonshin/action_engine.git
-cd action_engine
 ```
 
 ### Step 2: Create Virtual Environment
