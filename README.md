@@ -168,6 +168,7 @@ npm start
 
 ### Step 10: Lambda Function Deployment
 
+
 1. **Create Lambda Functions in AWS Console:**
    - Go to AWS Lambda Console
    - Click "Create function"
@@ -185,7 +186,7 @@ npm start
    - For functions using external libraries (like PIL for image processing), you may need to create a deployment package
    - Use Lambda Layers or include dependencies in your deployment package
 
-### Example: Copying the `username2id` Function
+**Example: Copying the `username2id` Function**
 
 ```python
 def lambda_handler(event, context):
@@ -196,20 +197,19 @@ def lambda_handler(event, context):
         "name": user_name  # Pass through
     }
 ```
-
 **Steps:**
 1. Create a new Lambda function named `username2id`
 2. Copy the code above
 3. Paste it into the Lambda function editor
 4. Save and deploy
 
-### Important Notes
+**Important Notes**
 
 - **Function Names:** The function names in your workflow must match the Lambda function names exactly
 - **Input/Output Format:** Ensure your functions handle the expected input format and return the expected output format
 - **Permissions:** Ensure your Lambda functions have the necessary IAM permissions for S3, Step Functions, etc.
 
-### Dependencies for Image Processing Functions
+**Dependencies for Image Processing Functions**
 
 For functions like `resizeimage` that use PIL, you'll need to include the Pillow library. You can either:
 - Use a Lambda Layer with Pillow
@@ -218,10 +218,6 @@ For functions like `resizeimage` that use PIL, you'll need to include the Pillow
 
 ---
 
-
-
-
-```
 
 
 ## Action Engine Dashboard Usage Guide
@@ -299,3 +295,5 @@ For functions like `resizeimage` that use PIL, you'll need to include the Pillow
   - Return a public URL for the resized image
 
 ---
+
+
