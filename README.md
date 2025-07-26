@@ -156,9 +156,6 @@ Your AWS user needs the following permissions to run the Action Engine:
 }
 ```
 
-### Step 6: Load Environment Variables
-
-The application will automatically load these environment variables if you have `python-dotenv` installed.
 
 ### Step 7: Create Required Directories
 ```bash
