@@ -166,10 +166,59 @@ npm start
 - API Documentation: `http://127.0.0.1:8000/docs`
 - Frontend: `http://localhost:3000` 
 
-**Important:** Remember to activate your virtual environment before running the server:
-```bash
+### Step 10: Lambda Function Deployment
+
+1. **Create Lambda Functions in AWS Console:**
+   - Go to AWS Lambda Console
+   - Click "Create function"
+   - Choose "Author from scratch"
+   - Give your function a name (e.g., `username2id`, `getusermood`)
+   - Select Python 3.9+ as runtime
+   - Click "Create function"
+
+2. **Copy & Paste Function Code:**
+   - In the Lambda function editor, replace the default code with the function code from the demos
+   - Each function should have the exact structure shown in the demo sections
+   - Make sure to include all necessary imports (e.g., `import boto3`, `from PIL import Image`)
+
+3. **Install Dependencies (if needed):**
+   - For functions using external libraries (like PIL for image processing), you may need to create a deployment package
+   - Use Lambda Layers or include dependencies in your deployment package
+
+### Example: Copying the `username2id` Function
+
+```python
+def lambda_handler(event, context):
+    user_name = event.get("user_name", "unknown")
+    user_id = f"{user_name.lower()}_123"
+    return {
+        "user_id": user_id,
+        "name": user_name  # Pass through
+    }
+```
+
+**Steps:**
+1. Create a new Lambda function named `username2id`
+2. Copy the code above
+3. Paste it into the Lambda function editor
+4. Save and deploy
+
+### Important Notes
+
+- **Function Names:** The function names in your workflow must match the Lambda function names exactly
+- **Input/Output Format:** Ensure your functions handle the expected input format and return the expected output format
+- **Permissions:** Ensure your Lambda functions have the necessary IAM permissions for S3, Step Functions, etc.
+
+### Dependencies for Image Processing Functions
+
+For functions like `resizeimage` that use PIL, you'll need to include the Pillow library. You can either:
+- Use a Lambda Layer with Pillow
+- Create a deployment package with Pillow included
+- Use the AWS-provided Pillow layer
 
 ---
+
+
 
 
 ```
@@ -250,358 +299,3 @@ npm start
   - Return a public URL for the resized image
 
 ---
-
-## Lambda Function Deployment
-
-### How to Deploy Lambda Functions
-
-1. **Create Lambda Functions in AWS Console:**
-   - Go to AWS Lambda Console
-   - Click "Create function"
-   - Choose "Author from scratch"
-   - Give your function a name (e.g., `username2id`, `getusermood`)
-   - Select Python 3.9+ as runtime
-   - Click "Create function"
-
-2. **Copy & Paste Function Code:**
-   - In the Lambda function editor, replace the default code with the function code from the demos
-   - Each function should have the exact structure shown in the demo sections
-   - Make sure to include all necessary imports (e.g., `import boto3`, `from PIL import Image`)
-
-3. **Install Dependencies (if needed):**
-   - For functions using external libraries (like PIL for image processing), you may need to create a deployment package
-   - Use Lambda Layers or include dependencies in your deployment package
-
-### Example: Copying the `username2id` Function
-
-```python
-def lambda_handler(event, context):
-    user_name = event.get("user_name", "unknown")
-    user_id = f"{user_name.lower()}_123"
-    return {
-        "user_id": user_id,
-        "name": user_name  # Pass through
-    }
-```
-
-**Steps:**
-1. Create a new Lambda function named `username2id`
-2. Copy the code above
-3. Paste it into the Lambda function editor
-4. Save and deploy
-
-### Important Notes
-
-- **Function Names:** The function names in your workflow must match the Lambda function names exactly
-- **Input/Output Format:** Ensure your functions handle the expected input format and return the expected output format
-- **Permissions:** Ensure your Lambda functions have the necessary IAM permissions for S3, Step Functions, etc.
-
-### Dependencies for Image Processing Functions
-
-For functions like `resizeimage` that use PIL, you'll need to include the Pillow library. You can either:
-- Use a Lambda Layer with Pillow
-- Create a deployment package with Pillow included
-- Use the AWS-provided Pillow layer
-
----
-
-## Lambda Function Code Examples
-
-### Demo 1: Music Recommendation Workflow Functions
-
-<details>
-<summary><strong>username2id</strong> (Click to expand)</summary>
-
-```python
-def lambda_handler(event, context):
-    user_name = event.get("user_name", "unknown")
-    user_id = f"{user_name.lower()}_123"
-    return {
-        "user_id": user_id,
-        "name": user_name  # Pass through
-    }
-```
-</details>
-
-<details>
-<summary><strong>getusermood</strong> (Click to expand)</summary>
-
-```python
-def lambda_handler(event, context):
-    user_id = event.get("user_id", "unknown_id")
-    user_name = event.get("name", "unknown")
-    mood = "happy" if "anna" in user_name.lower() else "neutral"
-    return {
-        "mood": mood,
-        "name": user_name  # Pass through
-    }
-```
-</details>
-
-<details>
-<summary><strong>recommendsong</strong> (Click to expand)</summary>
-
-```python
-def lambda_handler(event, context):
-    mood = event.get("mood", "neutral")
-    if mood == "happy":
-        song = "Happy Tune"
-    elif mood == "sad":
-        song = "Melancholy Melody"
-    else:
-        song = "Lo-fi Chill"
-    return {
-        "recommended_song": song
-    }
-```
-</details>
-
-<details>
-<summary><strong>playmusic</strong> (Click to expand)</summary>
-
-```python
-def lambda_handler(event, context):
-    song_title = event.get("recommended_song", "unknown song")
-    name = event.get("name", "someone")
-    return {
-        "message": f"Now playing: {song_title}",
-        "name": name
-    }
-```
-</details>
-
-### Demo 2: S3 Image Resize Workflow Functions
-
-<details>
-<summary><strong>getimagefroms3</strong> (Click to expand)</summary>
-
-```python
-import boto3
-import os
-import json
-import uuid
-import base64 
-
-s3_client = boto3.client('s3')
-
-def lambda_handler(event, context):
-    """
-    1. Gets an image from S3 by intelligently handling input from the Action Engine or direct tests.
-    2. Packages it into a JSON with metadata.
-    3. Saves this JSON to a temporary key in S3 (the "claim check").
-    4. Returns the temporary S3 key to keep the payload small.
-    """
-    
-    bucket_name = None
-    original_s3_key = None
-
-    # Handle input from Action Engine UI ('input_files') or direct invocation ('s3_key')
-    if 'input_files' in event and isinstance(event['input_files'], list) and event['input_files']:
-        s3_uri = event['input_files'][0]  # Take the first file from the list
-        # s3_uri is expected in the format 's3://bucket-name/key'
-        if s3_uri.startswith("s3://"):
-            uri_parts = s3_uri.replace("s3://", "").split('/', 1)
-            if len(uri_parts) == 2:
-                bucket_name, original_s3_key = uri_parts
-    elif 's3_key' in event:
-        # Fallback for direct testing
-        original_s3_key = event.get('s3_key')
-        bucket_name = event.get('bucket_name', 'automatic-workflow-files')  # Default bucket if not provided
-
-    # Validate that we have the necessary details
-    if not original_s3_key or not bucket_name:
-        return {
-            "success": False, 
-            "error": "Input is invalid. It must include 'input_files' (as s3://bucket/key) or both 's3_key' and 'bucket_name'."
-        }
-
-    try:
-        # Step 1: Get the original image
-        response = s3_client.get_object(Bucket=bucket_name, Key=original_s3_key)
-        image_data = response['Body'].read()
-        
-        # Step 2: Create the data package (this would be too large to return directly)
-        data_package = {
-            "image_data_b64": base64.b64encode(image_data).decode('utf-8'),
-            "content_type": response.get('ContentType', 'image/jpeg'),
-            "original_s3_key": original_s3_key,
-            "bucket_name": bucket_name
-        }
-        
-        # Step 3: Save this package to a new temporary key in S3
-        temp_key = f"temp/{uuid.uuid4().hex}.json"
-        s3_client.put_object(
-            Bucket=bucket_name,
-            Key=temp_key,
-            Body=json.dumps(data_package),
-            ContentType='application/json'
-        )
-        
-        # Step 4: Return the "claim check" (the reference to the temp file)
-        return {
-            "success": True,
-            "claim_check_s3_key": temp_key,
-            "bucket_name": bucket_name
-        }
-
-    except Exception as e:
-        return {"success": False, "error": str(e)}
-```
-</details>
-
-<details>
-<summary><strong>resizeimage</strong> (Click to expand)</summary>
-
-```python
-import boto3
-import json
-import base64
-from PIL import Image
-import io
-
-s3_client = boto3.client('s3')
-
-def lambda_handler(event, context):
-    """
-    1. Receives a "claim check" (an S3 key to a JSON file).
-    2. Downloads and reads the JSON file to get the image data.
-    3. Resizes the image.
-    4. Returns the RESIZED image data as a Base64 string.
-    """
-    claim_check_s3_key = event.get('claim_check_s3_key')
-    bucket_name = event.get('bucket_name')
-
-    if not claim_check_s3_key or not bucket_name:
-        return {"success": False, "error": "Input missing 'claim_check_s3_key' or 'bucket_name'."}
-
-    try:
-        # Step 1: Use the claim check to get the data package from S3
-        response = s3_client.get_object(Bucket=bucket_name, Key=claim_check_s3_key)
-        data_package = json.loads(response['Body'].read())
-        
-        image_bytes = base64.b64decode(data_package['image_data_b64'])
-        image = Image.open(io.BytesIO(image_bytes))
-
-        # Step 2: Resize the image
-        target_width, target_height = 256, 256
-        new_image = Image.new('RGB', (target_width, target_height), 'white')
-        image.thumbnail((target_width, target_height), Image.Resampling.LANCZOS)
-        new_image.paste(image, ((target_width - image.width) // 2, (target_height - image.height) // 2))
-
-        # Step 3: Save resized image to a buffer and encode to Base64
-        output_buffer = io.BytesIO()
-        new_image.save(output_buffer, format='JPEG', quality=95)
-        resized_b64 = base64.b64encode(output_buffer.getvalue()).decode('utf-8')
-
-        # Clean up the temporary file from S3
-        s3_client.delete_object(Bucket=bucket_name, Key=claim_check_s3_key)
-
-        # Step 4: Return the resized data, which should be small enough
-        return {
-            "success": True,
-            "resized_image_data_b64": resized_b64,
-            "content_type": "image/jpeg",
-            "bucket_name": bucket_name,
-            "original_s3_key": data_package['original_s3_key']
-        }
-
-    except Exception as e:
-        return {"success": False, "error": str(e)}
-```
-</details>
-
-<details>
-<summary><strong>uploadimagetos3</strong> (Click to expand)</summary>
-
-```python
-import boto3
-import base64
-import os
-
-s3_client = boto3.client('s3')
-
-def lambda_handler(event, context):
-    """
-    1. Receives the Base64-encoded RESIZED image data.
-    2. Decodes it and uploads it to a final destination in S3.
-    3. Returns the final S3 key.
-    """
-    # This is the Base64 data from the 'resizeimage' function
-    resized_b64 = event.get('resized_image_data_b64') # <--- We expect this key
-    
-    # Get the other necessary info from the event payload
-    bucket_name = event.get('bucket_name')
-    original_s3_key = event.get('original_s3_key')
-
-    if not resized_b64 or not bucket_name or not original_s3_key:
-        # Construct a detailed error message for easier debugging
-        missing = []
-        if not resized_b64: missing.append("'resized_image_data_b64'")
-        if not bucket_name: missing.append("'bucket_name'")
-        if not original_s3_key: missing.append("'original_s3_key'")
-        return {"success": False, "error": f"Input missing required keys: {', '.join(missing)}."}
-        
-    try:
-        image_bytes = base64.b64decode(resized_b64)
-        
-        # Create the new, final key for the resized image
-        base, ext = os.path.splitext(original_s3_key)
-        final_s3_key = f"resized/{os.path.basename(base)}_256x256{ext or '.jpg'}"
-        
-        s3_client.put_object(
-            Bucket=bucket_name,
-            Key=final_s3_key,
-            Body=image_bytes,
-            ContentType=event.get('content_type', 'image/jpeg')
-        )
-        
-        # Pass the final key to the next function
-        return {
-            "success": True,
-            "final_s3_key": final_s3_key, 
-            "bucket_name": bucket_name
-        }
-        
-    except Exception as e:
-        return {"success": False, "error": str(e)}
-```
-</details>
-
-<details>
-<summary><strong>generatepublicurl</strong> (Click to expand)</summary>
-
-```python
-import boto3
-import os
-
-def lambda_handler(event, context):
-    """
-    Receives the final S3 key from the previous step and generates a 
-    public URL for it.
-    """
-    # Look for 'final_s3_key' from the event payload.
-    final_s3_key = event.get('final_s3_key')
-    
-    if not final_s3_key:
-        # This error message is more specific to help with future debugging.
-        return {"success": False, "error": "Input did not include 'final_s3_key'."}
-        
-    bucket_name = event.get('bucket_name')
-    region = os.environ.get('AWS_REGION', 'us-east-2')
-    
-    try:
-        # Construct the public URL
-        public_url = f"https://{bucket_name}.s3.{region}.amazonaws.com/{final_s3_key}"
-        
-        # This is the final output of the entire workflow
-        return {
-            "success": True,
-            "public_url": public_url,
-            "s3_key": final_s3_key
-        }
-        
-    except Exception as e:
-        return {"success": False, "error": str(e)}
-```
-</details>
-
