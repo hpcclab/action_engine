@@ -13,42 +13,6 @@
 💡 **Why it matters:**  
 Creating FaaS workflows traditionally requires manual effort, specialized platform knowledge (e.g., AWS Step Functions, Google Cloud Composer), and tight coupling with provider-specific APIs. Action Engine **eliminates these challenges** by generating executable, platform-independent workflows from human-readable descriptions — **no manual orchestration needed**.
 
----
-
-## 📊 Evaluation & Results
-
-We evaluated Action Engine using the Reverse Chain dataset against various baselines including **GPT-4o**, **Qwen-Coder-32B-Instruct**, and **Reverse Chain**.
-
-📈 **Key Metrics:**
-- **Function Selection Accuracy**: ~42% (Level 3)
-- **Data Dependency F1 Score**: Competitive with GPT-4o Few-Shot CoT
-- **Topological Order Accuracy**: Highest LCS among all baselines
-
-🔍 **Insight**: Action Engine offers robust performance **even at higher workflow complexity**, highlighting its scalability and reliability in real-world FaaS systems.
-
----
-
-## 📚 Citation
-
-If you use this work, please cite:
-
-```bibtex
-@article{esashi2025actionengine,
-  title={Action Engine: Automatic Workflow Generation in FaaS},
-  author={Esashi, Akiharu and Lertpongrujikorn, Pawissanutt and Salehi, Mohsen Amini},
-  journal={Preprint submitted to Elsevier},
-  year={2025}
-}
-```
-
----
-
-## 📬 Contact
-
-- 📧 Akiharu Esashi: [akiharuesashi@my.unt.edu](mailto:akiharuesashi@my.unt.edu)  
-- 💼 Mohsen Amini Salehi: [mohsen.aminisalehi@unt.edu](mailto:mohsen.aminisalehi@unt.edu)
-
----
 
 # 🚀 Action Engine Dashboard Setup & Usage Guide
 
@@ -103,7 +67,6 @@ pip install -r requirements.txt
 ### Step 4: Set Required Environment Variables in the `.env` File
 
 Below is an example of what your `.env` file should look like. Replace the placeholder values with your actual credentials:
-
 
 ```
 AWS_ACCOUNT_ID=YOUR_ACCOUNT_ID
@@ -165,10 +128,8 @@ npm start
    - Select Python 3.9+ as runtime
    - Click "Create function"
 
-2. **Copy & Paste Function Code:**
-   - In the Lambda function editor, replace the default code with the function code from the demos
-   - Each function should have the exact structure shown in the demo sections
-   - Make sure to include all necessary imports (e.g., `import boto3`, `from PIL import Image`)
+2. **Uploead each Zip files into matched lamda function:**
+
 
 3. **Install Dependencies (if needed):**
    - For functions using external libraries (like PIL for image processing), you may need to create a deployment package
@@ -180,11 +141,6 @@ npm start
 3. Paste it into the Lambda function editor
 4. Save and deploy
 
-**Important Notes**
-
-- **Function Names:** The function names in your workflow must match the Lambda function names exactly
-- **Input/Output Format:** Ensure your functions handle the expected input format and return the expected output format
-- **Permissions:** Ensure your Lambda functions have the necessary IAM permissions for S3, Step Functions, etc.
 
 **Dependencies for Image Processing Functions**
 
@@ -244,11 +200,6 @@ For functions like `resizeimage` that use PIL, you'll need to include the Pillow
 
 ---
 
-
----
-
-
-
 ## Action Engine Dashboard Usage Guide
 
 > This guide explains how to use the Action Engine web-based dashboard to generate, run, and manage workflows through the graphical interface.
@@ -277,3 +228,11 @@ For functions like `resizeimage` that use PIL, you'll need to include the Pillow
 
 
 
+---
+
+## 📬 Contact
+
+- 📧 Akiharu Esashi: [akiharuesashi@my.unt.edu](mailto:akiharuesashi@my.unt.edu)  
+- 💼 Mohsen Amini Salehi: [mohsen.aminisalehi@unt.edu](mailto:mohsen.aminisalehi@unt.edu)
+
+---
