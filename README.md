@@ -635,16 +635,6 @@ def lambda_handler(event, context):
 
 ---
 
-## Use Cases
-
-- **Automated Image Processing:** Retrieve images from S3, process (resize, convert), and return public URLs.
-- **AI-Driven Media Workflows:** Generate, enhance, and distribute media files using serverless functions.
-- **Custom API Generation:** Instantly create REST endpoints for business logic workflows.
-- **Data Pipeline Automation:** Orchestrate multi-step data processing tasks using serverless functions.
-- **File-Driven Workflows:** Trigger workflows based on file uploads or S3 events.
-
----
-
 ## Cloud Provider Note
 
 > **Note:** This workflow system is currently designed to run on AWS, leveraging AWS Step Functions, Lambda, and S3 for workflow orchestration, serverless execution, and file storage. With additional development, it could be adapted to other cloud providers (such as Azure Logic Apps, Google Cloud Workflows, etc.).
