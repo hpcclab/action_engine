@@ -168,8 +168,18 @@ chmod 755 output_file
 - Ensure your IAM role has access to this bucket
 
 ### Step 9: Start the Server
+In your project root, run the following command to start the backend server:
 ```bash
 uvicorn main:app --reload
+```
+
+### Step 10: Step 10: Start the Dashboard (Frontend)
+
+Open a new terminal tab or window, then run the following commands to start the frontend development server:
+```bash
+cd frontend
+npm install
+npm start
 ```
 
 **Access Points:**
@@ -188,38 +198,6 @@ source venv/bin/activate  # Linux/macOS
 cd frontend
 npm install
 npm start
-```
-
----
-
-## Configuration
-
-### Environment Variables
-
-**All sensitive credentials (AWS, OpenAI, etc.) should be stored in a `.env` file in the project root.**
-The application will read from this file automatically if `python-dotenv` is installed.
-
-**Setting Environment Variables:**
-
-**Linux/macOS:**
-```bash
-export AWS_ACCOUNT_ID=123456789012
-export AWS_ROLE_ARN=arn:aws:iam::123456789012:role/StepFunctionExecutionRole
-export OPENAI_API_KEY=your_openai_api_key_here
-```
-
-**Windows (CMD):**
-```cmd
-set AWS_ACCOUNT_ID=123456789012
-set AWS_ROLE_ARN=arn:aws:iam::123456789012:role/StepFunctionExecutionRole
-set OPENAI_API_KEY=your_openai_api_key_here
-```
-
-**.env file (if using dotenv):**
-```
-AWS_ACCOUNT_ID=123456789012
-AWS_ROLE_ARN=arn:aws:iam::123456789012:role/StepFunctionExecutionRole
-OPENAI_API_KEY=your_openai_api_key_here
 ```
 
 ---
