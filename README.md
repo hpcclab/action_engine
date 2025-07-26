@@ -135,24 +135,6 @@ Your AWS user needs the following permissions to run the Action Engine:
    - `AWSLambdaRole` 
    - `IAMFullAccess`
 7. **Click "Next" and "Add permissions"**
-
-**Alternative: Create a custom policy** for more restrictive access:
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "states:*",
-                "lambda:*",
-                "iam:*",
-                "s3:*"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
 ```
 
 
