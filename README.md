@@ -77,7 +77,6 @@ If you use this work, please cite:
 ### Step 1: Clone and Navigate
 ```bash
 git clone https://github.com/Doonshin/action_engine.git
-cd AutomaticWorkflowGeneration
 ```
 
 ### Step 2: Create Virtual Environment
@@ -184,20 +183,14 @@ npm start
 
 **Access Points:**
 - API: `http://127.0.0.1:8000`
-- Frontend: `http://localhost:3000` (if running)
+- API Documentation: `http://127.0.0.1:8000/docs`
+- Frontend: `http://localhost:3000` 
 
 **Important:** Remember to activate your virtual environment before running the server:
 ```bash
 source venv/bin/activate  # Linux/macOS
 # or
 # venv\Scripts\activate  # Windows
-```
-
-### Optional: Frontend Setup
-```bash
-cd frontend
-npm install
-npm start
 ```
 
 ---
@@ -209,12 +202,6 @@ npm start
 uvicorn main:app --reload
 ```
 
-### Access Points
-- **API Endpoint**: `http://127.0.0.1:8000`
-- **Frontend Dashboard**: `http://localhost:3000` (if running)
-- **API Documentation**: `http://127.0.0.1:8000/docs`
-
----
 
 ## Action Engine Dashboard Usage Guide
 
@@ -240,19 +227,6 @@ uvicorn main:app --reload
 
 ### 4. Manual Execution
 - Use the "Manual Execution" section to invoke a workflow by URL with custom JSON input
-
-### 5. Workflow Management
-- **List Workflows**: `/workflows`
-- **Get Workflow Definition**: `/workflows/{workflow_name}`
-- **Update Workflow**: `/workflows/{workflow_name}/update`
-- **Delete Workflow**: `/workflows/{workflow_name}`
-- **Restructure Workflow**: `/restructure-workflow` (POST with new order)
-- **Export Workflow**: `/workflows/{workflow_name}/export`
-
-### 6. Custom API Endpoints
-- Use `/generate-api-endpoint` to create a REST endpoint for any workflow
-- Call the generated endpoint (e.g., `/api/api_resize_image_1234abcd`) with POST requests
-
 ---
 
 ## Demo Workflows
