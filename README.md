@@ -65,8 +65,7 @@ pip install -r requirements.txt
 ```
 
 ### Step 4: Configure Environment Variables
-
-Create a `.env` file in the project root with your credentials:
+Set requrired credentials in `.env` file in the project root:
 
 ```env
 AWS_ACCOUNT_ID=YOUR_ACCOUNT_ID
@@ -118,9 +117,9 @@ npm start
 ```
 
 **Access Points:**
-- 🌐 **Frontend Dashboard**: `http://localhost:3000`
-- 🔗 **API**: `http://127.0.0.1:8000`
-- 📚 **API Documentation**: `http://127.0.0.1:8000/docs`
+- **Frontend Dashboard**: `http://localhost:3000`
+- **API**: `http://127.0.0.1:8000`
+- **API Documentation**: `http://127.0.0.1:8000/docs`
 
 ### Step 7: Try Demo Workflows
 
