@@ -138,19 +138,7 @@ Your AWS user needs the following permissions to run the Action Engine:
    - `IAMFullAccess`
 7. **Click "Next" and "Add permissions"**
 
-
-
-### Step 7: Create Required Directories
-```bash
-mkdir -p output_file
-chmod 755 output_file
-```
-
-### Step 8: Set Up S3 Bucket
-- Create an S3 bucket named `automatic-workflow-files` (or update the code/config to use your bucket)
-- Ensure your IAM role has access to this bucket
-
-### Step 9: Start the Server the Dashboard (Frontend)
+### Step 6: Start the Server the Dashboard (Frontend)
 In your project root, run the following command to start the backend server:
 ```bash
 uvicorn main:app --reload
@@ -166,7 +154,7 @@ npm start
 - API Documentation: `http://127.0.0.1:8000/docs`
 - Frontend: `http://localhost:3000` 
 
-### Step 10: Lambda Function Deployment
+### Step 7: Lambda Function Deployment
 
 
 1. **Create Lambda Functions in AWS Console:**
