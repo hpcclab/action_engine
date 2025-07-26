@@ -1,4 +1,10 @@
-# 🧠⚙️ Action Engine: Automatic Workflow Generation in FaaS
+# 🧠⚙️ A## 📋 Table of Contents
+
+- [🚀 Overview](#-overview)
+- [⚙️ System Requirements](#️-system-requirements)
+- [🛠️ Setup Guide](#️-setup-guide)
+- [🖥️ Dashboard Usage Guide](#️-dashboard-usage-guide)
+- [📬 Contact](#-contact)gine: Automatic Workflow Generation in FaaS
 
 **Authors**: Akiharu Esashi, Pawissanutt Lertpongrujikorn, Mohsen Amini Salehi  
 📍 University of North Texas  
@@ -6,7 +12,18 @@
 
 ---
 
-## 🚀 Overview
+## 📋 Table of Contents
+
+- [🚀 Overview](#-overview)
+- [⚙️ System Requirements](#️-system-requirements)
+- [🛠️ Setup Guide](#️-setup-guide)
+- [🎬 Demo Workflows](#-demo-workflows)
+- [🖥️ Dashboard Usage Guide](#️-dashboard-usage-guide)
+- [� Contact](#-contact)
+
+---
+
+## �🚀 Overview
 
 **Action Engine** is an end-to-end system that **automates the generation of serverless (FaaS) workflows** from natural language queries using **Tool-Augmented Large Language Models (LLMs)**.
 
@@ -26,6 +43,7 @@ Creating FaaS workflows traditionally requires manual effort, specialized platfo
 > **Note:** This workflow system is currently designed to run on AWS, leveraging AWS Step Functions, Lambda, and S3 for workflow orchestration, serverless execution, and file storage. With additional development, it could be adapted to other cloud providers (such as Azure Logic Apps, Google Cloud Workflows, etc.).
 
 ---
+
 
 ## ⚙️ System Requirements
 
@@ -135,7 +153,7 @@ npm start
 
 > **⚠️ Important:** Before running demos, you must deploy the required Lambda functions to AWS. The workflows will fail if these functions don't exist in your AWS account.
 
-#### 🎵 Demo 1: Music Recommendation Workflow
+### 🎵 Demo 1: Music Recommendation Workflow
 
 **Required Lambda Functions:**
 - `username2id` - Converts user name to user ID
@@ -173,7 +191,7 @@ The workflow will:
 
 ---
 
-#### 🖼️ Demo 2: S3 Image Resize Workflow
+### 🖼️ Demo 2: S3 Image Resize Workflow
 
 **Required Lambda Functions:**
 - `getimagefroms3` - Retrieves image from S3
@@ -254,6 +272,7 @@ The Action Engine dashboard provides an intuitive web interface for generating, 
 - Access detailed execution traces for debugging
 
 ---
+
 
 ## 📬 Contact
 
