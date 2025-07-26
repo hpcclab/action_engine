@@ -1,4 +1,10 @@
-# 🧠⚙️ Action Engine: Automatic Workflow Generation in FaaS
+# 🧠⚙️ A## 📋 Table of Contents
+
+- [🚀 Overview](#-overview)
+- [⚙️ System Requirements](#️-system-requirements)
+- [🛠️ Setup Guide](#️-setup-guide)
+- [🖥️ Dashboard Usage Guide](#️-dashboard-usage-guide)
+- [📬 Contact](#-contact)gine: Automatic Workflow Generation in FaaS
 
 **Authors**: Akiharu Esashi, Pawissanutt Lertpongrujikorn, Mohsen Amini Salehi  
 📍 University of North Texas  
@@ -143,9 +149,7 @@ npm start
 - 🔗 **API**: `http://127.0.0.1:8000`
 - 📚 **API Documentation**: `http://127.0.0.1:8000/docs`
 
----
-
-## 🎬 Demo Workflows
+### Step 7: Try Demo Workflows
 
 > **⚠️ Important:** Before running demos, you must deploy the required Lambda functions to AWS. The workflows will fail if these functions don't exist in your AWS account.
 
