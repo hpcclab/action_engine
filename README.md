@@ -70,6 +70,8 @@ If you use this work, please cite:
   - **Hugging Face Token** (if using Hugging Face models) - Get from [Hugging Face Settings](https://huggingface.co/settings/tokens)
 
 
+> **Note:** This workflow system is currently designed to run on AWS, leveraging AWS Step Functions, Lambda, and S3 for workflow orchestration, serverless execution, and file storage. With additional development, it could be adapted to other cloud providers (such as Azure Logic Apps, Google Cloud Workflows, etc.).
+
 ---
 
 ## Setup Guide
@@ -135,7 +137,7 @@ Your AWS user needs the following permissions to run the Action Engine:
    - `AWSLambdaRole` 
    - `IAMFullAccess`
 7. **Click "Next" and "Add permissions"**
-```
+
 
 
 ### Step 7: Create Required Directories
@@ -148,21 +150,17 @@ chmod 755 output_file
 - Create an S3 bucket named `automatic-workflow-files` (or update the code/config to use your bucket)
 - Ensure your IAM role has access to this bucket
 
-### Step 9: Start the Server
+### Step 9: Start the Server the Dashboard (Frontend)
 In your project root, run the following command to start the backend server:
 ```bash
 uvicorn main:app --reload
 ```
-
-### Step 10: Step 10: Start the Dashboard (Frontend)
-
 Open a new terminal tab or window, then run the following commands to start the frontend development server:
 ```bash
 cd frontend
 npm install
 npm start
 ```
-
 **Access Points:**
 - API: `http://127.0.0.1:8000`
 - API Documentation: `http://127.0.0.1:8000/docs`
@@ -170,18 +168,10 @@ npm start
 
 **Important:** Remember to activate your virtual environment before running the server:
 ```bash
-source venv/bin/activate  # Linux/macOS
-# or
-# venv\Scripts\activate  # Windows
-```
 
 ---
 
-## Running the System
 
-### Start the FastAPI Server
-```bash
-uvicorn main:app --reload
 ```
 
 
