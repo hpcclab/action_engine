@@ -174,17 +174,6 @@ npm start
    - For functions using external libraries (like PIL for image processing), you may need to create a deployment package
    - Use Lambda Layers or include dependencies in your deployment package
 
-**Example: Copying the `username2id` Function**
-
-```python
-def lambda_handler(event, context):
-    user_name = event.get("user_name", "unknown")
-    user_id = f"{user_name.lower()}_123"
-    return {
-        "user_id": user_id,
-        "name": user_name  # Pass through
-    }
-```
 **Steps:**
 1. Create a new Lambda function named `username2id`
 2. Copy the code above
@@ -204,35 +193,6 @@ For functions like `resizeimage` that use PIL, you'll need to include the Pillow
 - Create a deployment package with Pillow included
 - Use the AWS-provided Pillow layer
 
----
-
-
-
-## Action Engine Dashboard Usage Guide
-
-> This guide explains how to use the Action Engine web-based dashboard to generate, run, and manage workflows through the graphical interface.
-
-### 1. Dashboard Access
-- Open your browser and navigate to the dashboard
-- View recent workflows, execution results, and recent queries
-
-### 2. File Uploads
-- Use the "Add File Inputs" button to upload files
-- Files are uploaded to S3 and their URLs are returned for use in workflows
-
-### 3. Workflow Generation
-- Enter a natural language description of your workflow
-- Optionally attach files
-- Click "Generate & Run Workflow"
-- The backend will:
-  - Parse your query
-  - Generate a workflow
-  - Compile it to AWS Step Functions
-  - Start execution and return the result
-
-### 4. Manual Execution
-- Use the "Manual Execution" section to invoke a workflow by URL with custom JSON input
----
 
 ## Demo Workflows
 
@@ -283,5 +243,37 @@ For functions like `resizeimage` that use PIL, you'll need to include the Pillow
   - Return a public URL for the resized image
 
 ---
+
+
+---
+
+
+
+## Action Engine Dashboard Usage Guide
+
+> This guide explains how to use the Action Engine web-based dashboard to generate, run, and manage workflows through the graphical interface.
+
+### 1. Dashboard Access
+- Open your browser and navigate to the dashboard
+- View recent workflows, execution results, and recent queries
+
+### 2. File Uploads
+- Use the "Add File Inputs" button to upload files
+- Files are uploaded to S3 and their URLs are returned for use in workflows
+
+### 3. Workflow Generation
+- Enter a natural language description of your workflow
+- Optionally attach files
+- Click "Generate & Run Workflow"
+- The backend will:
+  - Parse your query
+  - Generate a workflow
+  - Compile it to AWS Step Functions
+  - Start execution and return the result
+
+### 4. Manual Execution
+- Use the "Manual Execution" section to invoke a workflow by URL with custom JSON input
+---
+
 
 
