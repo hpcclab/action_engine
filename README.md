@@ -56,17 +56,6 @@ If you use this work, please cite:
 ![UI　Dashboard](frontend/public/images/ae_dashboard.png)
 ---
 
-## 📋 Table of Contents
-
-1. [System Requirements](#system-requirements)
-2. [Quick Setup Guide](#quick-setup-guide)
-3. [Configuration](#configuration)
-4. [Running the System](#running-the-system)
-5. [Usage Guide](#usage-guide)
-6. [Demo Workflows](#demo-workflows)
-7. [Troubleshooting](#troubleshooting)
-
----
 
 ## System Requirements
 
@@ -87,7 +76,7 @@ If you use this work, please cite:
 
 ### Step 1: Clone and Navigate
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Doonshin/action_engine.git
 cd AutomaticWorkflowGeneration
 ```
 
@@ -110,15 +99,6 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
-
-**Note:** The `requirements.txt` file includes all necessary dependencies including:
-- FastAPI and Uvicorn for the web server
-- Boto3 for AWS integration
-- OpenAI and LangChain for LLM functionality
-- Transformers and VLLM for local LLM support
-- Pillow for image processing
-- And other required modules
-
 ### Step 4: Create a `.env` File for Environment Variables
 
 Below is an example of what your `.env` file should look like. Replace the placeholder values with your actual credentials:
