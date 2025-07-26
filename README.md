@@ -15,37 +15,6 @@ Creating FaaS workflows traditionally requires manual effort, specialized platfo
 
 ---
 
-## ✨ Highlights
-
-- ✅ **Automated Workflow Generation**: Translates user queries into executable FaaS workflows.
-- 🌐 **Platform & Language Agnostic**: Supports any cloud provider and programming language.
-- 🤖 **LLM-Powered Intelligence**: Uses state-of-the-art tool-augmented LLMs for function selection and dependency handling.
-- 🔁 **Reusability & Scalability**: Constructs DAG-based workflows with explicit data dependencies.
-- ⚙️ **API-Backed Execution**: Generates ready-to-use API endpoints for seamless integration.
-
----
-
-## 🧱 System Architecture
-
-```
-+------------------+      +---------------------+      +------------------+
-|   User Query     +----->+   Text-to-Workflow  +----->+   API Endpoint   |
-+------------------+      +---------------------+      +------------------+
-                                |                             |
-                                v                             v
-                  [Function Selection]           [Workflow Execution Engine]
-                                |
-                                v
-                        DAG Construction
-                                |
-                                v
-                Platform-Specific Workflow Compiler
-```
-
-Read more in our [📘 Paper](#) about each component.
-
----
-
 ## 📊 Evaluation & Results
 
 We evaluated Action Engine using the Reverse Chain dataset against various baselines including **GPT-4o**, **Qwen-Coder-32B-Instruct**, and **Reverse Chain**.
@@ -56,14 +25,6 @@ We evaluated Action Engine using the Reverse Chain dataset against various basel
 - **Topological Order Accuracy**: Highest LCS among all baselines
 
 🔍 **Insight**: Action Engine offers robust performance **even at higher workflow complexity**, highlighting its scalability and reliability in real-world FaaS systems.
-
----
-
-## 🔬 Key Contributions
-
-1. **Action Engine Framework**: Open-source, plug-and-play system for FaaS automation.
-2. **Novel Evaluation Benchmark**: Extends the Reverse Chain dataset for complex multi-step tasks.
-3. **LLM Workflow Adaptation**: Redefines tool-augmented LLM stages for cloud-native applications.
 
 ---
 
@@ -79,13 +40,6 @@ If you use this work, please cite:
   year={2025}
 }
 ```
-
----
-
-## 🤝 Acknowledgments
-
-This work is supported by the **National Science Foundation (NSF)** through CNS Awards #2419588 and #2418188.  
-We gratefully acknowledge **Chameleon Cloud** for providing the computational resources.
 
 ---
 
@@ -184,8 +138,6 @@ AWS_DEFAULT_REGION=us-east-2
 AWS_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT_ID:role/StepFunctionExecutionRole
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 HUGGINGFACE_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-# Add any other API keys or secrets here
-```
 
 The application will automatically load these environment variables if you have `python-dotenv` installed.
 
@@ -448,7 +400,6 @@ def lambda_handler(event, context):
 
 - **Function Names:** The function names in your workflow must match the Lambda function names exactly
 - **Input/Output Format:** Ensure your functions handle the expected input format and return the expected output format
-- **Error Handling:** Add proper error handling for production use
 - **Permissions:** Ensure your Lambda functions have the necessary IAM permissions for S3, Step Functions, etc.
 
 ### Dependencies for Image Processing Functions
@@ -457,43 +408,6 @@ For functions like `resizeimage` that use PIL, you'll need to include the Pillow
 - Use a Lambda Layer with Pillow
 - Create a deployment package with Pillow included
 - Use the AWS-provided Pillow layer
-
----
-
-## Troubleshooting
-
-### Common Issues and Solutions
-
-**AWS Permissions:**
-- If you see errors related to AWS permissions, ensure your IAM user/role has access to Step Functions and S3
-
-**File Upload Fails:**
-- Check S3 bucket name and permissions
-- Ensure file size does not exceed S3 limits
-
-**Workflow Not Found:**
-- The workflow name may be incorrect or deleted
-- Check `/workflows` for available workflows
-
-**State Machine Already Exists:**
-- The system appends timestamps or hashes to workflow names to avoid collisions
-- If you see this error, try again or clean up old workflows
-
-**Dependency Validation Fails (Restructuring):**
-- You cannot reorder steps if it breaks data dependencies
-- The API will return a clear error message
-
-**Large or Long-Running Workflows:**
-- The UI/API waits up to 10–30 seconds for execution. For longer jobs, poll `/execution-status?executionArn=...`
-
-**File Not Found in S3:**
-- Ensure the file was uploaded successfully and the S3 key is correct
-
-**JSON Errors:**
-- Ensure your manual input is valid JSON
-
-**CORS Issues:**
-- The backend allows all origins for development. For production, restrict `allow_origins` in `main.py`
 
 ---
 
