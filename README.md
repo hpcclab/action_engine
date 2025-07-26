@@ -29,7 +29,7 @@ Creating FaaS workflows traditionally requires manual effort, specialized platfo
 
 ---
 
-## Dashboard Setup Guide
+# 🚀 Dashboard Setup Guide
 ![Action Engine Dashboard](frontend/public/images/ae_dashboard.png)
 
 > **Note:** This workflow system is currently designed to run on AWS, leveraging AWS Step Functions, Lambda, and S3 for workflow orchestration, serverless execution, and file storage. With additional development, it could be adapted to other cloud providers (such as Azure Logic Apps, Google Cloud Workflows, etc.).
