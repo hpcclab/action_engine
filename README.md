@@ -250,9 +250,7 @@ The Action Engine dashboard provides an intuitive web interface for generating, 
 
 For questions, support, or collaboration opportunities:
 
-- 📧 **Akiharu Esashi**: [akiharuesashi@my.unt.edu](mailto:akiharuesashi@my.unt.edu)  
-- 💼 **Mohsen Amini Salehi**: [mohsen.aminisalehi@unt.edu](mailto:mohsen.aminisalehi@unt.edu)
-- 🏛️ **University of North Texas** - [HPC Lab](https://hpcclab.org/)
+- 📧 **Akiharu Esashi**: [akiharuesashi@my.unt.edu](mailto:akiharuesashi@my.unt.edu)   **Mohsen Amini Salehi**: [mohsen.aminisalehi@unt.edu](mailto:mohsen.aminisalehi@unt.edu) **University of North Texas** - [HPCC Lab](https://hpcclab.org/)
 
 ---
 
