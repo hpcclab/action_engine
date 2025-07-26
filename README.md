@@ -103,12 +103,6 @@ pip install -r requirements.txt
 
 Below is an example of what your `.env` file should look like. Replace the placeholder values with your actual credentials:
 
-- `AWS_ACCOUNT_ID`: Your 12-digit AWS account number
-- `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY`: Your AWS IAM user credentials
-- `AWS_DEFAULT_REGION`: The AWS region you want to use (e.g., us-east-2)
-- `AWS_ROLE_ARN`: The ARN of the IAM role for Step Functions execution
-- `HUGGINGFACE_TOKEN`: Your Hugging Face access token (required for Hugging Face models and APIs; get it from https://huggingface.co/settings/tokens)
-- `OPENAI_API_KEY`: Your OpenAI API key (if using OpenAI LLMs)
 
 ```
 AWS_ACCOUNT_ID=YOUR_ACCOUNT_ID
@@ -118,6 +112,7 @@ AWS_DEFAULT_REGION=us-east-2
 AWS_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT_ID:role/StepFunctionExecutionRole
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 HUGGINGFACE_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
 
 The application will automatically load these environment variables if you have `python-dotenv` installed.
 
