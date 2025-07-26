@@ -99,7 +99,7 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
-### Step 4: Create a `.env` File for Environment Variables
+### Step 4: Set Required Environment Variables in the `.env` File
 
 Below is an example of what your `.env` file should look like. Replace the placeholder values with your actual credentials:
 
@@ -113,8 +113,6 @@ AWS_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT_ID:role/StepFunctionExecutionRole
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 HUGGINGFACE_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
-
-The application will automatically load these environment variables if you have `python-dotenv` installed.
 
 ### Step 5: Configure AWS IAM Permissions
 
