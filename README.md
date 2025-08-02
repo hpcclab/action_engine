@@ -76,8 +76,18 @@ AWS_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT_ID:role/StepFunctionExecutionRole
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 HUGGINGFACE_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+### Step 5: Create Vector Database
 
-### Step 5: Configure AWS IAM Permissions
+
+```bash
+# Create the vector database directory
+mkdir -p db/api_info/vectordb/LangChain_FAISS
+
+# Run the vector database creation script
+python3 db/create_db.py
+```
+
+### Step 6: Configure AWS IAM Permissions
 
 Your AWS user needs the following permissions:
 
@@ -100,7 +110,7 @@ Your AWS user needs the following permissions:
    - `IAMFullAccess`
 7. Click **"Next"** and **"Add permissions"**
 
-### Step 6: Start the Application
+### Step 7: Start the Application
 
 #### Start Backend Server
 In your project root directory:
@@ -121,7 +131,7 @@ npm start
 - **API**: `http://127.0.0.1:8000`
 - **API Documentation**: `http://127.0.0.1:8000/docs`
 
-### Step 7: Try Demo Workflows
+### Step 8: Try Demo Workflows
 
 > **⚠️ Important:** Before running demos, you must deploy the required Lambda functions to AWS. The workflows will fail if these functions don't exist in your AWS account.
 

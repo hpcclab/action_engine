@@ -1075,13 +1075,3 @@ def delete_api_endpoint(workflow_name: str):
             "success": False,
             "error": str(e)
         }
-
-# to run the FastAPI server, use the command: uvicorn main:app --reload
-
-# example queries:
-# user_query = "Create a graffiti-style image from a text prompt, enhance its quality, resize it to 800x600, convert it to a PDF, and send it via email."
-# user_query ="It will be perfect if you play music that matches my mood. This is Anna."
-# user_query ="Create a workflow that retrieves an image from S3, resizes it to 256x256 and returns the public URL of the resized image for display in the UI"
-
-
-# "test"
