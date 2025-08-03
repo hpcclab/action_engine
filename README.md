@@ -64,30 +64,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Step 4: Configure Environment Variables
-Set requrired credentials in `.env` file in the project root:
-
-```env
-AWS_ACCOUNT_ID=YOUR_ACCOUNT_ID
-AWS_ACCESS_KEY_ID=YOUR_AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY=YOUR_AWS_SECRET_ACCESS_KEY
-AWS_DEFAULT_REGION=us-east-2
-AWS_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT_ID:role/StepFunctionExecutionRole
-OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-HUGGINGFACE_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-### Step 5: Create Vector Database
-
-
-```bash
-# Create the vector database directory
-mkdir -p db/api_info/vectordb/LangChain_FAISS
-
-# Run the vector database creation script
-python3 db/create_db.py
-```
-
-### Step 6: Configure AWS IAM Permissions
+### Step 4: Configure AWS IAM Permissions
 
 Your AWS user needs the following permissions:
 
@@ -95,9 +72,9 @@ Your AWS user needs the following permissions:
 - `AWSStepFunctionsFullAccess` - For creating and managing Step Functions
 - `AWSLambdaRole` - For Lambda function execution
 - `IAMFullAccess` - For IAM role management
-- `S3AutomaticWorkflowFilesAccess` - For S3 file operations
+- `S3AutomaticWorkflowFilesAccess` - Custom policy for S3 file operations
 
-**How to attach policies:**
+### Step 4a: Attach AWS Managed Policies
 
 1. Go to **AWS Console** → **IAM** → **Users**
 2. Click on your user (e.g., `action-engine-test`)
@@ -109,6 +86,60 @@ Your AWS user needs the following permissions:
    - `AWSLambdaRole` 
    - `IAMFullAccess`
 7. Click **"Next"** and **"Add permissions"**
+
+### Step 4b: Create Custom S3 Policy
+
+1. In the same **"Permissions"** tab, click **"Add permissions"** again
+2. Choose **"Create inline policy"**
+3. Click on the **"JSON"** tab
+4. Replace the default policy with this S3 access policy:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::automatic-workflow-files",
+                "arn:aws:s3:::automatic-workflow-files/*"
+            ]
+        }
+    ]
+}
+```
+
+5. Click **"Next"**
+6. Enter policy name: `S3AutomaticWorkflowFilesAccess`
+7. Click **"Create policy"**
+
+### Step 5: Configure Environment Variables
+Set requrired credentials in `.env` file in the project root:
+
+```env
+AWS_ACCOUNT_ID=YOUR_ACCOUNT_ID
+AWS_ACCESS_KEY_ID=YOUR_AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY=YOUR_AWS_SECRET_ACCESS_KEY
+AWS_DEFAULT_REGION=us-east-2
+AWS_ROLE_ARN=arn:aws:iam::YOUR_ACCOUNT_ID:role/StepFunctionExecutionRole
+OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+HUGGINGFACE_TOKEN=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+### Step 6: Create Vector Database
+
+
+```bash
+# Create the vector database directory
+mkdir -p db/api_info/vectordb/LangChain_FAISS
+
+# Run the vector database creation script
+python3 db/create_db.py
+```
 
 ### Step 7: Start the Application
 
@@ -146,7 +177,7 @@ npm start
 **Setup Steps:**
 1. **Deploy Lambda Functions:**
    - Find the folder `Music Recommendation Workflow/` in the repository
-   - Go to **AWS Lambda Console**
+   - **⚠️ IMPORTANT:** Go to **AWS Lambda Console** in the same region you configured in your `.env` file
    - For each function:
      - Click **"Create function"**
      - Select **"Author from scratch"**
@@ -154,6 +185,9 @@ npm start
      - Select **Python 3.13** as runtime
      - Click **"Create Function"**
      - Upload the corresponding `.zip` file
+     - Go to **Runtime settings** section → Click **"Edit"**
+     - Set the Handler to `lambda_function.lambda_handler`
+     - Click **"Save"**
 
 2. **Run the Demo:**
    - Open the Action Engine Dashboard at `http://localhost:3000`
@@ -184,7 +218,7 @@ The workflow will:
 **Setup Steps:**
 1. **Deploy Lambda Functions:**
    - Find the folder `S3_Image_Resize_Workflow_Functions/` in the repository
-   - Go to **AWS Lambda Console**
+   - **⚠️ IMPORTANT:** Go to **AWS Lambda Console** in the same region you configured in your `.env` file
    - For each function:
      - Click **"Create function"**
      - Select **"Author from scratch"**
@@ -192,6 +226,9 @@ The workflow will:
      - Select **Python 3.13** as runtime
      - Click **"Create Function"**
      - Upload the corresponding `.zip` file
+     - Go to **Runtime settings** section → Click **"Edit"**
+     - Set the Handler to `lambda_function.lambda_handler`
+     - Click **"Save"**
 
 2. **Configure Dependencies:**
    For functions like `resizeimage` that use PIL, you'll need to include the Pillow library:
