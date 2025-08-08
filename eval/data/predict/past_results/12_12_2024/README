@@ -1,8 +1,0 @@
-This is the result from updated data dependency part
-
-- I changed to superior embeding model (Open AI text-embedding-3-large)
-- Improved Data Dependency method
-    - Add data type filter
-    - Embedding similarity rerunking
-
-The result of improvement was negligible
